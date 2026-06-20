@@ -1,0 +1,6 @@
+# The Inferno Curse - Project Rules
+- Player character: 13th-century Catholic priest, 32-bit pixel art sprite (res://assets/images/priest_sprite.png)
+- Game: 2D top-down RPG (HD 2D / Octopath-inspired style)
+- Color palette: deep golds, shadow blues, warm burnt oranges, dark moody aesthetic
+- Main scene: res://main.tscn -- medieval tavern interior
+- Collision via CharacterBody2D move_and_slide, walls are StaticBody2D
