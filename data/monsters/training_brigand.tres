@@ -1,0 +1,33 @@
+[gd_resource type="Resource" script_class="MonsterSheet" load_steps=3 format=3]
+
+[ext_resource type="Script" path="res://scripts/data/monster_sheet.gd" id="1_monster_sheet"]
+[ext_resource type="Script" path="res://scripts/data/core_stats.gd" id="2_core_stats"]
+
+[sub_resource type="Resource" id="CoreStats_training_brigand"]
+script = ExtResource("2_core_stats")
+strength = 6
+speed = 5
+intellect = 3
+faith = 2
+creativity = 3
+presence = 4
+
+[resource]
+script = ExtResource("1_monster_sheet")
+monster_id = "training_brigand"
+display_name = "Training Brigand"
+family = "Human"
+level = 1
+core_stats = SubResource("CoreStats_training_brigand")
+max_hp = 38
+max_mp = 0
+starting_ct = 0
+power_stat = "STR"
+natural_power = 2
+natural_defense = 2
+sprite_scene_path = ""
+abilities = Array[String](["Strike", "Guard"])
+ai_tags = Array[String](["melee", "training", "low_threat"])
+reward_experience = 12
+reward_coin = 5
+drop_table = Array[String](["worn_dagger"])

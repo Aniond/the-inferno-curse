@@ -1,0 +1,34 @@
+[gd_resource type="Resource" script_class="NpcSheet" load_steps=3 format=3]
+
+[ext_resource type="Script" path="res://scripts/data/npc_sheet.gd" id="1_npc_sheet"]
+[ext_resource type="Script" path="res://scripts/data/core_stats.gd" id="2_core_stats"]
+
+[sub_resource type="Resource" id="CoreStats_matteo"]
+script = ExtResource("2_core_stats")
+strength = 5
+speed = 4
+intellect = 5
+faith = 4
+creativity = 7
+presence = 6
+
+[resource]
+script = ExtResource("1_npc_sheet")
+npc_id = "matteo_the_baker"
+display_name = "Matteo the Baker"
+role = "Baker"
+faction = "Florentine Townsfolk"
+level = 1
+core_stats = SubResource("CoreStats_matteo")
+portrait_path = ""
+sprite_scene_path = "res://scenes/characters/baker_npc.tscn"
+home_node = "florence_inn_common_room"
+dialogue_tags = Array[String](["inn", "bread", "townsfolk", "rumor"])
+services = Array[String](["rumors", "simple_food"])
+can_join_battle = false
+max_hp = 34
+max_mp = 0
+power_stat = "CRT"
+equipment_power = 0
+equipment_defense = 0
+abilities = Array[String]([])

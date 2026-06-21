@@ -1,0 +1,7 @@
+[gd_scene format=3 uid="uid://du7tvmk4tm238"]
+
+[ext_resource type="Script" uid="uid://cyuy3neam703u" path="res://scripts/ui/character_sheet_ui.gd" id="1_character_sheet_ui"]
+
+[node name="CharacterSheetUI" type="CanvasLayer" unique_id=932997934]
+layer = 10
+script = ExtResource("1_character_sheet_ui")

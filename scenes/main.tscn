@@ -12,6 +12,7 @@
 [ext_resource type="PackedScene" uid="uid://d81143x0upw8" path="res://assets/models/tavern_bar_counter_l_shape.glb" id="11_tavern_bar"]
 [ext_resource type="PackedScene" uid="uid://dnmgp6bevkwgb" path="res://assets/models/tavern_table_and_stools.glb" id="12_tavern_table_set"]
 [ext_resource type="PackedScene" uid="uid://ciklgtxlwtryg" path="res://assets/models/tavern_single_stool.glb" id="13_tavern_stool"]
+[ext_resource type="PackedScene" path="res://scenes/ui/character_sheet_ui.tscn" id="14_character_sheet_ui"]
 
 [sub_resource type="PlaneMesh" id="PlaneMesh_ground"]
 size = Vector2(30, 30)
@@ -181,3 +182,5 @@ transform = Transform3D(0.55, 0, 0, 0, 0.55, 0, 0, 0, 0.55, 4, 0.55, -8)
 transform = Transform3D(0.55, 0, 0, 0, 0.55, 0, 0, 0, 0.55, 6, 0.55, -8)
 
 [node name="NPCs" type="Node3D" parent="." unique_id=1249679006]
+
+[node name="CharacterSheetUI" parent="." unique_id=791393023 instance=ExtResource("14_character_sheet_ui")]

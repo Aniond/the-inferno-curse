@@ -1,0 +1,78 @@
+[gd_resource type="Resource" script_class="CharacterSheet" load_steps=4 format=3]
+
+[ext_resource type="Script" path="res://scripts/data/character_sheet.gd" id="1_character_sheet"]
+[ext_resource type="Script" path="res://scripts/data/core_stats.gd" id="2_core_stats"]
+[ext_resource type="Script" path="res://scripts/data/stat_modifier.gd" id="3_stat_modifier"]
+
+[sub_resource type="Resource" id="CoreStats_guglielmo"]
+script = ExtResource("2_core_stats")
+strength = 7
+speed = 6
+intellect = 4
+faith = 7
+creativity = 4
+presence = 6
+
+[sub_resource type="Resource" id="StatModifier_squire_hp_growth"]
+script = ExtResource("3_stat_modifier")
+source_id = "squire_level_growth"
+source_name = "Squire Level Growth"
+target_stat = "HP"
+per_level_bonus = 6.0
+
+[sub_resource type="Resource" id="StatModifier_squire_mp_growth"]
+script = ExtResource("3_stat_modifier")
+source_id = "squire_level_growth"
+source_name = "Squire Level Growth"
+target_stat = "MP"
+per_level_bonus = 2.0
+
+[sub_resource type="Resource" id="StatModifier_squire_strength_growth"]
+script = ExtResource("3_stat_modifier")
+source_id = "squire_level_growth"
+source_name = "Squire Level Growth"
+target_stat = "STR"
+per_level_bonus = 0.5
+
+[sub_resource type="Resource" id="StatModifier_training_sword_power"]
+script = ExtResource("3_stat_modifier")
+source_id = "training_sword"
+source_name = "Training Sword"
+target_stat = "POW"
+flat_bonus = 4
+
+[sub_resource type="Resource" id="StatModifier_basic_kit_defense"]
+script = ExtResource("3_stat_modifier")
+source_id = "basic_squire_kit"
+source_name = "Basic Squire Kit"
+target_stat = "DEF"
+flat_bonus = 5
+
+[resource]
+script = ExtResource("1_character_sheet")
+character_id = "guglielmo_da_siena"
+display_name = "Guglielmo da Siena"
+job_title = "Squire"
+level = 1
+experience = 0
+core_stats = SubResource("CoreStats_guglielmo")
+max_hp = 51
+max_mp = 15
+starting_ct = 0
+movement = 5
+jump = 3
+evasion_rate = 10
+critical_rate = 5
+power_stat = "STR"
+equipment_power = 0
+equipment_defense = 0
+stat_modifiers = Array[Resource]([SubResource("StatModifier_squire_hp_growth"), SubResource("StatModifier_squire_mp_growth"), SubResource("StatModifier_squire_strength_growth"), SubResource("StatModifier_training_sword_power"), SubResource("StatModifier_basic_kit_defense")])
+portrait_path = "res://assets/images/priest_sprite.png"
+sprite_scene_path = "res://scenes/characters/baker_npc.tscn"
+abilities = Array[String](["Guts", "Protezione", "Guarigione"])
+weapon = "Training Sword"
+head = "Elmetto del Cavaliere"
+body = "Cotta di Maglia"
+feet = "Calzature di Pelle"
+accessory = ""
+shield = "Scudo del Comune"
