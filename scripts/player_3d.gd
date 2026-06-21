@@ -14,9 +14,10 @@ var _last_direction: String = "south"
 func _ready() -> void:
 	# Collision capsule
 	var shape := CapsuleShape3D.new()
-	shape.radius = 0.35
-	shape.height = 1.4
+	shape.radius = 0.25
+	shape.height = 1.7
 	$Collision.shape = shape
+	$Collision.position = Vector3(0, 0.85, 0)
 
 	# AnimatedSprite3D with SpriteFrames
 	var frames := SpriteFrames.new()
@@ -26,11 +27,11 @@ func _ready() -> void:
 	$AnimatedSprite.sprite_frames = frames
 	$AnimatedSprite.billboard = 1  # BILLBOARD_ENABLED
 	$AnimatedSprite.centered = true
-	$AnimatedSprite.pixel_size = 0.025
+	$AnimatedSprite.pixel_size = 0.012
 	# Y-scale compensation: undo vertical squash from camera pitch
 	# Y-Scale = 1 / cos(pitch). Camera pitch is 55 deg -> 1/cos(55) = 1.74
 	$AnimatedSprite.scale = Vector3(1.0, 1.74, 1.0)
-	$AnimatedSprite.position = Vector3(0, 0.7, 0)
+	$AnimatedSprite.position = Vector3(0, 0.95, 0)
 	$AnimatedSprite.play("idle_south")
 
 	# Divine light aura
@@ -89,7 +90,7 @@ func _process(_delta: float) -> void:
 
 
 func _physics_process(delta: float) -> void:
-	# Lock all rotation — sprite billboards face camera, body never tilts
+	# Lock all rotation; sprite billboards face camera, body never tilts.
 	self.rotation = Vector3.ZERO
 
 	var input_dir := Input.get_vector("move_left", "move_right", "move_up", "move_down")
