@@ -5,6 +5,23 @@ extends CanvasLayer
 ## Background: res://assets/images/edited-blank-ui-bars.png
 
 const BG_IMAGE := preload("res://assets/images/edited-blank-ui-bars.png")
+const STATUS_TYPES := ["Physical", "Poison", "Bleed", "Paralyze", "Holy", "Corruption"]
+const STATUS_LABELS := {
+	"Physical": "Phys",
+	"Poison": "Pois",
+	"Bleed": "Bleed",
+	"Paralyze": "Para",
+	"Holy": "Holy",
+	"Corruption": "Corr",
+}
+const STATUS_ICONS := {
+	"Physical": preload("res://assets/ui/status_icons/physical.png"),
+	"Poison": preload("res://assets/ui/status_icons/poison.png"),
+	"Bleed": preload("res://assets/ui/status_icons/bleed.png"),
+	"Paralyze": preload("res://assets/ui/status_icons/paralyze.png"),
+	"Holy": preload("res://assets/ui/status_icons/holy.png"),
+	"Corruption": preload("res://assets/ui/status_icons/corruption.png"),
+}
 var _overlay: ColorRect
 var _bg_rect: TextureRect
 var _labels: Control
@@ -15,7 +32,7 @@ var _hp_fill: ColorRect
 var _mp_fill: ColorRect
 var _ct_fill: ColorRect
 
-# Elemental resistance fills
+# Resistance/status fills
 var _resist_fills: Dictionary = {}
 
 var _is_open: bool = false
@@ -132,6 +149,7 @@ func _make_label(text: String, xf: float, yf: float, h_align: int = HORIZONTAL_A
 	lbl.mouse_filter = Control.MOUSE_FILTER_IGNORE
 	lbl.position = Vector2(_xf(xf), _yf(yf))
 	lbl.size = Vector2(_xf(0.12), _yf(0.035))
+	lbl.clip_text = true
 	_labels.add_child(lbl)
 	return lbl
 
@@ -154,6 +172,19 @@ func _make_fill(color: Color, xf: float, yf: float, wf: float, hf: float) -> Col
 	return r
 
 
+func _make_icon(texture: Texture2D, xf: float, yf: float, sf: float) -> TextureRect:
+	var icon := TextureRect.new()
+	icon.texture = texture
+	icon.expand_mode = TextureRect.EXPAND_IGNORE_SIZE
+	icon.stretch_mode = TextureRect.STRETCH_SCALE
+	icon.texture_filter = CanvasItem.TEXTURE_FILTER_NEAREST
+	icon.mouse_filter = Control.MOUSE_FILTER_IGNORE
+	icon.position = Vector2(_xf(xf), _yf(yf))
+	icon.size = Vector2(_xf(sf), _yf(sf))
+	_labels.add_child(icon)
+	return icon
+
+
 # ----------------------------------------------------------------- gauge fills
 
 func _create_gauge_fills() -> void:
@@ -162,12 +193,11 @@ func _create_gauge_fills() -> void:
 	_mp_fill = _make_fill(Color(0.72, 0.15, 0.20, 0.62), 0.300, 0.350, 0.145, 0.026)
 	_ct_fill = _make_fill(Color(0.55, 0.55, 0.62, 0.62), 0.300, 0.415, 0.145, 0.026)
 
-	# Elemental resistance fills - far-right vertical strip
-	var elems := ["Physical", "Fire", "Ice", "Thunder", "Holy", "Dark"]
-	for i in range(elems.size()):
-		var yf_pos := 0.415 + i * 0.065
-		var fill := _make_fill(Color(0.30, 0.15, 0.10, 0.45), 0.895, yf_pos, 0.055, 0.014)
-		_resist_fills[elems[i]] = fill
+	# Resistance/status fills - far-right vertical strip
+	for i in range(STATUS_TYPES.size()):
+		var yf_pos := 0.537 + i * 0.052
+		var fill := _make_fill(Color(0.30, 0.15, 0.10, 0.45), 0.918, yf_pos, 0.040, 0.014)
+		_resist_fills[STATUS_TYPES[i]] = fill
 
 
 # ----------------------------------------------------------------- label creation
@@ -243,34 +273,38 @@ func _create_all_labels() -> void:
 	info_lbl.name = "InfoLine"
 	info_lbl.size = Vector2(_xf(0.340), _yf(0.040))
 
-	var ability_heading := _make_heading("Ability", 0.535, 0.390, 0.190)
+	var ability_heading := _make_heading("Ability", 0.535, 0.445, 0.190)
 	ability_heading.name = "AbilityHeading"
-	var at_heading := _make_label("AT", 0.735, 0.390, HORIZONTAL_ALIGNMENT_CENTER)
-	at_heading.name = "ATHeading"
-	var cev_heading := _make_label("C-EV", 0.795, 0.390, HORIZONTAL_ALIGNMENT_CENTER)
-	cev_heading.name = "CEVHeading"
 
 	# Ability rows (6 slots) - names and AT / C-EV values
 	for i in range(6):
-		var y_row := 0.455 + i * 0.065
+		var y_row := 0.510 + i * 0.052
 		var ab_name := _make_label("", 0.535, y_row, HORIZONTAL_ALIGNMENT_LEFT)
 		ab_name.name = "AbName_" + str(i)
-		ab_name.size = Vector2(_xf(0.180), _yf(0.035))
-		var ab_at := _make_label("", 0.735, y_row, HORIZONTAL_ALIGNMENT_CENTER)
+		ab_name.size = Vector2(_xf(0.125), _yf(0.035))
+		var ab_at := _make_label("", 0.705, y_row, HORIZONTAL_ALIGNMENT_CENTER)
 		ab_at.name = "AbAT_" + str(i)
 		ab_at.size = Vector2(_xf(0.050), _yf(0.035))
-		var ab_cev := _make_label("", 0.795, y_row, HORIZONTAL_ALIGNMENT_CENTER)
+		var ab_cev := _make_label("", 0.625, y_row, HORIZONTAL_ALIGNMENT_LEFT)
 		ab_cev.name = "AbCEV_" + str(i)
 		ab_cev.size = Vector2(_xf(0.060), _yf(0.035))
 
-	var resist_heading := _make_heading("Resist", 0.895, 0.350, 0.080)
+	var resist_heading := _make_heading("Resist", 0.835, 0.460, 0.085)
 	resist_heading.name = "ResistHeading"
-	var elems := ["Physical", "Fire", "Ice", "Thunder", "Holy", "Dark"]
-	for i in range(elems.size()):
-		var y_pos := 0.388 + i * 0.065
-		var elem_label := _make_label(elems[i], 0.895, y_pos, HORIZONTAL_ALIGNMENT_LEFT)
-		elem_label.name = "ResistLabel_" + elems[i]
-		elem_label.size = Vector2(_xf(0.090), _yf(0.030))
+	resist_heading.add_theme_font_size_override("font_size", 13)
+	for i in range(STATUS_TYPES.size()):
+		var elem: String = STATUS_TYPES[i]
+		var y_pos := 0.510 + i * 0.052
+		var icon := _make_icon(STATUS_ICONS[elem] as Texture2D, 0.800, y_pos - 0.004, 0.030)
+		icon.name = "ResistIcon_" + elem
+		var elem_label := _make_label(STATUS_LABELS[elem], 0.835, y_pos, HORIZONTAL_ALIGNMENT_LEFT)
+		elem_label.name = "ResistLabel_" + elem
+		elem_label.size = Vector2(_xf(0.055), _yf(0.030))
+		elem_label.add_theme_font_size_override("font_size", 10)
+		var elem_value := _make_label("", 0.890, y_pos, HORIZONTAL_ALIGNMENT_LEFT)
+		elem_value.name = "ResistValue_" + elem
+		elem_value.size = Vector2(_xf(0.055), _yf(0.030))
+		elem_value.add_theme_font_size_override("font_size", 10)
 
 
 # ----------------------------------------------------------------- refresh
@@ -310,14 +344,16 @@ func _refresh_all() -> void:
 		if not ab.get("unlocked", true):
 			name_str += "  (Locked)"
 		_set_label("AbName_" + str(i), name_str)
-		_set_label("AbAT_" + str(i), str(ab["at_cost"]))
+		_set_label("AbAT_" + str(i), "")
 		_set_label("AbCEV_" + str(i), ab["cev"])
 
-	# Elemental resistances
-	for elem in ["Physical", "Fire", "Ice", "Thunder", "Holy", "Dark"]:
+	# Resistance/status values
+	for elem_variant in STATUS_TYPES:
+		var elem: String = elem_variant
 		if _resist_fills.has(elem):
 			var frac := float(pd.get_resistance(elem)) / 100.0
-			_set_gauge(_resist_fills[elem], frac, 0.055)
+			_set_gauge(_resist_fills[elem], frac, 0.040)
+		_set_label("ResistValue_" + elem, "%d%%" % pd.get_resistance(elem))
 
 
 func _set_gauge(fill: ColorRect, fraction: float, full_wf: float) -> void:

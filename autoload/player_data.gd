@@ -62,11 +62,11 @@ var critical_rate: int = 0
 var evasion_rate: int = 0
 
 var resist_physical: int = 0
-var resist_fire: int = 0
-var resist_ice: int = 0
-var resist_thunder: int = 0
+var resist_poison: int = 0
+var resist_bleed: int = 0
+var resist_paralyze: int = 0
 var resist_holy: int = 0
-var resist_dark: int = 0
+var resist_corruption: int = 0
 
 var abilities: Array[Dictionary] = []
 
@@ -178,16 +178,16 @@ func get_resistance(element: String) -> int:
 	match element:
 		"Physical":
 			return resist_physical
-		"Fire":
-			return resist_fire
-		"Ice":
-			return resist_ice
-		"Thunder":
-			return resist_thunder
+		"Poison":
+			return resist_poison
+		"Bleed":
+			return resist_bleed
+		"Paralyze":
+			return resist_paralyze
 		"Holy":
 			return resist_holy
-		"Dark":
-			return resist_dark
+		"Corruption":
+			return resist_corruption
 	return 0
 
 
