@@ -2,18 +2,11 @@ extends CanvasLayer
 ## CharacterSheetUI - Full-screen character status overlay.
 ## Toggle with the "open_character_sheet" action (C key).
 ## Reads all data from PlayerData autoload.
-## Background: res://assets/images/edited-blank-ui-bars.png
+## Background: res://assets/summer/b6630f53-e376-42a0-9dea-dcdd6b8dd7ce/2026-06-22/JvLheMHJ7Vg9NahOuzTsY_dcaFSBTd.png
 
-const BG_IMAGE := preload("res://assets/images/edited-blank-ui-bars.png")
+const BG_IMAGE := preload("res://assets/summer/b6630f53-e376-42a0-9dea-dcdd6b8dd7ce/2026-06-22/JvLheMHJ7Vg9NahOuzTsY_dcaFSBTd.png")
 const STATUS_TYPES := ["Physical", "Poison", "Bleed", "Paralyze", "Holy", "Corruption"]
-const STATUS_LABELS := {
-	"Physical": "Phys",
-	"Poison": "Pois",
-	"Bleed": "Bleed",
-	"Paralyze": "Para",
-	"Holy": "Holy",
-	"Corruption": "Corr",
-}
+const TEXT_Y_OFFSET := -0.004
 const STATUS_ICONS := {
 	"Physical": preload("res://assets/ui/status_icons/physical.png"),
 	"Poison": preload("res://assets/ui/status_icons/poison.png"),
@@ -31,9 +24,7 @@ var _bars: Control
 var _hp_fill: ColorRect
 var _mp_fill: ColorRect
 var _ct_fill: ColorRect
-
-# Resistance/status fills
-var _resist_fills: Dictionary = {}
+var _exp_fill: ColorRect
 
 var _is_open: bool = false
 var _player_data: Node
@@ -146,19 +137,12 @@ func _make_label(text: String, xf: float, yf: float, h_align: int = HORIZONTAL_A
 	lbl.add_theme_font_size_override("font_size", 12)
 	lbl.add_theme_color_override("font_color", Color(0.13, 0.10, 0.06, 1.0))
 	lbl.horizontal_alignment = h_align
+	lbl.vertical_alignment = VERTICAL_ALIGNMENT_CENTER
 	lbl.mouse_filter = Control.MOUSE_FILTER_IGNORE
-	lbl.position = Vector2(_xf(xf), _yf(yf))
+	lbl.position = Vector2(_xf(xf), _yf(yf + TEXT_Y_OFFSET))
 	lbl.size = Vector2(_xf(0.12), _yf(0.035))
 	lbl.clip_text = true
 	_labels.add_child(lbl)
-	return lbl
-
-
-func _make_heading(text: String, xf: float, yf: float, wf: float) -> Label:
-	var lbl := _make_label(text, xf, yf)
-	lbl.size = Vector2(_xf(wf), _yf(0.040))
-	lbl.add_theme_font_size_override("font_size", 16)
-	lbl.add_theme_color_override("font_color", Color(0.28, 0.16, 0.07, 1.0))
 	return lbl
 
 
@@ -185,19 +169,102 @@ func _make_icon(texture: Texture2D, xf: float, yf: float, sf: float) -> TextureR
 	return icon
 
 
+func _make_slot_icon(kind: String, xf: float, yf: float, sf: float) -> Control:
+	var icon := Control.new()
+	icon.name = kind + "Icon"
+	icon.mouse_filter = Control.MOUSE_FILTER_IGNORE
+	icon.position = Vector2(_xf(xf), _yf(yf))
+	var side := _xf(sf)
+	icon.size = Vector2(side, side)
+	_labels.add_child(icon)
+
+	match kind:
+		"Skill":
+			_add_icon_diamond(icon, side, Color(0.95, 0.78, 0.28, 1.0))
+		"Weapon":
+			_add_icon_sword(icon, side)
+		"Armor":
+			_add_icon_armor(icon, side)
+		"Trinket":
+			_add_icon_trinket(icon, side)
+	return icon
+
+
+func _add_icon_line(parent: Control, points: PackedVector2Array, color: Color, width: float) -> void:
+	var line := Line2D.new()
+	line.points = points
+	line.default_color = color
+	line.width = width
+	line.joint_mode = Line2D.LINE_JOINT_SHARP
+	line.begin_cap_mode = Line2D.LINE_CAP_ROUND
+	line.end_cap_mode = Line2D.LINE_CAP_ROUND
+	parent.add_child(line)
+
+
+func _add_icon_diamond(parent: Control, side: float, color: Color) -> void:
+	var poly := Polygon2D.new()
+	poly.polygon = PackedVector2Array([
+		Vector2(side * 0.50, side * 0.12),
+		Vector2(side * 0.64, side * 0.38),
+		Vector2(side * 0.88, side * 0.50),
+		Vector2(side * 0.64, side * 0.62),
+		Vector2(side * 0.50, side * 0.88),
+		Vector2(side * 0.36, side * 0.62),
+		Vector2(side * 0.12, side * 0.50),
+		Vector2(side * 0.36, side * 0.38),
+	])
+	poly.color = color
+	parent.add_child(poly)
+	_add_icon_line(parent, PackedVector2Array([Vector2(side * 0.50, side * 0.12), Vector2(side * 0.64, side * 0.38), Vector2(side * 0.88, side * 0.50), Vector2(side * 0.64, side * 0.62), Vector2(side * 0.50, side * 0.88), Vector2(side * 0.36, side * 0.62), Vector2(side * 0.12, side * 0.50), Vector2(side * 0.36, side * 0.38), Vector2(side * 0.50, side * 0.12)]), Color(0.12, 0.08, 0.05, 1.0), maxf(2.0, side * 0.08))
+
+
+func _add_icon_sword(parent: Control, side: float) -> void:
+	_add_icon_line(parent, PackedVector2Array([Vector2(side * 0.26, side * 0.78), Vector2(side * 0.76, side * 0.18)]), Color(0.12, 0.08, 0.05, 1.0), maxf(4.0, side * 0.16))
+	_add_icon_line(parent, PackedVector2Array([Vector2(side * 0.26, side * 0.78), Vector2(side * 0.76, side * 0.18)]), Color(0.78, 0.83, 0.86, 1.0), maxf(2.0, side * 0.08))
+	_add_icon_line(parent, PackedVector2Array([Vector2(side * 0.20, side * 0.56), Vector2(side * 0.43, side * 0.80)]), Color(0.82, 0.57, 0.22, 1.0), maxf(3.0, side * 0.12))
+	_add_icon_line(parent, PackedVector2Array([Vector2(side * 0.18, side * 0.84), Vector2(side * 0.28, side * 0.94)]), Color(0.38, 0.20, 0.12, 1.0), maxf(3.0, side * 0.10))
+
+
+func _add_icon_armor(parent: Control, side: float) -> void:
+	var poly := Polygon2D.new()
+	poly.polygon = PackedVector2Array([
+		Vector2(side * 0.22, side * 0.14),
+		Vector2(side * 0.40, side * 0.14),
+		Vector2(side * 0.50, side * 0.28),
+		Vector2(side * 0.60, side * 0.14),
+		Vector2(side * 0.78, side * 0.14),
+		Vector2(side * 0.82, side * 0.82),
+		Vector2(side * 0.18, side * 0.82),
+	])
+	poly.color = Color(0.61, 0.66, 0.70, 1.0)
+	parent.add_child(poly)
+	_add_icon_line(parent, PackedVector2Array([Vector2(side * 0.22, side * 0.14), Vector2(side * 0.40, side * 0.14), Vector2(side * 0.50, side * 0.28), Vector2(side * 0.60, side * 0.14), Vector2(side * 0.78, side * 0.14), Vector2(side * 0.82, side * 0.82), Vector2(side * 0.18, side * 0.82), Vector2(side * 0.22, side * 0.14)]), Color(0.12, 0.08, 0.05, 1.0), maxf(2.0, side * 0.08))
+	_add_icon_line(parent, PackedVector2Array([Vector2(side * 0.32, side * 0.35), Vector2(side * 0.68, side * 0.35)]), Color(0.35, 0.39, 0.43, 1.0), maxf(2.0, side * 0.06))
+
+
+func _add_icon_trinket(parent: Control, side: float) -> void:
+	_add_icon_line(parent, PackedVector2Array([Vector2(side * 0.32, side * 0.14), Vector2(side * 0.50, side * 0.32), Vector2(side * 0.68, side * 0.14)]), Color(0.78, 0.59, 0.24, 1.0), maxf(2.0, side * 0.08))
+	var jewel := Polygon2D.new()
+	jewel.polygon = PackedVector2Array([
+		Vector2(side * 0.50, side * 0.30),
+		Vector2(side * 0.76, side * 0.46),
+		Vector2(side * 0.62, side * 0.78),
+		Vector2(side * 0.38, side * 0.78),
+		Vector2(side * 0.24, side * 0.46),
+	])
+	jewel.color = Color(0.55, 0.27, 0.75, 1.0)
+	parent.add_child(jewel)
+	_add_icon_line(parent, PackedVector2Array([Vector2(side * 0.50, side * 0.30), Vector2(side * 0.76, side * 0.46), Vector2(side * 0.62, side * 0.78), Vector2(side * 0.38, side * 0.78), Vector2(side * 0.24, side * 0.46), Vector2(side * 0.50, side * 0.30)]), Color(0.12, 0.08, 0.05, 1.0), maxf(2.0, side * 0.08))
+
+
 # ----------------------------------------------------------------- gauge fills
 
 func _create_gauge_fills() -> void:
-	# HP / MP / CT bars - left page, right of portrait
-	_hp_fill = _make_fill(Color(0.16, 0.50, 0.78, 0.62), 0.300, 0.285, 0.145, 0.026)
-	_mp_fill = _make_fill(Color(0.72, 0.15, 0.20, 0.62), 0.300, 0.350, 0.145, 0.026)
-	_ct_fill = _make_fill(Color(0.55, 0.55, 0.62, 0.62), 0.300, 0.415, 0.145, 0.026)
-
-	# Resistance/status fills - far-right vertical strip
-	for i in range(STATUS_TYPES.size()):
-		var yf_pos := 0.537 + i * 0.052
-		var fill := _make_fill(Color(0.30, 0.15, 0.10, 0.45), 0.918, yf_pos, 0.040, 0.014)
-		_resist_fills[STATUS_TYPES[i]] = fill
+	# HP / MP / CT fills sit inside the baked meter frames.
+	_hp_fill = _make_fill(Color(0.16, 0.50, 0.78, 0.70), 0.440, 0.159, 0.176, 0.017)
+	_mp_fill = _make_fill(Color(0.72, 0.15, 0.20, 0.70), 0.440, 0.199, 0.176, 0.017)
+	_ct_fill = _make_fill(Color(0.55, 0.55, 0.62, 0.70), 0.440, 0.239, 0.176, 0.017)
+	_exp_fill = _make_fill(Color(0.76, 0.58, 0.20, 0.55), 0.531, 0.626, 0.041, 0.023)
 
 
 # ----------------------------------------------------------------- label creation
@@ -206,105 +273,74 @@ func _create_all_labels() -> void:
 	var pd := _player_data
 	if pd == null:
 		return
-	# The background is art-only. All readable text is generated here so no
-	# stale template names, test values, or hallucinated text can leak through.
 
-	# --- LEFT PAGE ---
-	var lv_label := _make_label("Lv.", 0.315, 0.170)
-	lv_label.name = "LevelLabel"
-	var exp_label := _make_label("Exp.", 0.315, 0.225)
-	exp_label.name = "ExpLabel"
-	var hp_label := _make_label("Hp", 0.275, 0.280)
-	hp_label.name = "HPLabel"
-	var mp_label := _make_label("Mp", 0.275, 0.345)
-	mp_label.name = "MPLabel"
-	var ct_label := _make_label("CT", 0.275, 0.410)
-	ct_label.name = "CTLabel"
-
-	var lv_val := _make_label("", 0.385, 0.170, HORIZONTAL_ALIGNMENT_LEFT)
-	lv_val.name = "LevelValue"
-	var exp_val := _make_label("", 0.385, 0.225, HORIZONTAL_ALIGNMENT_LEFT)
-	exp_val.name = "ExpValue"
-
-	var hp_val := _make_label("", 0.300, 0.280, HORIZONTAL_ALIGNMENT_CENTER)
+	var hp_val := _make_label("", 0.440, 0.150, HORIZONTAL_ALIGNMENT_CENTER)
 	hp_val.name = "HPValue"
-	hp_val.size = Vector2(_xf(0.145), _yf(0.035))
+	hp_val.size = Vector2(_xf(0.176), _yf(0.035))
 	hp_val.add_theme_color_override("font_color", Color(0.96, 0.92, 0.82, 1.0))
-	var mp_val := _make_label("", 0.300, 0.345, HORIZONTAL_ALIGNMENT_CENTER)
+	var mp_val := _make_label("", 0.440, 0.190, HORIZONTAL_ALIGNMENT_CENTER)
 	mp_val.name = "MPValue"
-	mp_val.size = Vector2(_xf(0.145), _yf(0.035))
+	mp_val.size = Vector2(_xf(0.176), _yf(0.035))
 	mp_val.add_theme_color_override("font_color", Color(0.96, 0.92, 0.82, 1.0))
-	var ct_val := _make_label("", 0.300, 0.410, HORIZONTAL_ALIGNMENT_CENTER)
+	var ct_val := _make_label("", 0.440, 0.230, HORIZONTAL_ALIGNMENT_CENTER)
 	ct_val.name = "CTValue"
-	ct_val.size = Vector2(_xf(0.145), _yf(0.035))
+	ct_val.size = Vector2(_xf(0.176), _yf(0.035))
 	ct_val.add_theme_color_override("font_color", Color(0.16, 0.13, 0.09, 1.0))
 
-	var attr_a := ["STR", "SPD", "INT", "FTH", "ATK", "DEF"]
-	for i in attr_a.size():
-		var y_row := 0.515 + i * 0.052
-		var name := _make_label(attr_a[i], 0.085, y_row, HORIZONTAL_ALIGNMENT_LEFT)
-		name.name = "Label_A_" + attr_a[i]
-		var val := _make_label(str(pd.get_attribute(attr_a[i])), 0.112, y_row, HORIZONTAL_ALIGNMENT_CENTER)
-		val.name = "Val_A_" + attr_a[i]
+	var stat_rows := ["STR", "SPD", "INT", "FTH", "POW", "DEF", "MOV", "JMP", "EXP"]
+	for i in stat_rows.size():
+		var stat_name: String = stat_rows[i]
+		var val := _make_label("", 0.528, 0.282 + i * 0.040, HORIZONTAL_ALIGNMENT_CENTER)
+		val.name = "StatValue_" + stat_name
+		val.size = Vector2(_xf(0.052), _yf(0.034))
+		val.add_theme_font_size_override("font_size", 13)
 
-	var attr_b := ["CRT", "PRS", "POW", "DEF", "MOV", "JMP"]
-	for i in attr_b.size():
-		var y_row := 0.515 + i * 0.052
-		var name := _make_label(attr_b[i], 0.325, y_row, HORIZONTAL_ALIGNMENT_LEFT)
-		name.name = "Label_B_" + attr_b[i]
-		var val := _make_label(str(pd.get_attribute(attr_b[i])), 0.365, y_row, HORIZONTAL_ALIGNMENT_CENTER)
-		val.name = "Val_B_" + attr_b[i]
-
-	# --- RIGHT PAGE ---
-	# Character name + title in the info panel
-	var name_lbl := _make_label(pd.character_name, 0.555, 0.135, HORIZONTAL_ALIGNMENT_CENTER)
+	var name_lbl := _make_label(pd.character_name, 0.066, 0.431, HORIZONTAL_ALIGNMENT_CENTER)
 	name_lbl.name = "CharName"
-	name_lbl.size = Vector2(_xf(0.340), _yf(0.050))
-	name_lbl.add_theme_font_size_override("font_size", 18)
+	name_lbl.size = Vector2(_xf(0.260), _yf(0.052))
+	name_lbl.add_theme_font_size_override("font_size", 16)
 	name_lbl.add_theme_color_override("font_color", Color(0.55, 0.32, 0.10, 1.0))
 
-	var title_lbl := _make_label(pd.character_title, 0.555, 0.205, HORIZONTAL_ALIGNMENT_CENTER)
+	var title_lbl := _make_label(pd.character_title, 0.066, 0.504, HORIZONTAL_ALIGNMENT_CENTER)
 	title_lbl.name = "CharTitle"
-	title_lbl.size = Vector2(_xf(0.340), _yf(0.040))
+	title_lbl.size = Vector2(_xf(0.260), _yf(0.052))
 	title_lbl.add_theme_font_size_override("font_size", 14)
 	title_lbl.add_theme_color_override("font_color", Color(0.38, 0.32, 0.22, 1.0))
 
-	var info_lbl := _make_label("", 0.555, 0.280, HORIZONTAL_ALIGNMENT_CENTER)
-	info_lbl.name = "InfoLine"
-	info_lbl.size = Vector2(_xf(0.340), _yf(0.040))
-
-	var ability_heading := _make_heading("Ability", 0.535, 0.445, 0.190)
-	ability_heading.name = "AbilityHeading"
-
-	# Ability rows (6 slots) - names and AT / C-EV values
-	for i in range(6):
-		var y_row := 0.510 + i * 0.052
-		var ab_name := _make_label("", 0.535, y_row, HORIZONTAL_ALIGNMENT_LEFT)
-		ab_name.name = "AbName_" + str(i)
-		ab_name.size = Vector2(_xf(0.125), _yf(0.035))
-		var ab_at := _make_label("", 0.705, y_row, HORIZONTAL_ALIGNMENT_CENTER)
-		ab_at.name = "AbAT_" + str(i)
-		ab_at.size = Vector2(_xf(0.050), _yf(0.035))
-		var ab_cev := _make_label("", 0.625, y_row, HORIZONTAL_ALIGNMENT_LEFT)
-		ab_cev.name = "AbCEV_" + str(i)
-		ab_cev.size = Vector2(_xf(0.060), _yf(0.035))
-
-	var resist_heading := _make_heading("Resist", 0.835, 0.460, 0.085)
-	resist_heading.name = "ResistHeading"
-	resist_heading.add_theme_font_size_override("font_size", 13)
 	for i in range(STATUS_TYPES.size()):
 		var elem: String = STATUS_TYPES[i]
-		var y_pos := 0.510 + i * 0.052
-		var icon := _make_icon(STATUS_ICONS[elem] as Texture2D, 0.800, y_pos - 0.004, 0.030)
+		var y_pos := 0.155 + i * 0.072
+		var icon := _make_icon(STATUS_ICONS[elem] as Texture2D, 0.692, y_pos, 0.045)
 		icon.name = "ResistIcon_" + elem
-		var elem_label := _make_label(STATUS_LABELS[elem], 0.835, y_pos, HORIZONTAL_ALIGNMENT_LEFT)
-		elem_label.name = "ResistLabel_" + elem
-		elem_label.size = Vector2(_xf(0.055), _yf(0.030))
-		elem_label.add_theme_font_size_override("font_size", 10)
-		var elem_value := _make_label("", 0.890, y_pos, HORIZONTAL_ALIGNMENT_LEFT)
+		var elem_value := _make_label("", 0.760, y_pos + 0.004, HORIZONTAL_ALIGNMENT_CENTER)
 		elem_value.name = "ResistValue_" + elem
-		elem_value.size = Vector2(_xf(0.055), _yf(0.030))
-		elem_value.add_theme_font_size_override("font_size", 10)
+		elem_value.size = Vector2(_xf(0.180), _yf(0.038))
+		elem_value.add_theme_font_size_override("font_size", 14)
+
+	for i in range(4):
+		var y_row := 0.696 + i * 0.067
+		_make_slot_icon("Skill", 0.066, y_row, 0.040).name = "SkillIcon_" + str(i)
+		var skill_label := _make_label("", 0.136, y_row + 0.004, HORIZONTAL_ALIGNMENT_LEFT)
+		skill_label.name = "SkillName_" + str(i)
+		skill_label.size = Vector2(_xf(0.188), _yf(0.038))
+		skill_label.add_theme_font_size_override("font_size", 13)
+
+	var equipment_slots := ["Weapon", "Armor", "Trinket"]
+	for i in equipment_slots.size():
+		var slot_name: String = equipment_slots[i]
+		var y_row := 0.764 + i * 0.066
+		_make_slot_icon(slot_name, 0.375, y_row, 0.040).name = "EquipmentIcon_" + slot_name
+		var equipment_label := _make_label("", 0.438, y_row + 0.004, HORIZONTAL_ALIGNMENT_LEFT)
+		equipment_label.name = "EquipmentName_" + slot_name
+		equipment_label.size = Vector2(_xf(0.196), _yf(0.038))
+		equipment_label.add_theme_font_size_override("font_size", 13)
+
+	for i in range(4):
+		var y_row := 0.696 + i * 0.067
+		var trait_label := _make_label("", 0.750, y_row + 0.004, HORIZONTAL_ALIGNMENT_LEFT)
+		trait_label.name = "TraitName_" + str(i)
+		trait_label.size = Vector2(_xf(0.196), _yf(0.038))
+		trait_label.add_theme_font_size_override("font_size", 13)
 
 
 # ----------------------------------------------------------------- refresh
@@ -314,46 +350,46 @@ func _refresh_all() -> void:
 	if pd == null:
 		return
 
-	_set_gauge(_hp_fill, float(pd.hp) / float(maxi(pd.max_hp, 1)), 0.145)
-	_set_gauge(_mp_fill, float(pd.mp) / float(maxi(pd.max_mp, 1)), 0.145)
-	_set_gauge(_ct_fill, float(pd.ct) / float(maxi(pd.max_ct, 1)), 0.145)
+	_set_gauge(_hp_fill, float(pd.hp) / float(maxi(pd.max_hp, 1)), 0.176)
+	_set_gauge(_mp_fill, float(pd.mp) / float(maxi(pd.max_mp, 1)), 0.176)
+	_set_gauge(_ct_fill, float(pd.ct) / float(maxi(pd.max_ct, 1)), 0.176)
+	_set_gauge(_exp_fill, float(pd.experience) / float(maxi(pd.exp_to_next, 1)), 0.041)
 
 	_set_label("HPValue", "%d / %d" % [pd.hp, pd.max_hp])
 	_set_label("MPValue", "%d / %d" % [pd.mp, pd.max_mp])
 	_set_label("CTValue", "%d / %d" % [pd.ct, pd.max_ct])
-	_set_label("LevelValue", "%02d" % pd.level)
-	_set_label("ExpValue", "%d / %d" % [pd.experience, pd.exp_to_next])
-
-	# Attributes
-	for attr in ["STR", "SPD", "INT", "FTH", "ATK", "DEF"]:
-		_set_label("Val_A_" + attr, str(pd.get_attribute(attr)))
-	for attr in ["CRT", "PRS", "POW", "DEF", "MOV", "JMP"]:
-		_set_label("Val_B_" + attr, str(pd.get_attribute(attr)))
+	for attr in ["STR", "SPD", "INT", "FTH", "POW", "DEF", "MOV", "JMP"]:
+		_set_label("StatValue_" + attr, str(pd.get_attribute(attr)))
+	_set_label("StatValue_EXP", str(pd.experience))
 
 	# Info panel
 	_set_label("CharName", pd.character_name)
 	_set_label("CharTitle", pd.character_title)
-	_set_label("InfoLine", "Lv. %d    Exp  %d / %d    CRT %d%%" % [pd.level, pd.experience, pd.exp_to_next, pd.critical_rate])
 
-	# Abilities
-	for i in range(pd.abilities.size()):
-		if i >= 6:
-			break
-		var ab: Dictionary = pd.abilities[i]
-		var name_str: String = ab["name"]
-		if not ab.get("unlocked", true):
-			name_str += "  (Locked)"
-		_set_label("AbName_" + str(i), name_str)
-		_set_label("AbAT_" + str(i), "")
-		_set_label("AbCEV_" + str(i), ab["cev"])
+	for i in range(4):
+		var skill_text := ""
+		if i < pd.abilities.size():
+			var ab: Dictionary = pd.abilities[i]
+			skill_text = ab["name"]
+			if not ab.get("unlocked", true):
+				skill_text += " (Locked)"
+		_set_label("SkillName_" + str(i), skill_text)
+
+	for row in pd.get_equipment_rows():
+		var slot_name: String = row["slot"]
+		_set_label("EquipmentName_" + slot_name, _format_equipment_label(slot_name, row["item"]))
 
 	# Resistance/status values
 	for elem_variant in STATUS_TYPES:
 		var elem: String = elem_variant
-		if _resist_fills.has(elem):
-			var frac := float(pd.get_resistance(elem)) / 100.0
-			_set_gauge(_resist_fills[elem], frac, 0.040)
 		_set_label("ResistValue_" + elem, "%d%%" % pd.get_resistance(elem))
+
+
+func _format_equipment_label(slot_name: String, item_name: String) -> String:
+	var trimmed := item_name.strip_edges()
+	if trimmed.is_empty():
+		return slot_name
+	return "%s: %s" % [slot_name, trimmed]
 
 
 func _set_gauge(fill: ColorRect, fraction: float, full_wf: float) -> void:

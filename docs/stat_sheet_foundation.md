@@ -59,6 +59,10 @@ Current sample:
 - `res://data/characters/guglielmo_da_siena.tres`
 - `res://data/npcs/matteo_the_baker.tres`
 - `res://data/monsters/training_brigand.tres`
+- `res://data/monsters/starved_wolf.tres`
+- `res://data/monsters/ash_cultist.tres`
+- `res://data/monsters/gravebound_soldier.tres`
+- `res://data/monsters/plague_rat_swarm.tres`
 
 These sheets are combat-readable but do not depend on the combat engine yet.
 

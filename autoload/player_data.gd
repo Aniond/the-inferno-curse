@@ -18,6 +18,9 @@ var character_sheet: Resource
 var character_name: String = ""
 var character_title: String = ""
 var portrait_path: String = ""
+var equipment_weapon: String = ""
+var equipment_armor: String = ""
+var equipment_trinket: String = ""
 
 var level: int = 1
 var experience: int = 0
@@ -95,6 +98,14 @@ func _apply_character_sheet() -> void:
 	character_name = character_sheet.display_name
 	character_title = character_sheet.job_title
 	portrait_path = character_sheet.portrait_path
+	equipment_weapon = character_sheet.weapon
+	equipment_armor = _first_non_empty([
+		character_sheet.body,
+		character_sheet.shield,
+		character_sheet.head,
+		character_sheet.feet,
+	])
+	equipment_trinket = character_sheet.accessory
 	level = character_sheet.level
 	experience = character_sheet.experience
 	exp_to_next = _calculate_exp_to_next(level)
@@ -189,6 +200,22 @@ func get_resistance(element: String) -> int:
 		"Corruption":
 			return resist_corruption
 	return 0
+
+
+func get_equipment_rows() -> Array[Dictionary]:
+	return [
+		{"slot": "Weapon", "item": equipment_weapon},
+		{"slot": "Armor", "item": equipment_armor},
+		{"slot": "Trinket", "item": equipment_trinket},
+	]
+
+
+func _first_non_empty(values: Array) -> String:
+	for value in values:
+		var text := str(value).strip_edges()
+		if not text.is_empty():
+			return text
+	return ""
 
 
 func deal_damage(amount: int) -> void:

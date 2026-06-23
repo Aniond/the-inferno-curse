@@ -1,0 +1,30 @@
+[gd_resource type="Resource" script_class="MonsterSheet" format=3]
+
+[ext_resource type="Script" uid="uid://cfug6jap4u1ja" path="res://scripts/data/monster_sheet.gd" id="1_monster_sheet"]
+[ext_resource type="Script" uid="uid://unbjv8sfem0j" path="res://scripts/data/core_stats.gd" id="2_core_stats"]
+
+[sub_resource type="Resource" id="CoreStats_gravebound_soldier"]
+script = ExtResource("2_core_stats")
+strength = 8
+speed = 2
+intellect = 2
+faith = 3
+creativity = 2
+presence = 5
+
+[resource]
+script = ExtResource("1_monster_sheet")
+monster_id = "gravebound_soldier"
+display_name = "Gravebound Soldier"
+family = "Undead"
+level = 3
+core_stats = SubResource("CoreStats_gravebound_soldier")
+max_hp = 56
+power_stat = "STR"
+natural_power = 3
+natural_defense = 6
+abilities = Array[String](["Rust Cleave", "Shield Brace"])
+ai_tags = Array[String](["undead", "armored", "slow", "medium_threat"])
+reward_experience = 24
+reward_coin = 4
+drop_table = Array[String](["rusted_mail_fragment"])

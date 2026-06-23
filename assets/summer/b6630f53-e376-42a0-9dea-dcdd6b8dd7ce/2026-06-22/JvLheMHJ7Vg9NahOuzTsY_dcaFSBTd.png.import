@@ -2,16 +2,16 @@
 
 importer="texture"
 type="CompressedTexture2D"
-uid="uid://ogewpdv46lgp"
-path="res://.godot/imported/character_sheet_background.png-ff210bd2e907321850a6f031916b0873.ctex"
+uid="uid://dd22bnwyoufim"
+path="res://.godot/imported/JvLheMHJ7Vg9NahOuzTsY_dcaFSBTd.png-388ccd36799444e93d7bd69fa5012bf9.ctex"
 metadata={
 "vram_texture": false
 }
 
 [deps]
 
-source_file="res://assets/ui/character_sheet_background.png"
-dest_files=["res://.godot/imported/character_sheet_background.png-ff210bd2e907321850a6f031916b0873.ctex"]
+source_file="res://assets/summer/b6630f53-e376-42a0-9dea-dcdd6b8dd7ce/2026-06-22/JvLheMHJ7Vg9NahOuzTsY_dcaFSBTd.png"
+dest_files=["res://.godot/imported/JvLheMHJ7Vg9NahOuzTsY_dcaFSBTd.png-388ccd36799444e93d7bd69fa5012bf9.ctex"]
 
 [params]
 

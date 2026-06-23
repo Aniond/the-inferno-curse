@@ -1,0 +1,27 @@
+[gd_resource type="Resource" script_class="MonsterSheet" format=3]
+
+[ext_resource type="Script" uid="uid://cfug6jap4u1ja" path="res://scripts/data/monster_sheet.gd" id="1_monster_sheet"]
+[ext_resource type="Script" uid="uid://unbjv8sfem0j" path="res://scripts/data/core_stats.gd" id="2_core_stats"]
+
+[sub_resource type="Resource" id="CoreStats_plague_rat_swarm"]
+script = ExtResource("2_core_stats")
+strength = 3
+speed = 7
+intellect = 1
+faith = 1
+creativity = 5
+presence = 1
+
+[resource]
+script = ExtResource("1_monster_sheet")
+monster_id = "plague_rat_swarm"
+display_name = "Plague Rat Swarm"
+family = "Beast"
+core_stats = SubResource("CoreStats_plague_rat_swarm")
+max_hp = 20
+power_stat = "SPD"
+natural_power = 1
+abilities = Array[String](["Gnaw", "Sickening Bite"])
+ai_tags = Array[String](["beast", "poison", "swarm", "low_threat"])
+reward_experience = 7
+drop_table = Array[String](["tainted_fang"])
