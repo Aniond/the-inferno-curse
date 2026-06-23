@@ -92,6 +92,11 @@ func _unhandled_input(event: InputEvent) -> void:
 				get_viewport().set_input_as_handled()
 			return
 
+	if _is_grid_move_action_pressed(event):
+		if _handle_grid_direction_move():
+			get_viewport().set_input_as_handled()
+		return
+
 	if not _is_player_combat_turn():
 		return
 
@@ -564,6 +569,55 @@ func _is_exploration_grid_mode() -> bool:
 	return not _combat_active or not _is_player_combat_turn()
 
 
+func _is_grid_move_action_pressed(event: InputEvent) -> bool:
+	if not event.is_pressed() or event.is_echo():
+		return false
+	return (
+		event.is_action_pressed("move_left")
+		or event.is_action_pressed("move_right")
+		or event.is_action_pressed("move_up")
+		or event.is_action_pressed("move_down")
+	)
+
+
+func _get_neighbor_cell_from_move_input() -> CombatCell:
+	if player_actor == null or player_actor.current_cell == null or combat_grid == null:
+		return null
+
+	var input_dir := Input.get_vector("move_left", "move_right", "move_up", "move_down")
+	if input_dir.length_squared() < 0.1:
+		return null
+
+	var offset := Vector2i(int(round(input_dir.x)), int(round(input_dir.y)))
+	if offset == Vector2i.ZERO:
+		return null
+
+	if not combat_grid.allow_diagonal_movement and offset.x != 0 and offset.y != 0:
+		if absf(input_dir.x) >= absf(input_dir.y):
+			offset.y = 0
+		else:
+			offset.x = 0
+
+	return combat_grid.get_cell(player_actor.get_grid_position() + offset)
+
+
+func _handle_grid_direction_move() -> bool:
+	var neighbor := _get_neighbor_cell_from_move_input()
+	if neighbor == null:
+		return false
+
+	if _is_player_combat_turn() and _player_phase == PlayerTurnPhase.MOVE:
+		if not _reachable_cells.has(neighbor):
+			return false
+		_player_move_to_cell(neighbor)
+		return true
+
+	if not _is_player_combat_turn():
+		return _exploration_move_to_cell(neighbor)
+
+	return false
+
+
 func _handle_mouse_click() -> bool:
 	var cell := _get_cell_under_mouse()
 	if cell == null:
@@ -867,7 +921,7 @@ func _refresh_battle_ui() -> void:
 		return
 
 	if not _encounter_started:
-		_battle_overlay.show_pre_combat("Click grid squares to move. Approach the Training Brigand to fight.")
+		_battle_overlay.show_pre_combat("Click or arrow keys to move on the grid. Approach the Training Brigand to fight.")
 		_show_exploration_reachability()
 		return
 
@@ -879,7 +933,7 @@ func _refresh_battle_ui() -> void:
 	if _combat_active and combat_state.active_actor == player_actor:
 		match _player_phase:
 			PlayerTurnPhase.MOVE:
-				hint = "[b]Move[/b] — Click a highlighted cell. Numbers show MOV cost.\nOrange tiles cost more (height). [b]Enter[/b] skips move."
+				hint = "[b]Move[/b] — Click a cell or use [b]arrows / WASD[/b]. Numbers show MOV cost.\nOrange tiles cost more (height). [b]Enter[/b] skips move."
 			PlayerTurnPhase.ROTATE:
 				hint = "[b]Rotate[/b] — [b]Q/E[/b] turn facing. Click or [b]Enter[/b] confirms. Yellow wedge shows facing."
 			PlayerTurnPhase.ATTACK:
@@ -888,7 +942,7 @@ func _refresh_battle_ui() -> void:
 	elif _combat_active:
 		hint = "Enemy is acting..."
 	elif not _encounter_started:
-		hint = "[b]Explore[/b] — Click a green highlighted square to move. Cursor shows target cell."
+		hint = "[b]Explore[/b] — Click or use [b]arrows / WASD[/b] on green squares. Cursor shows target cell."
 	else:
 		hint = "Encounter ended."
 

@@ -159,7 +159,7 @@ func _build_ui() -> void:
 	_root.mouse_filter = Control.MOUSE_FILTER_IGNORE
 	add_child(_root)
 
-	_waiting_label = _make_label("Click grid squares to move. Approach the Training Brigand to fight.", 22)
+	_waiting_label = _make_label("Click or arrow keys to move on the grid. Approach the Training Brigand to fight.", 22)
 	_waiting_label.horizontal_alignment = HORIZONTAL_ALIGNMENT_CENTER
 	_waiting_label.vertical_alignment = VERTICAL_ALIGNMENT_CENTER
 	_waiting_label.set_anchors_preset(Control.PRESET_CENTER)
