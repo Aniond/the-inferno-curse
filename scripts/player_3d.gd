@@ -8,6 +8,8 @@ const SPRITE_BASE := "res://assets/images"
 const WALK_FPS := 8.0
 const IDLE_FPS := 4.0
 
+var movement_enabled: bool = true
+var grid_movement_only: bool = false
 var _last_direction: String = "south"
 
 
@@ -93,6 +95,12 @@ func _physics_process(delta: float) -> void:
 	# Lock all rotation; sprite billboards face camera, body never tilts.
 	self.rotation = Vector3.ZERO
 
+	if not movement_enabled or grid_movement_only:
+		velocity = velocity.move_toward(Vector3.ZERO, friction * delta)
+		_play_idle_anim()
+		move_and_slide()
+		return
+
 	var input_dir := Input.get_vector("move_left", "move_right", "move_up", "move_down")
 	var move_dir := Vector3(input_dir.x, 0.0, input_dir.y)
 
@@ -135,3 +143,9 @@ func _play_idle_anim() -> void:
 	else:
 		if $AnimatedSprite.animation != "idle_south":
 			$AnimatedSprite.play("idle_south")
+
+
+func set_combat_facing(dir_key: String) -> void:
+	if dir_key in ["south", "east", "north", "west"]:
+		_last_direction = dir_key
+	_play_idle_anim()

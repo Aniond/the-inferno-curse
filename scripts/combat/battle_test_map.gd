@@ -34,6 +34,9 @@ var _facing_indicator: MeshInstance3D = null
 var _tactical_ai_client: TacticalAiClient = null
 var _use_ranged_attack: bool = false
 var _reachable_costs: Dictionary = {}
+var _exploration_reachable_costs: Dictionary = {}
+var _grid_cursor: MeshInstance3D = null
+var _hovered_cell: CombatCell = null
 
 
 func _ready() -> void:
@@ -46,7 +49,14 @@ func _ready() -> void:
 	_create_player_actor()
 	_create_test_monster_actor()
 	_create_battle_overlay()
+	_create_grid_cursor()
 	_player_node = get_node_or_null("Player") as CharacterBody3D
+	combat_state.grid = combat_grid
+
+	if _player_node != null:
+		_player_node.grid_movement_only = true
+	_snap_player_to_nearest_cell()
+	_refresh_exploration_reachability()
 
 	combat_state.actor_turn_started.connect(_on_actor_turn_started)
 	combat_state.ct_updated.connect(_refresh_battle_ui)
@@ -61,6 +71,7 @@ func _ready() -> void:
 
 
 func _process(_delta: float) -> void:
+	_update_grid_cursor()
 	_update_attack_preview()
 
 
@@ -74,9 +85,14 @@ func _physics_process(_delta: float) -> void:
 
 
 func _unhandled_input(event: InputEvent) -> void:
-	if not _combat_active or combat_state.phase != CombatState.Phase.ACTOR_TURN:
-		return
-	if combat_state.active_actor != player_actor:
+	if event is InputEventMouseButton:
+		var mouse_event := event as InputEventMouseButton
+		if mouse_event.pressed and mouse_event.button_index == MOUSE_BUTTON_LEFT:
+			if _handle_mouse_click():
+				get_viewport().set_input_as_handled()
+			return
+
+	if not _is_player_combat_turn():
 		return
 
 	if event.is_action_pressed("ui_accept"):
@@ -105,12 +121,6 @@ func _unhandled_input(event: InputEvent) -> void:
 			_begin_player_attack_phase()
 			get_viewport().set_input_as_handled()
 			return
-
-	if event is InputEventMouseButton:
-		var mouse_event := event as InputEventMouseButton
-		if mouse_event.pressed and mouse_event.button_index == MOUSE_BUTTON_LEFT:
-			_handle_player_click()
-			get_viewport().set_input_as_handled()
 
 
 func _create_combat_grid() -> void:
@@ -152,6 +162,21 @@ func _create_highlight_root() -> void:
 	_highlight_root = Node3D.new()
 	_highlight_root.name = "BattleCellHighlights"
 	add_child(_highlight_root)
+
+
+func _create_grid_cursor() -> void:
+	_grid_cursor = MeshInstance3D.new()
+	_grid_cursor.name = "GridCursor"
+	var mesh := BoxMesh.new()
+	mesh.size = Vector3(grid_cell_size * 0.96, 0.1, grid_cell_size * 0.96)
+	_grid_cursor.mesh = mesh
+	var material := StandardMaterial3D.new()
+	material.albedo_color = Color(0.95, 0.95, 1.0, 0.55)
+	material.transparency = BaseMaterial3D.TRANSPARENCY_ALPHA
+	material.shading_mode = BaseMaterial3D.SHADING_MODE_UNSHADED
+	_grid_cursor.material_override = material
+	_grid_cursor.visible = false
+	_highlight_root.add_child(_grid_cursor)
 
 
 func _make_grid_line(size: Vector3, material: Material) -> MeshInstance3D:
@@ -344,7 +369,7 @@ func _start_test_combat() -> void:
 
 	if _player_node != null:
 		_player_node.movement_enabled = false
-
+	_clear_highlights()
 	_refresh_battle_ui()
 	print("Battle started: %s vs %s" % [player_actor.display_name, monster_actor.display_name])
 
@@ -527,24 +552,136 @@ func _finish_player_turn() -> void:
 	_refresh_battle_ui()
 
 
-func _handle_player_click() -> void:
+func _is_player_combat_turn() -> bool:
+	return (
+		_combat_active
+		and combat_state.phase == CombatState.Phase.ACTOR_TURN
+		and combat_state.active_actor == player_actor
+	)
+
+
+func _is_exploration_grid_mode() -> bool:
+	return not _combat_active or not _is_player_combat_turn()
+
+
+func _handle_mouse_click() -> bool:
+	var cell := _get_cell_under_mouse()
+	if cell == null:
+		return false
+
+	if _is_player_combat_turn():
+		if _player_phase == PlayerTurnPhase.MOVE:
+			if _reachable_cells.has(cell):
+				_player_move_to_cell(cell)
+				return true
+		elif _player_phase == PlayerTurnPhase.ROTATE:
+			_player_confirm_rotate()
+			return true
+		elif _player_phase == PlayerTurnPhase.ATTACK:
+			var occupant := cell.get_occupant()
+			if occupant is CombatActor and _attackable_targets.has(occupant):
+				_player_attack(occupant as CombatActor)
+				return true
+		return false
+
+	if _exploration_move_to_cell(cell):
+		return true
+	return false
+
+
+func _exploration_move_to_cell(cell: CombatCell) -> bool:
+	if cell == null or player_actor == null:
+		return false
+	if not _exploration_reachable_costs.has(cell):
+		return false
+	if cell == player_actor.current_cell:
+		return false
+
+	player_actor.set_current_cell(cell)
+	player_actor.face_cell(cell)
+	_sync_player_node_from_actor()
+	_refresh_exploration_reachability()
+	_show_exploration_reachability()
+	return true
+
+
+func _refresh_exploration_reachability() -> void:
+	if player_actor == null or combat_state == null:
+		_exploration_reachable_costs = {}
+		return
+	_exploration_reachable_costs = combat_state.get_reachable_cell_costs(player_actor)
+
+
+func _show_exploration_reachability() -> void:
+	if _is_player_combat_turn():
+		return
+	_clear_highlights()
+	var tile_size := grid_cell_size * 0.88
+	for cell in _exploration_reachable_costs.keys():
+		if cell == null or cell == player_actor.current_cell:
+			continue
+		var material := StandardMaterial3D.new()
+		material.albedo_color = Color(0.25, 0.7, 0.45, 0.22)
+		material.transparency = BaseMaterial3D.TRANSPARENCY_ALPHA
+		material.shading_mode = BaseMaterial3D.SHADING_MODE_UNSHADED
+		var marker := MeshInstance3D.new()
+		var mesh := BoxMesh.new()
+		mesh.size = Vector3(tile_size, 0.04, tile_size)
+		marker.mesh = mesh
+		marker.material_override = material
+		var world_pos := _cell_world_position(cell)
+		marker.position = world_pos + Vector3(0.0, 0.05, 0.0)
+		_highlight_root.add_child(marker)
+
+
+func _get_cell_under_mouse() -> CombatCell:
 	var ground_pos := _mouse_to_ground_position()
 	if ground_pos == Vector3.INF:
-		return
+		return null
 	var coord := combat_grid.world_to_grid(ground_pos)
-	var cell := combat_grid.get_cell(coord)
-	if cell == null:
+	return combat_grid.get_cell(coord)
+
+
+func _update_grid_cursor() -> void:
+	if _grid_cursor == null or combat_grid == null:
 		return
 
-	if _player_phase == PlayerTurnPhase.MOVE:
-		if _reachable_cells.has(cell):
-			_player_move_to_cell(cell)
-	elif _player_phase == PlayerTurnPhase.ROTATE:
-		_player_confirm_rotate()
-	elif _player_phase == PlayerTurnPhase.ATTACK:
-		var occupant := cell.get_occupant()
-		if occupant is CombatActor and _attackable_targets.has(occupant):
-			_player_attack(occupant as CombatActor)
+	_hovered_cell = _get_cell_under_mouse()
+	if _hovered_cell == null:
+		_grid_cursor.visible = false
+		return
+
+	_grid_cursor.visible = true
+	var world_pos := _cell_world_position(_hovered_cell)
+	_grid_cursor.position = world_pos + Vector3(0.0, 0.08, 0.0)
+
+	var material := _grid_cursor.material_override as StandardMaterial3D
+	if material == null:
+		return
+
+	if _is_player_combat_turn():
+		match _player_phase:
+			PlayerTurnPhase.MOVE:
+				material.albedo_color = (
+					Color(0.2, 0.55, 1.0, 0.65)
+					if _reachable_cells.has(_hovered_cell)
+					else Color(0.9, 0.2, 0.2, 0.45)
+				)
+			PlayerTurnPhase.ATTACK:
+				var occupant := _hovered_cell.get_occupant()
+				material.albedo_color = (
+					Color(0.95, 0.25, 0.15, 0.65)
+					if occupant is CombatActor and _attackable_targets.has(occupant)
+					else Color(0.9, 0.2, 0.2, 0.45)
+				)
+			_:
+				material.albedo_color = Color(0.95, 0.85, 0.2, 0.55)
+	elif _exploration_reachable_costs.has(_hovered_cell):
+		material.albedo_color = Color(0.35, 0.95, 0.55, 0.6)
+	elif _hovered_cell.walkable and not _hovered_cell.is_occupied():
+		material.albedo_color = Color(0.95, 0.95, 1.0, 0.4)
+	else:
+		material.albedo_color = Color(0.95, 0.25, 0.2, 0.45)
 
 
 func _mouse_to_ground_position() -> Vector3:
@@ -630,7 +767,7 @@ func _clear_highlights() -> void:
 	if _highlight_root == null:
 		return
 	for child in _highlight_root.get_children():
-		if child == _facing_indicator:
+		if child == _facing_indicator or child == _grid_cursor:
 			continue
 		child.queue_free()
 
@@ -691,6 +828,9 @@ func _on_encounter_ended(result_phase: int) -> void:
 	_clear_highlights()
 	if _player_node != null:
 		_player_node.movement_enabled = true
+		_player_node.grid_movement_only = true
+	_refresh_exploration_reachability()
+	_show_exploration_reachability()
 
 	var result_text := "Combat ended."
 	match result_phase:
@@ -727,7 +867,8 @@ func _refresh_battle_ui() -> void:
 		return
 
 	if not _encounter_started:
-		_battle_overlay.show_pre_combat("Approach the Training Brigand to start combat.")
+		_battle_overlay.show_pre_combat("Click grid squares to move. Approach the Training Brigand to fight.")
+		_show_exploration_reachability()
 		return
 
 	var active_name := "CT filling"
@@ -746,6 +887,8 @@ func _refresh_battle_ui() -> void:
 				hint = "[b]Attack (%s)[/b] — Click an enemy. [b]R[/b] toggles ranged. Hover for flank/cover preview. [b]Enter[/b] waits." % mode
 	elif _combat_active:
 		hint = "Enemy is acting..."
+	elif not _encounter_started:
+		hint = "[b]Explore[/b] — Click a green highlighted square to move. Cursor shows target cell."
 	else:
 		hint = "Encounter ended."
 
