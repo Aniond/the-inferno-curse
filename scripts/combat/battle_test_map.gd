@@ -21,7 +21,7 @@ var combat_grid: CombatGrid = null
 var combat_state: CombatState = null
 var player_actor: CombatActor = null
 var monster_actor: CombatActor = null
-var _status_label: Label3D = null
+var _battle_overlay: BattleOverlay = null
 var _player_node: CharacterBody3D = null
 var _encounter_started: bool = false
 var _combat_active: bool = false
@@ -45,11 +45,11 @@ func _ready() -> void:
 	_create_combat_state()
 	_create_player_actor()
 	_create_test_monster_actor()
-	_create_status_label()
+	_create_battle_overlay()
 	_player_node = get_node_or_null("Player") as CharacterBody3D
 
 	combat_state.actor_turn_started.connect(_on_actor_turn_started)
-	combat_state.ct_updated.connect(_refresh_status_label)
+	combat_state.ct_updated.connect(_refresh_battle_ui)
 	combat_state.encounter_ended.connect(_on_encounter_ended)
 
 	_setup_tactical_ai_client()
@@ -57,7 +57,11 @@ func _ready() -> void:
 	if start_combat_on_ready:
 		_start_test_combat()
 	else:
-		_refresh_status_label()
+		_refresh_battle_ui()
+
+
+func _process(_delta: float) -> void:
+	_update_attack_preview()
 
 
 func _physics_process(_delta: float) -> void:
@@ -281,15 +285,11 @@ func _make_actor_marker(color: Color, label_text: String) -> Node3D:
 	return marker
 
 
-func _create_status_label() -> void:
-	_status_label = Label3D.new()
-	_status_label.name = "CombatStatusLabel"
-	_status_label.billboard = BaseMaterial3D.BILLBOARD_ENABLED
-	_status_label.font_size = 28
-	_status_label.outline_size = 8
-	_status_label.outline_modulate = Color(0, 0, 0, 1)
-	_status_label.position = Vector3(-7.5, 2.5, -7.0)
-	add_child(_status_label)
+func _create_battle_overlay() -> void:
+	_battle_overlay = BattleOverlay.new()
+	_battle_overlay.name = "BattleOverlay"
+	add_child(_battle_overlay)
+	_battle_overlay.show_pre_combat("Approach the Training Brigand to start combat.")
 
 
 func _apply_test_jump_modifiers() -> void:
@@ -345,7 +345,7 @@ func _start_test_combat() -> void:
 	if _player_node != null:
 		_player_node.movement_enabled = false
 
-	_refresh_status_label()
+	_refresh_battle_ui()
 	print("Battle started: %s vs %s" % [player_actor.display_name, monster_actor.display_name])
 
 
@@ -364,7 +364,7 @@ func _snap_player_to_nearest_cell() -> void:
 func _on_actor_turn_started(actor: CombatActor) -> void:
 	_clear_highlights()
 	_player_phase = PlayerTurnPhase.INACTIVE
-	_refresh_status_label()
+	_refresh_battle_ui()
 	if actor == null:
 		return
 	if actor.faction == "enemy":
@@ -378,7 +378,7 @@ func _begin_player_turn() -> void:
 	_reachable_costs = combat_state.get_reachable_cell_costs(player_actor)
 	_reachable_cells = _reachable_costs.keys()
 	_show_reachable_highlights()
-	_refresh_status_label()
+	_refresh_battle_ui()
 
 
 func _resolve_enemy_turn(actor: CombatActor) -> void:
@@ -397,7 +397,7 @@ func _resolve_enemy_turn(actor: CombatActor) -> void:
 	if turn_controller != null:
 		turn_controller.finish_act()
 	combat_state.end_actor_turn()
-	_refresh_status_label()
+	_refresh_battle_ui()
 
 
 func _player_move_to_cell(cell: CombatCell) -> void:
@@ -428,7 +428,7 @@ func _begin_player_rotate_phase() -> void:
 	_player_phase = PlayerTurnPhase.ROTATE
 	_clear_highlights()
 	_show_facing_indicator()
-	_refresh_status_label()
+	_refresh_battle_ui()
 
 
 func _player_rotate(step: int) -> void:
@@ -438,7 +438,7 @@ func _player_rotate(step: int) -> void:
 	player_actor.rotate_to_direction(next_facing)
 	_sync_player_node_from_actor()
 	_show_facing_indicator()
-	_refresh_status_label()
+	_refresh_battle_ui()
 
 
 func _player_confirm_rotate() -> void:
@@ -471,7 +471,7 @@ func _begin_player_attack_phase() -> void:
 			target_cells.append(target.current_cell)
 	var target_color := Color(0.95, 0.45, 0.1, 0.5) if _use_ranged_attack else Color(0.95, 0.2, 0.15, 0.5)
 	_show_cell_highlights(target_cells, target_color)
-	_refresh_status_label()
+	_refresh_battle_ui()
 
 
 func _player_attack(target: CombatActor) -> void:
@@ -524,7 +524,7 @@ func _finish_player_turn() -> void:
 	_clear_facing_indicator()
 	_player_phase = PlayerTurnPhase.INACTIVE
 	combat_state.end_actor_turn()
-	_refresh_status_label()
+	_refresh_battle_ui()
 
 
 func _handle_player_click() -> void:
@@ -699,47 +699,138 @@ func _on_encounter_ended(result_phase: int) -> void:
 		CombatState.Phase.DEFEAT:
 			result_text = "Defeat..."
 
-	_status_label.text = result_text
+	if _battle_overlay != null:
+		_battle_overlay.clear_target_preview()
+		_battle_overlay.update_display({
+			"round": combat_state.round,
+			"active_actor_name": result_text,
+			"player_phase": -1,
+			"player_name": player_actor.display_name if player_actor != null else "Player",
+			"enemy_name": monster_actor.display_name if monster_actor != null else "Enemy",
+			"player_hp": player_actor.current_hp if player_actor != null else 0,
+			"player_max_hp": _get_actor_max_hp(player_actor),
+			"enemy_hp": monster_actor.current_hp if monster_actor != null else 0,
+			"enemy_max_hp": _get_actor_max_hp(monster_actor),
+			"player_ct": player_actor.current_ct if player_actor != null else 0,
+			"enemy_ct": monster_actor.current_ct if monster_actor != null else 0,
+			"ct_threshold": combat_state.get_ct_threshold(),
+			"player_mov": player_actor.movement if player_actor != null else 0,
+			"player_facing": player_actor.visual_facing if player_actor != null else "south",
+			"hint": result_text,
+			"last_action": result_text,
+		})
 	print(result_text)
 
 
-func _refresh_status_label() -> void:
-	if _status_label == null:
+func _refresh_battle_ui() -> void:
+	if _battle_overlay == null:
 		return
 
 	if not _encounter_started:
-		_status_label.text = "Approach the Training Brigand to start combat."
+		_battle_overlay.show_pre_combat("Approach the Training Brigand to start combat.")
 		return
 
 	var active_name := "CT filling"
 	if combat_state.active_actor != null:
 		active_name = combat_state.active_actor.display_name
 
-	var player_ct := player_actor.current_ct if player_actor != null else 0
-	var monster_ct := monster_actor.current_ct if monster_actor != null else 0
-	var threshold := combat_state.get_ct_threshold()
 	var hint := ""
 	if _combat_active and combat_state.active_actor == player_actor:
 		match _player_phase:
 			PlayerTurnPhase.MOVE:
-				hint = "\nClick cell to move (number = MOV cost) | Orange = costly height | Enter to skip"
+				hint = "[b]Move[/b] — Click a highlighted cell. Numbers show MOV cost.\nOrange tiles cost more (height). [b]Enter[/b] skips move."
 			PlayerTurnPhase.ROTATE:
-				hint = "\nQ/E to rotate | Click to confirm facing | Enter to skip rotate"
+				hint = "[b]Rotate[/b] — [b]Q/E[/b] turn facing. Click or [b]Enter[/b] confirms. Yellow wedge shows facing."
 			PlayerTurnPhase.ATTACK:
 				var mode := "RANGED" if _use_ranged_attack else "MELEE"
-				hint = "\n[%s] Click enemy to attack | R toggles ranged | Enter to skip" % mode
+				hint = "[b]Attack (%s)[/b] — Click an enemy. [b]R[/b] toggles ranged. Hover for flank/cover preview. [b]Enter[/b] waits." % mode
+	elif _combat_active:
+		hint = "Enemy is acting..."
+	else:
+		hint = "Encounter ended."
 
-	var action_line := ""
-	if _last_action_text != "":
-		action_line = "\n%s" % _last_action_text
+	_battle_overlay.update_display({
+		"round": combat_state.round,
+		"active_actor_name": active_name,
+		"player_phase": _player_phase_to_overlay_index(),
+		"use_ranged": _use_ranged_attack,
+		"player_name": player_actor.display_name if player_actor != null else "Player",
+		"enemy_name": monster_actor.display_name if monster_actor != null else "Enemy",
+		"player_hp": player_actor.current_hp if player_actor != null else 0,
+		"player_max_hp": _get_actor_max_hp(player_actor),
+		"enemy_hp": monster_actor.current_hp if monster_actor != null else 0,
+		"enemy_max_hp": _get_actor_max_hp(monster_actor),
+		"player_ct": player_actor.current_ct if player_actor != null else 0,
+		"enemy_ct": monster_actor.current_ct if monster_actor != null else 0,
+		"ct_threshold": combat_state.get_ct_threshold(),
+		"player_mov": player_actor.movement if player_actor != null else 0,
+		"player_facing": player_actor.visual_facing if player_actor != null else "south",
+		"hint": hint,
+		"last_action": _last_action_text,
+	})
 
-	_status_label.text = "Round %d | Turn: %s\nCT %d/%d vs %d/%d%s%s" % [
-		combat_state.round,
-		active_name,
-		player_ct,
-		threshold,
-		monster_ct,
-		threshold,
-		hint,
-		action_line,
-	]
+
+func _player_phase_to_overlay_index() -> int:
+	match _player_phase:
+		PlayerTurnPhase.MOVE:
+			return 0
+		PlayerTurnPhase.ROTATE:
+			return 1
+		PlayerTurnPhase.ATTACK:
+			return 2
+	return -1
+
+
+func _get_actor_max_hp(actor: CombatActor) -> int:
+	if actor == null:
+		return 1
+	if actor.sheet_resource != null and actor.sheet_resource.has_method("get_max_hp"):
+		return maxi(1, actor.sheet_resource.get_max_hp())
+	return maxi(1, actor.current_hp)
+
+
+func _update_attack_preview() -> void:
+	if _battle_overlay == null or _player_phase != PlayerTurnPhase.ATTACK or not _combat_active:
+		_battle_overlay.clear_target_preview()
+		return
+
+	var target := _get_hovered_attack_target()
+	if target == null:
+		_battle_overlay.clear_target_preview()
+		return
+
+	var is_ranged := _use_ranged_attack
+	var arc_label := TacticalFacing.arc_label(combat_grid.get_attack_arc(player_actor, target))
+	var cover_label := "No Cover"
+	var height_delta := 0
+	if player_actor.current_cell != null and target.current_cell != null:
+		if is_ranged:
+			cover_label = combat_grid.get_directional_cover_description(player_actor.current_cell, target.current_cell)
+			height_delta = (
+				player_actor.current_cell.get_effective_height_level()
+				- target.current_cell.get_effective_height_level()
+			)
+	var predicted_damage := combat_state.calculate_damage(player_actor, target, 0, is_ranged)
+
+	_battle_overlay.update_target_preview({
+		"target_name": target.display_name,
+		"arc_label": arc_label,
+		"cover_label": cover_label,
+		"height_delta": height_delta,
+		"is_ranged": is_ranged,
+		"predicted_damage": predicted_damage,
+	})
+
+
+func _get_hovered_attack_target() -> CombatActor:
+	var ground_pos := _mouse_to_ground_position()
+	if ground_pos == Vector3.INF:
+		return null
+	var coord := combat_grid.world_to_grid(ground_pos)
+	var cell := combat_grid.get_cell(coord)
+	if cell == null:
+		return null
+	var occupant := cell.get_occupant()
+	if occupant is CombatActor and _attackable_targets.has(occupant):
+		return occupant as CombatActor
+	return null

@@ -1,0 +1,312 @@
+extends CanvasLayer
+class_name BattleOverlay
+
+const PANEL_BG := Color(0.08, 0.06, 0.05, 0.88)
+const PANEL_BORDER := Color(0.55, 0.42, 0.22, 1.0)
+const TEXT_MAIN := Color(0.93, 0.88, 0.78, 1.0)
+const TEXT_MUTED := Color(0.72, 0.66, 0.56, 1.0)
+const ACCENT_MOVE := Color(0.28, 0.55, 0.95, 1.0)
+const ACCENT_ROTATE := Color(0.95, 0.82, 0.2, 1.0)
+const ACCENT_ATTACK := Color(0.92, 0.28, 0.2, 1.0)
+const ACCENT_RANGED := Color(0.95, 0.55, 0.15, 1.0)
+
+var _root: Control
+var _round_label: Label
+var _turn_label: Label
+var _phase_labels: Array[Label] = []
+var _player_name_label: Label
+var _player_hp_bar: ProgressBar
+var _player_hp_value: Label
+var _player_ct_bar: ProgressBar
+var _player_ct_value: Label
+var _player_mov_label: Label
+var _enemy_name_label: Label
+var _enemy_hp_bar: ProgressBar
+var _enemy_hp_value: Label
+var _enemy_ct_bar: ProgressBar
+var _enemy_ct_value: Label
+var _hint_label: RichTextLabel
+var _action_label: Label
+var _preview_panel: PanelContainer
+var _preview_title: Label
+var _preview_body: RichTextLabel
+var _waiting_label: Label
+
+
+func _ready() -> void:
+	layer = 90
+	_build_ui()
+	hide()
+
+
+func show_pre_combat(message: String) -> void:
+	show()
+	_waiting_label.text = message
+	_waiting_label.visible = true
+	_root.visible = false
+
+
+func show_combat() -> void:
+	show()
+	_waiting_label.visible = false
+	_root.visible = true
+
+
+func hide_combat() -> void:
+	hide()
+	clear_target_preview()
+
+
+func update_display(data: Dictionary) -> void:
+	if data.get("waiting_message", "") != "":
+		show_pre_combat(str(data["waiting_message"]))
+		return
+
+	show_combat()
+	_round_label.text = "Round %d" % int(data.get("round", 1))
+	_turn_label.text = "Active: %s" % str(data.get("active_actor_name", "—"))
+
+	var phase := int(data.get("player_phase", -1))
+	_set_phase_highlight(phase, bool(data.get("use_ranged", false)))
+
+	_player_name_label.text = str(data.get("player_name", "Player"))
+	_enemy_name_label.text = str(data.get("enemy_name", "Enemy"))
+
+	var player_hp := int(data.get("player_hp", 0))
+	var player_max_hp := maxi(1, int(data.get("player_max_hp", 1)))
+	var enemy_hp := int(data.get("enemy_hp", 0))
+	var enemy_max_hp := maxi(1, int(data.get("enemy_max_hp", 1)))
+	_player_hp_bar.max_value = player_max_hp
+	_player_hp_bar.value = player_hp
+	_player_hp_value.text = "%d / %d" % [player_hp, player_max_hp]
+	_enemy_hp_bar.max_value = enemy_max_hp
+	_enemy_hp_bar.value = enemy_hp
+	_enemy_hp_value.text = "%d / %d" % [enemy_hp, enemy_max_hp]
+
+	var threshold := maxi(1, int(data.get("ct_threshold", 100)))
+	var player_ct := int(data.get("player_ct", 0))
+	var enemy_ct := int(data.get("enemy_ct", 0))
+	_player_ct_bar.max_value = threshold
+	_player_ct_bar.value = player_ct
+	_player_ct_value.text = "CT %d / %d" % [player_ct, threshold]
+	_enemy_ct_bar.max_value = threshold
+	_enemy_ct_bar.value = enemy_ct
+	_enemy_ct_value.text = "CT %d / %d" % [enemy_ct, threshold]
+
+	_player_mov_label.text = "MOV %d | Facing %s" % [
+		int(data.get("player_mov", 0)),
+		str(data.get("player_facing", "south")),
+	]
+
+	var hint := str(data.get("hint", ""))
+	_hint_label.text = hint if hint != "" else " "
+	var action := str(data.get("last_action", ""))
+	_action_label.text = action if action != "" else "Awaiting orders..."
+	_action_label.modulate = TEXT_MAIN if action != "" else TEXT_MUTED
+
+
+func update_target_preview(preview: Dictionary) -> void:
+	if preview.is_empty():
+		clear_target_preview()
+		return
+
+	_preview_panel.visible = true
+	_preview_title.text = "Target: %s" % str(preview.get("target_name", "Enemy"))
+	var lines: PackedStringArray = []
+	lines.append("Attack arc: [color=#f0c060]%s[/color]" % str(preview.get("arc_label", "front")))
+	if bool(preview.get("is_ranged", false)):
+		lines.append("Cover: [color=#8ec8ff]%s[/color]" % str(preview.get("cover_label", "No Cover")))
+		var height_delta := int(preview.get("height_delta", 0))
+		if height_delta > 0:
+			lines.append("Height: [color=#7dffb0]+%d advantage[/color]" % height_delta)
+		elif height_delta < 0:
+			lines.append("Height: [color=#ff8a7d]%d disadvantage[/color]" % height_delta)
+		else:
+			lines.append("Height: even ground")
+	lines.append("Est. damage: [color=#ff6b5e]%d[/color]" % int(preview.get("predicted_damage", 0)))
+	_preview_body.text = "\n".join(lines)
+
+
+func clear_target_preview() -> void:
+	_preview_panel.visible = false
+	_preview_title.text = "Target Preview"
+	_preview_body.text = ""
+
+
+func _set_phase_highlight(player_phase: int, use_ranged: bool) -> void:
+	var phases := ["MOVE", "ROTATE", "ATTACK"]
+	for index in _phase_labels.size():
+		var label := _phase_labels[index]
+		var active := index == player_phase
+		label.modulate = TEXT_MAIN if active else TEXT_MUTED
+		if index == 0 and active:
+			label.add_theme_color_override("font_color", ACCENT_MOVE)
+		elif index == 1 and active:
+			label.add_theme_color_override("font_color", ACCENT_ROTATE)
+		elif index == 2 and active:
+			var attack_color := ACCENT_RANGED if use_ranged else ACCENT_ATTACK
+			label.add_theme_color_override("font_color", attack_color)
+		else:
+			label.add_theme_color_override("font_color", TEXT_MUTED if not active else TEXT_MAIN)
+		if index == 2:
+			label.text = "ATTACK (%s)" % ("RANGED" if use_ranged else "MELEE")
+
+
+func _build_ui() -> void:
+	_root = Control.new()
+	_root.name = "Root"
+	_root.set_anchors_preset(Control.PRESET_FULL_RECT)
+	_root.mouse_filter = Control.MOUSE_FILTER_IGNORE
+	add_child(_root)
+
+	_waiting_label = _make_label("Approach the Training Brigand to start combat.", 22)
+	_waiting_label.horizontal_alignment = HORIZONTAL_ALIGNMENT_CENTER
+	_waiting_label.vertical_alignment = VERTICAL_ALIGNMENT_CENTER
+	_waiting_label.set_anchors_preset(Control.PRESET_CENTER)
+	_waiting_label.position = Vector2(-280, -20)
+	_waiting_label.size = Vector2(560, 40)
+	add_child(_waiting_label)
+
+	var top_panel := _make_panel()
+	top_panel.position = Vector2(16, 16)
+	top_panel.size = Vector2(520, 72)
+	_root.add_child(top_panel)
+	var top_vbox := _make_vbox(10)
+	top_panel.add_child(top_vbox)
+	_round_label = _make_label("Round 1", 20)
+	_turn_label = _make_label("Active: —", 18)
+	top_vbox.add_child(_round_label)
+	top_vbox.add_child(_turn_label)
+	var phase_row := HBoxContainer.new()
+	phase_row.add_theme_constant_override("separation", 12)
+	top_vbox.add_child(phase_row)
+	for phase_name in ["MOVE", "ROTATE", "ATTACK"]:
+		var phase_label := _make_label(phase_name, 16)
+		_phase_labels.append(phase_label)
+		phase_row.add_child(phase_label)
+
+	var player_panel := _make_panel()
+	player_panel.position = Vector2(16, 100)
+	player_panel.size = Vector2(280, 150)
+	_root.add_child(player_panel)
+	var player_vbox := _make_vbox(8)
+	player_panel.add_child(player_vbox)
+	_player_name_label = _make_label("Player", 18)
+	player_vbox.add_child(_player_name_label)
+	_player_hp_bar = _make_bar(ACCENT_MOVE)
+	player_vbox.add_child(_player_hp_bar)
+	_player_hp_value = _make_label("HP", 14)
+	player_vbox.add_child(_player_hp_value)
+	_player_ct_bar = _make_bar(ACCENT_ROTATE)
+	player_vbox.add_child(_player_ct_bar)
+	_player_ct_value = _make_label("CT", 14)
+	player_vbox.add_child(_player_ct_value)
+	_player_mov_label = _make_label("MOV", 14)
+	player_vbox.add_child(_player_mov_label)
+
+	var enemy_panel := _make_panel()
+	enemy_panel.set_anchors_preset(Control.PRESET_TOP_RIGHT)
+	enemy_panel.offset_left = -296
+	enemy_panel.offset_top = 100
+	enemy_panel.offset_right = -16
+	enemy_panel.offset_bottom = 250
+	_root.add_child(enemy_panel)
+	var enemy_vbox := _make_vbox(8)
+	enemy_panel.add_child(enemy_vbox)
+	_enemy_name_label = _make_label("Enemy", 18)
+	enemy_vbox.add_child(_enemy_name_label)
+	_enemy_hp_bar = _make_bar(ACCENT_ATTACK)
+	enemy_vbox.add_child(_enemy_hp_bar)
+	_enemy_hp_value = _make_label("HP", 14)
+	enemy_vbox.add_child(_enemy_hp_value)
+	_enemy_ct_bar = _make_bar(Color(0.75, 0.35, 0.85, 1.0))
+	enemy_vbox.add_child(_enemy_ct_bar)
+	_enemy_ct_value = _make_label("CT", 14)
+	enemy_vbox.add_child(_enemy_ct_value)
+
+	var bottom_panel := _make_panel()
+	bottom_panel.set_anchors_preset(Control.PRESET_BOTTOM_WIDE)
+	bottom_panel.offset_top = -190
+	bottom_panel.offset_bottom = -16
+	bottom_panel.offset_left = 16
+	bottom_panel.offset_right = -16
+	_root.add_child(bottom_panel)
+	var bottom_vbox := _make_vbox(8)
+	bottom_panel.add_child(bottom_vbox)
+	_hint_label = RichTextLabel.new()
+	_hint_label.fit_content = true
+	_hint_label.scroll_active = false
+	_hint_label.bbcode_enabled = true
+	_hint_label.autowrap_mode = TextServer.AUTOWRAP_WORD_SMART
+	_hint_label.custom_minimum_size = Vector2(0, 72)
+	_hint_label.add_theme_color_override("default_color", TEXT_MAIN)
+	_hint_label.add_theme_font_size_override("normal_font_size", 15)
+	bottom_vbox.add_child(_hint_label)
+	_action_label = _make_label("Awaiting orders...", 16)
+	bottom_vbox.add_child(_action_label)
+
+	_preview_panel = _make_panel()
+	_preview_panel.set_anchors_preset(Control.PRESET_BOTTOM_RIGHT)
+	_preview_panel.offset_left = -300
+	_preview_panel.offset_top = -250
+	_preview_panel.offset_right = -16
+	_preview_panel.offset_bottom = -100
+	_preview_panel.visible = false
+	_root.add_child(_preview_panel)
+	var preview_vbox := _make_vbox(6)
+	_preview_panel.add_child(preview_vbox)
+	_preview_title = _make_label("Target Preview", 17)
+	preview_vbox.add_child(_preview_title)
+	_preview_body = RichTextLabel.new()
+	_preview_body.fit_content = true
+	_preview_body.scroll_active = false
+	_preview_body.bbcode_enabled = true
+	_preview_body.autowrap_mode = TextServer.AUTOWRAP_WORD_SMART
+	_preview_body.custom_minimum_size = Vector2(0, 90)
+	_preview_body.add_theme_color_override("default_color", TEXT_MAIN)
+	_preview_body.add_theme_font_size_override("normal_font_size", 14)
+	preview_vbox.add_child(_preview_body)
+
+
+func _make_panel() -> PanelContainer:
+	var panel := PanelContainer.new()
+	var style := StyleBoxFlat.new()
+	style.bg_color = PANEL_BG
+	style.border_color = PANEL_BORDER
+	style.set_border_width_all(2)
+	style.set_corner_radius_all(6)
+	style.content_margin_left = 12
+	style.content_margin_right = 12
+	style.content_margin_top = 10
+	style.content_margin_bottom = 10
+	panel.add_theme_stylebox_override("panel", style)
+	return panel
+
+
+func _make_vbox(separation: int) -> VBoxContainer:
+	var box := VBoxContainer.new()
+	box.add_theme_constant_override("separation", separation)
+	return box
+
+
+func _make_label(text: String, font_size: int) -> Label:
+	var label := Label.new()
+	label.text = text
+	label.add_theme_color_override("font_color", TEXT_MAIN)
+	label.add_theme_font_size_override("font_size", font_size)
+	return label
+
+
+func _make_bar(fill_color: Color) -> ProgressBar:
+	var bar := ProgressBar.new()
+	bar.custom_minimum_size = Vector2(0, 18)
+	bar.show_percentage = false
+	var bg := StyleBoxFlat.new()
+	bg.bg_color = Color(0.15, 0.12, 0.1, 1.0)
+	bg.set_corner_radius_all(4)
+	var fill := StyleBoxFlat.new()
+	fill.bg_color = fill_color
+	fill.set_corner_radius_all(4)
+	bar.add_theme_stylebox_override("background", bg)
+	bar.add_theme_stylebox_override("fill", fill)
+	return bar
