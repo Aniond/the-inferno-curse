@@ -31,6 +31,7 @@ var _attackable_targets: Array = []
 var _last_action_text: String = ""
 var _highlight_root: Node3D = null
 var _facing_indicator: MeshInstance3D = null
+var _tactical_ai_client: TacticalAiClient = null
 
 
 func _ready() -> void:
@@ -47,6 +48,8 @@ func _ready() -> void:
 	combat_state.actor_turn_started.connect(_on_actor_turn_started)
 	combat_state.ct_updated.connect(_refresh_status_label)
 	combat_state.encounter_ended.connect(_on_encounter_ended)
+
+	_setup_tactical_ai_client()
 
 	if start_combat_on_ready:
 		_start_test_combat()
@@ -247,6 +250,32 @@ func _create_status_label() -> void:
 	add_child(_status_label)
 
 
+func _setup_tactical_ai_client() -> void:
+	_tactical_ai_client = TacticalAiClient.new()
+	if EnvSecrets.has_tactical_ai_key():
+		_tactical_ai_client.configure(EnvSecrets.get_tactical_ai_api_key())
+		print("Tactical AI: API key loaded from .env.local")
+	else:
+		push_warning("Tactical AI: no API key found in .env.local or environment.")
+
+
+func _ping_tactical_ai() -> void:
+	if _tactical_ai_client == null or not _tactical_ai_client.is_configured():
+		return
+	_tactical_ai_client.request_tactical_advice(
+		'{"task":"ping","encounter":"training_brigand","reply_format":{"status":"ok"}}',
+		_on_tactical_ai_ping_response
+	)
+
+
+func _on_tactical_ai_ping_response(payload: Dictionary) -> void:
+	if not payload.get("ok", false):
+		push_warning("Tactical AI ping failed: %s" % payload.get("error", payload.get("body", "unknown")))
+		return
+	var body_text := str(payload.get("body", ""))
+	print("Tactical AI ping OK: %s" % body_text.left(240))
+
+
 func _start_test_combat() -> void:
 	if _encounter_started:
 		return
@@ -256,6 +285,7 @@ func _start_test_combat() -> void:
 
 	_snap_player_to_nearest_cell()
 	combat_state.start_encounter(combat_grid, [player_actor, monster_actor])
+	_ping_tactical_ai()
 
 	if _player_node != null:
 		_player_node.movement_enabled = false

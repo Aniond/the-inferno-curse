@@ -5,6 +5,12 @@
 # Summer Engine local-only state
 .summer/local/
 
+# Local secrets (API keys — never commit)
+.env
+.env.local
+.env.*.local
+secrets/
+
 # Local editor backups
 *.bak
 
