@@ -10,12 +10,14 @@ class_name CombatGrid
 @export var allow_diagonal_movement: bool = true
 
 var cells: Dictionary = {}
+var cover_volumes: Array[CoverVolume] = []
 
 func _ready() -> void:
 	build_grid()
 
 func build_grid() -> void:
 	cells.clear()
+	cover_volumes.clear()
 	for x in range(columns):
 		for y in range(rows):
 			var coord: Vector2i = Vector2i(x, y)
@@ -79,6 +81,12 @@ func is_grid_line_of_sight_clear(from_cell: CombatCell, to_cell: CombatCell, ful
 			return false
 		if full_cover_blocks and cell.cover_level == CombatCell.CoverLevel.FULL:
 			return false
+	for volume in _get_cover_volumes_on_attack_line(from_cell, to_cell):
+		if full_cover_blocks and volume.cover_level >= CombatCell.CoverLevel.FULL:
+			if volume.protects_against_attack(from_cell, to_cell):
+				return false
+		if volume.blocks_attack_line_of_sight(from_cell, to_cell):
+			return false
 	return true
 
 
@@ -117,7 +125,56 @@ func get_directional_cover_modifier(from_cell: CombatCell, to_cell: CombatCell) 
 		if cell.blocks_ranged_line_of_sight():
 			return 999
 
+	for volume in _get_cover_volumes_on_attack_line(from_cell, to_cell):
+		if volume.protects_against_attack(from_cell, to_cell):
+			strongest_cover = max(strongest_cover, volume.get_cover_bonus())
+			if volume.blocks_attack_line_of_sight(from_cell, to_cell):
+				return 999
+
 	return max(strongest_cover, to_cell.get_cover_bonus())
+
+
+func register_cover_volume(volume: CoverVolume) -> void:
+	if volume == null or cover_volumes.has(volume):
+		return
+	cover_volumes.append(volume)
+
+
+func unregister_cover_volume(volume: CoverVolume) -> void:
+	cover_volumes.erase(volume)
+
+
+func get_cover_volumes() -> Array[CoverVolume]:
+	return cover_volumes.duplicate()
+
+
+func get_directional_cover_description(from_cell: CombatCell, to_cell: CombatCell) -> String:
+	if from_cell == null or to_cell == null:
+		return "No Cover"
+
+	var modifier := get_directional_cover_modifier(from_cell, to_cell)
+	if modifier >= 999:
+		return "Blocked"
+
+	var best_label := ""
+	var best_bonus := 0
+	for volume in _get_cover_volumes_on_attack_line(from_cell, to_cell):
+		if not volume.protects_against_attack(from_cell, to_cell):
+			continue
+		var bonus := volume.get_cover_bonus()
+		if bonus > best_bonus:
+			best_bonus = bonus
+			best_label = "%s (%s face)" % [volume.get_cover_label(), volume.cover_facing]
+
+	if best_bonus > 0:
+		return best_label
+
+	if to_cell.get_cover_bonus() > 0:
+		return "%s (terrain)" % to_cell.get_cover_label()
+
+	if modifier > 0:
+		return "Half Cover"
+	return "No Cover"
 
 func get_height_modifier(from_cell: CombatCell, to_cell: CombatCell) -> int:
 	if from_cell == null or to_cell == null:
@@ -240,3 +297,23 @@ func _is_adjacent_cardinal_or_diagonal(a: CombatCell, b: CombatCell) -> bool:
 		return false
 	var delta: Vector2i = a.grid_position - b.grid_position
 	return max(abs(delta.x), abs(delta.y)) == 1
+
+
+func _get_cover_volumes_on_attack_line(from_cell: CombatCell, to_cell: CombatCell) -> Array[CoverVolume]:
+	var on_line: Array[CoverVolume] = []
+	for volume in cover_volumes:
+		if _is_volume_on_attack_line(volume, from_cell, to_cell):
+			on_line.append(volume)
+	return on_line
+
+
+func _is_volume_on_attack_line(volume: CoverVolume, from_cell: CombatCell, to_cell: CombatCell) -> bool:
+	if volume == null or from_cell == null or to_cell == null:
+		return false
+	var volume_pos := volume.grid_position
+	if volume_pos == to_cell.grid_position:
+		return true
+	for cell in get_cells_between(from_cell.grid_position, to_cell.grid_position):
+		if cell.grid_position == volume_pos:
+			return true
+	return false

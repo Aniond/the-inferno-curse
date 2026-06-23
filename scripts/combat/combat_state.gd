@@ -261,6 +261,8 @@ func place_terrain(terrain: CombatTerrain, affected_cells: Array[CombatCell], ow
 	for cell in affected_cells:
 		snapshots[cell] = _snapshot_cell(cell)
 		grid.apply_terrain_to_cell(cell, terrain)
+	if terrain is CoverVolume:
+		grid.register_cover_volume(terrain as CoverVolume)
 	terrain_cell_snapshots[terrain] = snapshots
 
 
@@ -276,6 +278,8 @@ func remove_terrain(terrain: CombatTerrain, affected_cells: Array[CombatCell]) -
 			_restore_cell(cell, terrain_cell_snapshots[terrain][cell])
 		else:
 			grid.clear_terrain_from_cell(cell)
+	if terrain is CoverVolume:
+		grid.unregister_cover_volume(terrain as CoverVolume)
 	terrain_cells.erase(terrain)
 	terrain_cell_snapshots.erase(terrain)
 

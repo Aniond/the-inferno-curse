@@ -32,6 +32,7 @@ var _last_action_text: String = ""
 var _highlight_root: Node3D = null
 var _facing_indicator: MeshInstance3D = null
 var _tactical_ai_client: TacticalAiClient = null
+var _use_ranged_attack: bool = false
 
 
 func _ready() -> void:
@@ -39,6 +40,7 @@ func _ready() -> void:
 	_create_grid_visuals()
 	_create_highlight_root()
 	_apply_test_map_tactical_cells()
+	_create_test_cover_volumes()
 	_create_combat_state()
 	_create_player_actor()
 	_create_test_monster_actor()
@@ -93,6 +95,11 @@ func _unhandled_input(event: InputEvent) -> void:
 				_player_rotate(1)
 				get_viewport().set_input_as_handled()
 				return
+		if _player_phase == PlayerTurnPhase.ATTACK and key_event.keycode == KEY_R:
+			_use_ranged_attack = not _use_ranged_attack
+			_begin_player_attack_phase()
+			get_viewport().set_input_as_handled()
+			return
 
 	if event is InputEventMouseButton:
 		var mouse_event := event as InputEventMouseButton
@@ -173,6 +180,40 @@ func _apply_test_map_tactical_cells() -> void:
 		raised_cell.terrain_tags.append("raised_floor_test")
 
 
+func _create_test_cover_volumes() -> void:
+	var barrel := CoverVolume.new()
+	barrel.name = "TestBarrelCover"
+	barrel.terrain_id = "tavern_barrel_cover"
+	barrel.grid_position = Vector2i(5, 8)
+	barrel.cover_facing = "north"
+	barrel.coverage_arc = 180.0
+	barrel.cover_level = CombatCell.CoverLevel.HALF
+	barrel.block_movement = false
+	barrel.is_obstruction = false
+	barrel.blocks_line_of_sight = false
+
+	var barrel_cell := combat_grid.get_cell(barrel.grid_position)
+	if barrel_cell != null:
+		barrel.position = combat_grid.grid_to_world(barrel.grid_position, barrel_cell.get_effective_height_level())
+	barrel.add_child(_make_cover_volume_marker(Color(0.45, 0.28, 0.12, 1.0)))
+	combat_grid.add_child(barrel)
+	combat_grid.register_cover_volume(barrel)
+
+
+func _make_cover_volume_marker(color: Color) -> MeshInstance3D:
+	var mesh := CylinderMesh.new()
+	mesh.top_radius = grid_cell_size * 0.22
+	mesh.bottom_radius = grid_cell_size * 0.26
+	mesh.height = grid_cell_size * 0.55
+	var material := StandardMaterial3D.new()
+	material.albedo_color = color
+	var marker := MeshInstance3D.new()
+	marker.mesh = mesh
+	marker.material_override = material
+	marker.position = Vector3(0.0, mesh.height * 0.5, 0.0)
+	return marker
+
+
 func _create_combat_state() -> void:
 	combat_state = CombatState.new()
 	combat_state.name = "CombatState"
@@ -204,8 +245,8 @@ func _create_test_monster_actor() -> void:
 	monster_actor.display_name = "Training Brigand"
 	monster_actor.faction = "enemy"
 	monster_actor.sheet_resource = TEST_MONSTER_SHEET
-	monster_actor.starting_grid_position = Vector2i(7, 6)
-	monster_actor.visual_facing = "west"
+	monster_actor.starting_grid_position = Vector2i(5, 9)
+	monster_actor.visual_facing = "north"
 	add_child(monster_actor)
 	monster_actor.set_current_cell(combat_grid.get_cell(monster_actor.starting_grid_position))
 	monster_actor.add_child(_make_actor_marker(Color(0.75, 0.12, 0.08, 1.0), "Training Brigand"))
@@ -403,22 +444,47 @@ func _player_skip_rotate() -> void:
 func _begin_player_attack_phase() -> void:
 	_player_phase = PlayerTurnPhase.ATTACK
 	_clear_facing_indicator()
-	_attackable_targets = combat_state.get_attackable_targets(player_actor, 1, false)
+	var attack_range := 5 if _use_ranged_attack else 1
+	var is_ranged := _use_ranged_attack
+	_attackable_targets = combat_state.get_attackable_targets(player_actor, attack_range, is_ranged)
 	var target_cells: Array = []
 	for target in _attackable_targets:
 		if target.current_cell != null:
 			target_cells.append(target.current_cell)
-	_show_cell_highlights(target_cells, Color(0.95, 0.2, 0.15, 0.5))
+	var target_color := Color(0.95, 0.45, 0.1, 0.5) if _use_ranged_attack else Color(0.95, 0.2, 0.15, 0.5)
+	_show_cell_highlights(target_cells, target_color)
 	_refresh_status_label()
 
 
 func _player_attack(target: CombatActor) -> void:
 	if not _attackable_targets.has(target):
 		return
-	var damage := combat_state.resolve_attack(player_actor, target, 0, false)
+	var is_ranged := _use_ranged_attack
+	var damage := combat_state.resolve_attack(player_actor, target, 0, is_ranged)
 	var arc_label := TacticalFacing.arc_label(combat_grid.get_attack_arc(player_actor, target))
-	_last_action_text = "%s strikes %s for %d (%s)!" % [player_actor.display_name, target.display_name, damage, arc_label]
+	var cover_label := ""
+	if is_ranged and player_actor.current_cell != null and target.current_cell != null:
+		cover_label = combat_grid.get_directional_cover_description(player_actor.current_cell, target.current_cell)
+	var attack_verb := "shoots" if is_ranged else "strikes"
+	if cover_label != "" and cover_label != "No Cover":
+		_last_action_text = "%s %s %s for %d (%s, %s)!" % [
+			player_actor.display_name,
+			attack_verb,
+			target.display_name,
+			damage,
+			arc_label,
+			cover_label,
+		]
+	else:
+		_last_action_text = "%s %s %s for %d (%s)!" % [
+			player_actor.display_name,
+			attack_verb,
+			target.display_name,
+			damage,
+			arc_label,
+		]
 	print(_last_action_text)
+	_use_ranged_attack = false
 	var turn_controller := combat_state.get_turn_controller()
 	if turn_controller != null:
 		turn_controller.finish_act()
@@ -606,7 +672,8 @@ func _refresh_status_label() -> void:
 			PlayerTurnPhase.ROTATE:
 				hint = "\nQ/E to rotate | Click to confirm facing | Enter to skip rotate"
 			PlayerTurnPhase.ATTACK:
-				hint = "\nClick red enemy to attack | Enter to skip attack"
+				var mode := "RANGED" if _use_ranged_attack else "MELEE"
+				hint = "\n[%s] Click enemy to attack | R toggles ranged | Enter to skip" % mode
 
 	var action_line := ""
 	if _last_action_text != "":
