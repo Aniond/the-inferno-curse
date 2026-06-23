@@ -155,9 +155,15 @@ func get_turn_controller() -> CombatTurnController:
 	return active_turn_controller
 
 func get_reachable_cells(actor: CombatActor) -> Array:
-	var reachable: Array = []
+	var costs := get_reachable_cell_costs(actor)
+	return costs.keys()
+
+
+func get_reachable_cell_costs(actor: CombatActor) -> Dictionary:
+	var reachable: Dictionary = {}
 	if actor == null or actor.current_cell == null:
 		return reachable
+
 	var frontier: Array = [{"cell": actor.current_cell, "cost": 0}]
 	var visited: Dictionary = {actor.current_cell.grid_position: 0}
 
@@ -165,15 +171,13 @@ func get_reachable_cells(actor: CombatActor) -> Array:
 		var entry = frontier.pop_front()
 		var cell: CombatCell = entry["cell"]
 		var cost: int = entry["cost"]
-		reachable.append(cell)
+		reachable[cell] = cost
 		for neighbor in grid.get_neighbors(cell, grid.allow_diagonal_movement):
 			if neighbor == null or not neighbor.walkable or neighbor.is_occupied():
 				continue
 			if not _can_traverse_height(actor, cell, neighbor):
 				continue
-			var is_diagonal: bool = abs(cell.grid_position.x - neighbor.grid_position.x) == 1 and abs(cell.grid_position.y - neighbor.grid_position.y) == 1
-			var step_cost: int = 2 if is_diagonal else 1
-			step_cost = max(step_cost, neighbor.movement_cost)
+			var step_cost: int = actor.get_step_movement_cost(cell, neighbor)
 			var next_cost: int = cost + step_cost
 			if next_cost > actor.movement:
 				continue

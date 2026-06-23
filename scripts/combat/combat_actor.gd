@@ -20,6 +20,10 @@ var power: int = 0
 var defense: int = 0
 var cover_bonus: int = 0
 var current_cell: CombatCell = null
+var jump_cost_reduction: int = 0
+var jump_cost_multiplier: float = 1.0
+var ignore_first_height_level: bool = false
+var downhill_free: bool = false
 
 func _ready() -> void:
 	_sync_stats()
@@ -103,3 +107,46 @@ func face_cell(cell: CombatCell) -> void:
 	if cell == null:
 		return
 	set_visual_facing_from_vector(cell.grid_position - get_grid_position())
+
+
+func get_height_step_cost(from_level: int, to_level: int) -> int:
+	var delta := to_level - from_level
+	if delta == 0:
+		return 0
+
+	var magnitude := absi(delta)
+	if ignore_first_height_level and magnitude > 0:
+		magnitude = maxi(0, magnitude - 1)
+	if delta < 0 and downhill_free:
+		return 0
+
+	var per_level := 2 if delta > 0 else 1
+	var raw_cost := magnitude * per_level
+	raw_cost = int(ceil(float(raw_cost) * jump_cost_multiplier))
+	return maxi(0, raw_cost - jump_cost_reduction)
+
+
+func get_step_movement_cost(from_cell: CombatCell, to_cell: CombatCell) -> int:
+	if from_cell == null or to_cell == null:
+		return 999
+
+	var delta_pos := to_cell.grid_position - from_cell.grid_position
+	var is_diagonal := absi(delta_pos.x) == 1 and absi(delta_pos.y) == 1
+	var base_step := 2 if is_diagonal else 1
+	base_step = maxi(base_step, to_cell.movement_cost)
+	var height_cost := get_height_step_cost(
+		from_cell.get_effective_height_level(),
+		to_cell.get_effective_height_level()
+	)
+	return base_step + height_cost
+
+
+func apply_jump_traversal_modifiers(modifiers: Dictionary) -> void:
+	if modifiers.has("jump_cost_reduction"):
+		jump_cost_reduction = int(modifiers["jump_cost_reduction"])
+	if modifiers.has("jump_cost_multiplier"):
+		jump_cost_multiplier = float(modifiers["jump_cost_multiplier"])
+	if modifiers.has("ignore_first_height_level"):
+		ignore_first_height_level = bool(modifiers["ignore_first_height_level"])
+	if modifiers.has("downhill_free"):
+		downhill_free = bool(modifiers["downhill_free"])

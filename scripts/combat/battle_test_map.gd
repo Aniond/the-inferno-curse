@@ -33,6 +33,7 @@ var _highlight_root: Node3D = null
 var _facing_indicator: MeshInstance3D = null
 var _tactical_ai_client: TacticalAiClient = null
 var _use_ranged_attack: bool = false
+var _reachable_costs: Dictionary = {}
 
 
 func _ready() -> void:
@@ -291,6 +292,18 @@ func _create_status_label() -> void:
 	add_child(_status_label)
 
 
+func _apply_test_jump_modifiers() -> void:
+	if player_actor == null:
+		return
+	# Toggle for manual playtests: set true to verify jump_cost_reduction.
+	player_actor.apply_jump_traversal_modifiers({
+		"jump_cost_reduction": 0,
+		"jump_cost_multiplier": 1.0,
+		"ignore_first_height_level": false,
+		"downhill_free": false,
+	})
+
+
 func _setup_tactical_ai_client() -> void:
 	_tactical_ai_client = TacticalAiClient.new()
 	if EnvSecrets.has_tactical_ai_key():
@@ -325,6 +338,7 @@ func _start_test_combat() -> void:
 	_last_action_text = ""
 
 	_snap_player_to_nearest_cell()
+	_apply_test_jump_modifiers()
 	combat_state.start_encounter(combat_grid, [player_actor, monster_actor])
 	_ping_tactical_ai()
 
@@ -361,8 +375,9 @@ func _on_actor_turn_started(actor: CombatActor) -> void:
 
 func _begin_player_turn() -> void:
 	_player_phase = PlayerTurnPhase.MOVE
-	_reachable_cells = combat_state.get_reachable_cells(player_actor)
-	_show_cell_highlights(_reachable_cells, Color(0.2, 0.55, 1.0, 0.45))
+	_reachable_costs = combat_state.get_reachable_cell_costs(player_actor)
+	_reachable_cells = _reachable_costs.keys()
+	_show_reachable_highlights()
 	_refresh_status_label()
 
 
@@ -391,6 +406,9 @@ func _player_move_to_cell(cell: CombatCell) -> void:
 	if cell != player_actor.current_cell:
 		player_actor.set_current_cell(cell)
 		_sync_player_node_from_actor()
+		var move_cost := int(_reachable_costs.get(cell, 0))
+		if move_cost > 0:
+			_last_action_text = "Moved (%d MOV)" % move_cost
 	var turn_controller := combat_state.get_turn_controller()
 	if turn_controller != null:
 		turn_controller.finish_move()
@@ -551,6 +569,42 @@ func _cell_world_position(cell: CombatCell) -> Vector3:
 	return combat_grid.grid_to_world(cell.grid_position, cell.get_effective_height_level())
 
 
+func _show_reachable_highlights() -> void:
+	_clear_highlights()
+	var tile_size := grid_cell_size * 0.88
+	for cell in _reachable_cells:
+		if cell == null:
+			continue
+		var move_cost := int(_reachable_costs.get(cell, 0))
+		var material := StandardMaterial3D.new()
+		if move_cost >= 4:
+			material.albedo_color = Color(0.85, 0.35, 0.1, 0.55)
+		elif move_cost >= 2:
+			material.albedo_color = Color(0.15, 0.45, 0.95, 0.5)
+		else:
+			material.albedo_color = Color(0.2, 0.55, 1.0, 0.45)
+		material.transparency = BaseMaterial3D.TRANSPARENCY_ALPHA
+		material.shading_mode = BaseMaterial3D.SHADING_MODE_UNSHADED
+
+		var marker := MeshInstance3D.new()
+		var mesh := BoxMesh.new()
+		mesh.size = Vector3(tile_size, 0.05, tile_size)
+		marker.mesh = mesh
+		marker.material_override = material
+		var world_pos := _cell_world_position(cell)
+		marker.position = world_pos + Vector3(0.0, 0.06, 0.0)
+		_highlight_root.add_child(marker)
+
+		if move_cost > 0 and cell != player_actor.current_cell:
+			var cost_label := Label3D.new()
+			cost_label.text = str(move_cost)
+			cost_label.font_size = 22
+			cost_label.outline_size = 5
+			cost_label.outline_modulate = Color(0, 0, 0, 1)
+			cost_label.position = world_pos + Vector3(0.0, 0.35, 0.0)
+			_highlight_root.add_child(cost_label)
+
+
 func _show_cell_highlights(cells: Array, color: Color) -> void:
 	_clear_highlights()
 	var material := StandardMaterial3D.new()
@@ -668,7 +722,7 @@ func _refresh_status_label() -> void:
 	if _combat_active and combat_state.active_actor == player_actor:
 		match _player_phase:
 			PlayerTurnPhase.MOVE:
-				hint = "\nClick blue cell to move | Enter to skip move"
+				hint = "\nClick cell to move (number = MOV cost) | Orange = costly height | Enter to skip"
 			PlayerTurnPhase.ROTATE:
 				hint = "\nQ/E to rotate | Click to confirm facing | Enter to skip rotate"
 			PlayerTurnPhase.ATTACK:
