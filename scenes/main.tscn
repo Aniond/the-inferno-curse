@@ -43,6 +43,7 @@ size = Vector3(0.8, 6, 0.8)
 
 [node name="World" type="Node3D" unique_id=1662994112]
 script = ExtResource("16_battle_test_map")
+spawn_test_squad = true
 
 [node name="Camera" type="Camera3D" parent="." unique_id=1134048631]
 script = ExtResource("2_camera_script")

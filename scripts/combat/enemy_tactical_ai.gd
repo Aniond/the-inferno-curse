@@ -40,6 +40,15 @@ const INT_GATES := {
 	"self_preserve": 5,
 }
 
+## Commander directive bias weights (Phase 2). Applied on top of the base
+## considerations when a unit acts under an AiDirective.
+const DIR_FOCUS_DAMAGE := 1.2     # extra damage weight vs the called focus target
+const DIR_SLOT_BONUS := 4.0       # reward for sitting in the assigned formation slot
+const DIR_SLOT_FALLOFF := 1.0     # bonus lost per cell of distance from the ideal slot
+const DIR_PRESS_EXPOSURE := 0.4   # PRESS multiplies exposure penalty down (accept risk)
+const DIR_HOLD_EXPOSURE := 1.6    # HOLD multiplies exposure penalty up (avoid risk)
+const DIR_HOLD_CLOSE := 0.4       # HOLD down-weights closing distance
+
 var _state: CombatState = null
 var _grid: CombatGrid = null
 var _rng: RandomNumberGenerator = null
@@ -53,7 +62,7 @@ func _init(state: CombatState, grid: CombatGrid, rng: RandomNumberGenerator = nu
 
 ## Choose this actor's turn. directive is an optional AiDirective (Phase 2);
 ## null means act solo.
-func choose_turn(actor: CombatActor, directive = null) -> AiTurnPlan:
+func choose_turn(actor: CombatActor, directive: AiDirective = null) -> AiTurnPlan:
 	var plans := _enumerate_plans(actor)
 	if plans.is_empty():
 		# No reachable cells at all: stay put, no action.
@@ -127,15 +136,30 @@ func _opposing_actors(actor: CombatActor) -> Array:
 # Scoring
 # ---------------------------------------------------------------------------
 
-func _score_plan(actor: CombatActor, plan: AiTurnPlan, _directive) -> void:
-	# _directive biases are applied in Phase 2 (Step 9); unused in Phase 1.
+func _score_plan(actor: CombatActor, plan: AiTurnPlan, directive: AiDirective) -> void:
 	var int_level := actor.intelligence
 	var score := 0.0
+
+	# Posture multipliers from a commander directive (1.0 = no directive).
+	var exposure_mult := 1.0
+	var close_mult := 1.0
+	if directive != null:
+		match directive.posture:
+			AiDirective.Posture.PRESS:
+				exposure_mult = DIR_PRESS_EXPOSURE
+			AiDirective.Posture.HOLD:
+				exposure_mult = DIR_HOLD_EXPOSURE
+				close_mult = DIR_HOLD_CLOSE
 
 	# damage + flank (only when attacking)
 	if plan.target != null:
 		var dmg := _hypothetical_damage(actor, plan, plan.is_ranged)
-		score += _w("damage") * float(dmg)
+		var dmg_weight := _w("damage")
+		# Focus-fire: extra weight when attacking the commander's called target.
+		if directive != null and directive.focus_target == plan.target:
+			dmg_weight += DIR_FOCUS_DAMAGE
+			plan.add_reason("focus")
+		score += dmg_weight * float(dmg)
 		plan.add_reason("dmg %d" % dmg)
 
 		if _gated(int_level, "flank"):
@@ -152,7 +176,7 @@ func _score_plan(actor: CombatActor, plan: AiTurnPlan, _directive) -> void:
 		var after := _dist_to_nearest(plan.destination_cell, enemies)
 		var closed := before - after
 		if closed != 0:
-			score += _w("close_distance") * float(closed)
+			score += _w("close_distance") * close_mult * float(closed)
 			if closed > 0:
 				plan.add_reason("closed %d" % closed)
 
@@ -170,11 +194,11 @@ func _score_plan(actor: CombatActor, plan: AiTurnPlan, _directive) -> void:
 			score += _w("height") * float(h)
 			plan.add_reason("height +%d" % h)
 
-	# exposure: penalty for ending in reach of living enemies
+	# exposure: penalty for ending in reach of living enemies (posture-scaled)
 	if _gated(int_level, "exposure"):
 		var exposure := _exposure_at(actor, plan.destination_cell)
 		if exposure > 0:
-			score -= _w("exposure") * float(exposure)
+			score -= _w("exposure") * exposure_mult * float(exposure)
 			plan.add_reason("exposed -%d" % exposure)
 
 	# self_preserve: when wounded, value distance/safety, devalue attacking
@@ -184,7 +208,48 @@ func _score_plan(actor: CombatActor, plan: AiTurnPlan, _directive) -> void:
 		score += _w("self_preserve") * float(safety)
 		plan.add_reason("retreat safety %d" % safety)
 
+	# Formation slot: reward sitting in the commander's assigned position.
+	if directive != null and directive.formation_slot != AiDirective.Slot.NONE:
+		score += _slot_bonus(plan, directive)
+
 	plan.score = score
+
+
+## Bonus for ending in (or near) the cell the commander wants this unit to hold.
+func _slot_bonus(plan: AiTurnPlan, directive: AiDirective) -> float:
+	var ideal: Variant = _ideal_slot_cell_pos(directive)
+	if ideal == null:
+		return 0.0
+	var ideal_pos: Vector2i = ideal
+	var dist := _chebyshev(plan.destination_cell.grid_position, ideal_pos)
+	var bonus := DIR_SLOT_BONUS - DIR_SLOT_FALLOFF * float(dist)
+	if bonus > 0.0:
+		plan.add_reason("%s slot" % directive.slot_name())
+	return maxf(0.0, bonus)
+
+
+## Grid position (Vector2i) the directive's slot maps to, or null if undetermined.
+func _ideal_slot_cell_pos(directive: AiDirective) -> Variant:
+	var focus := directive.focus_target
+	var anchor := directive.anchor_cell
+	match directive.formation_slot:
+		AiDirective.Slot.ANCHOR:
+			if anchor != null:
+				return anchor.grid_position
+		AiDirective.Slot.SCREEN:
+			# Between the player (focus) and the anchor/commander.
+			if focus != null and focus.current_cell != null and anchor != null:
+				return (focus.current_cell.grid_position + anchor.grid_position) / 2
+		AiDirective.Slot.FLANK_LEFT, AiDirective.Slot.FLANK_RIGHT:
+			if focus != null and focus.current_cell != null:
+				# Offset one cell to the side of the focus target, perpendicular
+				# to the target's facing, on the assigned side.
+				var facing_vec := TacticalFacing.vector_from_direction(focus.get_tactical_facing())
+				var perp := Vector2i(-facing_vec.y, facing_vec.x)  # 90 deg
+				if directive.formation_slot == AiDirective.Slot.FLANK_RIGHT:
+					perp = -perp
+				return focus.current_cell.grid_position + perp
+	return null
 
 
 func _hypothetical_damage(actor: CombatActor, plan: AiTurnPlan, is_ranged: bool) -> int:

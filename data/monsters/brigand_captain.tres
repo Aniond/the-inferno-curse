@@ -1,0 +1,28 @@
+[gd_resource type="Resource" script_class="MonsterSheet" format=3 uid="uid://b8captbrig0aa"]
+
+[ext_resource type="Script" uid="uid://cfug6jap4u1ja" path="res://scripts/data/monster_sheet.gd" id="1_monster_sheet"]
+[ext_resource type="Script" uid="uid://unbjv8sfem0j" path="res://scripts/data/core_stats.gd" id="2_core_stats"]
+
+[sub_resource type="Resource" id="CoreStats_brigand_captain"]
+script = ExtResource("2_core_stats")
+strength = 8
+intellect = 7
+faith = 3
+creativity = 5
+presence = 7
+
+[resource]
+script = ExtResource("1_monster_sheet")
+monster_id = "brigand_captain"
+display_name = "Brigand Captain"
+family = "Human"
+core_stats = SubResource("CoreStats_brigand_captain")
+max_hp = 54
+natural_power = 4
+natural_defense = 3
+intelligence = 8
+abilities = Array[String](["Strike", "Rally", "Guard"])
+ai_tags = Array[String](["melee", "commander", "human"])
+reward_experience = 40
+reward_coin = 25
+drop_table = Array[String](["worn_dagger", "captains_signet"])

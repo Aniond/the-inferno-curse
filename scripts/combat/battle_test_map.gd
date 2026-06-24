@@ -11,6 +11,9 @@ enum PlayerTurnPhase {
 }
 
 @export var start_combat_on_ready: bool = false
+@export var spawn_test_squad: bool = false  # debug: add a commander + 2 mobs to test Phase 2
+@export var god_mode: bool = false  # debug: player and enemies take no damage (AI movement/coord playtest)
+@export var ai_enabled: bool = true  # debug: disable to make enemies skip their turn (stand still)
 @export var encounter_trigger_radius: float = 2.75
 @export var grid_columns: int = 15
 @export var grid_rows: int = 15
@@ -21,6 +24,7 @@ var combat_grid: CombatGrid = null
 var combat_state: CombatState = null
 var player_actor: CombatActor = null
 var monster_actor: CombatActor = null
+var _squad_actors: Array[CombatActor] = []  # test-only commander + mobs
 var _battle_overlay: BattleOverlay = null
 var _player_node: CharacterBody3D = null
 var _encounter_started: bool = false
@@ -33,6 +37,7 @@ var _last_action_text: String = ""
 var _highlight_root: Node3D = null
 var _facing_indicator: MeshInstance3D = null
 var _tactical_ai_client: TacticalAiClient = null
+var _last_commanded_round: int = -1  # last round a commander issued directives
 var _use_ranged_attack: bool = false
 var _reachable_costs: Dictionary = {}
 var _exploration_reachable_costs: Dictionary = {}
@@ -44,6 +49,8 @@ func _ready() -> void:
 	_create_combat_state()
 	_create_player_actor()
 	_create_test_monster_actor()
+	if spawn_test_squad:
+		_create_test_squad()
 	_create_battle_overlay()
 	_player_node = get_node_or_null("Player") as CharacterBody3D
 	# Weather system for battles (location + dynamic)
@@ -309,6 +316,43 @@ func _create_test_monster_actor() -> void:
 	monster_actor.add_child(_make_actor_marker(Color(0.75, 0.12, 0.08, 1.0), "Training Brigand"))
 
 
+## Debug (spawn_test_squad): a Brigand Captain (commander, INT 8) plus two
+## mob brigands, to exercise the Phase 2 squad coordination layer.
+func _create_test_squad() -> void:
+	var captain_sheet := load("res://data/monsters/brigand_captain.tres")
+	var captain := _spawn_enemy(
+		"brigand_captain_01", "Brigand Captain", captain_sheet,
+		Vector2i(7, 12), Color(0.85, 0.65, 0.15, 1.0)
+	)
+	_squad_actors.append(captain)
+
+	var mob_a := _spawn_enemy(
+		"brigand_mob_01", "Brigand A", TEST_MONSTER_SHEET,
+		Vector2i(5, 12), Color(0.7, 0.18, 0.12, 1.0)
+	)
+	var mob_b := _spawn_enemy(
+		"brigand_mob_02", "Brigand B", TEST_MONSTER_SHEET,
+		Vector2i(9, 12), Color(0.7, 0.18, 0.12, 1.0)
+	)
+	_squad_actors.append(mob_a)
+	_squad_actors.append(mob_b)
+
+
+func _spawn_enemy(id: String, label: String, sheet: Resource, grid_pos: Vector2i, color: Color) -> CombatActor:
+	var actor := CombatActor.new()
+	actor.name = "%sCombatActor" % id
+	actor.actor_id = id
+	actor.display_name = label
+	actor.faction = "enemy"
+	actor.sheet_resource = sheet
+	actor.starting_grid_position = grid_pos
+	actor.visual_facing = "north"
+	add_child(actor)
+	actor.global_position = _grid_to_world(grid_pos)
+	actor.add_child(_make_actor_marker(color, label))
+	return actor
+
+
 func _make_actor_marker(color: Color, label_text: String) -> Node3D:
 	var marker := Node3D.new()
 	marker.name = "BattleMarker"
@@ -423,11 +467,14 @@ func _start_test_combat() -> void:
 	_encounter_started = true
 	_combat_active = true
 	_last_action_text = ""
+	_last_commanded_round = -1
 
 	_snap_player_to_nearest_cell()
 	_apply_test_jump_modifiers()
 	combat_state.grid = combat_grid
-	combat_state.start_encounter(combat_grid, [player_actor, monster_actor])
+	var combatants: Array = [player_actor, monster_actor]
+	combatants.append_array(_squad_actors)
+	combat_state.start_encounter(combat_grid, combatants)
 	combat_state.weather_system = weather_system
 	# Demo: use BEACH + HURRICANE for dramatic mid-battle weather (or TAVERN + RAIN)
 	weather_system.set_location(weather_system.LocationType.BEACH)
@@ -477,13 +524,56 @@ func _begin_player_turn() -> void:
 	_refresh_battle_ui()
 
 
+## Once per round, let any living commander coordinate its squad. A commander
+## is an actor whose sheet ai_tags contains "commander". No commander -> all
+## enemies act solo (directives stay null).
+func _run_commander_if_needed() -> void:
+	if combat_state.round == _last_commanded_round:
+		return
+	_last_commanded_round = combat_state.round
+	for actor in combat_state.actors:
+		if actor == null or not actor.is_alive():
+			continue
+		if actor.faction != "enemy":
+			continue
+		if _actor_has_ai_tag(actor, "commander"):
+			var commander := EnemyCommander.new(combat_state, combat_grid)
+			commander.plan_round(actor)
+			print("[Commander %s] issued squad directives (round %d)" % [actor.display_name, combat_state.round])
+
+
+func _actor_has_ai_tag(actor: CombatActor, tag: String) -> bool:
+	if actor.sheet_resource == null:
+		return false
+	var tags = actor.sheet_resource.get("ai_tags")
+	return tags is Array and tags.has(tag)
+
+
 func _resolve_enemy_turn(actor: CombatActor) -> void:
 	var turn_controller := combat_state.get_turn_controller()
+
+	if not ai_enabled:
+		print("[%s] AI disabled — skipping turn." % actor.display_name)
+		if turn_controller != null:
+			turn_controller.skip_move()
+			turn_controller.skip_rotate()
+			turn_controller.finish_act()
+		combat_state.advance_ct(3)
+		combat_state.end_actor_turn()
+		_refresh_battle_ui()
+		return
+
+	# SQUAD layer: once per round, a commander (ai_tags has "commander") reads
+	# the board and writes directives onto its subordinates.
+	_run_commander_if_needed()
 
 	# INTENT layer: the tactical AI chooses where to stand and what to attack.
 	var ai := EnemyTacticalAI.new(combat_state, combat_grid)
 	var plan := ai.choose_turn(actor, actor.pending_directive)
-	print("[%s INT %d] %s" % [actor.display_name, actor.intelligence, plan.describe()])
+	var dir_note := ""
+	if actor.pending_directive != null:
+		dir_note = " <%s/%s>" % [actor.pending_directive.posture_name(), actor.pending_directive.slot_name()]
+	print("[%s INT %d%s] %s" % [actor.display_name, actor.intelligence, dir_note, plan.describe()])
 
 	# MOTION layer: execute the plan (move -> rotate -> attack), mirroring the
 	# player's CT accounting so turn order stays fair.
@@ -505,11 +595,14 @@ func _resolve_enemy_turn(actor: CombatActor) -> void:
 
 	# Attack if the plan has a target reachable from the destination cell.
 	if plan.target != null and plan.target.is_alive():
-		var damage := combat_state.resolve_attack(actor, plan.target, 0, plan.is_ranged)
+		var damage := combat_state.calculate_damage(actor, plan.target, 0, plan.is_ranged)
+		if not god_mode:
+			plan.target.apply_damage(damage)
 		var arc_label := TacticalFacing.arc_label(combat_grid.get_attack_arc(actor, plan.target))
-		_last_action_text = "%s strikes %s for %d (%s)!" % [actor.display_name, plan.target.display_name, damage, arc_label]
+		_last_action_text = "%s strikes %s for %d%s (%s)!" % [actor.display_name, plan.target.display_name, damage, " [GOD]" if god_mode else "", arc_label]
 		print(_last_action_text)
-		plan.target.current_ct = maxi(0, plan.target.current_ct - 15)
+		if not god_mode:
+			plan.target.current_ct = maxi(0, plan.target.current_ct - 15)
 		combat_state.advance_ct(1)  # attack action used
 	else:
 		_last_action_text = "%s repositions." % actor.display_name
@@ -636,7 +729,9 @@ func _player_attack(target: CombatActor) -> void:
 	if not _attackable_targets.has(target):
 		return
 	var is_ranged := _use_ranged_attack
-	var damage := combat_state.resolve_attack(player_actor, target, 0, is_ranged)
+	var damage := combat_state.calculate_damage(player_actor, target, 0, is_ranged)
+	if not god_mode:
+		target.apply_damage(damage)
 	var arc_label := TacticalFacing.arc_label(combat_grid.get_attack_arc(player_actor, target))
 	var cover_label := ""
 	if is_ranged and player_actor.current_cell != null and target.current_cell != null:
@@ -659,11 +754,12 @@ func _player_attack(target: CombatActor) -> void:
 			damage,
 			arc_label,
 		]
+	if god_mode and not _last_action_text.contains("[GOD]"):
+		_last_action_text = _last_action_text.replace("!", " [GOD]!")
 	print(_last_action_text)
-	# Example: action affects CT (e.g. attack delays next turn)
-	target.current_ct = max(0, target.current_ct - 15)
-	# Example: skill/spell to speed up own CT (boost turn speed)
-	player_actor.current_ct = min(200, player_actor.current_ct + 25)
+	if not god_mode:
+		target.current_ct = max(0, target.current_ct - 15)
+		player_actor.current_ct = min(200, player_actor.current_ct + 25)
 	combat_state.advance_ct(1)  # attack used
 	_use_ranged_attack = false
 	var turn_controller := combat_state.get_turn_controller()
