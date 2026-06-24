@@ -1,0 +1,36 @@
+{
+  "name": "summer_import_from_url_batch",
+  "description": "Download multiple files from URLs in one operation. Performs a single filesystem scan after all downloads, which is faster than importing one at a time.",
+  "inputSchema": {
+    "type": "object",
+    "properties": {
+      "imports": {
+        "type": "array",
+        "items": {
+          "type": "object",
+          "properties": {
+            "url": {
+              "type": "string",
+              "description": "URL to download"
+            },
+            "path": {
+              "type": "string",
+              "description": "Target path in project"
+            }
+          },
+          "required": [
+            "url",
+            "path"
+          ],
+          "additionalProperties": false
+        },
+        "description": "Array of {url, path} objects"
+      }
+    },
+    "required": [
+      "imports"
+    ],
+    "additionalProperties": false,
+    "$schema": "http://json-schema.org/draft-07/schema#"
+  }
+}

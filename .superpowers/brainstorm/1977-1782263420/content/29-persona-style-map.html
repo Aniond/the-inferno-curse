@@ -1,0 +1,90 @@
+<h2>Florence Map – Persona-Style Node Structure</h2>
+<p class="subtitle">Overview city map with roads and nodes. Entering a node loads a small 3D explorable area (like the current test map).</p>
+
+<div class="section">
+  <div class="label">Structure</div>
+  <p><strong>Overworld View (City Overview)</strong><br>
+  • Stylized top-down or angled view of Florence.<br>
+  • Connected by roads/paths (visual connections between nodes).<br>
+  • Nodes = distinct parts of the city (e.g. Market District, Cathedral Plaza, Riverside, Slums, etc.).<br>
+  • Player moves between nodes on the overview (free movement or simple pathing).</p>
+
+  <p><strong>Inside a Node (3D Map)</strong><br>
+  • Loads a small-to-medium 3D area (similar in scale and feel to the current battle_test_map).<br>
+  • Free movement exploration inside the node.<br>
+  • Grid/tactical combat only triggers on engagement (Limbo Squares, enemies, events).<br>
+  • Can contain multiple points of interest, NPCs, hazards, etc.</p>
+</div>
+
+<h3>How Corruption &amp; Systems Fit</h3>
+<div class="section">
+  <p><strong>World Corruption</strong><br>
+  • Each node has its own corruption "heat" level.<br>
+  • Higher corruption in a node = more Limbo Squares, denser shadows, water changes, higher random battle chance.<br>
+  • Corruption can spread between connected nodes over time if not managed.<br>
+  • Limbo Squares are placed inside the 3D node maps (invisible until focused).</p>
+
+  <p><strong>Exploration Flow</strong><br>
+  1. On the city overview, choose a node to enter.<br>
+  2. Load into the 3D map for that district.<br>
+  3. Freely walk around, talk to NPCs, look for clues/quests.<br>
+  4. Stepping on a Limbo Square or triggering an encounter loads tactical grid combat (or just teleports you in the 3D space).<br>
+  5. When done, exit back to the overview map.</p>
+
+  <p><strong>Ability Tree / Orbs Interaction</strong><br>
+  • Focus ability reveals Limbo Squares inside the 3D nodes.<br>
+  • Tree nodes can affect specific districts (e.g. reduce corruption spread in connected nodes, detect squares city-wide, etc.).<br>
+  • Saint vs Sinner choices can make certain nodes "safer" or more dangerous over time.</p>
+</div>
+
+<div class="pros-cons">
+  <div class="pros">
+    <h4>Strengths</h4>
+    <ul>
+      <li>Feels like Persona’s city navigation (familiar and clean).</li>
+      <li>Keeps 3D maps small and focused (easier to build, load, and populate).</li>
+      <li>Clear separation between "travel" and "explore/combat".</li>
+      <li>Easy to layer corruption visually per node.</li>
+      <li>Supports the hybrid movement system perfectly.</li>
+    </ul>
+  </div>
+  <div class="cons">
+    <h4>Things to decide</h4>
+    <ul>
+      <li>How many nodes at launch? (4–8 feels manageable)</li>
+      <li>Do nodes have internal "sub-areas" or are they single load zones?</li>
+      <li>Fast travel between nodes? (risky at high corruption?)</li>
+    </ul>
+  </div>
+</div>
+
+<div class="options">
+  <div class="option" data-choice="node-count" onclick="toggleSelect(this)">
+    <div class="letter">A</div>
+    <div class="content">
+      <h3>Starting Node Count</h3>
+      <p>How many nodes should Florence have at the beginning of the game?</p>
+    </div>
+  </div>
+  <div class="option" data-choice="corruption-visual" onclick="toggleSelect(this)">
+    <div class="letter">B</div>
+    <div class="content">
+      <h3>Corruption on Overview</h3>
+      <p>Should the city overview show corruption levels visually (color tint, particles, fog) per node, or only inside the 3D maps?</p>
+    </div>
+  </div>
+  <div class="option" data-choice="fast-travel" onclick="toggleSelect(this)">
+    <div class="letter">C</div>
+    <div class="content">
+      <h3>Fast Travel</h3>
+      <p>Should there be fast travel between nodes? If yes, how does corruption affect safety or availability?</p>
+    </div>
+  </div>
+  <div class="option" data-choice="next" onclick="toggleSelect(this)">
+    <div class="letter">D</div>
+    <div class="content">
+      <h3>Next Step</h3>
+      <p>Want to list out example node names/types for Florence first, or sketch how the overworld connects to other towns?</p>
+    </div>
+  </div>
+</div>

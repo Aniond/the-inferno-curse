@@ -10,6 +10,7 @@ extends Node3D
 var _light: OmniLight3D
 var _noise: FastNoiseLite
 var _seed_offset: float
+var _external_mult: float = 1.0
 
 
 func _ready() -> void:
@@ -26,6 +27,9 @@ func _ready() -> void:
 	_seed_offset = randf() * 1000.0
 
 
+func set_external_multiplier(m: float) -> void:
+	_external_mult = max(0.1, m)
+
 func _process(_delta: float) -> void:
 	if not _light:
 		return
@@ -33,4 +37,5 @@ func _process(_delta: float) -> void:
 	var t := Time.get_ticks_msec() * 0.001 * flicker_speed
 	var n := _noise.get_noise_1d(t + _seed_offset)
 	var flicker := 1.0 + n * flicker_strength - randf() * 0.08
-	_light.light_energy = max(base_energy * flicker, 0.3)
+	var effective := base_energy * _external_mult
+	_light.light_energy = max(effective * flicker, 0.25)

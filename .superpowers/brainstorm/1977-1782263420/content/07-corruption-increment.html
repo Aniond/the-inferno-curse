@@ -1,0 +1,117 @@
+<h2>Single Target — Equip Stat Interaction + Corruption System</h2>
+<p class="subtitle">D selected + new rule: each ability carries a corruption value that scales with number of abilities and skill power</p>
+
+<div class="section">
+  <div class="label">D: Equip + Stat Interaction</div>
+  <p>When you equip a Single Target ability, it can provide a small ongoing stat interaction (bonus or penalty) while equipped. This makes equipping meaningful beyond just "unlocking the button".</p>
+  <div style="margin-top:8px; font-size:13px;">
+    <strong>Example for "Strike" (Damage):</strong><br>
+    While equipped: +1 STR (or +1 POW)<br>
+    <span style="color:#a08060;">Tradeoff:</span> Adds to your personal corruption pressure
+  </div>
+</div>
+
+<h3>Corruption Value per Ability (scales)</h3>
+<div class="mockup">
+  <div class="mockup-header">Template fields (Damage &amp; Heal)</div>
+  <div class="mockup-body" style="font-family:monospace; font-size:12px; background:#111; color:#c8a060; padding:10px;">
+    base_corruption = 1          # the ability's "weight"<br>
+    corruption_scaling = 0.15    # % increase per extra equipped ability<br>
+    skill_power = 1.0            # 1.0 = normal, 1.5 = uncommon, 2.0+ = rare/high<br><br>
+    # Runtime (calculated when equipped)<br>
+    effective_corruption = base_corruption * (1 + (corruption_scaling * (total_equipped - 1))) * skill_power
+  </div>
+</div>
+
+<h3>How it increments (your rule)</h3>
+<div class="section">
+  <p>Every ability you equip adds its own corruption value, but the values themselves get bigger the more abilities you carry and the stronger they are.</p>
+  
+  <table style="width:100%; border-collapse:collapse; margin-top:8px; font-size:12px;">
+    <tr style="background:#2a2218;">
+      <th style="padding:4px; border:1px solid #554433;">Equipped</th>
+      <th style="padding:4px; border:1px solid #554433;">Ability</th>
+      <th style="padding:4px; border:1px solid #554433;">Base</th>
+      <th style="padding:4px; border:1px solid #554433;">Effective (with scaling)</th>
+    </tr>
+    <tr>
+      <td style="padding:4px; border:1px solid #554433;">1</td>
+      <td style="padding:4px; border:1px solid #554433;">Strike (normal)</td>
+      <td style="padding:4px; border:1px solid #554433;">1</td>
+      <td style="padding:4px; border:1px solid #554433;">1.0</td>
+    </tr>
+    <tr>
+      <td style="padding:4px; border:1px solid #554433;">2</td>
+      <td style="padding:4px; border:1px solid #554433;">Strike (normal)</td>
+      <td style="padding:4px; border:1px solid #554433;">1</td>
+      <td style="padding:4px; border:1px solid #554433;">1.15</td>
+    </tr>
+    <tr>
+      <td style="padding:4px; border:1px solid #554433;">2</td>
+      <td style="padding:4px; border:1px solid #554433;">Ash Hex (uncommon)</td>
+      <td style="padding:4px; border:1px solid #554433;">3</td>
+      <td style="padding:4px; border:1px solid #554433;">3.45</td>
+    </tr>
+    <tr>
+      <td style="padding:4px; border:1px solid #554433;">3</td>
+      <td style="padding:4px; border:1px solid #554433;">Strike</td>
+      <td style="padding:4px; border:1px solid #554433;">1</td>
+      <td style="padding:4px; border:1px solid #554433;">1.30</td>
+    </tr>
+  </table>
+  
+  <p style="margin-top:8px; font-size:12px;"><strong>Total player corruption</strong> = sum of all effective_corruption values (while equipped)</p>
+</div>
+
+<div class="pros-cons">
+  <div class="pros">
+    <h4>Why this works well</h4>
+    <ul>
+      <li>Encourages thoughtful equipping (you can't just equip everything)</li>
+      <li>Higher skills / rarer abilities naturally cost more</li>
+      <li>Having "more abilities" itself becomes a tax</li>
+      <li>Perfect hook for Church purification and guild reinterpretation</li>
+      <li>Corruption can affect world perception, NPC reactions, city circles, etc.</li>
+    </ul>
+  </div>
+  <div class="cons">
+    <h4>Still to decide</h4>
+    <ul>
+      <li>Does the scaling only apply to equipped, or also to total learned/absorbed?</li>
+      <li>Is skill_power based on rarity, or does the ability have its own "power level" that can grow?</li>
+      <li>Can you temporarily unequip to drop the corruption pressure?</li>
+      <li>Does using the ability add even more (per-use increment)?</li>
+    </ul>
+  </div>
+</div>
+
+<div class="options">
+  <div class="option" data-choice="scaling" onclick="toggleSelect(this)">
+    <div class="letter">A</div>
+    <div class="content">
+      <h3>Scaling Details</h3>
+      <p>How exactly should "more abilities" and "higher skills" increase the per-ability corruption value? Linear? Exponential? Different curves per rarity?</p>
+    </div>
+  </div>
+  <div class="option" data-choice="equip-interaction" onclick="toggleSelect(this)">
+    <div class="letter">B</div>
+    <div class="content">
+      <h3>Equip Stat Bonus Details</h3>
+      <p>What kind of stat interaction should a basic Single Target ability give while equipped? Flat +1? %? Conditional? Penalty on some stats?</p>
+    </div>
+  </div>
+  <div class="option" data-choice="examples" onclick="toggleSelect(this)">
+    <div class="letter">C</div>
+    <div class="content">
+      <h3>Full Template Examples</h3>
+      <p>Show complete Single Target damage + heal templates with base_corruption, stat interaction, and example scaled values for your current monsters.</p>
+    </div>
+  </div>
+  <div class="option" data-choice="total-corruption" onclick="toggleSelect(this)">
+    <div class="letter">D</div>
+    <div class="content">
+      <h3>Total Corruption Effects</h3>
+      <p>What does the player's total corruption actually do in the world and systems? (perception changes, city effects, NPC reactions, combat penalties...)</p>
+    </div>
+  </div>
+</div>

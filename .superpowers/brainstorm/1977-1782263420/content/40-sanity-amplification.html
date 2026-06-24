@@ -1,0 +1,129 @@
+<h2>Skills Grant Sanity Cost — World Horror Amplifies It</h2>
+<p class="subtitle">Mixture confirmed: Each skill/orb has a flat base Sanity cost (player). Using it or having it equipped grants/increases Sanity. Seeing world Corruption (horror) amplifies the Sanity impact.</p>
+
+<div class="section">
+  <div class="label">Your Rule</div>
+  <p>"it would be a mixure of both. Your skills grant sanity and seeing the world horor amplifies that"</p>
+  <p>Skills are the source of personal Sanity cost. The corrupted world makes that cost worse — more intense, more frequent, or with extra personal effects.</p>
+</div>
+
+<h3>Flat Values per Skill (as locked earlier)</h3>
+<div class="mockup">
+  <div class="mockup-body" style="font-family:monospace; font-size:12px;">
+    Every orb has two flat values:<br>
+    base_sanity_cost = X   (player personal toll)<br>
+    base_corruption_value = Y   (world contribution)<br><br>
+    
+    Example — Shadow Claw (Single Target Damage):<br>
+    base_sanity_cost = 3<br>
+    base_corruption_value = 2<br>
+    base_damage = 8<br>
+    scaling_stat = "STR"
+  </div>
+</div>
+
+<h3>How the Mixture Works</h3>
+<div class="section">
+  <p><strong>Skills Grant Sanity</strong></p>
+  <ul>
+    <li>Equipping an orb adds its base_sanity_cost to your current personal Sanity load.</li>
+    <li>Using the orb in combat pays the current Sanity cost (can be modified by tree stacks or nodes).</li>
+    <li>Stacking duplicates of the same orb in the tree increases both damage and the effective Sanity cost of that orb line.</li>
+  </ul>
+
+  <p><strong>World Horror Amplifies It</strong></p>
+  <ul>
+    <li>When world Corruption is high (Limbo Squares visible, shadows moving, water dark, random battles common), the Sanity cost of using skills becomes amplified.</li>
+    <li>Amplification examples (to be balanced later):<br>
+      • Higher effective cost (e.g. 3 becomes 5 in high corruption).<br>
+      • Extra personal effects (intrusive thoughts, temporary loss of control, orbs feel "wrong").<br>
+      • Increased bleed into world (using the skill while horrified makes nearby Corruption effects stronger).</li>
+    <li>Low world Corruption = skills cost closer to their base Sanity value. The world isn't fighting you as hard.</li>
+  </ul>
+</div>
+
+<h3>Single Target Template Update</h3>
+<div class="mockup">
+  <div class="mockup-body">
+    <strong>Damage Variant (Corrupted)</strong><br>
+    base_damage = 8<br>
+    scaling_stat = "STR"<br>
+    stat_multiplier = 1.0<br>
+    base_sanity_cost = 3<br>
+    base_corruption_value = 2<br><br>
+    
+    <strong>Heal Variant (Corrupted)</strong><br>
+    base_heal = 10<br>
+    scaling_stat = "FTH"<br>
+    base_sanity_cost = 2<br>
+    base_corruption_value = 1<br><br>
+    
+    <strong>Holy Version (after Church)</strong><br>
+    ...<br>
+    base_sanity_cost reduced<br>
+    base_corruption_value = 0 or very low
+  </div>
+</div>
+
+<h3>Tree Stacking &amp; Amplification</h3>
+<div class="section">
+  <p>Placing multiple copies of the same orb in the tree:</p>
+  <ul>
+    <li>Increases damage/power of that orb concept.</li>
+    <li>Increments the Sanity cost of using it.</li>
+    <li>When the world is horrified (high Corruption), the Sanity cost is amplified on top of the stacking increase.</li>
+  </ul>
+  <p>Example: A 3x stacked Shadow Claw might cost 3 base + 2 from stacks = 5 Sanity normally. In a high-corruption node it might cost 7 or 8, plus risk of personal side effects.</p>
+</div>
+
+<div class="pros-cons">
+  <div class="pros">
+    <h4>Why the mixture works</h4>
+    <ul>
+      <li>Skills are the source of personal Sanity (player agency and cost).</li>
+      <li>World horror (Corruption) acts as an environmental amplifier — the same skill feels worse in a more broken world.</li>
+      <li>Creates natural tension: using power in a corrupted area hurts you more.</li>
+      <li>Fits Saint vs Sinner: Saints try to keep both low; Sinners stack power knowing the world will amplify their Sanity cost.</li>
+      <li>Church Focus ability and purification become powerful tools to reduce base Sanity and resist amplification.</li>
+    </ul>
+  </div>
+  <div class="cons">
+    <h4>Still to tune (as you noted, balance testing later)</h4>
+    <ul>
+      <li>Exact amplification formula (additive, multiplier, or situational effects).</li>
+      <li>Whether amplification only happens in high-corruption nodes or scales continuously.</li>
+      <li>How personal side effects from high Sanity + amplification manifest (visuals, forced actions, orb misfires).</li>
+    </ul>
+  </div>
+</div>
+
+<div class="options">
+  <div class="option" data-choice="amplification-formula" onclick="toggleSelect(this)">
+    <div class="letter">A</div>
+    <div class="content">
+      <h3>Amplification Formula</h3>
+      <p>Should world horror multiply the Sanity cost, add a flat amount based on local corruption, or trigger extra personal effects instead of (or in addition to) higher cost?</p>
+    </div>
+  </div>
+  <div class="option" data-choice="holy-resistance" onclick="toggleSelect(this)">
+    <div class="letter">B</div>
+    <div class="content">
+      <h3>Holy Versions &amp; Amplification</h3>
+      <p>Should holy versions resist amplification (lower or no extra Sanity hit in high-corruption areas) or just have lower base Sanity cost?</p>
+    </div>
+  </div>
+  <div class="option" data-choice="tree-nodes" onclick="toggleSelect(this)">
+    <div class="letter">C</div>
+    <div class="content">
+      <h3>Tree Nodes on Amplification</h3>
+      <p>Should certain tree nodes reduce or increase how much world horror amplifies Sanity cost for orbs in that cluster?</p>
+    </div>
+  </div>
+  <div class="option" data-choice="personal-effects" onclick="toggleSelect(this)">
+    <div class="letter">D</div>
+    <div class="content">
+      <h3>Personal Effects from Amplification</h3>
+      <p>When Sanity cost is amplified, should the player experience direct character effects (hallucinations, loss of control, altered dialogue) in addition to higher cost?</p>
+    </div>
+  </div>
+</div>

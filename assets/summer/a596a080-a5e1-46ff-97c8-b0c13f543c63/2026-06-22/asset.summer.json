@@ -1,0 +1,47 @@
+{
+	"assetId": "a596a080-a5e1-46ff-97c8-b0c13f543c63",
+	"metadata": {
+		"downloadUrl": "https://v3b.fal.media/files/b/0a9f5df4/fSasagEDgjEZWgrMEw-ZM_GSVxGuk1.png",
+		"fileName": "fSasagEDgjEZWgrMEw-ZM_GSVxGuk1.png",
+		"filename": "fSasagEDgjEZWgrMEw-ZM_GSVxGuk1.png",
+		"id": "a596a080-a5e1-46ff-97c8-b0c13f543c63",
+		"metadata": {
+			"aspect_ratio": "1:1",
+			"batchCapped": false,
+			"batchSize": 1.0,
+			"clientImageModel": "fal-ai/recraft-v3",
+			"entrypoint": "api/art/generate",
+			"falModelId": "xai/grok-imagine-image",
+			"falPrompt": "Create a square 1024x1024 pixel-art fantasy RPG character sheet UI template on aged parchment, with ornate dark carved wood headers, gold filigree corners, and a medieval Italian dark fantasy style.\n\nThis is a game UI background template. Bake in only fixed interface labels. Leave every player-specific or changing value blank.\n\nAllowed baked text only:\nPROFILE\nSTATS\nRESISTANCE\nSKILLS\nEQUIPMENT\nTRAITS\nHP\nMP\nCT\nSTR\nSPD\nINT\nFTH\nPOW\nDEF\nMOV\nJMP\nEXP\n\nDo not add any other text. Do not add ABILITIES. Do not add ability cards. Do not add names, class names, numbers, sample values, percentages, equipment names, trait names, placeholder text, or random decorative letters.\n\nLayout:\n- Top row: three carved wooden title plaques labeled PROFILE, STATS, RESISTANCE.\n- Left PROFILE panel: ornate empty portrait frame, one blank nameplate for character name, one blank strip for class/job.\n- Center STATS panel: three empty horizontal meter frames labeled HP, MP, CT on the left. The meter frames must be empty, with no colored fill and no numbers.\n- Below the meters, include stat rows with baked stat labels and blank value boxes for STR, SPD, INT, FTH, POW, DEF, MOV, JMP, and EXP. Each stat label appears exactly once.\n- Right RESISTANCE panel: exactly six resistance rows, evenly stacked. Each row has only one small icon slot on the left and one long blank value box on the right. No shield icons, no shield column, no duplicate icon boxes. Use small symbolic icons for Physical, Poison, Bleed, Paralyze, Holy, and Corruption, but do not write those words.\n- SKILLS section: exactly four empty skill rows, each with one blank square icon slot and one long blank description field.\n- EQUIPMENT section: four empty rows, each with one blank square icon slot and one long blank item field.\n- TRAITS section: four empty rows, each with one blank square icon slot and one long blank description field.\n- There must be no ABILITIES section anywhere on the image.\n\nStyle:\nPixel-art UI, aged parchment, dark brown carved wood plaques, thin gold trim, subtle grime and wear, ornate frame, crisp black/brown outlines, clean alignment, readable baked labels, empty spaces ready for game text overlay. No character art, no sample values, no watermark., 16-bit pixel art, SNES-era detailed sprites, rich palette",
+			"finalPrompt": "Create a square 1024x1024 pixel-art fantasy RPG character sheet UI template on aged parchment, with ornate dark carved wood headers, gold filigree corners, and a medieval Italian dark fantasy style.\n\nThis is a game UI background template. Bake in only fixed interface labels. Leave every player-specific or changing value blank.\n\nAllowed baked text only:\nPROFILE\nSTATS\nRESISTANCE\nSKILLS\nEQUIPMENT\nTRAITS\nHP\nMP\nCT\nSTR\nSPD\nINT\nFTH\nPOW\nDEF\nMOV\nJMP\nEXP\n\nDo not add any other text. Do not add ABILITIES. Do not add ability cards. Do not add names, class names, numbers, sample values, percentages, equipment names, trait names, placeholder text, or random decorative letters.\n\nLayout:\n- Top row: three carved wooden title plaques labeled PROFILE, STATS, RESISTANCE.\n- Left PROFILE panel: ornate empty portrait frame, one blank nameplate for character name, one blank strip for class/job.\n- Center STATS panel: three empty horizontal meter frames labeled HP, MP, CT on the left. The meter frames must be empty, with no colored fill and no numbers.\n- Below the meters, include stat rows with baked stat labels and blank value boxes for STR, SPD, INT, FTH, POW, DEF, MOV, JMP, and EXP. Each stat label appears exactly once.\n- Right RESISTANCE panel: exactly six resistance rows, evenly stacked. Each row has only one small icon slot on the left and one long blank value box on the right. No shield icons, no shield column, no duplicate icon boxes. Use small symbolic icons for Physical, Poison, Bleed, Paralyze, Holy, and Corruption, but do not write those words.\n- SKILLS section: exactly four empty skill rows, each with one blank square icon slot and one long blank description field.\n- EQUIPMENT section: four empty rows, each with one blank square icon slot and one long blank item field.\n- TRAITS section: four empty rows, each with one blank square icon slot and one long blank description field.\n- There must be no ABILITIES section anywhere on the image.\n\nStyle:\nPixel-art UI, aged parchment, dark brown carved wood plaques, thin gold trim, subtle grime and wear, ornate frame, crisp black/brown outlines, clean alignment, readable baked labels, empty spaces ready for game text overlay. No character art, no sample values, no watermark.",
+			"generatedAt": "2026-06-22T21:39:37.541Z",
+			"generationBatchId": "c984ae49-4e7b-4e9f-9e44-12b480d3efad",
+			"height": 1024.0,
+			"multiview": false,
+			"numImages": 1.0,
+			"numImagesRequested": 1.0,
+			"pose": "none",
+			"promptRefined": false,
+			"referenceCount": 0.0,
+			"runIndex": 0.0,
+			"style": "retro-16bit",
+			"surface": "studio",
+			"width": 1024.0
+		},
+		"name": "Pixel Fantasy UI",
+		"previewUrl": "https://v3b.fal.media/files/b/0a9f5df4/fSasagEDgjEZWgrMEw-ZM_GSVxGuk1.png",
+		"primary": true,
+		"thumbnailUrl": "https://v3b.fal.media/files/b/0a9f5df4/fSasagEDgjEZWgrMEw-ZM_GSVxGuk1.png",
+		"title": "Pixel Fantasy UI",
+		"type": "image",
+		"url": "https://v3b.fal.media/files/b/0a9f5df4/fSasagEDgjEZWgrMEw-ZM_GSVxGuk1.png",
+		"version": "2026-06-22"
+	},
+	"name": "Pixel Fantasy UI",
+	"paths": [
+		"res://assets/summer/a596a080-a5e1-46ff-97c8-b0c13f543c63/2026-06-22/fSasagEDgjEZWgrMEw-ZM_GSVxGuk1.jpg"
+	],
+	"primaryPath": "res://assets/summer/a596a080-a5e1-46ff-97c8-b0c13f543c63/2026-06-22/fSasagEDgjEZWgrMEw-ZM_GSVxGuk1.jpg",
+	"source": "summer-studio",
+	"version": "2026-06-22"
+}

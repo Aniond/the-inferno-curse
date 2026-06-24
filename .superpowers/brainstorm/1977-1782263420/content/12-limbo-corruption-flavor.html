@@ -1,0 +1,115 @@
+<h2>Single Target — Corruption as Limbo Infection (Dante's Florence)</h2>
+<p class="subtitle">1200-1300 Italy • Divine Comedy inspired • Florence warped by the first circle of Hell</p>
+
+<div class="section">
+  <div class="label">Setting & Lore</div>
+  <p>The game is set in real 13th-century Italy, centered on Florence. Limbo — the first circle of Dante’s Inferno — has begun bleeding into the city. It is not fire and brimstone. It is <strong>eternal hesitation, melancholy, and the weight of unmade choices</strong>.</p>
+  <p>The player (Guglielmo) absorbs souls/abilities from monsters. Each absorption or certain actions “infects” him with Limbo. Corruption is completely hidden. The player never sees a number.</p>
+</div>
+
+<h3>Limbo Manifestations (what the player actually experiences)</h3>
+<div class="split">
+  <div class="mockup">
+    <div class="mockup-header">Water & Rivers</div>
+    <div class="mockup-body">
+      • Clear water slowly turns gray, then the dull color of old parchment or stagnant ash.<br>
+      • Fountains and the Arno feel “heavy” — reflections show faces that aren’t there.<br>
+      • Later stages: water seems to hesitate before flowing, like it’s deciding whether to move.
+    </div>
+  </div>
+  <div class="mockup">
+    <div class="mockup-header">Shadows & Light</div>
+    <div class="mockup-body">
+      • Shadows lengthen and linger even when they shouldn’t.<br>
+      • Sometimes a shadow stays behind after the person or object has moved — a “left behind” soul.<br>
+      • Torches and sunlight feel dimmer in certain districts, as if the light itself is unsure.
+    </div>
+  </div>
+  <div class="mockup">
+    <div class="mockup-header">Random Encounters & Atmosphere</div>
+    <div class="mockup-body">
+      • Restless shades (neutral souls) begin appearing in normally safe streets.<br>
+      • Encounters feel like “interrupted conversations” — enemies hesitate before attacking.<br>
+      • Occasional distant sighs or the sound of people endlessly debating something just out of sight.
+    </div>
+  </div>
+</div>
+
+<h3>How Limbo Infection Works (tied to abilities & actions)</h3>
+<div class="section">
+  <p>Every absorbed ability carries a hidden <strong>base_corruption</strong> (Limbo weight).</p>
+  <p>When you equip more abilities (or higher-power ones), the effective Limbo infection increases <strong>additively</strong>:</p>
+  <p style="font-family:monospace; background:#111; padding:6px;">effective_limbo = base + sum(base of all other equipped abilities)</p>
+  <p>Certain actions (mercy killings, breaking oaths, delaying decisions in quests) can also add small hidden amounts.</p>
+  <p>As the total rises, the three manifestation categories above intensify. The world itself starts to feel suspended between life and death — exactly like Limbo.</p>
+</div>
+
+<h3>Integration with Single Target Damage Template</h3>
+<div class="mockup">
+  <div class="mockup-header">Damage Variant (with Limbo flavor)</div>
+  <div class="mockup-body" style="font-family:monospace; font-size:11px;">
+    base_damage = 8<br>
+    scaling_stat = "STR"<br>
+    stat_multiplier = 1.0<br><br>
+    base_corruption = 1          # hidden Limbo weight from this soul<br>
+    # effective = base + sum(other equipped bases)<br><br>
+    equip_stat_mod = { "STR": +1 }<br><br>
+    # No visible corruption. Only the world changes.
+  </div>
+</div>
+
+<div class="section">
+  <p><strong>Design implication for Single Target abilities</strong></p>
+  <p>Absorbing a martial soul (Strike) feels like choosing violence — it carries Limbo weight because it delays the soul’s proper rest or judgment. Using it in combat pushes Florence (and the player) further into hesitation and melancholy.</p>
+</div>
+
+<div class="pros-cons">
+  <div class="pros">
+    <h4>Why this fits the setting</h4>
+    <ul>
+      <li>Limbo is not punishment by pain — it is the pain of never choosing, never moving on.</li>
+      <li>Water, shadows, and random “interrupted” battles perfectly evoke suspended souls.</li>
+      <li>Corruption from absorption/actions directly ties player power to the city’s decay.</li>
+      <li>Purification at the Church or guilds can feel like “forcing a decision” and pushing Limbo back.</li>
+    </ul>
+  </div>
+  <div class="cons">
+    <h4>Still to decide</h4>
+    <ul>
+      <li>Do certain ability themes (martial vs sacred) produce different flavors of Limbo effect?</li>
+      <li>How quickly do manifestations appear after you equip a new ability?</li>
+      <li>Should day/night or existing weather interact with Limbo manifestations?</li>
+    </ul>
+  </div>
+</div>
+
+<div class="options">
+  <div class="option" data-choice="theme-flavor" onclick="toggleSelect(this)">
+    <div class="letter">A</div>
+    <div class="content">
+      <h3>Ability Theme Flavor</h3>
+      <p>Should different absorbed souls (martial, infernal, sacred, etc.) tint the Limbo effects differently (e.g. more violent shadows vs more sighing echoes)?</p>
+    </div>
+  </div>
+  <div class="option" data-choice="ramp-speed" onclick="toggleSelect(this)">
+    <div class="letter">B</div>
+    <div class="content">
+      <h3>Ramp Speed</h3>
+      <p>How fast do the world changes appear after you absorb or equip something new? Immediate subtle shift, or over in-game hours/days?</p>
+    </div>
+  </div>
+  <div class="option" data-choice="weather-time" onclick="toggleSelect(this)">
+    <div class="letter">C</div>
+    <div class="content">
+      <h3>Weather &amp; Time Interaction</h3>
+      <p>Should Florence’s existing weather system and day/night cycle make Limbo manifestations stronger or more visible at certain times?</p>
+    </div>
+  </div>
+  <div class="option" data-choice="personal-effect" onclick="toggleSelect(this)">
+    <div class="letter">D</div>
+    <div class="content">
+      <h3>Player Personal Effect</h3>
+      <p>Besides world changes, should the player sometimes personally “feel” Limbo (brief screen hesitation, delayed inputs, melancholy dialogue options)?</p>
+    </div>
+  </div>
+</div>

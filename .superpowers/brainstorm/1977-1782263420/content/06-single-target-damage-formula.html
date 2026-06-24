@@ -1,0 +1,110 @@
+<h2>Single Target Damage — Base Damage Modified by Stats</h2>
+<p class="subtitle">Equipable template with explicit damage calculation</p>
+
+<div class="section">
+  <div class="label">Your clarification</div>
+  <p>The ability carries a <strong>base_damage</strong> that gets modified by the user's stats at the time of use.</p>
+</div>
+
+<h3>Updated Damage Variant Template</h3>
+<div class="mockup">
+  <div class="mockup-header">strike.tres (Damage variant)</div>
+  <div class="mockup-body" style="font-family:monospace; font-size:12px; background:#111; color:#ff8a7d; padding:10px; line-height:1.5;">
+    id = "strike"<br>
+    display_name = "Strike"<br>
+    type = "single_target"<br>
+    variant = "damage"<br><br>
+    base_damage = 8<br>
+    scaling_stat = "STR"<br>
+    stat_multiplier = 1.0     # damage added per point of stat<br><br>
+    # Targeting<br>
+    range = 1<br>
+    is_ranged = false<br><br>
+    # CT<br>
+    ct_target_delay = 12<br>
+    ct_self_gain = 0<br>
+    action_cost = 1<br><br>
+    mp_cost = 0<br>
+    corruption_on_equip = 1<br>
+    corruption_on_use = 0<br><br>
+    theme_tags = ["martial"]
+  </div>
+</div>
+
+<h3>Calculation (usable formula)</h3>
+<div class="mockup">
+  <div class="mockup-header">Damage Resolution</div>
+  <div class="mockup-body" style="background:#1a140f; padding:12px; font-size:13px;">
+    <strong>final_damage = base_damage + (user.scaling_stat_value * stat_multiplier)</strong><br><br>
+    Then apply the normal combat modifiers:<br>
+    + height bonus<br>
+    + flank / pincer<br>
+    - target defense + cover<br>
+    * weather damage_mult (if any)<br><br>
+    <em>Example: User has STR 7, Strike (base 8, mult 1.0)</em><br>
+    final_damage = 8 + (7 × 1.0) = <strong>15</strong><br>
+    (before height/flank/cover/weather)
+  </div>
+</div>
+
+<h3>Why this shape is usable</h3>
+<div class="section">
+  <ul>
+    <li>base_damage gives the "identity" of the ability (weak vs strong)</li>
+    <li>stat_multiplier lets strong abilities scale harder with high stats</li>
+    <li>scaling_stat can be different per ability (STR for physical, INT for spells)</li>
+    <li>Works the same whether the user is player or (future) NPC</li>
+    <li>Easy to author on monster sheets for absorption</li>
+  </ul>
+</div>
+
+<div class="pros-cons">
+  <div class="pros">
+    <h4>Pros</h4>
+    <ul>
+      <li>Simple, readable template</li>
+      <li>Base + stat mod is intuitive</li>
+      <li>Can tune per ability without changing core formula</li>
+      <li>Still feeds into existing combat_state.calculate_damage</li>
+    </ul>
+  </div>
+  <div class="cons">
+    <h4>Open decisions</h4>
+    <ul>
+      <li>Should stat_multiplier default to 1.0 or be ability-specific only?</li>
+      <li>Do we want a minimum damage floor? (e.g. always at least base_damage)</li>
+      <li>How does this interact with natural_power on monsters?</li>
+    </ul>
+  </div>
+</div>
+
+<div class="options">
+  <div class="option" data-choice="formula" onclick="toggleSelect(this)">
+    <div class="letter">A</div>
+    <div class="content">
+      <h3>Tune the Formula</h3>
+      <p>Examples: flat add, percentage, or different multiplier per stat tier.</p>
+    </div>
+  </div>
+  <div class="option" data-choice="examples" onclick="toggleSelect(this)">
+    <div class="letter">B</div>
+    <div class="content">
+      <h3>Concrete Ability Examples</h3>
+      <p>3-4 damage abilities with actual base_damage + stat_multiplier values for your monsters.</p>
+    </div>
+  </div>
+  <div class="option" data-choice="heal" onclick="toggleSelect(this)">
+    <div class="letter">C</div>
+    <div class="content">
+      <h3>Heal Variant Formula</h3>
+      <p>Should heal use the same pattern? (base_heal + stat * mult)</p>
+    </div>
+  </div>
+  <div class="option" data-choice="equip" onclick="toggleSelect(this)">
+    <div class="letter">D</div>
+    <div class="content">
+      <h3>Equip + Stat Interaction</h3>
+      <p>Does equipping the ability also give a small stat bonus (or penalty) while equipped?</p>
+    </div>
+  </div>
+</div>

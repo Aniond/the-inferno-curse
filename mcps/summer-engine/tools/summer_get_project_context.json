@@ -1,0 +1,9 @@
+{
+  "name": "summer_get_project_context",
+  "description": "Get essential project context before editing. Returns:\n- engine health/status\n- project name and project path when exposed by project state\n- current scene path (if available)\n- main scene path from project settings\n- lightweight .summer project memory summary when project path is available\n\nUse this first in every fresh chat to avoid guessing scene filenames or editing the wrong scene.",
+  "inputSchema": {
+    "$schema": "http://json-schema.org/draft-07/schema#",
+    "type": "object",
+    "properties": {}
+  }
+}

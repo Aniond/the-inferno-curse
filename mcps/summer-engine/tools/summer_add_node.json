@@ -1,0 +1,28 @@
+{
+  "name": "summer_add_node",
+  "description": "Add a new node to the scene tree.\n\nPreflight (fresh chat):\n1) summer_get_project_context\n2) summer_open_main_scene (if no scene open)\n3) summer_get_scene_tree\n\nCommon node types:\n- 3D: Node3D, MeshInstance3D, CharacterBody3D, RigidBody3D, StaticBody3D, Camera3D, DirectionalLight3D, OmniLight3D, SpotLight3D, WorldEnvironment, CollisionShape3D, Area3D\n- 2D: Node2D, Sprite2D, CharacterBody2D, RigidBody2D, StaticBody2D, Camera2D, CollisionShape2D, Area2D, TileMapLayer\n- UI: Control, Label, Button, TextEdit, Panel, VBoxContainer, HBoxContainer, MarginContainer\n- Audio: AudioStreamPlayer, AudioStreamPlayer3D\n\nThe parent path uses \"./\" prefix for relative paths from scene root. E.g., \"./World\" means the \"World\" child of the root node.",
+  "inputSchema": {
+    "type": "object",
+    "properties": {
+      "parent": {
+        "type": "string",
+        "description": "Parent node path, e.g. './World' or './World/Enemies'"
+      },
+      "type": {
+        "type": "string",
+        "description": "Godot node type, e.g. 'MeshInstance3D', 'CharacterBody3D'"
+      },
+      "name": {
+        "type": "string",
+        "description": "Name for the new node, e.g. 'Player', 'MainCamera'"
+      }
+    },
+    "required": [
+      "parent",
+      "type",
+      "name"
+    ],
+    "additionalProperties": false,
+    "$schema": "http://json-schema.org/draft-07/schema#"
+  }
+}

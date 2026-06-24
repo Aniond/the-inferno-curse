@@ -1,0 +1,59 @@
+{"type":"owner-pid-invalid","pid":1,"reason":"dead at startup"}
+{"type":"server-started","port":53293,"host":"127.0.0.1","url_host":"localhost","url":"http://localhost:53293","screen_dir":"c:\\Gadot Projects\\the-inferno-curse\\.superpowers\\brainstorm\\1977-1782263420\\content","state_dir":"c:\\Gadot Projects\\the-inferno-curse\\.superpowers\\brainstorm\\1977-1782263420\\state"}
+{"type":"screen-added","file":"c:\\Gadot Projects\\the-inferno-curse\\.superpowers\\brainstorm\\1977-1782263420\\content\\01-skill-types-overview.html"}
+{"type":"screen-added","file":"c:\\Gadot Projects\\the-inferno-curse\\.superpowers\\brainstorm\\1977-1782263420\\content\\02-which-type-first.html"}
+{"source":"user-event","type":"click","text":"1\n    \n      Single Target (Attack / Heal)\n      Direct single-cell effects. Easiest to implement first using existing attack/targeting code. Good for Normal abilities.\n      Focus areas: CT steal/boost, simple damage/heal, basic status","choice":"single","id":null,"timestamp":1782263749230}
+{"source":"user-event","type":"click","text":"2\n    \n      Area Effect Spells\n      Shapes on the grid (cross, 3x3, line, cone). Needs new targeting logic but high tactical payoff. Strong Uncommon candidate.\n      Focus areas: AoE shapes, height interaction, weather dampening, multi-target CT","choice":"area","id":null,"timestamp":1782263750068}
+{"source":"user-event","type":"click","text":"3\n    \n      Buff / Curse\n      Status-like effects on CT, power, movement. Leverages existing apply_status_effect and modifiers. Fits both Normal and Uncommon.\n      Focus areas: Duration, stacking, CT multiplier/flat changes, corruption on use","choice":"buff","id":null,"timestamp":1782263750464}
+{"source":"user-event","type":"click","text":"4\n    \n      Traits (Passives)\n      Always-on or equipped effects. Rare tier mostly. Impacts builds and class identity. Needs careful limits.\n      Focus areas: Passive hooks in combat formulas, equip slots, theme tags for jobs","choice":"trait","id":null,"timestamp":1782263750825}
+{"type":"screen-added","file":"c:\\Gadot Projects\\the-inferno-curse\\.superpowers\\brainstorm\\1977-1782263420\\content\\03-single-target-template.html"}
+{"type":"screen-added","file":"c:\\Gadot Projects\\the-inferno-curse\\.superpowers\\brainstorm\\1977-1782263420\\content\\04-equipable-single-target.html"}
+{"type":"screen-added","file":"c:\\Gadot Projects\\the-inferno-curse\\.superpowers\\brainstorm\\1977-1782263420\\content\\05-single-target-damage-heal-variants.html"}
+{"type":"screen-added","file":"c:\\Gadot Projects\\the-inferno-curse\\.superpowers\\brainstorm\\1977-1782263420\\content\\06-single-target-damage-formula.html"}
+{"source":"user-event","type":"click","text":"D\n    \n      Equip + Stat Interaction\n      Does equipping the ability also give a small stat bonus (or penalty) while equipped?","choice":"equip","id":null,"timestamp":1782263952782}
+{"source":"user-event","type":"click","text":"A\n    \n      Tune the Formula\n      Examples: flat add, percentage, or different multiplier per stat tier.","choice":"formula","id":null,"timestamp":1782263955853}
+{"source":"user-event","type":"click","text":"D\n    \n      Equip + Stat Interaction\n      Does equipping the ability also give a small stat bonus (or penalty) while equipped?","choice":"equip","id":null,"timestamp":1782263957569}
+{"type":"screen-added","file":"c:\\Gadot Projects\\the-inferno-curse\\.superpowers\\brainstorm\\1977-1782263420\\content\\07-corruption-increment.html"}
+{"type":"screen-added","file":"c:\\Gadot Projects\\the-inferno-curse\\.superpowers\\brainstorm\\1977-1782263420\\content\\08-corruption-additive-example.html"}
+{"type":"screen-added","file":"c:\\Gadot Projects\\the-inferno-curse\\.superpowers\\brainstorm\\1977-1782263420\\content\\09-single-target-full-template.html"}
+{"type":"screen-added","file":"c:\\Gadot Projects\\the-inferno-curse\\.superpowers\\brainstorm\\1977-1782263420\\content\\10-hidden-corruption-effects.html"}
+{"type":"screen-added","file":"c:\\Gadot Projects\\the-inferno-curse\\.superpowers\\brainstorm\\1977-1782263420\\content\\11-hidden-corruption-manifestations.html"}
+{"type":"screen-added","file":"c:\\Gadot Projects\\the-inferno-curse\\.superpowers\\brainstorm\\1977-1782263420\\content\\12-limbo-corruption-flavor.html"}
+{"source":"user-event","type":"click","text":"A\n    \n      Ability Theme Flavor\n      Should different absorbed souls (martial, infernal, sacred, etc.) tint the Limbo effects differently (e.g. more violent shadows vs more sighing echoes)?","choice":"theme-flavor","id":null,"timestamp":1782264456240}
+{"source":"user-event","type":"click","text":"B\n    \n      Ramp Speed\n      How fast do the world changes appear after you absorb or equip something new? Immediate subtle shift, or over in-game hours/days?","choice":"ramp-speed","id":null,"timestamp":1782264457026}
+{"type":"screen-added","file":"c:\\Gadot Projects\\the-inferno-curse\\.superpowers\\brainstorm\\1977-1782263420\\content\\13-guilds-church-system.html"}
+{"type":"screen-added","file":"c:\\Gadot Projects\\the-inferno-curse\\.superpowers\\brainstorm\\1977-1782263420\\content\\14-church-holy-purification.html"}
+{"type":"screen-added","file":"c:\\Gadot Projects\\the-inferno-curse\\.superpowers\\brainstorm\\1977-1782263420\\content\\15-saint-vs-sinner.html"}
+{"type":"screen-added","file":"c:\\Gadot Projects\\the-inferno-curse\\.superpowers\\brainstorm\\1977-1782263420\\content\\16-orb-skill-tree.html"}
+{"type":"screen-added","file":"c:\\Gadot Projects\\the-inferno-curse\\.superpowers\\brainstorm\\1977-1782263420\\content\\17-duplicate-farming-tree.html"}
+{"type":"screen-added","file":"c:\\Gadot Projects\\the-inferno-curse\\.superpowers\\brainstorm\\1977-1782263420\\content\\18-sanity-cost-stacking.html"}
+{"type":"screen-added","file":"c:\\Gadot Projects\\the-inferno-curse\\.superpowers\\brainstorm\\1977-1782263420\\content\\19-sanity-vs-corruption.html"}
+{"type":"screen-added","file":"c:\\Gadot Projects\\the-inferno-curse\\.superpowers\\brainstorm\\1977-1782263420\\content\\20-sanity-vs-single-corruption.html"}
+{"type":"screen-added","file":"c:\\Gadot Projects\\the-inferno-curse\\.superpowers\\brainstorm\\1977-1782263420\\content\\21-limbo-squares.html"}
+{"type":"screen-added","file":"c:\\Gadot Projects\\the-inferno-curse\\.superpowers\\brainstorm\\1977-1782263420\\content\\22-limbo-squares-scaling.html"}
+{"type":"screen-added","file":"c:\\Gadot Projects\\the-inferno-curse\\.superpowers\\brainstorm\\1977-1782263420\\content\\23-limbo-squares-deceptive.html"}
+{"type":"screen-added","file":"c:\\Gadot Projects\\the-inferno-curse\\.superpowers\\brainstorm\\1977-1782263420\\content\\24-limbo-squares-random-deception.html"}
+{"type":"screen-added","file":"c:\\Gadot Projects\\the-inferno-curse\\.superpowers\\brainstorm\\1977-1782263420\\content\\25-limbo-squares-invisible-focus.html"}
+{"type":"screen-added","file":"c:\\Gadot Projects\\the-inferno-curse\\.superpowers\\brainstorm\\1977-1782263420\\content\\26-church-focus-ability.html"}
+{"type":"screen-added","file":"c:\\Gadot Projects\\the-inferno-curse\\.superpowers\\brainstorm\\1977-1782263420\\content\\27-church-reputation.html"}
+{"type":"screen-added","file":"c:\\Gadot Projects\\the-inferno-curse\\.superpowers\\brainstorm\\1977-1782263420\\content\\28-foundation-map-concepts.html"}
+{"type":"screen-added","file":"c:\\Gadot Projects\\the-inferno-curse\\.superpowers\\brainstorm\\1977-1782263420\\content\\29-persona-style-map.html"}
+{"type":"screen-added","file":"c:\\Gadot Projects\\the-inferno-curse\\.superpowers\\brainstorm\\1977-1782263420\\content\\30-florence-nodes.html"}
+{"type":"screen-added","file":"c:\\Gadot Projects\\the-inferno-curse\\.superpowers\\brainstorm\\1977-1782263420\\content\\31-hidden-nodes.html"}
+{"type":"screen-added","file":"c:\\Gadot Projects\\the-inferno-curse\\.superpowers\\brainstorm\\1977-1782263420\\content\\32-npc-story-hidden-nodes.html"}
+{"type":"screen-added","file":"c:\\Gadot Projects\\the-inferno-curse\\.superpowers\\brainstorm\\1977-1782263420\\content\\33-ai-npc-natural-discovery.html"}
+{"type":"screen-added","file":"c:\\Gadot Projects\\the-inferno-curse\\.superpowers\\brainstorm\\1977-1782263420\\content\\34-ai-npc-rumor-unlock.html"}
+{"type":"screen-added","file":"c:\\Gadot Projects\\the-inferno-curse\\.superpowers\\brainstorm\\1977-1782263420\\content\\35-ai-npc-decision-consequences.html"}
+{"type":"screen-added","file":"c:\\Gadot Projects\\the-inferno-curse\\.superpowers\\brainstorm\\1977-1782263420\\content\\36-ai-npc-decision-consequences.html"}
+{"source":"user-event","type":"click","text":"A\n    \n      Rumor Directness\n      Should NPCs ever directly reference your involvement (\"I heard someone turned that person away...\"), or keep it indirect so the player has to connect the dots themselves?","choice":"rumor-directness","id":null,"timestamp":1782266776459}
+{"source":"user-event","type":"click","text":"B\n    \n      Redemption Path\n      Can later positive actions (helping others, purifying orbs, Church work) reduce the corruption increase from past neglect, or is the weight permanent?","choice":"redemption","id":null,"timestamp":1782266777686}
+{"type":"screen-added","file":"c:\\Gadot Projects\\the-inferno-curse\\.superpowers\\brainstorm\\1977-1782263420\\content\\37-skills-sanity-vs-corruption.html"}
+{"type":"screen-added","file":"c:\\Gadot Projects\\the-inferno-curse\\.superpowers\\brainstorm\\1977-1782263420\\content\\38-flat-sanity-corruption-per-skill.html"}
+{"type":"screen-added","file":"c:\\Gadot Projects\\the-inferno-curse\\.superpowers\\brainstorm\\1977-1782263420\\content\\39-coc-insanity-bleed.html"}
+{"type":"screen-added","file":"c:\\Gadot Projects\\the-inferno-curse\\.superpowers\\brainstorm\\1977-1782263420\\content\\40-sanity-amplification.html"}
+{"type":"screen-updated","file":"c:\\Gadot Projects\\the-inferno-curse\\.superpowers\\brainstorm\\1977-1782263420\\content\\01-skill-types-overview.html"}
+{"type":"screen-added","file":"c:\\Gadot Projects\\the-inferno-curse\\.superpowers\\brainstorm\\1977-1782263420\\content\\41-equip-limit-and-merging-paths.html"}
+{"type":"screen-added","file":"c:\\Gadot Projects\\the-inferno-curse\\.superpowers\\brainstorm\\1977-1782263420\\content\\42-shadow-light-merging-paths.html"}
+{"type":"screen-added","file":"c:\\Gadot Projects\\the-inferno-curse\\.superpowers\\brainstorm\\1977-1782263420\\content\\43-full-foundations-summary.html"}
+{"type":"screen-updated","file":"c:\\Gadot Projects\\the-inferno-curse\\.superpowers\\brainstorm\\1977-1782263420\\content\\02-which-type-first.html"}
+{"type":"server-stopped","reason":"idle timeout"}

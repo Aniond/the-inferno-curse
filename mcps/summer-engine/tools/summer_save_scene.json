@@ -1,0 +1,15 @@
+{
+  "name": "summer_save_scene",
+  "description": "Save the current scene to disk. Call this after making scene changes to persist them. Without saving, changes only exist in the editor's memory.",
+  "inputSchema": {
+    "type": "object",
+    "properties": {
+      "path": {
+        "type": "string",
+        "description": "Save-as path for creating a new scene file, e.g. 'res://levels/level2.tscn'"
+      }
+    },
+    "additionalProperties": false,
+    "$schema": "http://json-schema.org/draft-07/schema#"
+  }
+}

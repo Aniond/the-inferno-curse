@@ -1,0 +1,45 @@
+{
+  "name": "summer_get_console",
+  "description": "Read recent messages from the editor's Output panel.\n\nOutput is post-processed for token economy: consecutive identical messages collapse into one entry with a \"(×N)\" count suffix, and the response carries a \"_filter\" summary so you can see what was hidden. Use errors_only=true (default) to drop info/std noise; use raw=true to bypass all shaping.\n\nUse after summer_get_diagnostics indicates console issues.",
+  "inputSchema": {
+    "type": "object",
+    "properties": {
+      "max_lines": {
+        "type": "number",
+        "default": 100,
+        "description": "Max lines to return after dedupe (default 100)"
+      },
+      "filter": {
+        "type": "string",
+        "description": "Only return lines containing this string"
+      },
+      "type": {
+        "type": "string",
+        "enum": [
+          "error",
+          "warning",
+          "std",
+          "editor"
+        ],
+        "description": "Filter by message type at the engine level"
+      },
+      "errors_only": {
+        "type": "boolean",
+        "default": true,
+        "description": "Drop info/std noise, keep errors and warnings (default true)"
+      },
+      "strict_errors": {
+        "type": "boolean",
+        "default": false,
+        "description": "Drop warnings too — return errors only"
+      },
+      "raw": {
+        "type": "boolean",
+        "default": false,
+        "description": "Bypass dedupe and level filtering — return engine output verbatim"
+      }
+    },
+    "additionalProperties": false,
+    "$schema": "http://json-schema.org/draft-07/schema#"
+  }
+}

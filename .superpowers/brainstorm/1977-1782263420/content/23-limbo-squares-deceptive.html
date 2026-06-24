@@ -1,0 +1,98 @@
+<h2>Limbo Squares — Deceptive Random Teleports</h2>
+<p class="subtitle">"Just a random square. You think you're safe but it transfers you right back into the enemy."</p>
+
+<div class="section">
+  <div class="label">Core Behavior (Confirmed)</div>
+  <p>Limbo Squares are not obviously special tiles. They can look like any normal part of the floor in Florence.</p>
+  <p>Stepping on one triggers a random teleport to another location in the area.</p>
+  <p>The cruel part: the teleport often lands you in what feels like a safe or neutral spot… only for enemies to be right there, or for more squares to chain the danger.</p>
+</div>
+
+<h3>How the Deception Works</h3>
+<div class="mockup">
+  <div class="mockup-body">
+    <strong>Player Experience</strong><br>
+    1. You navigate what looks like a clear path.<br>
+    2. Step on an ordinary-looking square.<br>
+    3. Teleport to a new spot that appears safe (empty street, quiet plaza).<br>
+    4. Enemies immediately appear or were already waiting.<br>
+    5. You’re back in combat — often in a worse position than before.<br><br>
+    
+    <strong>Corruption Scaling</strong><br>
+    • Low world corruption: Squares are rare. Teleports are usually short and low-risk.<br>
+    • Medium: More common. Higher chance of landing near or into existing enemy groups.<br>
+    • High: Dense. Teleports frequently drop you straight into ambushes or chain with other squares.<br>
+    • Extreme: Almost every open area has risk. You can get pulled from “safety” back into fights repeatedly.
+  </div>
+</div>
+
+<h3>Design Integration</h3>
+<div class="section">
+  <p><strong>World Corruption Driven</strong><br>
+  As established: density and danger scale purely with the city’s overall corruption level (not your personal sanity). Lowering world corruption (Church purification, good choices, Saint path) makes squares rarer and less punishing.</p>
+
+  <p><strong>Player Sanity Interaction</strong><br>
+  High personal sanity cost can make the experience worse — perhaps slower reaction on teleport, or increased chance of landing in danger — but the squares themselves are a world effect.</p>
+
+  <p><strong>Ability Tree Nodes</strong><br>
+  Strong potential for meaningful choices:<br>
+  • Detect squares before stepping on them (Saint-leaning).<br>
+  • Reduce teleport distance or make landings safer.<br>
+  • Turn the teleport into a deliberate short-range reposition (Sinner risk/reward).<br>
+  • Gain a temporary buff after being teleported (encourages Sinner aggression).<br>
+  • Temporarily “lock” squares in an area (very Saint-aligned).</p>
+
+  <p><strong>Exploration &amp; Combat Feel</strong><br>
+  During free movement in Florence, these create paranoia. You can’t fully trust “safe” looking ground once corruption rises. They are one of the main ways corruption forces you into tactical grid combat unexpectedly.</p>
+</div>
+
+<div class="pros-cons">
+  <div class="pros">
+    <h4>Why this is strong</h4>
+    <ul>
+      <li>Perfectly captures Limbo’s theme of false safety and being pulled back into suffering.</li>
+      <li>Makes world corruption feel personal and dangerous without needing numbers.</li>
+      <li>Creates “I thought I was safe…” moments that stick with the player.</li>
+      <li>Scales beautifully with the corruption system.</li>
+      <li>Gives the ability tree real environmental interaction.</li>
+    </ul>
+  </div>
+  <div class="cons">
+    <h4>Still to tune</h4>
+    <ul>
+      <li>How obvious (or invisible) the squares are before you step on one.</li>
+      <li>Whether teleports can ever be beneficial on purpose for a Sinner build.</li>
+    </ul>
+  </div>
+</div>
+
+<div class="options">
+  <div class="option" data-choice="visibility" onclick="toggleSelect(this)">
+    <div class="letter">A</div>
+    <div class="content">
+      <h3>Visibility</h3>
+      <p>Should squares be completely invisible until stepped on (pure paranoia), or have very subtle tells that get worse with higher corruption?</p>
+    </div>
+  </div>
+  <div class="option" data-choice="landing" onclick="toggleSelect(this)">
+    <div class="letter">B</div>
+    <div class="content">
+      <h3>Teleport Landing</h3>
+      <p>When it says “right back into the enemy,” should it always try to land you in or near existing enemies, or is it fully random with the risk just being high?</p>
+    </div>
+  </div>
+  <div class="option" data-choice="tree" onclick="toggleSelect(this)">
+    <div class="letter">C</div>
+    <div class="content">
+      <h3>Tree Interaction</h3>
+      <p>Should there be tree nodes that let you deliberately trigger a square for aggressive repositioning (Sinner flavor) versus nodes that suppress them?</p>
+    </div>
+  </div>
+  <div class="option" data-choice="punishment" onclick="toggleSelect(this)">
+    <div class="letter">D</div>
+    <div class="content">
+      <h3>Personal Cost</h3>
+      <p>Should stepping on a square also cost a small amount of personal Sanity, or is it purely a world-driven hazard?</p>
+    </div>
+  </div>
+</div>

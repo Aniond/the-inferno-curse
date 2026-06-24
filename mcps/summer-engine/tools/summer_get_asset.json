@@ -1,0 +1,18 @@
+{
+  "name": "summer_get_asset",
+  "description": "Fetch one asset by exact Summer asset ID.\n\nUse this after a generation job returns assetId/rigAssetId/animationAssetId, or\nafter summer_list_my_assets/search results when you need the stable file URL,\ndownload URL, viewer URL, metadata, license, visibility, parent chain, or\nprovider details.",
+  "inputSchema": {
+    "type": "object",
+    "properties": {
+      "assetId": {
+        "type": "string",
+        "description": "Summer ArtAssets id"
+      }
+    },
+    "required": [
+      "assetId"
+    ],
+    "additionalProperties": false,
+    "$schema": "http://json-schema.org/draft-07/schema#"
+  }
+}

@@ -1,0 +1,110 @@
+<h2>Skills &amp; Orbs: Sanity (Player) vs Corruption (World)</h2>
+<p class="subtitle">Your question: Should skills primarily affect the player's Sanity or the world's Corruption?</p>
+
+<div class="section">
+  <div class="label">Current Split (locked)</div>
+  <ul>
+    <li><strong>Sanity</strong> = Player-based personal toll (resource cost, personal strain, risk of "losing control").</li>
+    <li><strong>Corruption</strong> = World-based (Limbo Squares, shadows, water color, random battles, NPC behavior, Florence itself).</li>
+  </ul>
+  <p>They are two sides of the same coin, but mechanically and thematically separate.</p>
+</div>
+
+<h3>Option Comparison</h3>
+
+<div class="split">
+  <div class="mockup">
+    <div class="mockup-header">Skills Affect Sanity (Player)</div>
+    <div class="mockup-body">
+      <strong>Recommended</strong><br><br>
+      • When you equip or use an orb, it primarily costs/risks your personal Sanity.<br>
+      • Stacking duplicates in the tree ramps Sanity cost of that orb line.<br>
+      • High Sanity cost = higher resource drain, personal debuffs, risk of mental side effects, or "losing control" moments.<br>
+      • World Corruption is affected indirectly (high personal Sanity can leak and speed up world effects).<br><br>
+      <strong>Example:</strong><br>
+      Shadow Claw: High damage, but each use costs Sanity. 3x stacked version costs a lot of Sanity to use but hits very hard.<br>
+      Church purification reduces the Sanity cost (and overall contribution to world).
+    </div>
+  </div>
+  
+  <div class="mockup">
+    <div class="mockup-header">Skills Affect Corruption (World)</div>
+    <div class="mockup-body">
+      • Using or equipping orbs directly increases the city's Corruption level.<br>
+      • More orbs / stronger orbs = faster spread of Limbo Squares, shadows, random battles, NPC paranoia.<br>
+      • Player Sanity is affected indirectly (living in a more corrupted world drains you).<br><br>
+      <strong>Example:</strong><br>
+      Every time you use Shadow Claw, Florence's corruption ticks up. More squares appear in the city. NPCs start whispering about "someone using dark power."
+    </div>
+  </div>
+</div>
+
+<div class="pros-cons">
+  <div class="pros">
+    <h4>Skills on Sanity (Player) – My Recommendation</h4>
+    <ul>
+      <li>Fits "Saint vs Sinner" perfectly: Sinners stack power and eat the personal Sanity cost. Saints use Church to keep Sanity clean.</li>
+      <li>Makes the player's internal struggle mechanical and visible in how they play (cost to use abilities).</li>
+      <li>Stacking duplicates becomes a deliberate personal sacrifice ("I want more power, even if it costs my mind").</li>
+      <li>Church purification has a clear role: reduce the Sanity tax on your orbs.</li>
+      <li>World Corruption can still be influenced (high Sanity leaks into the world), but the primary lever stays with player choices and actions.</li>
+      <li>Keeps the two systems distinct so you can design interesting tradeoffs.</li>
+    </ul>
+  </div>
+  <div class="cons">
+    <h4>Skills on Corruption (World)</h4>
+    <ul>
+      <li>Very strong thematic link ("my power is literally damning the city").</li>
+      <li>Makes every use of power have city-wide consequences.</li>
+      <li>However, it risks making the world feel punishing for normal play and blurs the player/world split you wanted.</li>
+    </ul>
+  </div>
+</div>
+
+<h3>My Clear Opinion</h3>
+<div class="section">
+  <p><strong>Skills/orbs should primarily affect Sanity (the player), with controlled bleed into world Corruption.</strong></p>
+  <p><strong>Reasoning:</strong></p>
+  <ul>
+    <li>You already established Sanity = player, Corruption = world. Skills are personal power the player chooses to wield, so the direct cost should be personal.</li>
+    <li>This preserves the "Dark and Light cannot coexist" tension and the Saint/Sinner choice at the mechanical level.</li>
+    <li>Stacking in the tree becomes very flavorful: "Each time I slot another Shadow Claw, my Sanity cost goes up, but I hit harder."</li>
+    <li>Church has a strong identity: it helps you manage the personal Sanity cost of your power.</li>
+    <li>World Corruption can still rise from heavy use (via the "leak" from high personal Sanity), but it's not automatic on every cast. This gives you more design levers.</li>
+  </ul>
+</div>
+
+<div class="section">
+  <p><strong>Proposed Exact Rule</strong></p>
+  <ul>
+    <li>Equipping an orb contributes to your current Sanity load.</li>
+    <li>Using an orb costs Sanity (base + any stacking from duplicates in the tree).</li>
+    <li>Very high personal Sanity load causes "leak" into world Corruption (faster Limbo Square appearance, more aggressive shadows, etc.).</li>
+    <li>Church purification reduces the Sanity cost of that orb and can lower your overall load.</li>
+    <li>Negative world actions (ignoring people) directly increase world Corruption (as previously established).</li>
+  </ul>
+</div>
+
+<div class="options">
+  <div class="option" data-choice="primary-sanity" onclick="toggleSelect(this)">
+    <div class="letter">A</div>
+    <div class="content">
+      <h3>Primary on Sanity (Recommended)</h3>
+      <p>Skills cost/risk player Sanity. High Sanity leaks into world Corruption. Clean split, strong Saint/Sinner tension.</p>
+    </div>
+  </div>
+  <div class="option" data-choice="primary-corruption" onclick="toggleSelect(this)">
+    <div class="letter">B</div>
+    <div class="content">
+      <h3>Primary on Corruption</h3>
+      <p>Using skills directly increases world Corruption. Player feels it through environment and personal side effects.</p>
+    </div>
+  </div>
+  <div class="option" data-choice="hybrid" onclick="toggleSelect(this)">
+    <div class="letter">C</div>
+    <div class="content">
+      <h3>Hybrid with Clear Levers</h3>
+      <p>Skills have both a Sanity cost (player) and a Corruption contribution (world), but different orbs and tree nodes can weight them differently.</p>
+    </div>
+  </div>
+</div>

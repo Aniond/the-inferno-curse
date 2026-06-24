@@ -1,0 +1,23 @@
+{
+  "name": "summer_cloud_conflicts",
+  "description": "List local Summer Cloud conflict sets, or restore a preserved conflict file with restorePath.",
+  "inputSchema": {
+    "type": "object",
+    "properties": {
+      "project": {
+        "type": "string",
+        "description": "Project root path. Defaults to the current working directory."
+      },
+      "restorePath": {
+        "type": "string",
+        "description": "Project-relative path to restore from the conflict sets."
+      },
+      "set": {
+        "type": "string",
+        "description": "Conflict set stamp; defaults to the newest set containing the path."
+      }
+    },
+    "additionalProperties": false,
+    "$schema": "http://json-schema.org/draft-07/schema#"
+  }
+}

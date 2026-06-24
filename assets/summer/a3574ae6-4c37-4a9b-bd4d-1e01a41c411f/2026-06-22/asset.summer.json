@@ -1,0 +1,73 @@
+{
+	"assetId": "a3574ae6-4c37-4a9b-bd4d-1e01a41c411f",
+	"metadata": {
+		"downloadUrl": "https://v3b.fal.media/files/b/0a9f5cf5/6-0iKTmbDgS6U1Pai5c4Q_Nf5OWWrr.png",
+		"fileName": "6-0iKTmbDgS6U1Pai5c4Q_Nf5OWWrr.png",
+		"filename": "6-0iKTmbDgS6U1Pai5c4Q_Nf5OWWrr.png",
+		"id": "a3574ae6-4c37-4a9b-bd4d-1e01a41c411f",
+		"metadata": {
+			"aspect_ratio": "1:1",
+			"batchCapped": false,
+			"batchSize": 1.0,
+			"clientImageModel": "fal-ai/nano-banana-2",
+			"entrypoint": "api/art/generate",
+			"falModelId": "fal-ai/nano-banana-2",
+			"falPrompt": "Create a square 1024x1024 pixel-art fantasy RPG character sheet UI template on aged parchment, with ornate dark wood headers, gold filigree corners, medieval Italian dark fantasy style.\n\nCRITICAL: This must be a blank UI template. Do not place any numbers, names, sample values, placeholder values, character names, class names, ability names, equipment names, trait names, or random text inside any writable field. The game will populate all fields later.\n\nAllowed text only:\nPROFILE\nSTATS\nRESISTANCE\nABILITIES\nSKILLS\nEQUIPMENT\nTRAITS\nHP\nMP\nCT\n\nLayout:\n- Top row has three carved wooden title plaques: PROFILE, STATS, RESISTANCE.\n- Left PROFILE panel has an ornate empty portrait frame, one blank nameplate, and one blank class/job strip.\n- Center STATS panel has three empty horizontal meter frames labeled HP, MP, and CT on the left. The meter frames must be empty parchment/gold frames only, with no colored fill and no numbers. Below them are blank stat rows with empty value boxes only.\n- Right RESISTANCE panel has exactly six blank resistance rows, evenly stacked.\n- Each resistance row should have only one small square icon slot on the left, followed by one long empty parchment value box.\n- Do not add shield icons, shield slots, shield emblems, armor symbols, or duplicate icon boxes in the resistance rows.\n- The six resistance icon slots should visually correspond to Physical, Poison, Bleed, Paralyze, Holy, and Corruption, but do not write those words.\n- ABILITIES section has six empty ability cards with no text.\n- SKILLS section has two empty rows with one icon slot and one blank description bar per row.\n- EQUIPMENT section has four empty rows with one icon slot and one long blank item field per row.\n- TRAITS section has four empty rows with one icon slot and one long blank description field per row.\n\nVisual style:\nPixel-art UI, aged parchment, dark carved wood plaques, thin gold trim, subtle grime and wear, ornate frame, clean alignment, readable empty spaces for game text overlay. No character art, no sample values, no placeholder text, no colored meter fills, no watermark., 16-bit pixel art, SNES-era detailed sprites, rich palette",
+			"finalPrompt": "Create a square 1024x1024 pixel-art fantasy RPG character sheet UI template on aged parchment, with ornate dark wood headers, gold filigree corners, medieval Italian dark fantasy style.\n\nCRITICAL: This must be a blank UI template. Do not place any numbers, names, sample values, placeholder values, character names, class names, ability names, equipment names, trait names, or random text inside any writable field. The game will populate all fields later.\n\nAllowed text only:\nPROFILE\nSTATS\nRESISTANCE\nABILITIES\nSKILLS\nEQUIPMENT\nTRAITS\nHP\nMP\nCT\n\nLayout:\n- Top row has three carved wooden title plaques: PROFILE, STATS, RESISTANCE.\n- Left PROFILE panel has an ornate empty portrait frame, one blank nameplate, and one blank class/job strip.\n- Center STATS panel has three empty horizontal meter frames labeled HP, MP, and CT on the left. The meter frames must be empty parchment/gold frames only, with no colored fill and no numbers. Below them are blank stat rows with empty value boxes only.\n- Right RESISTANCE panel has exactly six blank resistance rows, evenly stacked.\n- Each resistance row should have only one small square icon slot on the left, followed by one long empty parchment value box.\n- Do not add shield icons, shield slots, shield emblems, armor symbols, or duplicate icon boxes in the resistance rows.\n- The six resistance icon slots should visually correspond to Physical, Poison, Bleed, Paralyze, Holy, and Corruption, but do not write those words.\n- ABILITIES section has six empty ability cards with no text.\n- SKILLS section has two empty rows with one icon slot and one blank description bar per row.\n- EQUIPMENT section has four empty rows with one icon slot and one long blank item field per row.\n- TRAITS section has four empty rows with one icon slot and one long blank description field per row.\n\nVisual style:\nPixel-art UI, aged parchment, dark carved wood plaques, thin gold trim, subtle grime and wear, ornate frame, clean alignment, readable empty spaces for game text overlay. No character art, no sample values, no placeholder text, no colored meter fills, no watermark.",
+			"generatedAt": "2026-06-22T20:55:50.322Z",
+			"generationBatchId": "0d83ba6d-d5a5-4f44-acba-22e4628a0be4",
+			"height": 1024.0,
+			"multiview": false,
+			"numImages": 1.0,
+			"numImagesRequested": 1.0,
+			"pose": "none",
+			"promptRefined": false,
+			"referenceCount": 0.0,
+			"runIndex": 0.0,
+			"seo": {
+				"description": "Pixel art fantasy RPG character sheet UI template. Single 1024x1024 static image with parchment panels, wood plaques, gold trim, and empty labeled sections. PNG format. Free license.",
+				"keywords": [
+					"free game assets",
+					"game art",
+					"free 2d game assets",
+					"2d game art",
+					"create",
+					"square",
+					"1024x1024",
+					"pixel-art",
+					"fantasy",
+					"free game character"
+				],
+				"openGraph": {
+					"description": "Pixel art fantasy RPG character sheet UI template. Single 1024x1024 static image with parchment panels, wood plaques, gold trim, and empty labeled sections. PNG format. Free license.",
+					"title": "Fantasy RPG Character Sheet - Free Character Art",
+					"type": "article"
+				},
+				"title": "Fantasy RPG Character Sheet - Free Character Art | Summer Engine",
+				"twitter": {
+					"card": "summary_large_image",
+					"description": "Pixel art fantasy RPG character sheet UI template. Single 1024x1024 static image with parchment panels, wood plaques, gold trim, and empty labeled sections. PNG format. Free license.",
+					"title": "Fantasy RPG Character Sheet - Free Character Art"
+				}
+			},
+			"style": "retro-16bit",
+			"surface": "studio",
+			"width": 1024.0
+		},
+		"name": "Fantasy RPG Character Sheet",
+		"previewUrl": "https://v3b.fal.media/files/b/0a9f5cf5/6-0iKTmbDgS6U1Pai5c4Q_Nf5OWWrr.png",
+		"primary": true,
+		"thumbnailUrl": "https://v3b.fal.media/files/b/0a9f5cf5/6-0iKTmbDgS6U1Pai5c4Q_Nf5OWWrr.png",
+		"title": "Fantasy RPG Character Sheet",
+		"type": "image",
+		"url": "https://v3b.fal.media/files/b/0a9f5cf5/6-0iKTmbDgS6U1Pai5c4Q_Nf5OWWrr.png",
+		"version": "2026-06-22"
+	},
+	"name": "Fantasy RPG Character Sheet",
+	"paths": [
+		"res://assets/summer/a3574ae6-4c37-4a9b-bd4d-1e01a41c411f/2026-06-22/6-0iKTmbDgS6U1Pai5c4Q_Nf5OWWrr.png"
+	],
+	"primaryPath": "res://assets/summer/a3574ae6-4c37-4a9b-bd4d-1e01a41c411f/2026-06-22/6-0iKTmbDgS6U1Pai5c4Q_Nf5OWWrr.png",
+	"source": "summer-studio",
+	"version": "2026-06-22"
+}

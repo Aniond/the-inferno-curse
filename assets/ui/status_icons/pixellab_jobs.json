@@ -1,0 +1,26 @@
+[
+    {
+        "name":  "physical",
+        "job_id":  "0f1c507e-c467-4dfa-a164-876dd674ae80"
+    },
+    {
+        "name":  "poison",
+        "job_id":  "6f8a2c01-79d3-4e48-b3d6-68c8b32ee3af"
+    },
+    {
+        "name":  "bleed",
+        "job_id":  "0a6553ff-b44c-49a6-a225-7d6ff0869170"
+    },
+    {
+        "name":  "paralyze",
+        "job_id":  "eb2ce82d-993b-4884-a2ac-88566f9d910e"
+    },
+    {
+        "name":  "holy",
+        "job_id":  "ba35dc8c-5e2c-42b1-a060-bd24307b7bb8"
+    },
+    {
+        "name":  "corruption",
+        "job_id":  "ddc5b59e-8d35-4828-8f04-8ce1e289aa36"
+    }
+]

@@ -1,0 +1,19 @@
+{
+  "servers": {
+    "pixellab": {
+      "type": "http",
+      "url": "https://api.pixellab.ai/mcp",
+      "headers": {
+        "Authorization": "Bearer ${env:PIXELLAB_API_TOKEN}"
+      }
+    },
+    "pixellab-local": {
+      "type": "stdio",
+      "command": "pixellab-mcp",
+      "args": [],
+      "env": {
+        "PIXELLAB_SECRET": "${env:PIXELLAB_SECRET}"
+      }
+    }
+  }
+}

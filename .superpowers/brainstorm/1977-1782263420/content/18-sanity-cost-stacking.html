@@ -1,0 +1,101 @@
+<h2>Orb Skill Tree – No Hard Cap + Sanity Cost Stacking</h2>
+<p class="subtitle">No cap on orbs in the tree. Farming duplicates of the same orb (e.g. Shadow Claw) increases its power AND ramps its sanity cost. Base skills first, then increments with each stack.</p>
+
+<div class="section">
+  <div class="label">Your Rule (refined)</div>
+  <p>"Instead of that have it increase the cost of sanity more. First is base skills, it increments than."</p>
+  <p>Power comes from stacking duplicates in the tree. The downside is a growing sanity cost (instead of directly ramping the hidden corruption weight).</p>
+</div>
+
+<h3>How Duplicate Stacking Works (Sanity Focus)</h3>
+<div class="mockup">
+  <div class="mockup-body">
+    <strong>Shadow Claw (Single Target Damage Orb)</strong><br><br>
+    <strong>1st copy slotted in tree (base skill):</strong><br>
+    • Damage: base 8 + STR scaling<br>
+    • Sanity cost: base 1 (or 0 for very basic orbs)<br><br>
+    <strong>2nd copy slotted (same orb type):</strong><br>
+    • Damage: base + noticeable increase (e.g. +20-30% on the orb line)<br>
+    • Sanity cost: base + increment (e.g. now 2 or +1)<br><br>
+    <strong>3rd copy slotted:</strong><br>
+    • Damage: even higher<br>
+    • Sanity cost: base + 2 increments (e.g. 3)<br><br>
+    <span style="color:#ff8a7d;">More power, but each use or sustained activation now costs more sanity.</span>
+  </div>
+</div>
+
+<h3>Integration with Existing Systems</h3>
+<div class="section">
+  <p><strong>Sanity Cost (new downside)</strong></p>
+  <ul>
+    <li>This is the personal/mental toll the player pays when using or maintaining the orb.</li>
+    <li>Could be an extra resource cost on activation, a drain over time while the orb is "active", or a modifier that increases the corruption manifestation rate when the cost gets high.</li>
+    <li>Base skills start cheap (or free). Each duplicate stack increments the cost.</li>
+  </ul>
+
+  <p><strong>Relation to Hidden Corruption &amp; Limbo</strong></p>
+  <ul>
+    <li>Sanity cost is the direct price of power from stacking.</li>
+    <li>High sanity cost can still feed into Limbo effects (e.g. faster water darkening or more aggressive shadows), but the primary hit is on the player.</li>
+    <li>Church purification can reduce the sanity cost of a stacked orb (while also weakening the power, per previous Saint/Sinner rules).</li>
+  </ul>
+
+  <p><strong>Equip + Tree ("slot them both")</strong></p>
+  <ul>
+    <li>You can still equip the orb for combat while having multiple copies invested in the tree.</li>
+    <li>The tree stacks power up the entire "Shadow Claw" concept.</li>
+    <li>Nodes in the tree can further modify sanity cost (e.g. some nodes reduce sanity cost at the expense of something else, or increase it for even more power).</li>
+  </ul>
+</div>
+
+<div class="pros-cons">
+  <div class="pros">
+    <h4>Why this works</h4>
+    <ul>
+      <li>Creates a clear "power tax" that scales with how hard you farm one ability.</li>
+      <li>Keeps corruption as the world/Limbo infection while sanity is the personal cost.</li>
+      <li>"First is base skills, it increments" feels natural – you start simple, then stacking gets expensive.</li>
+      <li>Strong Saint vs Sinner tension: Sinners will stack for raw power despite the sanity drain; Saints will avoid over-stacking or purify to keep sanity costs manageable.</li>
+      <li>Easy to balance later through testing (as you noted).</li>
+    </ul>
+  </div>
+  <div class="cons">
+    <h4>Things still open</h4>
+    <ul>
+      <li>Exact form of the sanity cost (extra MP-like resource? drain per use? ongoing while equipped? modifier to corruption rate?)</li>
+      <li>How nodes in the tree interact with sanity cost (some nodes could reduce it for specific orbs?)</li>
+      <li>Does Church/Guild intervention reduce the sanity cost on stacked orbs, or just the hidden corruption?</li>
+    </ul>
+  </div>
+</div>
+
+<div class="options">
+  <div class="option" data-choice="sanity-form" onclick="toggleSelect(this)">
+    <div class="letter">A</div>
+    <div class="content">
+      <h3>Sanity Cost Form</h3>
+      <p>What exactly is the "sanity cost"? Extra resource to cast? Drain over time? Increases the rate at which Limbo manifestations appear?</p>
+    </div>
+  </div>
+  <div class="option" data-choice="diminishing" onclick="toggleSelect(this)">
+    <div class="letter">B</div>
+    <div class="content">
+      <h3>Stacking Curve</h3>
+      <p>Should sanity cost increase linearly with each duplicate, or should power gains diminish while cost keeps climbing (to prevent infinite farming)?</p>
+    </div>
+  </div>
+  <div class="option" data-choice="tree-nodes" onclick="toggleSelect(this)">
+    <div class="letter">C</div>
+    <div class="content">
+      <h3>Tree Node Interaction</h3>
+      <p>Should some tree nodes specifically reduce sanity cost for orbs in that cluster, or increase power without adding more sanity cost?</p>
+    </div>
+  </div>
+  <div class="option" data-choice="saint-sinner" onclick="toggleSelect(this)">
+    <div class="letter">D</div>
+    <div class="content">
+      <h3>Saint vs Sinner on Stacks</h3>
+      <p>How should the Saint path handle heavy duplicate stacking differently from the Sinner path (e.g. Saints get better ways to mitigate sanity cost via purification)?</p>
+    </div>
+  </div>
+</div>

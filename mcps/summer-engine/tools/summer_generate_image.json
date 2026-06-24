@@ -1,0 +1,37 @@
+{
+  "name": "summer_generate_image",
+  "description": "Generate an image using AI models via Summer Engine Studio.\n\nKnown models:\n  - \"nano-banana-2\" (default) — High quality, supports txt2img and img2img\n  - \"gemini-flash\" — Google Gemini 2.5 Flash, fast\n  - \"flux-2\" — FLUX.2, good for specific styles\n  - Any fal-ai model ID works as a passthrough\n\nTwo modes:\n  - txt2img (default): just pass prompt\n  - img2img (edit): pass prompt + referenceImageUrl to edit/transform an existing image\n\nStyle presets: \"realistic\" (default), \"cartoon\", \"anime\", \"none\"\n\nThe 'options' object is passed directly to the AI provider for full control.\n\nReturns the asset with fileUrl (hosted) and localPath (temp file on disk).\nUse the Read tool on localPath to show the image to the user for approval.\n\nRequires authentication: run 'npx summer-engine login' first.",
+  "inputSchema": {
+    "type": "object",
+    "properties": {
+      "prompt": {
+        "type": "string",
+        "description": "Description of the image to generate"
+      },
+      "model": {
+        "type": "string",
+        "default": "nano-banana-2",
+        "description": "Model name or full provider ID"
+      },
+      "style": {
+        "type": "string",
+        "default": "realistic",
+        "description": "Style preset: realistic, cartoon, anime, or 'none' to skip"
+      },
+      "referenceImageUrl": {
+        "type": "string",
+        "description": "Source image URL for img2img / edit mode. The prompt describes how to transform this image."
+      },
+      "options": {
+        "type": "object",
+        "additionalProperties": {},
+        "description": "Provider-specific params (guidance_scale, seed, image_size, negative_prompt, etc.)"
+      }
+    },
+    "required": [
+      "prompt"
+    ],
+    "additionalProperties": false,
+    "$schema": "http://json-schema.org/draft-07/schema#"
+  }
+}

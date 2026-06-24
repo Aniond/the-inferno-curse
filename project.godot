@@ -19,6 +19,7 @@ config/icon="res://icon.svg"
 
 PlayerData="*res://autoload/player_data.gd"
 EnvSecrets="*res://scripts/config/env_secrets.gd"
+ScreenshotBurst="*res://autoload/screenshot_burst.gd"
 
 [display]
 

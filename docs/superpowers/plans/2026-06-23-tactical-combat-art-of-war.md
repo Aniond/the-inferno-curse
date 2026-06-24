@@ -521,19 +521,25 @@ git commit -m "feat(combat): tactical ability profiles and spell cover"
 
 ## Spec Coverage Checklist
 
-| Spec section | Plan task |
-|--------------|-----------|
-| 8-way facing + flank arcs | P1 Task 1 |
-| move / rotate / act | P1 Task 2 |
-| Jump movement costs | P3 Task 4 |
-| CoverVolume | P2 Task 3 |
-| Battle overlay UI | P4 Task 5 |
-| TacticalMind + INT tiers | P5 Task 6 |
-| Influence maps + commander | P6 Task 7 |
-| Curse stages | P7 Task 8 |
-| TacticalProfile abilities | P8 Task 9 |
-| MonsterSheet doctrine fields | P5 Task 6 |
-| Art of War doctrines | P5–P6 plan scoring |
+| Spec section | Plan task | Status |
+|--------------|-----------|--------|
+| 8-way facing + flank arcs | P1 Task 1 | [x] |
+| move / rotate / act | P1 Task 2 | [x] |
+| Jump movement costs | P3 Task 4 | [x] |
+| CoverVolume | P2 Task 3 | [x] |
+| Battle overlay UI | P4 Task 5 | [x] |
+| TacticalMind + INT tiers | P5 Task 6 | [ ] (partial) |
+| Influence maps + commander | P6 Task 7 | [ ] |
+| Curse stages | P7 Task 8 | [ ] |
+| TacticalProfile abilities | P8 Task 9 | [ ] |
+| MonsterSheet doctrine fields | P5 Task 6 | [x] |
+| Art of War doctrines | P5–P6 plan scoring | [ ] |
+
+**Combat system:** Core implemented and tested (grid engagement, CT/action-based turns, height costs, facing). Checkmarked in tracking. 
+
+**Day/Night cycle:** Fully implemented (day_night_cycle.gd driving sun, sky, ambient, fog, torches; action-tied in combat). Marked complete in tracking.
+
+**Weather (new):** Implemented WeatherSystem for battles - location (beach=hurricane) + dynamic mid-battle changes (rainstorm etc.). Affects env, CT, move, LOS, damage, height. Action-based with skills support. See scripts/weather_system.gd and battle_test_map integration. Ready for AI tie-in.
 
 **Deferred (open questions):** battle orders UI, hidden INT on sheet, boss MCTS — not in this plan.
 

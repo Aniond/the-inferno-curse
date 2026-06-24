@@ -1,0 +1,116 @@
+<h2>Limbo Squares — Scaled by World Corruption</h2>
+<p class="subtitle">Confirmed: Limbo Squares are driven by the city's overall corruption level. Lower world corruption = fewer squares.</p>
+
+<div class="section">
+  <div class="label">How It Works</div>
+  <p>The density and danger of Limbo Squares scale directly with Florence's world corruption (separate from your personal Sanity).</p>
+  
+  <table style="width:100%; border-collapse: collapse; margin-top:8px;">
+    <tr style="background:#2a2218;">
+      <th style="padding:6px; border:1px solid #554433;">World Corruption</th>
+      <th style="padding:6px; border:1px solid #554433;">Limbo Squares</th>
+      <th style="padding:6px; border:1px solid #554433;">Teleport Behavior</th>
+      <th style="padding:6px; border:1px solid #554433;">Combat Risk</th>
+    </tr>
+    <tr>
+      <td style="padding:6px; border:1px solid #554433;">Very Low</td>
+      <td style="padding:6px; border:1px solid #554433;">None or extremely rare</td>
+      <td style="padding:6px; border:1px solid #554433;">—</td>
+      <td style="padding:6px; border:1px solid #554433;">—</td>
+    </tr>
+    <tr>
+      <td style="padding:6px; border:1px solid #554433;">Low</td>
+      <td style="padding:6px; border:1px solid #554433;">Scattered in tainted districts</td>
+      <td style="padding:6px; border:1px solid #554433;">Short-range, usually safe</td>
+      <td style="padding:6px; border:1px solid #554433;">Very low</td>
+    </tr>
+    <tr>
+      <td style="padding:6px; border:1px solid #554433;">Medium</td>
+      <td style="padding:6px; border:1px solid #554433;">Common in many streets</td>
+      <td style="padding:6px; border:1px solid #554433;">Medium range, occasional bad spots</td>
+      <td style="padding:6px; border:1px solid #554433;">Moderate</td>
+    </tr>
+    <tr>
+      <td style="padding:6px; border:1px solid #554433;">High</td>
+      <td style="padding:6px; border:1px solid #554433;">Dense, hard to avoid</td>
+      <td style="padding:6px; border:1px solid #554433;">Long range or into dangerous pockets</td>
+      <td style="padding:6px; border:1px solid #554433;">High (frequent ambushes)</td>
+    </tr>
+    <tr>
+      <td style="padding:6px; border:1px solid #554433;">Extreme</td>
+      <td style="padding:6px; border:1px solid #554433;">Overwhelming, chains possible</td>
+      <td style="padding:6px; border:1px solid #554433;">Unpredictable, can dump you into mini-limbo zones</td>
+      <td style="padding:6px; border:1px solid #554433;">Very high</td>
+    </tr>
+  </table>
+</div>
+
+<h3>Integration with Systems</h3>
+<div class="section">
+  <p><strong>World Corruption Source</strong><br>
+  Your equipped orbs, actions, and absorbed souls contribute to Florence's corruption level. The more "Sinner" you go (high personal Sanity + powerful corrupted orbs), the faster squares spread.</p>
+
+  <p><strong>Saint vs Sinner</strong><br>
+  • Saint path (Church-purified holy orbs) actively slows or reverses world corruption spread → fewer squares over time.<br>
+  • Sinner path accepts faster spread in exchange for stronger orbs and tree stacking.</p>
+
+  <p><strong>Ability Tree Nodes</strong><br>
+  Nodes can help you interact with squares:<br>
+  • Detect squares earlier<br>
+  • Reduce teleport distance or danger<br>
+  • Turn a square into a controlled short blink (Sinner reward)<br>
+  • Temporarily stabilize an area (Saint reward)</p>
+
+  <p><strong>Exploration Feel</strong><br>
+  As world corruption rises, normal movement in Florence becomes tense. You start routing around known tainted zones or accepting the risk for shortcuts.</p>
+</div>
+
+<div class="pros-cons">
+  <div class="pros">
+    <h4>Why this works</h4>
+    <ul>
+      <li>Direct, visible feedback for world corruption without numbers.</li>
+      <li>Makes the Saint vs Sinner choice feel meaningful in the open world.</li>
+      <li>Scales naturally with your progression and choices.</li>
+      <li>Creates dynamic navigation puzzles as the city changes.</li>
+    </ul>
+  </div>
+  <div class="cons">
+    <h4>Still to decide</h4>
+    <ul>
+      <li>Can squares ever be completely removed, or do they just become very rare at low corruption?</li>
+      <li>Do some areas (like near churches or guild halls) resist squares longer?</li>
+    </ul>
+  </div>
+</div>
+
+<div class="options">
+  <div class="option" data-choice="density" onclick="toggleSelect(this)">
+    <div class="letter">A</div>
+    <div class="content">
+      <h3>Density Curve</h3>
+      <p>Should squares appear gradually or hit certain thresholds where they suddenly become much more common?</p>
+    </div>
+  </div>
+  <div class="option" data-choice="player-impact" onclick="toggleSelect(this)">
+    <div class="letter">B</div>
+    <div class="content">
+      <h3>Player Impact</h3>
+      <p>When you step on one, should it also cost a small amount of personal Sanity, or is it purely a world effect?</p>
+    </div>
+  </div>
+  <div class="option" data-choice="tree-reward" onclick="toggleSelect(this)">
+    <div class="letter">C</div>
+    <div class="content">
+      <h3>Tree Reward</h3>
+      <p>Should heavily stacking a single orb type (like your Shadow Claw example) make squares appear faster in areas you frequent?</p>
+    </div>
+  </div>
+  <div class="option" data-choice="purification" onclick="toggleSelect(this)">
+    <div class="letter">D</div>
+    <div class="content">
+      <h3>Purification Effect</h3>
+      <p>When you purify orbs at the Church, should it immediately reduce square density in the surrounding area?</p>
+    </div>
+  </div>
+</div>

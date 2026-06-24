@@ -1,0 +1,41 @@
+{
+  "name": "summer_generate_motion",
+  "description": "Generate an animation clip for a Meshy-rigged humanoid character via Summer Engine Studio.\n\nBackend:\n  - \"meshy-library\" — picks a clip from a curated mocap set by name (idle, walk,\n    run, attack_sword, jump, ~70 standard names). Fast (~30s), cheap (~$0.10),\n    real mocap quality.\n\nRequires a Meshy-rigged humanoid as the target. The 'rigAssetId' must come from\na prior summer_generate_3d call with options.rig=true.\n\nBy default, waits for completion (up to 5 min) and returns the result directly.\nSet wait=false to get the jobId immediately and poll manually with summer_check_job.\n\nCommon motion names:\n  Locomotion: idle, idle_alert, idle_combat, walk, walk_back, run, sprint,\n              crouch_idle, crouch_walk, jump, jump_loop, jump_land\n  Combat: attack_sword, attack_punch, attack_kick, attack_bow, attack_cast,\n          block, dodge_left, dodge_right, hit_react, death\n  Social: wave, dance, sit_idle\n\nCost: ~$0.10 per clip. Confirm with user before spending.\n\nCustom prompt-driven motion is on the roadmap; not yet shipped. For one-off\nsignature moves not on the curated list, fall back to hand-authoring in the\nGodot editor or importing from Mixamo.\n\nRequires authentication: run 'npx summer-engine login' first.",
+  "inputSchema": {
+    "type": "object",
+    "properties": {
+      "rigAssetId": {
+        "type": "string",
+        "description": "Asset ID of a rigged character (from summer_generate_3d with options.rig=true)"
+      },
+      "backend": {
+        "type": "string",
+        "enum": [
+          "meshy-library"
+        ],
+        "default": "meshy-library",
+        "description": "Backend: meshy-library (only option today)"
+      },
+      "motionName": {
+        "type": "string",
+        "description": "Curated motion name: walk, run, attack_sword, idle, jump, etc."
+      },
+      "wait": {
+        "type": "boolean",
+        "default": true,
+        "description": "Wait for completion (default true, up to 5 min). Set false to get jobId immediately."
+      },
+      "options": {
+        "type": "object",
+        "additionalProperties": {},
+        "description": "Backend-specific passthrough"
+      }
+    },
+    "required": [
+      "rigAssetId",
+      "motionName"
+    ],
+    "additionalProperties": false,
+    "$schema": "http://json-schema.org/draft-07/schema#"
+  }
+}

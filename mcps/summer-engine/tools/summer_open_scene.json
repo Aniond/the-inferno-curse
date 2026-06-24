@@ -1,0 +1,18 @@
+{
+  "name": "summer_open_scene",
+  "description": "Open a scene file in the editor. Use this to switch between scenes.\n\nDo not guess paths. Prefer:\n1) summer_get_project_context (read mainScene)\n2) summer_open_main_scene (open known main scene)\n3) summer_open_scene only when user gave an explicit path.",
+  "inputSchema": {
+    "type": "object",
+    "properties": {
+      "path": {
+        "type": "string",
+        "description": "Scene path, e.g. 'res://main.tscn' or 'res://levels/level1.tscn'"
+      }
+    },
+    "required": [
+      "path"
+    ],
+    "additionalProperties": false,
+    "$schema": "http://json-schema.org/draft-07/schema#"
+  }
+}

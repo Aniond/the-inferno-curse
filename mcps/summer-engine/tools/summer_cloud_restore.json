@@ -1,0 +1,24 @@
+{
+  "name": "summer_cloud_restore",
+  "description": "Restore a retained cloud version (creates a new head version server-side, then pulls), or a local pre-sync checkpoint via checkpointStamp.",
+  "inputSchema": {
+    "type": "object",
+    "properties": {
+      "project": {
+        "type": "string",
+        "description": "Project root path. Defaults to the current working directory."
+      },
+      "version": {
+        "type": "integer",
+        "exclusiveMinimum": 0,
+        "description": "Cloud version to restore."
+      },
+      "checkpointStamp": {
+        "type": "string",
+        "description": "Local checkpoint stamp (see summer_cloud_checkpoints)."
+      }
+    },
+    "additionalProperties": false,
+    "$schema": "http://json-schema.org/draft-07/schema#"
+  }
+}

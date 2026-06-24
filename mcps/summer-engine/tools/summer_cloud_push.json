@@ -1,0 +1,33 @@
+{
+  "name": "summer_cloud_push",
+  "description": "Push local project changes to Summer Cloud.",
+  "inputSchema": {
+    "type": "object",
+    "properties": {
+      "project": {
+        "type": "string",
+        "description": "Project root path. Defaults to the current working directory."
+      },
+      "confirmDeletes": {
+        "type": "boolean",
+        "default": false,
+        "description": "Required when a push would delete many cloud files."
+      },
+      "bootstrap": {
+        "type": "string",
+        "enum": [
+          "keep-cloud",
+          "keep-local",
+          "merge"
+        ],
+        "description": "No-base bootstrap choice."
+      },
+      "adoptPath": {
+        "type": "boolean",
+        "description": "Accept that the project folder moved and update the recorded path."
+      }
+    },
+    "additionalProperties": false,
+    "$schema": "http://json-schema.org/draft-07/schema#"
+  }
+}

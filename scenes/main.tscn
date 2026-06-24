@@ -14,6 +14,8 @@
 [ext_resource type="PackedScene" uid="uid://ciklgtxlwtryg" path="res://assets/models/tavern_single_stool.glb" id="13_tavern_stool"]
 [ext_resource type="PackedScene" uid="uid://du7tvmk4tm238" path="res://scenes/ui/character_sheet_ui.tscn" id="14_character_sheet_ui"]
 [ext_resource type="PackedScene" path="res://scenes/ui/monster_sheet_ui.tscn" id="15_monster_sheet_ui"]
+[ext_resource type="Script" uid="uid://v83japwmqu81" path="res://scripts/combat/battle_test_map.gd" id="16_battle_test_map"]
+[ext_resource type="Script" uid="uid://c6fjdrw7qffft" path="res://scripts/day_night_cycle.gd" id="day_night_cycle"]
 
 [sub_resource type="PlaneMesh" id="PlaneMesh_ground"]
 size = Vector2(30, 30)
@@ -40,6 +42,7 @@ size = Vector3(0.8, 6, 0.8)
 size = Vector3(0.8, 6, 0.8)
 
 [node name="World" type="Node3D" unique_id=1662994112]
+script = ExtResource("16_battle_test_map")
 
 [node name="Camera" type="Camera3D" parent="." unique_id=1134048631]
 script = ExtResource("2_camera_script")
@@ -52,6 +55,9 @@ shadow_enabled = true
 
 [node name="WorldEnvironment" type="WorldEnvironment" parent="." unique_id=1014742819]
 environment = ExtResource("8_tavern_env")
+
+[node name="DayNightCycle" type="Node" parent="." unique_id=1421686356]
+script = ExtResource("day_night_cycle")
 
 [node name="Ground" type="StaticBody3D" parent="." unique_id=1706960394]
 

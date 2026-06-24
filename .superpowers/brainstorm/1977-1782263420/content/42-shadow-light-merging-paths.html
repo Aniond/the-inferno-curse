@@ -1,0 +1,101 @@
+<h2>Orb Tree Update: One Equipped per Type + Shadow/Light Merging Paths</h2>
+<p class="subtitle">Confirmed: Only ONE copy of each unique orb can be equipped at a time, even with multiples in the tree. Tree now has branching Shadow (Sinner) and Light (Saint) paths that can merge for hybrid orbs.</p>
+
+<div class="section">
+  <div class="label">Equip Limit Rule (your reminder)</div>
+  <p>For any unique orb (e.g. "Shadow Claw"):</p>
+  <ul>
+    <li>You can place unlimited copies in the tree to stack power and sanity cost.</li>
+    <li>You can only ever have ONE instance equipped for active use.</li>
+    <li>The power from ALL stacked copies applies to that single equipped version.</li>
+  </ul>
+  <p>This keeps loadouts meaningful while still letting you farm and invest heavily in favorites.</p>
+</div>
+
+<h3>Shadow / Light Branching with Merge Points</h3>
+<div class="mockup">
+  <div class="mockup-body">
+    <strong>Tree Flow (simplified)</strong><br><br>
+    Base Orb Entry<br>
+    ↓<br>
+    Split:<br>
+    &nbsp;&nbsp;Shadow Branch (Sinner) — raw power, higher base sanity + corruption, aggressive effects<br>
+    &nbsp;&nbsp;&nbsp;&nbsp;↓<br>
+    &nbsp;&nbsp;&nbsp;&nbsp;Merge Nodes (hybrid options appear here)<br>
+    &nbsp;&nbsp;&nbsp;&nbsp;↑<br>
+    &nbsp;&nbsp;Light Branch (Saint) — purified lean, lower corruption, utility or holy effects, Church synergy<br><br>
+    <strong>Merge Examples</strong><br>
+    • Merge a Shadow Damage orb with Light nodes → gains holy damage vs Limbo creatures + small self-bless on hit, but base damage slightly reduced and sanity cost stays high.<br>
+    • Merge a Light Heal orb with Shadow nodes → "Blood Sacrament" style: heals allies but drains a small amount from enemies or self, adds corruption bleed on use.<br>
+    • Deep merges can create unique hybrid orbs that are neither pure dark nor pure light.<br><br>
+    <span style="color:#a08060;">This replaces the strict "Dark and Light cannot coexist" with player choice at merge points.</span>
+  </div>
+</div>
+
+<h3>Impact on Single Target Template</h3>
+<div class="section">
+  <p>Each Single Target orb (Damage or Heal) now tracks:</p>
+  <ul>
+    <li>Its flat base_sanity_cost and base_corruption_value.</li>
+    <li>Path investment: pure Shadow, pure Light, or merged hybrid (chosen via tree nodes).</li>
+    <li>Only one version can be equipped, but it receives power from all tree stacks on that orb (including any merged nodes).</li>
+  </ul>
+  
+  <p>Example flow for Shadow Claw:</p>
+  <ul>
+    <li>Start in Shadow branch → high damage, high sanity/corruption.</li>
+    <li>Reach a merge node → option to add Light elements (holy vs Limbo, reduced world corruption on use, but lower raw damage and retained high sanity cost).</li>
+    <li>Equip the resulting hybrid — only one active, powered by everything you've slotted.</li>
+  </ul>
+</div>
+
+<div class="pros-cons">
+  <div class="pros">
+    <h4>Benefits</h4>
+    <ul>
+      <li>Enforces the "only one equipped per orb type" while still rewarding heavy tree investment via stacking.</li>
+      <li>Gives real choice and replayability through merge points without losing the Saint/Sinner identity.</li>
+      <li>Hybrids create interesting orbs that feel unique to the player's path decisions.</li>
+      <li>Church can still "reset" an orb toward pure Light if the player wants to back out of deep Shadow investment.</li>
+      <li>Fits the "equip one, invest many" rule you confirmed.</li>
+    </ul>
+  </div>
+  <div class="cons">
+    <h4>Tradeoffs to balance</h4>
+    <ul>
+      <li>Merge points need clear costs/benefits so pure paths remain attractive.</li>
+      <li>Need to decide if hybrids are "best of both" or always have a downside (e.g. higher sanity cost than pure Light but lower than pure Shadow).</li>
+    </ul>
+  </div>
+</div>
+
+<div class="options">
+  <div class="option" data-choice="merge-cost" onclick="toggleSelect(this)">
+    <div class="letter">A</div>
+    <div class="content">
+      <h3>Merge Cost/Benefit</h3>
+      <p>When merging Shadow and Light on an orb, should the result be a true hybrid (medium power, medium costs) or always carry a downside (e.g. higher sanity cost than either pure path)?</p>
+    </div>
+  </div>
+  <div class="option" data-choice="equip-enforcement" onclick="toggleSelect(this)">
+    <div class="letter">B</div>
+    <div class="content">
+      <h3>Equip Enforcement</h3>
+      <p>Is the "only one equipped per unique orb" a hard rule (game prevents it) or soft (you can equip multiples but with severe penalties like doubled sanity drain)?</p>
+    </div>
+  </div>
+  <div class="option" data-choice="hybrid-uniqueness" onclick="toggleSelect(this)">
+    <div class="letter">C</div>
+    <div class="content">
+      <h3>Hybrid Uniqueness</h3>
+      <p>Should merged orbs get entirely new names and effects (e.g. "Umbral Grace" instead of Shadow + Light), or just combined stats?</p>
+    </div>
+  </div>
+  <div class="option" data-choice="single-target" onclick="toggleSelect(this)">
+    <div class="letter">D</div>
+    <div class="content">
+      <h3>Single Target Merge Example</h3>
+      <p>Want a quick example of a Single Target Damage orb going through Shadow → merge with Light, showing final stats and sanity/corruption?</p>
+    </div>
+  </div>
+</div>

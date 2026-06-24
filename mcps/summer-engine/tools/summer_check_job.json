@@ -1,0 +1,18 @@
+{
+  "name": "summer_check_job",
+  "description": "Check the status of an async generation job.\n\nUse this when you called summer_generate_3d with wait=false, or need to re-check\na job that timed out. Most of the time you won't need this — summer_generate_3d\nwaits automatically.\n\nStatus values: waiting, active, completed, failed, delayed, unknown.\n\nRequires authentication: run 'npx summer-engine login' first.",
+  "inputSchema": {
+    "type": "object",
+    "properties": {
+      "jobId": {
+        "type": "string",
+        "description": "The job ID returned by an async generation tool"
+      }
+    },
+    "required": [
+      "jobId"
+    ],
+    "additionalProperties": false,
+    "$schema": "http://json-schema.org/draft-07/schema#"
+  }
+}

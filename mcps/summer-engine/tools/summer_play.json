@@ -1,0 +1,15 @@
+{
+  "name": "summer_play",
+  "description": "Start running the game in the engine. The game runs inside Summer Engine's viewport.\n\nAfter starting, use summer_get_diagnostics to check for runtime errors.\n\nYou can run a specific scene instead of the main scene — useful for testing individual levels or UI screens.",
+  "inputSchema": {
+    "type": "object",
+    "properties": {
+      "scene": {
+        "type": "string",
+        "description": "Scene to run instead of main scene, e.g. 'res://levels/test_level.tscn'"
+      }
+    },
+    "additionalProperties": false,
+    "$schema": "http://json-schema.org/draft-07/schema#"
+  }
+}

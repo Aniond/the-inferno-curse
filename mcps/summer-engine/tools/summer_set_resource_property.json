@@ -1,0 +1,37 @@
+{
+  "name": "summer_set_resource_property",
+  "description": "Set a nested property on a resource attached to a node.\n\nUse when you need to modify a sub-property of a resource, like:\n- CollisionShape3D shape size: nodePath=\"./Player/CollisionShape3D\", resourceProperty=\"shape\", subProperty=\"size\", value=\"Vector3(1, 2, 1)\"\n- Material albedo color: nodePath=\"./Floor\", resourceProperty=\"material_override\", subProperty=\"albedo_color\", value=\"Color(0.2, 0.5, 0.2, 1)\"\n- Mesh size: nodePath=\"./Box\", resourceProperty=\"mesh\", subProperty=\"size\", value=\"Vector3(2, 2, 2)\"",
+  "inputSchema": {
+    "type": "object",
+    "properties": {
+      "nodePath": {
+        "type": "string",
+        "description": "Node path, e.g. './Player/CollisionShape3D'"
+      },
+      "resourceProperty": {
+        "type": "string",
+        "description": "Resource property on the node, e.g. 'shape', 'mesh', 'material_override'"
+      },
+      "subProperty": {
+        "type": "string",
+        "description": "Property on the resource, e.g. 'size', 'radius', 'albedo_color'"
+      },
+      "value": {
+        "type": [
+          "string",
+          "number",
+          "boolean"
+        ],
+        "description": "Value in Godot string format"
+      }
+    },
+    "required": [
+      "nodePath",
+      "resourceProperty",
+      "subProperty",
+      "value"
+    ],
+    "additionalProperties": false,
+    "$schema": "http://json-schema.org/draft-07/schema#"
+  }
+}

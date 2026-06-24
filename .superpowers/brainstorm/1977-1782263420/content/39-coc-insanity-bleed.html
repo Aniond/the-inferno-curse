@@ -1,0 +1,99 @@
+<h2>Call of Cthulhu-Style Insanity Bleed</h2>
+<p class="subtitle">World Corruption doesn't just affect Florence — it bleeds into the character's mind. You start to see the world tearing apart, and it affects you personally.</p>
+
+<div class="section">
+  <div class="label">Your Idea</div>
+  <p>"We could go COC insanity. Seeing the world torn apart by Corruption bleeds into the Charecter"</p>
+  <p>This makes Sanity the personal, visible (to the player) mental toll caused by exposure to a corrupted world.</p>
+</div>
+
+<h3>How the Bleed Works</h3>
+<div class="mockup">
+  <div class="mockup-body">
+    <strong>World Corruption Events → Personal Sanity Hits</strong><br><br>
+    
+    • Stepping on a Limbo Square (teleport into enemies) → Sanity loss<br>
+    • Witnessing or causing a random battle due to corruption → Sanity loss<br>
+    • Hearing NPC rumors about murders/missing people caused by your neglect → Sanity loss<br>
+    • High water corruption or moving shadows in a node → Sanity loss over time while present<br>
+    • Using a high-Corruption orb in a high-corruption area → amplified Sanity hit<br><br>
+    
+    <strong>Personal Effects (player feels these)</strong><br>
+    • Low Sanity: Subtle unease, occasional whispers, slightly off combat feedback.<br>
+    • Medium Sanity: Hallucinations during exploration, orbs sometimes feel "wrong", increased risk of bad teleports.<br>
+    • High Sanity: Intrusive thoughts, temporary loss of control, orbs can misfire or draw extra corruption.<br>
+    • Extreme: Character starts acting against player's interests in small ways (dialogue options change, forced risky actions).
+  </div>
+</div>
+
+<h3>Integration with Flat Skill Values</h3>
+<div class="section">
+  <p>Each orb still has two flat values (as you confirmed):</p>
+  <ul>
+    <li><strong>base_sanity_cost</strong> — direct personal cost when used or equipped.</li>
+    <li><strong>base_corruption_value</strong> — how much it contributes to the world's Corruption.</li>
+  </ul>
+  
+  <p>The bleed happens on top of that: high world Corruption (driven by orbs + player decisions) causes ongoing Sanity loss through exposure. Using orbs in a corrupted world accelerates the bleed.</p>
+</div>
+
+<h3>Interaction with Saint vs Sinner</h3>
+<div class="section">
+  <p><strong>Sinner Path</strong><br>
+  Embraces the bleed. Tree nodes that increase power on stacked orbs can also increase how much world Corruption "feeds back" as personal Sanity loss — more power, more madness, more power from the madness.</p>
+
+  <p><strong>Saint Path</strong><br>
+  Actively fights the bleed. Church purification reduces both the orb's base_sanity_cost and its contribution to world Corruption. Focus ability and holy orbs slow or reverse personal Sanity loss in corrupted areas.</p>
+</div>
+
+<div class="pros-cons">
+  <div class="pros">
+    <h4>Why this fits the game</h4>
+    <ul>
+      <li>Perfect Dante/Limbo feel: the world is falling apart, and so are you.</li>
+      <li>Makes every negative decision or stacked orb have a personal, accumulating price.</li>
+      <li>Creates genuine horror and roleplay without numbers on screen (hidden, shown through effects and NPC reactions).</li>
+      <li>Gives the Church real power: not just lowering numbers, but literally saving your mind.</li>
+      <li>Strong differentiation between paths: Sinner leans into the madness for power; Saint tries to stay sane while saving the city.</li>
+    </ul>
+  </div>
+  <div class="cons">
+    <h4>Still needs decisions</h4>
+    <ul>
+      <li>How fast does the bleed happen? (per exposure event, over time in corrupted nodes, on every ability use?)</li>
+      <li>Can the player ever reduce personal Sanity without Church intervention, or is the Church the only real cure?</li>
+      <li>Should extreme Sanity loss ever force mechanical changes (like temporary loss of control over an orb)?</li>
+    </ul>
+  </div>
+</div>
+
+<div class="options">
+  <div class="option" data-choice="bleed-rate" onclick="toggleSelect(this)">
+    <div class="letter">A</div>
+    <div class="content">
+      <h3>Bleed Rate</h3>
+      <p>How should Sanity loss from world Corruption be triggered? (per event, passive drain in high-corruption nodes, or only when using abilities?)</p>
+    </div>
+  </div>
+  <div class="option" data-choice="recovery" onclick="toggleSelect(this)">
+    <div class="letter">B</div>
+    <div class="content">
+      <h3>Recovery</h3>
+      <p>Besides Church purification, should there be any other ways to recover Sanity (rest, certain orbs, helping people)?</p>
+    </div>
+  </div>
+  <div class="option" data-choice="saint-sinner" onclick="toggleSelect(this)">
+    <div class="letter">C</div>
+    <div class="content">
+      <h3>Saint vs Sinner on Insanity</h3>
+      <p>Should Sinner orbs or nodes ever give bonuses while Sanity is low (embracing the madness), while Saint versions penalize or prevent low Sanity states?</p>
+    </div>
+  </div>
+  <div class="option" data-choice="single-target" onclick="toggleSelect(this)">
+    <div class="letter">D</div>
+    <div class="content">
+      <h3>Single Target Example</h3>
+      <p>Would you like to see a concrete Single Target orb example with its base_sanity_cost, base_corruption_value, and how world Corruption causes bleed when using it?</p>
+    </div>
+  </div>
+</div>

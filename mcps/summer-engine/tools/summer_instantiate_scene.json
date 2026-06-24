@@ -1,0 +1,27 @@
+{
+  "name": "summer_instantiate_scene",
+  "description": "Add an existing scene or 3D model as a child node. Use this to:\n- Add a .tscn prefab (reusable scene) as a child\n- Add a .glb/.gltf 3D model into the scene\n- Compose scenes from smaller scenes (e.g., add a \"Player\" scene into a \"Level\" scene)\n\nThe scene must already exist in the project. Use summer_import_from_url first if importing from external sources.",
+  "inputSchema": {
+    "type": "object",
+    "properties": {
+      "parent": {
+        "type": "string",
+        "description": "Parent node path, e.g. './World'"
+      },
+      "scene": {
+        "type": "string",
+        "description": "Scene/model path, e.g. 'res://player.tscn' or 'res://models/tree.glb'"
+      },
+      "name": {
+        "type": "string",
+        "description": "Override the instance name"
+      }
+    },
+    "required": [
+      "parent",
+      "scene"
+    ],
+    "additionalProperties": false,
+    "$schema": "http://json-schema.org/draft-07/schema#"
+  }
+}

@@ -1,0 +1,111 @@
+<h2>NPC AI &amp; Player Decisions — Natural Consequences</h2>
+<p class="subtitle">NPCs are AI-driven and react to the actual world state. Your choices (help or ignore) directly feed world corruption and trigger organic rumors and events.</p>
+
+<div class="section">
+  <div class="label">Your Rule</div>
+  <p>"NPC are going to be AI driven so I want it to feel natural"</p>
+  <p>"Based on whats going on in the game world. If the player choses not to help a someone in need. Did you hear that someone recently was murdered by the so and so, or went missing. You start to feel your decision. Negative decision feed into the corruption"</p>
+</div>
+
+<h3>How It Works</h3>
+<div class="mockup">
+  <div class="mockup-body">
+    <strong>World State Tracking</strong><br>
+    • The game maintains a living model of world corruption per district/node + a record of player decisions (e.g., "ignored person in need in Old Market").<br>
+    • AI NPCs pull from this state when generating dialogue and behavior.<br><br>
+    
+    <strong>Player Choice Example</strong><br>
+    • You encounter someone in need (wounded person, threatened merchant, person asking for help with strange creatures).<br>
+    • You choose to ignore or walk away.<br>
+    • This decision is recorded and immediately adds to world corruption in that node (and can spread along roads).<br><br>
+    
+    <strong>Organic NPC Rumors</strong><br>
+    • Later, in the same or connected nodes, NPCs start talking about the consequences:<br>
+      "Did you hear? Someone was murdered near the Old Market last night. They say it was those creatures..."<br>
+      "I heard old man Rossi went missing after he was turned away at the gate..."<br>
+    • Rumors spread naturally between AI NPCs over time.<br>
+    • The more negative decisions you make, the darker and more frequent the rumors become.<br><br>
+    
+    <strong>You Start to Feel Your Decision</strong><br>
+    • World corruption rises → more Limbo Squares, shadows, random battles, closed areas.<br>
+    • Hidden nodes can unlock or worsen because of the increased corruption (e.g., Giardino delle Rose becomes overrun after you ignored the initial warning).<br>
+    • Your personal Sanity cost can tick up indirectly (the world reacting to your neglect makes everything feel heavier).<br>
+    • Saint vs Sinner: Consistent negative decisions push you toward the Sinner path and make Saint-aligned options (Church help) harder or more expensive.
+  </div>
+</div>
+
+<h3>Integration with Existing Systems</h3>
+<div class="section">
+  <p><strong>Hidden Nodes &amp; Exploration</strong><br>
+  • NPC rumors are one of the main ways hidden nodes unlock (as you described).<br>
+  • Your neglect can cause new hidden nodes to appear or existing ones to become more dangerous.<br>
+  • Positive choices can unlock "cleaner" or story-positive hidden nodes.</p>
+
+  <p><strong>World Corruption vs Player Sanity</strong><br>
+  • Negative decisions primarily feed world corruption (environment + NPC behavior).<br>
+  • You "feel" it through increased hazards (Limbo Squares teleporting you into enemies) and the tone of the city changing around you.<br>
+  • High personal Sanity cost from your orbs + bad decisions can compound the feeling (more aggressive enemies, harder focus).</p>
+
+  <p><strong>Ability Tree &amp; Orbs</strong><br>
+  • Tree nodes can react to your decision history (e.g., "Sinner branch nodes become stronger if you have a history of neglect").<br>
+  • Orbs absorbed from creatures that appeared because of your choices may carry higher base corruption/sanity cost.</p>
+
+  <p><strong>Church &amp; Guilds</strong><br>
+  • Church reputation can be damaged by repeated negative decisions (people notice you walked away).<br>
+  • Guilds might offer "pragmatic" reinterpretations that feel more Sinner-aligned after you ignore people.<br>
+  • High Church rep can give you ways to mitigate the consequences of past neglect.</p>
+
+  <p><strong>Saint vs Sinner</strong><br>
+  • This system makes the choice feel real and cumulative. Ignoring people isn't just "evil points" — it literally makes the world (and your path) darker.</p>
+</div>
+
+<div class="pros-cons">
+  <div class="pros">
+    <h4>Why this feels natural with AI-driven NPCs</h4>
+    <ul>
+      <li>Everything emerges from the actual state of the world + your past choices.</li>
+      <li>No artificial quest log — you hear the consequences in conversation.</li>
+      <li>Strong emotional feedback: "I caused that."</li>
+      <li>Scales with corruption: more neglect = more rumors and more visible world decay.</li>
+      <li>Reinforces the core theme of corruption spreading from personal decisions.</li>
+    </ul>
+  </div>
+  <div class="cons">
+    <h4>Things to balance</h4>
+    <ul>
+      <li>How visible should the link between your choice and the consequence be? (Subtle rumors vs direct "because you ignored them" lines?)</li>
+      <li>Can positive actions later redeem some of the corruption increase?</li>
+    </ul>
+  </div>
+</div>
+
+<div class="options">
+  <div class="option" data-choice="rumor-tone" onclick="toggleSelect(this)">
+    <div class="letter">A</div>
+    <div class="content">
+      <h3>Rumor Tone</h3>
+      <p>Should NPCs ever directly reference your involvement ("I heard someone turned that person away..."), or keep it indirect so the player has to connect the dots?</p>
+    </div>
+  </div>
+  <div class="option" data-choice="redemption" onclick="toggleSelect(this)">
+    <div class="letter">B</div>
+    <div class="content">
+      <h3>Redemption</h3>
+      <p>Can later positive actions (helping others, purifying orbs, Church work) reduce the corruption increase from past neglect?</p>
+    </div>
+  </div>
+  <div class="option" data-choice="tree-reaction" onclick="toggleSelect(this)">
+    <div class="letter">C</div>
+    <div class="content">
+      <h3>Tree Reaction</h3>
+      <p>Should the ability tree have nodes that react to your decision history (e.g., Sinner nodes get bonuses if you've caused neglect, Saint nodes penalize it)?</p>
+    </div>
+  </div>
+  <div class="option" data-choice="hidden-node" onclick="toggleSelect(this)">
+    <div class="letter">D</div>
+    <div class="content">
+      <h3>Hidden Node Trigger</h3>
+      <p>Should ignoring someone sometimes directly cause a new hidden node to appear (the consequence becomes explorable content)?</p>
+    </div>
+  </div>
+</div>

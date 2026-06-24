@@ -1,0 +1,148 @@
+<h2>Single Target Abilities — Equipable Model</h2>
+<p class="subtitle">Key insight: Abilities are equipable (learned vs equipped). Starting with Single Target templates.</p>
+
+<div class="section">
+  <div class="label">Core Principle (from you)</div>
+  <p>Abilities must be <strong>equipped</strong> to use. They are not automatically available just because learned via absorption. Equipping has consequences (corruption, slot limits, build choices).</p>
+</div>
+
+<h3>Usable Template: SingleTargetAbility</h3>
+<div class="mockup">
+  <div class="mockup-header">Example: strike.tres (or runtime dict)</div>
+  <div class="mockup-body" style="font-family:monospace; font-size:12px; background:#0c0a08; color:#c8b090; padding:10px;">
+    id = "strike"<br>
+    display_name = "Strike"<br>
+    description = "Basic physical attack."<br><br>
+    type = "single_target"<br>
+    category = "attack"   # attack | heal<br><br>
+    # Targeting<br>
+    range = 1<br>
+    is_ranged = false<br>
+    requires_line_of_sight = true<br><br>
+    # Core Effect<br>
+    base_power = 8<br>
+    scaling_stat = "STR"<br>
+    damage_type = "physical"<br><br>
+    # CT Interaction (very important)<br>
+    ct_self_gain = 0<br>
+    ct_target_delay = 12<br>
+    action_cost = 1<br><br>
+    # Costs<br>
+    mp_cost = 0<br>
+    corruption_on_use = 0<br>
+    corruption_on_equip = 1   # new from equipable insight<br><br>
+    # Optional status<br>
+    apply_status_id = ""<br>
+    status_duration_rounds = 0<br><br>
+    theme_tags = ["martial"]<br>
+    rarity_when_absorbed = "normal"
+  </div>
+</div>
+
+<div class="split">
+  <div class="mockup">
+    <div class="mockup-header">Equipped View (Character Sheet)</div>
+    <div class="mockup-body">
+      <strong>Equipped Abilities (4 slots?)</strong><br>
+      [1] Strike &nbsp;&nbsp;&nbsp; <span style="color:#a0c070;">(equipped)</span><br>
+      [2] Guarigione &nbsp; <span style="color:#666;">(empty)</span><br>
+      [3] <span style="color:#666;">empty</span><br>
+      [4] <span style="color:#666;">empty</span><br><br>
+      <em>Equipping Strike adds +1 Corruption pressure</em>
+    </div>
+  </div>
+  <div class="mockup">
+    <div class="mockup-header">In Battle (ACT phase)</div>
+    <div class="mockup-body">
+      Ability list only shows <strong>equipped</strong> ones.<br>
+      Click Strike → target single cell (range 1)<br>
+      On confirm:<br>
+      • Deal damage<br>
+      • Target CT -= 12<br>
+      • Advance global CT by 1<br>
+      • +0 corruption this use (but already paying from equip)
+    </div>
+  </div>
+</div>
+
+<h3>Learned vs Equipped Flow</h3>
+<div class="section">
+  <table style="width:100%; border-collapse: collapse;">
+    <tr style="background:#3a2f22;">
+      <th style="text-align:left; padding:6px;">State</th>
+      <th style="text-align:left; padding:6px;">What player can do</th>
+      <th style="text-align:left; padding:6px;">Corruption</th>
+    </tr>
+    <tr>
+      <td style="padding:6px; border:1px solid #554433;">Absorbed / Learned</td>
+      <td style="padding:6px; border:1px solid #554433;">Stored in player_data.unlocked_abilities<br>Visible in "Known Abilities"</td>
+      <td style="padding:6px; border:1px solid #554433;">0 (just known)</td>
+    </tr>
+    <tr>
+      <td style="padding:6px; border:1px solid #554433;">Equipped</td>
+      <td style="padding:6px; border:1px solid #554433;">Can be used in combat.<br>May give passive bonuses (later).</td>
+      <td style="padding:6px; border:1px solid #554433;">+ corruption_on_equip<br>(permanent while equipped)</td>
+    </tr>
+    <tr>
+      <td style="padding:6px; border:1px solid #554433;">Used</td>
+      <td style="padding:6px; border:1px solid #554433;">Apply effect + CT changes</td>
+      <td style="padding:6px; border:1px solid #554433;">+ corruption_on_use (optional)</td>
+    </tr>
+  </table>
+</div>
+
+<div class="pros-cons">
+  <div class="pros">
+    <h4>Why equipable makes sense here</h4>
+    <ul>
+      <li>Matches absorption fantasy: you "take" the power but have to choose to carry it.</li>
+      <li>Creates meaningful decisions (which 4 abilities do I run with?).</li>
+      <li>Corruption feels real — it's the cost of what you choose to equip.</li>
+      <li>Future proofs for Buff/Curse and Traits (some might be passive when equipped).</li>
+    </ul>
+  </div>
+  <div class="cons">
+    <h4>Open questions this raises</h4>
+    <ul>
+      <li>How many equip slots? (fixed 4? scales with level?)</li>
+      <li>Do equipped abilities give <strong>passive</strong> bonuses even when not used?</li>
+      <li>Can you swap equipped abilities outside combat only?</li>
+      <li>Should Single Target heals have different equip cost than attacks?</li>
+    </ul>
+  </div>
+</div>
+
+<div class="section">
+  <p><strong>Next:</strong> Click an option or reply to go deeper on one area.</p>
+</div>
+
+<div class="options">
+  <div class="option" data-choice="slots" onclick="toggleSelect(this)">
+    <div class="letter">A</div>
+    <div class="content">
+      <h3>Equip Slots &amp; Limits</h3>
+      <p>Define how many can be equipped, when you can change loadout, and if slots are per category (attack/heal vs others).</p>
+    </div>
+  </div>
+  <div class="option" data-choice="passives" onclick="toggleSelect(this)">
+    <div class="letter">B</div>
+    <div class="content">
+      <h3>Passive Bonuses on Equip</h3>
+      <p>Should simply equipping a Single Target ability give small always-on effects (e.g. +1 STR while Strike is equipped)?</p>
+    </div>
+  </div>
+  <div class="option" data-choice="examples" onclick="toggleSelect(this)">
+    <div class="letter">C</div>
+    <div class="content">
+      <h3>Concrete Examples</h3>
+      <p>3-4 ready Single Target abilities (with equip/use corruption values) that could come from the current monsters.</p>
+    </div>
+  </div>
+  <div class="option" data-choice="ui" onclick="toggleSelect(this)">
+    <div class="letter">D</div>
+    <div class="content">
+      <h3>UI &amp; PlayerData Changes</h3>
+      <p>How this affects character_sheet_ui, player_data.abilities, and the "equipped" vs "unlocked" lists.</p>
+    </div>
+  </div>
+</div>

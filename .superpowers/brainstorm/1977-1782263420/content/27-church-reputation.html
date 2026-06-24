@@ -1,0 +1,106 @@
+<h2>Church Reputation System — Quests, Perks, and Progression</h2>
+<p class="subtitle">You do quests for the Church, gain reputation, and unlock extra perks. This is the main way to lean into the Saint path and manage Limbo corruption.</p>
+
+<div class="section">
+  <div class="label">Core Loop</div>
+  <p>1. Accept Church quests (investigations, purifying corrupted zones, protecting holy sites, dealing with Limbo-tainted monsters, etc.).</p>
+  <p>2. Complete them to gain Church Reputation.</p>
+  <p>3. Reputation tiers unlock permanent or semi-permanent perks.</p>
+  <p>4. Higher reputation also improves your standing with the Church, affecting dialogue, prices, and access to special services.</p>
+</div>
+
+<h3>Example Reputation Tiers &amp; Perks</h3>
+<div class="mockup">
+  <div class="mockup-body" style="font-size:12px;">
+    <strong>Tier 1 (Neutral / Low Rep)</strong><br>
+    • Basic access to Church services (purification available but expensive in reputation or coin).<br>
+    • Learn basic Focus ability (see Limbo Squares).<br><br>
+    
+    <strong>Tier 2 (Respected)</strong><br>
+    • Purification costs reduced (less weakening of the ability, or lower reputation hit).<br>
+    • Improved Focus (wider range, passive mode, or lower sanity cost).<br>
+    • Small holy bonuses to equipped orbs (e.g. +damage vs Limbo creatures).<br><br>
+    
+    <strong>Tier 3 (Devout)</strong><br>
+    • Can request "blessed" reinterpretations of abilities (hybrid holy + original flavor with reduced corruption).<br>
+    • Focus can suppress nearby Limbo Squares temporarily.<br>
+    • Church provides occasional holy orbs or materials as rewards.<br>
+    • World corruption in Florence decreases slightly faster when you are in the area.<br><br>
+    
+    <strong>Tier 4 (Saintly)</strong><br>
+    • Major perks: Abilities purified here gain unique holy effects without as much power loss.<br>
+    • Permanent reduction to your personal Sanity cost on holy orbs.<br>
+    • Ability to "consecrate" tree nodes (making them more effective for Saint path).<br>
+    • Strong influence on city events (can help push back Limbo manifestations in certain districts).
+  </div>
+</div>
+
+<h3>Integration with Existing Systems</h3>
+<div class="section">
+  <p><strong>Single Target Template</strong><br>
+  Holy versions of Single Target abilities (Damage or Heal) benefit directly from Church reputation. Higher tiers can improve base_heal, stat scaling, or add anti-Limbo effects while keeping the corruption reduction.</p>
+
+  <p><strong>Orb Tree</strong><br>
+  Church reputation can unlock or improve Saint-aligned tree nodes. Stacking holy orbs becomes more attractive because perks offset the power loss from purification.</p>
+
+  <p><strong>Saint vs Sinner</strong><br>
+  Church reputation is the main mechanical support for the Saint path. Going deep into Church quests makes it easier to stay "clean" (lower personal Sanity cost, fewer world corruption effects) at the cost of potentially forgoing some raw power from Sinner-style stacking.</p>
+
+  <p><strong>World Corruption</strong><br>
+  High Church reputation can passively slow the spread of Limbo effects in Florence (fewer Limbo Squares, slower water darkening, etc.). This is one of the visible rewards for choosing the Saint path.</p>
+
+  <p><strong>Equippable Orbs</strong><br>
+  You still equip orbs normally. Church perks make holy versions more competitive in your loadout.</p>
+</div>
+
+<div class="pros-cons">
+  <div class="pros">
+    <h4>Why this fits</h4>
+    <ul>
+      <li>Gives the Church real long-term progression instead of a one-time service.</li>
+      <li>Reinforces the Saint vs Sinner choice with tangible gameplay differences.</li>
+      <li>Creates side content (Church quests) that directly impacts the main corruption systems.</li>
+      <li>Makes reputation feel meaningful beyond just "numbers go up."</li>
+      <li>Works well with the hidden corruption design — you see the world improve rather than staring at a bar.</li>
+    </ul>
+  </div>
+  <div class="cons">
+    <h4>Still open</h4>
+    <ul>
+      <li>How many tiers? How visible are the reputation changes to the player?</li>
+      <li>Can reputation ever decrease (e.g. if you do too many Sinner actions)?</li>
+      <li>Are there competing factions that pull you toward the Sinner path?</li>
+    </ul>
+  </div>
+</div>
+
+<div class="options">
+  <div class="option" data-choice="tiers" onclick="toggleSelect(this)">
+    <div class="letter">A</div>
+    <div class="content">
+      <h3>Number of Tiers &amp; Visibility</h3>
+      <p>How many reputation tiers should there be, and should the player see a clear "reputation rank" or only feel the perks?</p>
+    </div>
+  </div>
+  <div class="option" data-choice="quests" onclick="toggleSelect(this)">
+    <div class="letter">B</div>
+    <div class="content">
+      <h3>Quest Style</h3>
+      <p>What kinds of quests feel right for the Church in 13th-century Florence? (investigations, purifying zones, protecting pilgrims, dealing with Limbo-tainted monsters...)</p>
+    </div>
+  </div>
+  <div class="option" data-choice="perk-balance" onclick="toggleSelect(this)">
+    <div class="letter">C</div>
+    <div class="content">
+      <h3>Perk Balance</h3>
+      <p>How strong should Church perks be relative to raw Sinner power? (Should a fully maxed Saint still feel competitive with a fully stacked Sinner, or is the Saint path more about control and story?)</p>
+    </div>
+  </div>
+  <div class="option" data-choice="guild-interaction" onclick="toggleSelect(this)">
+    <div class="letter">D</div>
+    <div class="content">
+      <h3>Guild vs Church</h3>
+      <p>Should some guilds actively conflict with the Church (pulling you toward Sinner actions), or can you maintain good standing with both?</p>
+    </div>
+  </div>
+</div>

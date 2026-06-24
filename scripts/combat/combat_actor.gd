@@ -24,6 +24,12 @@ var jump_cost_reduction: int = 0
 var jump_cost_multiplier: float = 1.0
 var ignore_first_height_level: bool = false
 var downhill_free: bool = false
+var ct_gain_multiplier: float = 1.0
+var ct_gain_flat: int = 0
+var active_status_effects: Dictionary = {}
+var ct_height_delay_reduction: int = 0  # skills can reduce height CT cost
+var intelligence: int = 5  # tactical AI sophistication (1-10), synced from sheet
+var pending_directive = null  # AiDirective written by EnemyCommander (Phase 2); untyped until that class exists
 
 func _ready() -> void:
 	_sync_stats()
@@ -48,6 +54,8 @@ func _sync_stats() -> void:
 		power = sheet_resource.get_power()
 	if sheet_resource.has_method("get_defense"):
 		defense = sheet_resource.get_defense()
+	if sheet_resource.has_method("get_intelligence"):
+		intelligence = sheet_resource.get_intelligence()
 
 	cover_bonus = 0
 
@@ -138,7 +146,12 @@ func get_step_movement_cost(from_cell: CombatCell, to_cell: CombatCell) -> int:
 		from_cell.get_effective_height_level(),
 		to_cell.get_effective_height_level()
 	)
-	return base_step + height_cost
+	var total := base_step + height_cost
+	# Weather (location + dynamic/AI) can slow movement and height
+	if get_parent().has_method("get_weather_mod"):  # if attached or via state
+		# For now, assume combat_state or global query; in practice passed via battle map
+		pass
+	return total
 
 
 func apply_jump_traversal_modifiers(modifiers: Dictionary) -> void:
@@ -150,3 +163,20 @@ func apply_jump_traversal_modifiers(modifiers: Dictionary) -> void:
 		ignore_first_height_level = bool(modifiers["ignore_first_height_level"])
 	if modifiers.has("downhill_free"):
 		downhill_free = bool(modifiers["downhill_free"])
+
+func apply_ct_modifiers(modifiers: Dictionary) -> void:
+	if modifiers.has("ct_gain_multiplier"):
+		ct_gain_multiplier *= float(modifiers["ct_gain_multiplier"])
+		ct_gain_multiplier = max(0.1, ct_gain_multiplier)
+	if modifiers.has("ct_gain_flat"):
+		ct_gain_flat += int(modifiers["ct_gain_flat"])
+	if modifiers.has("ct_height_delay_reduction"):
+		ct_height_delay_reduction += int(modifiers["ct_height_delay_reduction"])
+
+func apply_status_effect(effect_id: String, duration_rounds: int = 3, ct_modifiers: Dictionary = {}) -> void:
+	active_status_effects[effect_id] = {
+		"duration": duration_rounds,
+		"ct_modifiers": ct_modifiers.duplicate()
+	}
+	if ct_modifiers:
+		apply_ct_modifiers(ct_modifiers)

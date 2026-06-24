@@ -1,0 +1,128 @@
+<h2>The Inferno Curse – Current Foundations Summary (as of 2026-06-23)</h2>
+
+<div class="section">
+  <div class="label">Core Fantasy</div>
+  <p>Set in 1200-1300 Italy (Dante-inspired Florence). The main character absorbs skills and spells from monsters. This power comes with a price: personal Sanity (player-based mental/spiritual toll) and world Corruption (Limbo bleeding into Florence, affecting NPCs, environment, and society). Dark and Light cannot easily coexist — the player must choose (or carefully balance) the path of the Sinner or the Saint.</p>
+</div>
+
+<h3>Ability / Orb System</h3>
+<div class="section">
+  <p><strong>Orbs</strong> = Absorbed abilities (Normal / Uncommon / Rare from monsters). They are both active (equipable) and passive (investable).</p>
+  
+  <p><strong>Four Core Types</strong> (starting design focus on Single Target):</p>
+  <ol>
+    <li><strong>Single Target (Attack / Heal)</strong> — Base damage or healing modified by stats (base + stat × multiplier). Flat base_sanity_cost and base_corruption_value.</li>
+    <li><strong>Area Effect Spells</strong></li>
+    <li><strong>Buff / Curse</strong></li>
+    <li><strong>Traits</strong> (passives / identity)</li>
+  </ol>
+
+  <p><strong>Key Values per Orb</strong> (flat values of the skill):</p>
+  <ul>
+    <li>base_sanity_cost (player personal toll — paid on use/equip, ramps with stacks)</li>
+    <li>base_corruption_value (world contribution)</li>
+  </ul>
+
+  <p><strong>Skill Tree (Mild PoE Style)</strong></p>
+  <ul>
+    <li>No hard cap on how many orbs you can place.</li>
+    <li>Place orbs in nodes. Certain nodes increase the power of orbs placed there (damage, scaling, new effects).</li>
+    <li>You can "slot them both": place orbs in the tree for growth AND equip one for active use.</li>
+    <li><strong>Equip Limit</strong>: Only ONE copy of each unique orb type can be equipped at a time (even if you have multiples stacked in the tree). Stacked power applies to the equipped version.</li>
+    <li>Stacking duplicates of the same orb in the tree increases damage/power AND the sanity cost.</li>
+    <li>Branching paths: Shadow (Sinner — raw power, higher costs) and Light (Saint — purified, lower corruption, utility). Paths can merge at nodes for hybrid orbs (shadow + light effects with tradeoffs).</li>
+  </ul>
+</div>
+
+<h3>Sanity vs Corruption</h3>
+<div class="section">
+  <p><strong>Sanity (Player-based)</strong>: Personal mental/spiritual cost. Skills grant/increase it. Stacking orbs ramps it. High Sanity causes personal effects (strain, possible hallucinations, loss of control, amplified costs).</p>
+  <p><strong>Corruption (World-based)</strong>: Affects Florence, NPCs, environment (water color change, shadows, random battles, Limbo Squares). Negative player decisions (ignoring people in need) feed it. Player actions and high personal Sanity can amplify world effects.</p>
+  <p><strong>Mixture</strong>: Skills grant Sanity cost. Seeing world horror (high Corruption) amplifies the Sanity impact. "You start to feel your decision."</p>
+  <p>Dark (corrupted/Sinner) and Light (holy/Saint) have tension but can merge via tree paths for hybrid builds.</p>
+</div>
+
+<h3>Limbo Squares (World Hazard)</h3>
+<div class="section">
+  <ul>
+    <li>Based purely on world corruption level. Lower corruption = fewer squares.</li>
+    <li>Appear as completely normal / invisible floor tiles (not marked).</li>
+    <li>Invisible unless you have a Focus ability (taught by the Church at higher reputation).</li>
+    <li>Stepping on one = random teleport. You often think you landed somewhere safe… but it drops you right back into enemies.</li>
+    <li>AI-driven NPC rumors can hint at or unlock related content.</li>
+    <li>Player decisions (neglect) increase world corruption, leading to more squares and NPC consequences ("someone went missing…").</li>
+  </ul>
+</div>
+
+<h3>Church &amp; Guild Systems</h3>
+<div class="section">
+  <p><strong>Church (Saint Path)</strong></p>
+  <ul>
+    <li>Purifies corrupted orbs into holy versions: lowers corruption/sanity cost, changes identity (e.g. Shadow Bolt → Holy Strike), usually weakens raw power.</li>
+    <li>Teaches Focus ability at higher levels (to see invisible Limbo Squares).</li>
+    <li>Quests grant reputation → extra perks (better purification, reduced costs, Focus upgrades, world corruption reduction in areas, etc.).</li>
+    <li>Reputation and purification help the Saint path.</li>
+  </ul>
+
+  <p><strong>Guilds</strong></p>
+  <ul>
+    <li>Reinterpret corrupted orbs as grounded trade/martial techniques (remove supernatural flavor, change tags, often remove or reduce corruption cost).</li>
+    <li>All major guilds will be incorporated.</li>
+  </ul>
+</div>
+
+<h3>Map Structure (Persona-Inspired)</h3>
+<div class="section">
+  <p><strong>City Overview (Florence)</strong></p>
+  <ul>
+    <li>Stylized map with roads connecting nodes.</li>
+    <li>4–5 nodes depending on the city (Florence examples: Ponte Vecchio, The Old Market, Cathedral of Santa Maria del Fiore, The Docks).</li>
+    <li>Hidden nodes exist and can be unlocked by quests or (preferably) organic story/NPC dialogue.</li>
+  </ul>
+
+  <p><strong>Node Exploration</strong></p>
+  <ul>
+    <li>Entering a node loads a small 3D map (similar scale to current test map).</li>
+    <li>Free movement for exploration.</li>
+    <li>Grid/tactical combat only triggers on engagement (or Limbo Square).</li>
+    <li>Limbo Squares live inside these 3D areas.</li>
+  </ul>
+
+  <p><strong>Hidden Node Unlocks</strong></p>
+  <ul>
+    <li>Primarily via story and AI-driven NPC dialogue (feels natural because NPCs react to world state and player decisions).</li>
+    <li>Example: Overhear NPC: "Have you heard that Giardino delle Rose has been closed down due to strange creatures?" Talk to them → node unlocks.</li>
+    <li>Quests can also unlock them.</li>
+    <li>Negative player decisions can cause or worsen hidden nodes (consequences become explorable content).</li>
+  </ul>
+
+  <p><strong>Corruption on Maps</strong></p>
+  <ul>
+    <li>World corruption affects node density of Limbo Squares, random battles, environmental storytelling.</li>
+    <li>Player decisions feed world corruption → more squares, more NPC rumors about the results of your neglect.</li>
+  </ul>
+</div>
+
+<h3>Ability Tree &amp; Stacking</h3>
+<div class="section">
+  <ul>
+    <li>Mild PoE-style tree.</li>
+    <li>Place orbs in nodes. Nodes boost power of orbs placed there.</li>
+    <li>Branching Shadow (Sinner) and Light (Saint) paths that can merge at nodes for hybrid orbs.</li>
+    <li>Stacking duplicates of the same orb increases damage + sanity cost (flat base value of the skill, then increments).</li>
+    <li>Only one copy of each unique orb can be equipped at a time.</li>
+  </ul>
+</div>
+
+<h3>Next Foundations to Set (as noted by user)</h3>
+<div class="section">
+  <ul>
+    <li>City maps (Persona-style nodes for Florence as described).</li>
+    <li>World map / connections to other areas.</li>
+    <li>Full list of major guilds and their reinterpretation flavors.</li>
+    <li>Concrete ability names, effects, and values for the four types (planned for tomorrow).</li>
+    <li>Exact amplification math for Sanity + world horror, tree node examples, and exact Church/Guild perk lists.</li>
+  </ul>
+</div>
+
+<p style="margin-top:16px; color:#a08060;">All prior screens (1–36) remain available for reference. This document captures the current agreed foundations.</p>

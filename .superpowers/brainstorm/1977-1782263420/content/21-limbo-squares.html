@@ -1,0 +1,98 @@
+<h2>Limbo Squares — World Corruption Manifestation</h2>
+<p class="subtitle">Battles in Florence. Limbo Squares appear as the city's corruption grows. Step on one and it randomly teleports you.</p>
+
+<div class="section">
+  <div class="label">Core Concept</div>
+  <p>These are physical distortions in Florence caused by Limbo bleeding through. They are a direct, player-visible expression of world corruption (separate from your personal Sanity cost).</p>
+  <p>As world corruption rises (through your actions, absorbed orbs, or story progression), more Limbo Squares appear in the streets and plazas.</p>
+</div>
+
+<h3>How They Work</h3>
+<div class="mockup">
+  <div class="mockup-body">
+    <strong>Appearance:</strong><br>
+    • Glowing or warped square tiles on the ground (subtle at first, more obvious as corruption increases).<br>
+    • They pulse faintly or have shifting, unreal shadows.<br><br>
+    
+    <strong>Effect when stepped on:</strong><br>
+    • Random teleport to another location in Florence (could be nearby, across the district, or into a temporarily distorted "pocket").<br>
+    • Small chance of a short combat encounter upon arrival (Limbo Shades or warped enemies).<br>
+    • Brief disorientation effect (screen shift, sound design of distant voices debating).<br><br>
+    
+    <strong>Progression:</strong><br>
+    • Low corruption: Rare, mostly in outlying or "tainted" areas.<br>
+    • Medium: Appear more frequently in main streets.<br>
+    • High: Dense in many areas; some squares may chain-teleport or dump you into more dangerous spots.
+  </div>
+</div>
+
+<h3>Integration with Existing Systems</h3>
+<div class="section">
+  <p><strong>World Corruption</strong><br>
+  Limbo Squares are primarily driven by the city's corruption level (NPC behavior, environmental changes like water color and shadows, plus your overall actions and absorbed power).</p>
+
+  <p><strong>Player Sanity</strong><br>
+  Stepping on them doesn't directly raise your personal sanity cost, but being repeatedly teleported and ambushed can feel punishing if your sanity is already high (you might have reduced awareness or slower reaction in some designs).</p>
+
+  <p><strong>Ability Tree / Orbs</strong><br>
+  Certain tree nodes could interact with Limbo Squares:<br>
+  • Detect squares from farther away.<br>
+  • Reduce chance of teleport or turn the teleport to your advantage.<br>
+  • Gain a temporary buff after being teleported (risk/reward node).<br>
+  • Saint-path nodes might even temporarily "stabilize" nearby squares.</p>
+
+  <p><strong>Combat &amp; Exploration</strong><br>
+  Ties directly into the hybrid system: free movement in Florence, but Limbo Squares can force sudden grid-based combat encounters in unexpected places.</p>
+</div>
+
+<div class="pros-cons">
+  <div class="pros">
+    <h4>Why this fits</h4>
+    <ul>
+      <li>Perfectly captures Limbo's theme of disorientation and being pulled into uncertainty.</li>
+      <li>Makes world corruption feel tangible and dangerous during normal exploration.</li>
+      <li>Creates emergent moments: you might get teleported near a key location, or into trouble.</li>
+      <li>Scales naturally with the corruption system you described.</li>
+      <li>Gives the ability tree meaningful interaction with the environment.</li>
+    </ul>
+  </div>
+  <div class="cons">
+    <h4>Things to tune</h4>
+    <ul>
+      <li>Teleport range and "fairness" (avoid pure frustration).</li>
+      <li>How visible they are before you step on one.</li>
+      <li>Whether some squares are "stable" vs always active.</li>
+    </ul>
+  </div>
+</div>
+
+<div class="options">
+  <div class="option" data-choice="visibility" onclick="toggleSelect(this)">
+    <div class="letter">A</div>
+    <div class="content">
+      <h3>Visibility</h3>
+      <p>Should Limbo Squares be obvious (glowing, pulsing) or subtle until you're close (forcing more careful movement)?</p>
+    </div>
+  </div>
+  <div class="option" data-choice="combat" onclick="toggleSelect(this)">
+    <div class="letter">B</div>
+    <div class="content">
+      <h3>Combat on Teleport</h3>
+      <p>When you teleport, should it always start a short battle, only sometimes, or never (just repositioning)?</p>
+    </div>
+  </div>
+  <div class="option" data-choice="tree" onclick="toggleSelect(this)">
+    <div class="letter">C</div>
+    <div class="content">
+      <h3>Tree Interaction</h3>
+      <p>Should there be nodes that let you "claim" or stabilize a Limbo Square for a temporary safe zone or bonus?</p>
+    </div>
+  </div>
+  <div class="option" data-choice="progression" onclick="toggleSelect(this)">
+    <div class="letter">D</div>
+    <div class="content">
+      <h3>Progression Feel</h3>
+      <p>Do you want the density of squares to feel like a steady pressure as corruption rises, or more dramatic jumps at certain story beats?</p>
+    </div>
+  </div>
+</div>

@@ -1,0 +1,110 @@
+<h2>Orb Skill Tree – Mild PoE-Style Progression</h2>
+<p class="subtitle">Absorbed abilities (orbs) are placed into a tree. You can use them actively (equip/slot) AND invest them in the tree for passive power growth. Nodes enhance placed orbs.</p>
+
+<div class="section">
+  <div class="label">Core Idea</div>
+  <p>You absorb "orbs" (the skills/spells from monsters – Single Target Damage, Heal, AoE, Buff/Curse, Traits, etc.).</p>
+  <p>Each orb can be:</p>
+  <ul>
+    <li><strong>Equipped / Slotted</strong> for active use in combat (the equipable system we already have).</li>
+    <li><strong>Placed in the Skill Tree</strong> for long-term growth and passive bonuses.</li>
+  </ul>
+  <p>Certain nodes in the tree increase the power of any orbs placed in/connected to them.</p>
+</div>
+
+<h3>Simple Tree Concept (Mild Version)</h3>
+<div class="mockup">
+  <div class="mockup-body" style="font-size:12px; background:#111; padding:12px; border:1px solid #554433;">
+    <div style="display:grid; grid-template-columns: repeat(5, 1fr); gap:6px; max-width:420px; margin:0 auto;">
+      <!-- Row 1 -->
+      <div style="grid-column: 3; text-align:center; background:#2a2a2a; padding:4px; border:1px solid #665533;">Starting Orb Socket</div>
+      <!-- Row 2 -->
+      <div style="grid-column: 2; text-align:center; background:#1a2a1a; padding:4px; border:1px solid #336633;">+10% Orb Damage</div>
+      <div style="grid-column: 4; text-align:center; background:#2a1a1a; padding:4px; border:1px solid #663333;">+15% Orb Corruption Weight (risk/reward)</div>
+      <!-- Row 3 -->
+      <div style="grid-column: 1/2; text-align:center; background:#2a2a2a; padding:4px; border:1px solid #665533;">Orb Range +1</div>
+      <div style="grid-column: 3; text-align:center; background:#1a2a1a; padding:4px; border:1px solid #336633;">+1 Stat Scaling on Placed Orbs</div>
+      <div style="grid-column: 5; text-align:center; background:#2a1a1a; padding:4px; border:1px solid #663333;">Orb CT Cost -1 (but +Limbo effect)</div>
+      <!-- Row 4 example cluster -->
+      <div style="grid-column: 2/4; text-align:center; background:#2a2a2a; padding:4px; border:1px solid #665533;">Major Node: Orbs placed here gain +25% power but become "Tainted" (higher corruption)</div>
+    </div>
+    <p style="text-align:center; margin-top:8px; font-size:11px; color:#a08060;">(Very small example cluster – real tree would have 40-80 nodes, paths that branch)</p>
+  </div>
+</div>
+
+<h3>How It Works with Existing Systems</h3>
+<div class="section">
+  <p><strong>Orb = Absorbed Ability</strong></p>
+  <ul>
+    <li>Comes from monster absorption (Normal/Uncommon/Rare).</li>
+    <li>Can be equipped in your active loadout (the 4-? equip slots we discussed).</li>
+    <li>Can also be placed into the tree (one orb can be both equipped AND invested in the tree).</li>
+  </ul>
+
+  <p><strong>Tree Investment</strong></p>
+  <ul>
+    <li>You allocate orbs into sockets/nodes.</li>
+    <li>Connected nodes apply bonuses to those orbs (damage, range, CT speed, stat scaling, new effects, etc.).</li>
+    <li>Some nodes are risk/reward (more power = more Limbo weight).</li>
+    <li>Certain paths or clusters can be "Saint-aligned" (holy, lower corruption) or "Sinner-aligned" (dark, higher power + higher corruption).</li>
+  </ul>
+
+  <p><strong>Interaction with Saint vs Sinner</strong></p>
+  <ul>
+    <li>Placing an orb on a "Light" node may help purify it or reduce its corruption contribution.</li>
+    <li>Placing on "Dark" nodes increases power but accelerates Limbo manifestations.</li>
+    <li>Dark and Light paths in the tree reinforce the choice: you can't efficiently invest the same orb in both sides.</li>
+  </ul>
+</div>
+
+<div class="pros-cons">
+  <div class="pros">
+    <h4>Why this feels good</h4>
+    <ul>
+      <li>Every absorbed orb has long-term value and growth (not just "equip or ignore").</li>
+      <li>Mild PoE tree – visual, satisfying to fill, but not overwhelming like full PoE.</li>
+      <li>Directly ties into equipable + corruption system.</li>
+      <li>Supports the Saint/Sinner identity: tree choices literally shape which version of the character you become.</li>
+      <li>Nodes can create build-defining synergies ("orbs placed here now apply a small AoE on hit").</li>
+    </ul>
+  </div>
+  <div class="cons">
+    <h4>Open questions</h4>
+    <ul>
+      <li>How many orbs can you have placed in the tree at once? (limited sockets? or unlimited but with diminishing returns?)</li>
+      <li>Do you "spend" the orb when placing it, or is it just assigned (you can move it later)?</li>
+      <li>How do you actually unlock tree nodes? (leveling, absorbing more orbs, reputation, etc.)</li>
+    </ul>
+  </div>
+</div>
+
+<div class="options">
+  <div class="option" data-choice="orb-limit" onclick="toggleSelect(this)">
+    <div class="letter">A</div>
+    <div class="content">
+      <h3>Orb Capacity in Tree</h3>
+      <p>How many orbs can be actively invested in the tree at the same time?</p>
+    </div>
+  </div>
+  <div class="option" data-choice="mobility" onclick="toggleSelect(this)">
+    <div class="letter">B</div>
+    <div class="content">
+      <h3>Orb Mobility</h3>
+      <p>Can you freely move orbs around the tree later, or is placement more permanent (like respeccing cost)?</p>
+    </div>
+  </div>
+  <div class="option" data-choice="node-unlock" onclick="toggleSelect(this)">
+    <div class="letter">C</div>
+    <div class="content">
+      <h3>Unlocking Nodes</h3>
+      <p>What makes new nodes available? Level, number of absorbed orbs, specific monster types, Saint/Sinner reputation?</p>
+    </div>
+  </div>
+  <div class="option" data-choice="saint-sinner-tree" onclick="toggleSelect(this)">
+    <div class="letter">D</div>
+    <div class="content">
+      <h3>Integration with Paths</h3>
+      <p>Should the tree have distinct Saint branches vs Sinner branches, or is it one tree where you choose sides through node selection?</p>
+    </div>
+  </div>
+</div>

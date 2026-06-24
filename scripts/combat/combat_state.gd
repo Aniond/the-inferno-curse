@@ -18,7 +18,7 @@ enum Phase {
 
 const CT_ACTION_THRESHOLD := 100
 
-@export var ct_tick_interval: float = 0.35
+@export var ct_tick_interval: float = 0.05
 
 var grid: CombatGrid = null
 var actors: Array[CombatActor] = []
@@ -30,6 +30,7 @@ var round: int = 0
 var phase: int = Phase.READY
 var turns_completed: int = 0
 var active_turn_controller: CombatTurnController = null
+var weather_system: Node = null  # set by battle map for location/AI weather
 
 var _encounter_active: bool = false
 var _ct_tick_timer: float = 0.0
@@ -53,6 +54,10 @@ func start_encounter(grid_node: CombatGrid, actor_nodes: Array) -> void:
 			actor.set_current_cell(start_cell)
 			if start_cell != null:
 				actor.global_position = start_cell.world_position
+		# Reset CT modifiers and status on new encounter
+		actor.ct_gain_multiplier = 1.0
+		actor.ct_gain_flat = 0
+		actor.active_status_effects.clear()
 
 	round = 1
 	turns_completed = 0
@@ -73,18 +78,18 @@ func _process(delta: float) -> void:
 		return
 
 	_ct_tick_timer += delta
-	while _ct_tick_timer >= ct_tick_interval and phase != Phase.ACTOR_TURN:
+	while _ct_tick_timer >= ct_tick_interval:
 		_ct_tick_timer -= ct_tick_interval
 		_tick_ct()
-		if phase == Phase.ACTOR_TURN:
-			break
 
 
 func _tick_ct() -> void:
 	for actor in actors:
 		if not actor.is_alive():
 			continue
-		actor.current_ct = mini(actor.current_ct + maxi(1, actor.speed), CT_ACTION_THRESHOLD * 2)
+		var base_gain = maxi(1, actor.speed) + actor.ct_gain_flat
+		var gain = int(ceil(base_gain * actor.ct_gain_multiplier))
+		actor.current_ct = mini(actor.current_ct + gain, CT_ACTION_THRESHOLD * 2)
 	ct_updated.emit()
 	_try_grant_next_actor_turn()
 
@@ -110,6 +115,27 @@ func _try_grant_next_actor_turn() -> void:
 	actor_turn_started.emit(active_actor)
 
 
+func advance_ct(action_cost: int = 1) -> void:
+	"""Advance CT based on an action being used (not passive time).
+	Each action (move, rotate, attack, etc.) counts as 'NPC action used'.
+	Skills/spells can call this or directly +/- current_ct to speed/slow.
+	"""
+	if not _encounter_active:
+		return
+	for actor in actors:
+		if not actor.is_alive():
+			continue
+		var base = maxi(1, actor.speed) * action_cost + actor.ct_gain_flat
+		var gain = int(ceil(base * actor.ct_gain_multiplier))
+		if weather_system and weather_system.has_method("get_combat_mod"):
+			gain = int(gain * weather_system.get_combat_mod("ct_gain_mult"))
+		actor.current_ct = mini(actor.current_ct + gain, CT_ACTION_THRESHOLD * 2)
+	ct_updated.emit()
+	# only grant if not currently in a turn
+	if phase != Phase.ACTOR_TURN:
+		_try_grant_next_actor_turn()
+
+
 func _sort_ct_priority(a: CombatActor, b: CombatActor) -> bool:
 	if a.current_ct != b.current_ct:
 		return a.current_ct > b.current_ct
@@ -129,6 +155,7 @@ func end_actor_turn() -> void:
 	if living_count > 0 and turns_completed % living_count == 0:
 		round += 1
 		_tick_temporary_terrain()
+		_tick_actor_status_effects()
 
 	phase = Phase.ACTION_RESOLUTION
 	active_actor = null
@@ -178,6 +205,8 @@ func get_reachable_cell_costs(actor: CombatActor) -> Dictionary:
 			if not _can_traverse_height(actor, cell, neighbor):
 				continue
 			var step_cost: int = actor.get_step_movement_cost(cell, neighbor)
+			if weather_system and weather_system.has_method("get_combat_mod"):
+				step_cost = int(step_cost * weather_system.get_combat_mod("move_cost_mult"))
 			var next_cost: int = cost + step_cost
 			if next_cost > actor.movement:
 				continue
@@ -203,6 +232,8 @@ func can_target_actor(attacker: CombatActor, defender: CombatActor, attack_range
 	var effective_range := attack_range
 	if is_ranged:
 		effective_range += grid.get_range_bonus_from_height(attacker.current_cell, defender.current_cell)
+		if weather_system and weather_system.has_method("get_combat_mod"):
+			effective_range = int(effective_range * weather_system.get_combat_mod("los_mult"))
 
 	if _grid_distance(attacker.current_cell, defender.current_cell) > effective_range:
 		return false
@@ -224,7 +255,14 @@ func calculate_damage(attacker: CombatActor, defender: CombatActor, base_damage:
 	var flank = grid.get_flank_bonus(attacker, defender)
 	var pincer = grid.get_pincer_bonus(attacker, defender, actors)
 	var defense = defender.get_defense_value() + cover
-	return max(1, raw_attack + height + flank + pincer - defense)
+	var dmg = max(1, raw_attack + height + flank + pincer - defense)
+	# Weather effects (location + mid-battle changes)
+	if weather_system and weather_system.has_method("get_combat_mod"):
+		if is_ranged:
+			dmg = int(dmg * weather_system.get_combat_mod("ranged_acc_mult"))
+		# height already in calc, but weather can further
+		dmg = int(dmg * weather_system.get_combat_mod("damage_mult"))
+	return dmg
 
 func resolve_attack(attacker: CombatActor, defender: CombatActor, base_damage: int = 0, is_ranged: bool = false, ignores_cover: bool = false) -> int:
 	var damage = calculate_damage(attacker, defender, base_damage, is_ranged, ignores_cover)
@@ -299,6 +337,26 @@ func _tick_temporary_terrain() -> void:
 	for terrain in expired:
 		var affected_cells: Array[CombatCell] = []
 		remove_terrain(terrain, affected_cells)
+
+
+func _tick_actor_status_effects() -> void:
+	for actor in actors:
+		if not actor.is_alive() or actor.active_status_effects.is_empty():
+			continue
+		var expired: Array = []
+		for effect_id in actor.active_status_effects.keys():
+			var eff = actor.active_status_effects[effect_id]
+			eff["duration"] = int(eff.get("duration", 0)) - 1
+			if eff["duration"] <= 0:
+				expired.append(effect_id)
+		for effect_id in expired:
+			actor.active_status_effects.erase(effect_id)
+		# Reset and re-apply remaining CT mods (simple approach for now)
+		actor.ct_gain_multiplier = 1.0
+		actor.ct_gain_flat = 0
+		for rem_eff in actor.active_status_effects.values():
+			if rem_eff.has("ct_modifiers"):
+				actor.apply_ct_modifiers(rem_eff["ct_modifiers"])
 
 
 func _grid_distance(from_cell: CombatCell, to_cell: CombatCell) -> int:

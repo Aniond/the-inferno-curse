@@ -1,0 +1,143 @@
+<h2>The Inferno Curse: 4 Core Skill Types</h2>
+<p class="subtitle">Designing abilities for the monster absorption system • Tactical grid (CT/action turns, height, facing, weather) • Normal / Uncommon / Rare tiers</p>
+
+<div class="section">
+  <div class="label">Context from current systems</div>
+  <ul>
+    <li>Abilities are string IDs today (e.g. "Strike", "Guts") — will expand to typed data</li>
+    <li>Combat is <strong>action-driven CT</strong>: every move/rotate/act advances everyone's CT. Skills can <strong>directly +/- CT</strong>, apply status, change multipliers</li>
+    <li>Grid is cell-based with height, cover, facing arcs, LOS</li>
+    <li>Weather and status already provide combat mods (ct_gain_mult, move, damage, LOS)</li>
+    <li>Absorption: Normal (frequent, simple), Uncommon (tactical shift), Rare (build-defining passive or powerful)</li>
+  </ul>
+</div>
+
+<div class="cards">
+  <!-- Type 1: Single Target -->
+  <div class="card" data-choice="single" onclick="toggleSelect(this)">
+    <div class="card-image" style="background:#1a140f; padding:8px; border:1px solid #554433;">
+      <div style="font-size:10px; color:#a08870; margin-bottom:4px;">SINGLE TARGET</div>
+      <div style="display:grid; grid-template-columns:repeat(5,18px); gap:2px; width:fit-content; margin:0 auto;">
+        <div style="width:18px;height:18px;background:#2a2a2a;"></div>
+        <div style="width:18px;height:18px;background:#2a2a2a;"></div>
+        <div style="width:18px;height:18px;background:#2a2a2a;"></div>
+        <div style="width:18px;height:18px;background:#2a2a2a;"></div>
+        <div style="width:18px;height:18px;background:#2a2a2a;"></div>
+        <div style="width:18px;height:18px;background:#2a2a2a;"></div>
+        <div style="width:18px;height:18px;background:#3a5a3a; border:1px solid #6a8a6a;"></div> <!-- ally -->
+        <div style="width:18px;height:18px;background:#5a2a2a; border:2px solid #ff6b5e;"></div> <!-- target -->
+        <div style="width:18px;height:18px;background:#2a2a2a;"></div>
+        <div style="width:18px;height:18px;background:#2a2a2a;"></div>
+        <div style="width:18px;height:18px;background:#2a2a2a;"></div>
+        <div style="width:18px;height:18px;background:#2a2a2a;"></div>
+        <div style="width:18px;height:18px;background:#2a2a2a;"></div>
+        <div style="width:18px;height:18px;background:#2a2a2a;"></div>
+        <div style="width:18px;height:18px;background:#2a2a2a;"></div>
+      </div>
+      <div style="font-size:9px; color:#ff6b5e; text-align:center; margin-top:4px;">Attack or Heal • 1 cell</div>
+    </div>
+    <div class="card-body">
+      <h3>1. Single Target (Attack / Heal)</h3>
+      <p>Direct damage, single ally heal, simple elemental poke, basic status (poison 1 target), low-cost utility (scan, minor CT boost).</p>
+      <div style="font-size:11px; color:#a08870;">
+        • Typical Normal tier<br>
+        • Simple targeting (existing attack code)<br>
+        • Can directly modify target.current_ct or self CT<br>
+        • Example: "Strike" (+dmg, -15 CT on target) or "Guarigione" (+HP)
+      </div>
+    </div>
+  </div>
+
+  <!-- Type 2: Area Effect -->
+  <div class="card" data-choice="area" onclick="toggleSelect(this)">
+    <div class="card-image" style="background:#1a140f; padding:8px; border:1px solid #554433;">
+      <div style="font-size:10px; color:#a08870; margin-bottom:4px;">AREA EFFECT</div>
+      <div style="display:grid; grid-template-columns:repeat(5,18px); gap:2px; width:fit-content; margin:0 auto;">
+        <div style="width:18px;height:18px;background:#2a2a2a;"></div>
+        <div style="width:18px;height:18px;background:#3a4a6a; border:1px solid #6a8acc;"></div>
+        <div style="width:18px;height:18px;background:#3a4a6a; border:1px solid #6a8acc;"></div>
+        <div style="width:18px;height:18px;background:#3a4a6a; border:1px solid #6a8acc;"></div>
+        <div style="width:18px;height:18px;background:#2a2a2a;"></div>
+        <div style="width:18px;height:18px;background:#2a2a2a;"></div>
+        <div style="width:18px;height:18px;background:#3a4a6a; border:1px solid #6a8acc;"></div>
+        <div style="width:18px;height:18px;background:#5a2a2a; border:2px solid #ff6b5e;"></div> <!-- center enemy -->
+        <div style="width:18px;height:18px;background:#3a4a6a; border:1px solid #6a8acc;"></div>
+        <div style="width:18px;height:18px;background:#2a2a2a;"></div>
+        <div style="width:18px;height:18px;background:#2a2a2a;"></div>
+        <div style="width:18px;height:18px;background:#3a4a6a; border:1px solid #6a8acc;"></div>
+        <div style="width:18px;height:18px;background:#3a4a6a; border:1px solid #6a8acc;"></div>
+        <div style="width:18px;height:18px;background:#3a4a6a; border:1px solid #6a8acc;"></div>
+        <div style="width:18px;height:18px;background:#2a2a2a;"></div>
+      </div>
+      <div style="font-size:9px; color:#6a8acc; text-align:center; margin-top:4px;">Cross / 3x3 / Cone • Multiple cells</div>
+    </div>
+    <div class="card-body">
+      <h3>2. Area Effect Spells</h3>
+      <p>Area damage (3x3, cross, line, cone), area heal, zone control (create difficult terrain), multi-target status, forced movement (push/pull).</p>
+      <div style="font-size:11px; color:#a08870;">
+        • Typical Uncommon tier<br>
+        • Needs grid query for affected cells<br>
+        • Height can modify (e.g. blast from high ground spreads less)<br>
+        • Weather can reduce (rain dampens fire AoE)<br>
+        • Example: "Ash Hex" (3x3 corruption zone + damage over time)
+      </div>
+    </div>
+  </div>
+
+  <!-- Type 3: Buff / Curse -->
+  <div class="card" data-choice="buff" onclick="toggleSelect(this)">
+    <div class="card-image" style="background:#1a140f; padding:8px; border:1px solid #554433;">
+      <div style="display:flex; justify-content:center; gap:12px; font-size:10px;">
+        <div>
+          <div style="background:#3a5a3a; width:32px; height:32px; margin:0 auto; border:2px solid #8ec8ff; border-radius:3px;"></div>
+          <div style="color:#8ec8ff; font-size:8px; text-align:center;">BUFF</div>
+        </div>
+        <div>
+          <div style="background:#5a2a2a; width:32px; height:32px; margin:0 auto; border:2px solid #ff6b5e; border-radius:3px;"></div>
+          <div style="color:#ff6b5e; font-size:8px; text-align:center;">CURSE</div>
+        </div>
+      </div>
+      <div style="margin-top:6px; font-size:9px; text-align:center;">
+        <span style="background:#3a4a2a; padding:1px 4px; color:#a0c070;">CT +20%</span>
+        <span style="background:#4a2a2a; padding:1px 4px; color:#c07070;">CT -30%</span>
+      </div>
+    </div>
+    <div class="card-body">
+      <h3>3. Buff / Curse</h3>
+      <p>Self or ally buff (speed, defense, CT gain), enemy debuff (slow CT, reduced power, status like paralyze/fear), morale effects, temporary height or cover bonuses.</p>
+      <div style="font-size:11px; color:#a08870;">
+        • Can be Normal (weak) or Uncommon (strong tactical)<br>
+        • Apply via existing status_effect + ct_modifiers<br>
+        • Duration in rounds or actions<br>
+        • Example: "Dirty Trick" (curse enemy CT gain -40% for 2 rounds)
+      </div>
+    </div>
+  </div>
+
+  <!-- Type 4: Traits -->
+  <div class="card" data-choice="trait" onclick="toggleSelect(this)">
+    <div class="card-image" style="background:#1a140f; padding:8px; border:1px solid #554433;">
+      <div style="font-size:9px; color:#a08870;">PASSIVE / TRAIT</div>
+      <div style="margin:4px 0; padding:4px; background:#2a2218; border:1px solid #665533; font-size:10px;">
+        <strong>Counterattack</strong><br>
+        <span style="color:#a0c070;">When struck in melee, 30% chance to auto-strike back for 50% damage.</span>
+      </div>
+      <div style="font-size:8px; color:#665533;">Always on • No CT cost • Rare only</div>
+    </div>
+    <div class="card-body">
+      <h3>4. Traits (Passives)</h3>
+      <p>Passive stat mods, resistances, counter rules, healing boost, movement rules, formation bonuses, conditional triggers (bonus vs isolated), morale/passive defense while holding position.</p>
+      <div style="font-size:11px; color:#a08870;">
+        • Almost exclusively Rare tier<br>
+        • Equipped / always active (limited slots?)<br>
+        • Can modify core formulas (get_power, get_step_cost, etc.)<br>
+        • Shape class identity and corruption<br>
+        • Example: "Limbo Echo" (preserve from death once per battle)
+      </div>
+    </div>
+  </div>
+</div>
+
+<div class="section" style="margin-top:16px;">
+  <p><strong>Next steps for design:</strong> Click any card above to select focus, or reply here with what you want to explore first (examples per type, data model, how they interact with CT/grid/absorption, corruption costs, or specific Limbo/Florence flavor).</p>
+</div>

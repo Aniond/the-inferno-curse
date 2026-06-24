@@ -1,0 +1,104 @@
+<h2>Orb Skill Tree – Sanity (Player) vs Corruption (World)</h2>
+<p class="subtitle">Sanity = your personal corruption toll. Corruption = the world/NPC side (Limbo infection in Florence, NPC behavior, environmental effects).</p>
+
+<div class="section">
+  <div class="label">Your Clarification</div>
+  <p>"sanity = corruption. Sanity is player based. COrruption is wolrd based. npc etc"</p>
+  <p>Stacking duplicates of the same orb in the tree primarily increases the <strong>sanity cost</strong> (personal price you pay), while the world corruption is a separate but related system.</p>
+</div>
+
+<h3>How Stacking Works Now</h3>
+<div class="mockup">
+  <div class="mockup-body">
+    <strong>Shadow Claw (Single Target Damage)</strong><br><br>
+    <strong>Base skill (1st copy in tree):</strong><br>
+    • Damage: base + STR scaling<br>
+    • Sanity cost: base value (player pays this to use or sustain)<br>
+    • Corruption contribution: base (feeds world effects)<br><br>
+    <strong>2nd copy slotted:</strong><br>
+    • Damage: + increment<br>
+    • Sanity cost: base + 1 (or more)<br>
+    • Corruption contribution: still base (or slight increase)<br><br>
+    <strong>3rd copy slotted:</strong><br>
+    • Damage: higher<br>
+    • Sanity cost: base + 2<br>
+    • Corruption: still mostly base<br><br>
+    <span style="color:#ff8a7d;">You get more power on that orb, but it becomes personally more expensive to use (sanity).</span>
+  </div>
+</div>
+
+<h3>Player Sanity vs World Corruption</h3>
+<div class="section">
+  <p><strong>Sanity (Player-based)</strong></p>
+  <ul>
+    <li>Personal cost to the character.</li>
+    <li>Ramps with duplicate stacks in the tree.</li>
+    <li>Could manifest as extra resource cost, drain over time, temporary debuffs, forced hesitation, or mental strain when using the orb.</li>
+    <li>Directly tied to the Saint vs Sinner choice (Saints will hate high sanity cost; Sinners will tolerate or lean into it).</li>
+  </ul>
+
+  <p><strong>Corruption (World-based)</strong></p>
+  <ul>
+    <li>Affects Florence, NPCs, environment (water color, shadows, random battles, NPC behavior, Limbo bleed).</li>
+    <li>Driven more by total number/strength of equipped orbs + actions, not purely by how many duplicates of one orb you stack.</li>
+    <li>Church purification and Guild reinterpretation reduce this world corruption.</li>
+  </ul>
+</div>
+
+<h3>Integration with Equip + Tree</h3>
+<div class="section">
+  <p>An orb can still be equipped for active use while multiple copies are invested in the tree.</p>
+  <p>The tree stack increases the sanity cost of using that ability concept.</p>
+  <p>Tree nodes can interact with sanity cost (e.g. some nodes reduce sanity cost for orbs in that cluster at the cost of something else; dark nodes might increase power but also sanity cost).</p>
+</div>
+
+<div class="pros-cons">
+  <div class="pros">
+    <h4>Why this split is powerful</h4>
+    <ul>
+      <li>Keeps corruption as the thematic world horror (Limbo infecting Florence).</li>
+      <li>Gives stacking a clear personal downside (sanity) that the player feels directly.</li>
+      <li>Reinforces Saint vs Sinner: Saints will work to keep sanity low (via purification, careful stacking); Sinners will push sanity high for power.</li>
+      <li>Allows different levers: you can reduce world corruption without fully removing the personal sanity cost, or vice versa.</li>
+    </ul>
+  </div>
+  <div class="cons">
+    <h4>Still open</h4>
+    <ul>
+      <li>Exact form of sanity cost (resource? drain? debuff?).</li>
+      <li>How much (if any) world corruption is still increased by heavy duplicate stacking.</li>
+      <li>Whether high sanity has visible personal effects the player sees (screen effects, dialogue changes, etc.).</li>
+    </ul>
+  </div>
+</div>
+
+<div class="options">
+  <div class="option" data-choice="sanity-form" onclick="toggleSelect(this)">
+    <div class="letter">A</div>
+    <div class="content">
+      <h3>Sanity Cost Form</h3>
+      <p>Is sanity an extra resource cost to activate the ability, an ongoing drain while equipped, a temporary debuff on use, or something else?</p>
+    </div>
+  </div>
+  <div class="option" data-choice="world-leak" onclick="toggleSelect(this)">
+    <div class="letter">B</div>
+    <div class="content">
+      <h3>World Corruption Leak</h3>
+      <p>Should heavy sanity cost still cause some world corruption bleed (e.g. faster random battles), or is it purely personal?</p>
+    </div>
+  </div>
+  <div class="option" data-choice="saint-tools" onclick="toggleSelect(this)">
+    <div class="letter">C</div>
+    <div class="content">
+      <h3>Saint Tools vs Stacking</h3>
+      <p>How can a Saint player still get strong orbs without paying high sanity (better purification results, tree nodes that reduce sanity, unique holy orbs)?</p>
+    </div>
+  </div>
+  <div class="option" data-choice="template" onclick="toggleSelect(this)">
+    <div class="letter">D</div>
+    <div class="content">
+      <h3>Template Field</h3>
+      <p>Should the Single Target template now explicitly have a <code>base_sanity_cost</code> field that gets incremented by tree stacks?</p>
+    </div>
+  </div>
+</div>

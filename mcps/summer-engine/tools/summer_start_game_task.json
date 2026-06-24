@@ -1,0 +1,70 @@
+{
+  "name": "summer_start_game_task",
+  "description": "Start here for any substantial AI game-building task.\n\nTakes the user's goal and returns the recommended Summer workflow: skill routes,\nMCP tool groups, host-file boundaries, asset policy, user confirmation gates,\nand verification steps. This is the router before deep skills and before\nmutating the project.",
+  "inputSchema": {
+    "type": "object",
+    "properties": {
+      "goal": {
+        "type": "string",
+        "description": "The user's game-building goal or task."
+      },
+      "mode": {
+        "type": "string",
+        "enum": [
+          "auto",
+          "new-game",
+          "feature",
+          "asset",
+          "debug",
+          "playtest",
+          "polish",
+          "ship"
+        ],
+        "default": "auto",
+        "description": "Optional task mode override."
+      },
+      "target": {
+        "type": "string",
+        "enum": [
+          "auto",
+          "2d",
+          "3d",
+          "ui",
+          "audio",
+          "animation",
+          "level",
+          "npc",
+          "multiplayer"
+        ],
+        "default": "auto",
+        "description": "Optional content/system target override."
+      },
+      "assetPolicy": {
+        "type": "string",
+        "enum": [
+          "reuse-first",
+          "ask-before-paid-generation",
+          "no-paid-generation",
+          "generate-when-clearly-needed"
+        ],
+        "default": "ask-before-paid-generation",
+        "description": "How aggressively to use paid asset generation."
+      },
+      "verification": {
+        "type": "string",
+        "enum": [
+          "none",
+          "fast",
+          "full"
+        ],
+        "default": "full",
+        "description": "How much engine verification the agent should plan for."
+      }
+    },
+    "required": [
+      "goal"
+    ],
+    "additionalProperties": false,
+    "$schema": "http://json-schema.org/draft-07/schema#"
+  }
+}

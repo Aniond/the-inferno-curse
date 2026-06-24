@@ -1,0 +1,90 @@
+<h2>Florence Nodes – Persona-Style Overview</h2>
+<p class="subtitle">4–5 nodes for Florence. Overview map with roads. Entering a node loads a small 3D explorable area.</p>
+
+<div class="section">
+  <div class="label">Confirmed Nodes for Florence</div>
+  <ul>
+    <li><strong>Ponte Vecchio</strong> – The iconic bridge district. Shopping, views of the Arno, narrow streets. Good early-game access.</li>
+    <li><strong>The Old Market</strong> – Bustling trade area. Merchants, crowds, potential for hidden alleys and shady deals. Guild presence.</li>
+    <li><strong>Cathedral of Santa Maria del Fiore</strong> – The Duomo area. Religious center, Church influence strong. Purification and Focus ability access.</li>
+    <li><strong>The Docks</strong> – Riverside/port area. Trade, smuggling, boats. Water corruption effects more prominent here.</li>
+  </ul>
+  <p>(Room for a 5th node depending on the city – e.g. a residential quarter, government/palace area, or a more dangerous slum/tannery district.)</p>
+</div>
+
+<h3>Overview Map Flow</h3>
+<div class="mockup">
+  <div class="mockup-body">
+    • Central "Florence" overview screen.<br>
+    • Nodes connected by roads/paths (visual lines the player travels along).<br>
+    • Player selects or walks to a node on the overview.<br>
+    • Loading into the 3D map for that node (small-to-medium 3D space like the current test map).<br>
+    • Free movement inside the node. Limbo Squares (invisible until focused) can force random teleports and combat.<br>
+    • Exit back to overview when done.
+  </div>
+</div>
+
+<h3>Corruption &amp; Systems Integration</h3>
+<div class="section">
+  <p><strong>World Corruption per Node</strong><br>
+  Each node can have its own corruption "heat" that contributes to the global city level. Corruption spreads along roads if left unchecked.</p>
+
+  <p><strong>Unique Flavor per Node (examples)</strong><br>
+  • Ponte Vecchio: Water corruption very visible (Arno darkens). Limbo Squares often teleport across the bridge or into the river area.<br>
+  • Old Market: Crowds + shadows. Random battles feel like ambushes in alleys. Good for Guild reinterpretation quests.<br>
+  • Cathedral: Strong Church presence. Purification services here. Limbo Squares feel more "wrong" near holy ground.<br>
+  • Docks: Smuggling, boats, water-heavy hazards. Possible fast travel by boat (risky at high corruption).</p>
+
+  <p><strong>Exploration &amp; Combat</strong><br>
+  Inside each 3D node: free movement until Limbo Square or enemy triggers tactical grid combat. Corruption increases square density and enemy aggression inside that node.</p>
+</div>
+
+<div class="pros-cons">
+  <div class="pros">
+    <h4>Strengths</h4>
+    <ul>
+      <li>Matches Persona navigation feel (clean overview + focused 3D areas).</li>
+      <li>Easy to layer unique corruption effects and side content per node.</li>
+      <li>Scales well: start with 4 nodes, add more as the story/city expands.</li>
+      <li>Clear hubs for Church (Cathedral) and Guilds (Old Market).</li>
+    </ul>
+  </div>
+  <div class="cons">
+    <h4>Open questions</h4>
+    <ul>
+      <li>Should nodes have internal "sub-zones" or stay as single load areas?</li>
+      <li>Fast travel between nodes (boat, carriage) – how does corruption affect safety/cost?</li>
+    </ul>
+  </div>
+</div>
+
+<div class="options">
+  <div class="option" data-choice="node-details" onclick="toggleSelect(this)">
+    <div class="letter">A</div>
+    <div class="content">
+      <h3>Node Personality</h3>
+      <p>Want to flesh out one or two of these nodes with specific points of interest, NPCs, or unique Limbo Square behaviors?</p>
+    </div>
+  </div>
+  <div class="option" data-choice="corruption-spread" onclick="toggleSelect(this)">
+    <div class="letter">B</div>
+    <div class="content">
+      <h3>Corruption Spread</h3>
+      <p>Should corruption spread automatically between connected nodes over time, or only through player actions/story events?</p>
+    </div>
+  </div>
+  <div class="option" data-choice="fast-travel" onclick="toggleSelect(this)">
+    <div class="letter">C</div>
+    <div class="content">
+      <h3>Fast Travel</h3>
+      <p>Any fast travel between nodes (e.g. carriages or boats)? How risky does it get at high corruption?</p>
+    </div>
+  </div>
+  <div class="option" data-choice="fifth-node" onclick="toggleSelect(this)">
+    <div class="letter">D</div>
+    <div class="content">
+      <h3>Fifth Node</h3>
+      <p>Should Florence start with a 5th node? If yes, what kind of district feels missing (residential, government/palace, industrial/slums)?</p>
+    </div>
+  </div>
+</div>

@@ -1,0 +1,26 @@
+{
+  "name": "summer_replace_node",
+  "description": "Replace a node with a different type or scene, preserving its position in the tree and its children. Useful for changing a StaticBody3D to a RigidBody3D, or swapping a placeholder with a proper prefab.",
+  "inputSchema": {
+    "type": "object",
+    "properties": {
+      "path": {
+        "type": "string",
+        "description": "Node path to replace"
+      },
+      "type": {
+        "type": "string",
+        "description": "New node type, e.g. 'RigidBody3D'"
+      },
+      "scene": {
+        "type": "string",
+        "description": "Scene to replace with, e.g. 'res://enemies/boss.tscn'"
+      }
+    },
+    "required": [
+      "path"
+    ],
+    "additionalProperties": false,
+    "$schema": "http://json-schema.org/draft-07/schema#"
+  }
+}

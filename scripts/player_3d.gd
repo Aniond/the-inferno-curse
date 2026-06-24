@@ -11,6 +11,7 @@ const IDLE_FPS := 4.0
 var movement_enabled: bool = true
 var grid_movement_only: bool = false
 var _last_direction: String = "south"
+var _move_tween: Tween = null
 
 
 func _ready() -> void:
@@ -97,7 +98,9 @@ func _physics_process(delta: float) -> void:
 
 	if not movement_enabled or grid_movement_only:
 		velocity = velocity.move_toward(Vector3.ZERO, friction * delta)
-		_play_idle_anim()
+		# Do not force _play_idle_anim() here — when in grid mode, animation state
+		# (walk vs idle) is driven by explicit calls from the grid controller (battle map)
+		# so the player uses the move (walk) animation during grid steps.
 		move_and_slide()
 		return
 
@@ -148,4 +151,50 @@ func _play_idle_anim() -> void:
 func set_combat_facing(dir_key: String) -> void:
 	if dir_key in ["south", "east", "north", "west"]:
 		_last_direction = dir_key
+	_play_idle_anim()
+
+
+# --- Grid movement animation support ---
+# These allow external grid controllers to show the walk ("active"/move) animation
+# while snapping or tweening the player between cells. The walk anim is transient;
+# we restore the combat facing's idle anim on completion.
+
+func play_walk_for_dir(dir_key: String) -> void:
+	dir_key = _normalize_dir_key(dir_key)
+	var anim_name: String = "walk_" + dir_key
+	if $AnimatedSprite.sprite_frames.has_animation(anim_name):
+		$AnimatedSprite.play(anim_name)
+	# Do not overwrite _last_direction — travel dir is only for the transient walk frames.
+
+
+func _normalize_dir_key(dir_key: String) -> String:
+	# Collapse 8-way or unknown to our 4-dir sprite set.
+	match dir_key:
+		"south", "south_east", "south_west":
+			return "south"
+		"north", "north_east", "north_west":
+			return "north"
+		"east":
+			return "east"
+		"west":
+			return "west"
+		_:
+			return "south"
+
+
+func animate_grid_move(target_pos: Vector3, travel_dir_key: String, final_dir_key: String = "") -> void:
+	if _move_tween != null and _move_tween.is_valid():
+		_move_tween.kill()
+	play_walk_for_dir(travel_dir_key)
+	_move_tween = create_tween()
+	var dist := global_position.distance_to(target_pos)
+	var duration := clampf(dist / 8.0, 0.12, 0.6)
+	_move_tween.tween_property(self, "global_position", target_pos, duration)
+	_move_tween.tween_callback(Callable(self, "_on_grid_move_complete").bind(final_dir_key))
+
+
+func _on_grid_move_complete(final_dir_key: String) -> void:
+	_move_tween = null
+	if final_dir_key != "" and final_dir_key in ["south", "east", "north", "west"]:
+		_last_direction = final_dir_key
 	_play_idle_anim()

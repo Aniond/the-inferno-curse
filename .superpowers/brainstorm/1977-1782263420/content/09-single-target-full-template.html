@@ -1,0 +1,109 @@
+<h2>Single Target Damage — Full Usable Template (Current State)</h2>
+<p class="subtitle">All pieces combined: damage calc, equipable, stat interaction (D), and additive corruption scaling</p>
+
+<div class="section">
+  <div class="label">Confirmed Rules</div>
+  <ul>
+    <li>Base damage modified by stats: base + (stat × multiplier)</li>
+    <li>Must be equipped to use (equipable)</li>
+    <li>While equipped: small stat interaction</li>
+    <li>Corruption value per ability <strong>increments additively</strong> by the base cost of every other equipped ability</li>
+  </ul>
+</div>
+
+<h3>Complete Template Fields</h3>
+<div class="mockup">
+  <div class="mockup-header">strike.tres (Damage variant example)</div>
+  <div class="mockup-body" style="font-family:monospace; font-size:11px; background:#111; color:#ff8a7d; padding:10px; line-height:1.4;">
+    id = "strike"<br>
+    display_name = "Strike"<br>
+    description = "Basic physical attack."<br>
+    type = "single_target"<br>
+    variant = "damage"<br><br>
+    # Damage calculation<br>
+    base_damage = 8<br>
+    scaling_stat = "STR"<br>
+    stat_multiplier = 1.0<br><br>
+    # Targeting &amp; Action<br>
+    range = 1<br>
+    is_ranged = false<br>
+    ct_target_delay = 12<br>
+    action_cost = 1<br><br>
+    # Equipable<br>
+    mp_cost = 0<br>
+    equip_stat_mod = { "STR": +1 }   # from choice D<br><br>
+    # Corruption (additive scaling)<br>
+    base_corruption = 1   # 1% in your example<br>
+    # effective = base + sum(other equipped bases)
+  </div>
+</div>
+
+<h3>Formulas</h3>
+<div class="section">
+  <p><strong>Damage:</strong><br>
+  final_damage = base_damage + (user.get_core_stat(scaling_stat) × stat_multiplier)</p>
+  
+  <p><strong>Corruption (additive per your example):</strong><br>
+  effective_corruption = base_corruption + sum(base_corruption of all other currently equipped abilities)</p>
+</div>
+
+<h3>Your Example in Action</h3>
+<div class="mockup">
+  <div class="mockup-body">
+    Only "Strike" (base_corruption=1): effective = 1%<br><br>
+    Add second ability also base=1:<br>
+    Strike effective = 1 + 1 = <strong>2%</strong><br>
+    Second effective = 1 + 1 = <strong>2%</strong>
+  </div>
+</div>
+
+<div class="pros-cons">
+  <div class="pros">
+    <h4>Current Template Strengths</h4>
+    <ul>
+      <li>Clean separation of base vs scaling</li>
+      <li>Equip gives meaningful stat interaction (D)</li>
+      <li>Corruption naturally punishes quantity + power</li>
+      <li>Matches additive example you just gave</li>
+    </ul>
+  </div>
+  <div class="cons">
+    <h4>Still open (pick next)</h4>
+    <ul>
+      <li>Exact nature of equip_stat_mod bonuses</li>
+      <li>Whether corruption is literal % or points into a bigger system</li>
+      <li>How this will look for the Heal variant</li>
+    </ul>
+  </div>
+</div>
+
+<div class="options">
+  <div class="option" data-choice="stat-bonus" onclick="toggleSelect(this)">
+    <div class="letter">A</div>
+    <div class="content">
+      <h3>Equip Stat Bonus Details</h3>
+      <p>What should the equip_stat_mod actually grant for basic Single Target abilities? (flat +1 to scaling stat, % to damage, CT related, etc.)</p>
+    </div>
+  </div>
+  <div class="option" data-choice="corruption-meaning" onclick="toggleSelect(this)">
+    <div class="letter">B</div>
+    <div class="content">
+      <h3>Corruption Meaning</h3>
+      <p>Is the "1%" a direct percentage the player sees, or does it feed into a larger corruption meter with world/NPC effects?</p>
+    </div>
+  </div>
+  <div class="option" data-choice="heal-template" onclick="toggleSelect(this)">
+    <div class="letter">C</div>
+    <div class="content">
+      <h3>Heal Variant Template</h3>
+      <p>Show the parallel usable template for the Heal variant with its own fields and corruption behavior.</p>
+    </div>
+  </div>
+  <div class="option" data-choice="monster-examples" onclick="toggleSelect(this)">
+    <div class="letter">D</div>
+    <div class="content">
+      <h3>Concrete Monster Examples</h3>
+      <p>Fill in real numbers for 3-4 Single Target abilities that could be absorbed from your current monsters (brigand, cultist, rat, wolf, etc.).</p>
+    </div>
+  </div>
+</div>

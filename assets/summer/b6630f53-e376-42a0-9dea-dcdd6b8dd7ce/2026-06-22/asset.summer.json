@@ -1,0 +1,47 @@
+{
+	"assetId": "b6630f53-e376-42a0-9dea-dcdd6b8dd7ce",
+	"metadata": {
+		"downloadUrl": "https://v3b.fal.media/files/b/0a9f5f00/JvLheMHJ7Vg9NahOuzTsY_dcaFSBTd.png",
+		"fileName": "JvLheMHJ7Vg9NahOuzTsY_dcaFSBTd.png",
+		"filename": "JvLheMHJ7Vg9NahOuzTsY_dcaFSBTd.png",
+		"id": "b6630f53-e376-42a0-9dea-dcdd6b8dd7ce",
+		"metadata": {
+			"aspect_ratio": "1:1",
+			"batchCapped": false,
+			"batchSize": 1.0,
+			"clientImageModel": "fal-ai/nano-banana-2",
+			"entrypoint": "api/art/generate",
+			"falModelId": "fal-ai/nano-banana-2",
+			"falPrompt": "Create one square 1024x1024 pixel-art fantasy RPG character sheet UI background on aged parchment, with ornate carved dark wood headers, gold filigree corners, crisp black/brown outlines, and medieval Italian dark fantasy styling.\n\nThis is a blank game UI template. Bake in only fixed interface labels. All player data fields must be empty.\n\nSTRICT COUNT REQUIREMENTS:\n- 6 total section headers.\n- 3 top section headers: PROFILE, STATS, RESISTANCE.\n- 3 lower section headers: SKILLS, EQUIPMENT, TRAITS.\n- 0 ABILITIES sections.\n- 3 meter rows: HP, MP, CT.\n- 9 stat labels: STR, SPD, INT, FTH, POW, DEF, MOV, JMP, EXP.\n- 9 stat value boxes, one per stat label.\n- 6 resistance rows.\n- 6 resistance icon slots, one per resistance row.\n- 6 resistance value boxes, one per resistance row.\n- 4 skill slots.\n- 4 skill icon boxes.\n- 4 skill description fields.\n- 4 equipment slots.\n- 4 equipment icon boxes.\n- 4 equipment item fields.\n- 4 trait slots.\n- 4 trait icon boxes.\n- 4 trait description fields.\n- 0 numbers.\n- 0 percentages.\n- 0 names.\n- 0 sample values.\n\nAllowed baked text only:\nPROFILE\nSTATS\nRESISTANCE\nSKILLS\nEQUIPMENT\nTRAITS\nHP\nMP\nCT\nSTR\nSPD\nINT\nFTH\nPOW\nDEF\nMOV\nJMP\nEXP\n\nDo not add any other text, letters, labels, names, class names, numbers, values, percentages, placeholder words, random symbols that look like text, or watermark. Do not add ABILITIES.\n\nLayout:\n- Top row: three large carved wood plaques. Left plaque says PROFILE, center plaque says STATS, right plaque says RESISTANCE.\n- PROFILE panel: one ornate empty portrait frame, one blank long name field, one blank long class/job field.\n- STATS panel: three empty horizontal meter frames labeled HP, MP, CT. Under them, exactly nine stat rows labeled STR, SPD, INT, FTH, POW, DEF, MOV, JMP, EXP. Each stat row has exactly one small blank value box.\n- RESISTANCE panel: exactly six rows. Each row has exactly one icon slot and exactly one long blank value box. No written resistance names. No shield column. No extra icon boxes.\n- SKILLS section: exactly four slots arranged as a 2x2 grid. Each slot has exactly one blank square icon box and one long blank description field.\n- EQUIPMENT section: exactly four slots arranged as a 2x2 grid. Each slot has exactly one blank square icon box and one long blank item field.\n- TRAITS section: exactly four slots arranged as a 2x2 grid. Each slot has exactly one blank square icon box and one long blank description field.\n\nStat label accuracy:\nThe stats must be exactly STR, SPD, INT, FTH, POW, DEF, MOV, JMP, EXP.\nEach appears once.\nDo not duplicate any stat.\nDo not misspell any stat.\nDo not create JMV.\nDo not replace EXP with XP.\n\nVisual style:\nClean aligned grid, aged parchment, dark carved wood headers, gold trim, subtle grime, ornate frame, pixel-art UI, readable dark ink labels, empty parchment fields ready for runtime text overlay. No character art, no sample icons inside skills/equipment/traits, no colored meter fills., 16-bit pixel art, SNES-era detailed sprites, rich palette",
+			"finalPrompt": "Create one square 1024x1024 pixel-art fantasy RPG character sheet UI background on aged parchment, with ornate carved dark wood headers, gold filigree corners, crisp black/brown outlines, and medieval Italian dark fantasy styling.\n\nThis is a blank game UI template. Bake in only fixed interface labels. All player data fields must be empty.\n\nSTRICT COUNT REQUIREMENTS:\n- 6 total section headers.\n- 3 top section headers: PROFILE, STATS, RESISTANCE.\n- 3 lower section headers: SKILLS, EQUIPMENT, TRAITS.\n- 0 ABILITIES sections.\n- 3 meter rows: HP, MP, CT.\n- 9 stat labels: STR, SPD, INT, FTH, POW, DEF, MOV, JMP, EXP.\n- 9 stat value boxes, one per stat label.\n- 6 resistance rows.\n- 6 resistance icon slots, one per resistance row.\n- 6 resistance value boxes, one per resistance row.\n- 4 skill slots.\n- 4 skill icon boxes.\n- 4 skill description fields.\n- 4 equipment slots.\n- 4 equipment icon boxes.\n- 4 equipment item fields.\n- 4 trait slots.\n- 4 trait icon boxes.\n- 4 trait description fields.\n- 0 numbers.\n- 0 percentages.\n- 0 names.\n- 0 sample values.\n\nAllowed baked text only:\nPROFILE\nSTATS\nRESISTANCE\nSKILLS\nEQUIPMENT\nTRAITS\nHP\nMP\nCT\nSTR\nSPD\nINT\nFTH\nPOW\nDEF\nMOV\nJMP\nEXP\n\nDo not add any other text, letters, labels, names, class names, numbers, values, percentages, placeholder words, random symbols that look like text, or watermark. Do not add ABILITIES.\n\nLayout:\n- Top row: three large carved wood plaques. Left plaque says PROFILE, center plaque says STATS, right plaque says RESISTANCE.\n- PROFILE panel: one ornate empty portrait frame, one blank long name field, one blank long class/job field.\n- STATS panel: three empty horizontal meter frames labeled HP, MP, CT. Under them, exactly nine stat rows labeled STR, SPD, INT, FTH, POW, DEF, MOV, JMP, EXP. Each stat row has exactly one small blank value box.\n- RESISTANCE panel: exactly six rows. Each row has exactly one icon slot and exactly one long blank value box. No written resistance names. No shield column. No extra icon boxes.\n- SKILLS section: exactly four slots arranged as a 2x2 grid. Each slot has exactly one blank square icon box and one long blank description field.\n- EQUIPMENT section: exactly four slots arranged as a 2x2 grid. Each slot has exactly one blank square icon box and one long blank item field.\n- TRAITS section: exactly four slots arranged as a 2x2 grid. Each slot has exactly one blank square icon box and one long blank description field.\n\nStat label accuracy:\nThe stats must be exactly STR, SPD, INT, FTH, POW, DEF, MOV, JMP, EXP.\nEach appears once.\nDo not duplicate any stat.\nDo not misspell any stat.\nDo not create JMV.\nDo not replace EXP with XP.\n\nVisual style:\nClean aligned grid, aged parchment, dark carved wood headers, gold trim, subtle grime, ornate frame, pixel-art UI, readable dark ink labels, empty parchment fields ready for runtime text overlay. No character art, no sample icons inside skills/equipment/traits, no colored meter fills.",
+			"generatedAt": "2026-06-22T22:24:22.364Z",
+			"generationBatchId": "09a53b79-f7b4-4533-ab52-92b26ce01714",
+			"height": 1024.0,
+			"multiview": false,
+			"numImages": 1.0,
+			"numImagesRequested": 1.0,
+			"pose": "none",
+			"promptRefined": false,
+			"referenceCount": 0.0,
+			"runIndex": 0.0,
+			"style": "retro-16bit",
+			"surface": "studio",
+			"width": 1024.0
+		},
+		"name": "Aged Fantasy UI",
+		"previewUrl": "https://v3b.fal.media/files/b/0a9f5f00/JvLheMHJ7Vg9NahOuzTsY_dcaFSBTd.png",
+		"primary": true,
+		"thumbnailUrl": "https://v3b.fal.media/files/b/0a9f5f00/JvLheMHJ7Vg9NahOuzTsY_dcaFSBTd.png",
+		"title": "Aged Fantasy UI",
+		"type": "image",
+		"url": "https://v3b.fal.media/files/b/0a9f5f00/JvLheMHJ7Vg9NahOuzTsY_dcaFSBTd.png",
+		"version": "2026-06-22"
+	},
+	"name": "Aged Fantasy UI",
+	"paths": [
+		"res://assets/summer/b6630f53-e376-42a0-9dea-dcdd6b8dd7ce/2026-06-22/JvLheMHJ7Vg9NahOuzTsY_dcaFSBTd.png"
+	],
+	"primaryPath": "res://assets/summer/b6630f53-e376-42a0-9dea-dcdd6b8dd7ce/2026-06-22/JvLheMHJ7Vg9NahOuzTsY_dcaFSBTd.png",
+	"source": "summer-studio",
+	"version": "2026-06-22"
+}

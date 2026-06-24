@@ -1,0 +1,46 @@
+{
+  "name": "summer_search_assets",
+  "description": "Search for game assets in the Summer Engine ecosystem. **Free for all users** with rate limits.\n\nSources:\n  - \"library\" (default) — Public asset library (25k+ community assets). Free.\n  - \"my_assets\" — Your own generated/uploaded assets. Free. Query is optional.\n  - \"all\" — Search both library and your assets.\n\nUses hybrid search: keywords + semantic similarity. Finds assets by name AND by meaning.\nReturns asset names, types, preview URLs, and import-ready file URLs.\n\nRequires authentication (so we can attribute usage and apply per-user rate limits): run 'npx summer-engine login' first.",
+  "inputSchema": {
+    "type": "object",
+    "properties": {
+      "query": {
+        "type": "string",
+        "description": "Natural language search, e.g. 'low-poly tree', 'sci-fi weapon'. For my_assets, can be empty to list recent."
+      },
+      "assetType": {
+        "type": "string",
+        "enum": [
+          "2d_image",
+          "animation",
+          "3d_model",
+          "audio",
+          "music",
+          "all"
+        ],
+        "default": "all",
+        "description": "Filter by asset type"
+      },
+      "limit": {
+        "type": "number",
+        "default": 10,
+        "description": "Max results (1-20)"
+      },
+      "source": {
+        "type": "string",
+        "enum": [
+          "library",
+          "my_assets",
+          "all"
+        ],
+        "default": "library",
+        "description": "Where to search: library (public 25k+), my_assets (your generated assets), all"
+      }
+    },
+    "required": [
+      "query"
+    ],
+    "additionalProperties": false,
+    "$schema": "http://json-schema.org/draft-07/schema#"
+  }
+}

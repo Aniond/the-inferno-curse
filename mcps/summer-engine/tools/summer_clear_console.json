@@ -1,0 +1,9 @@
+{
+  "name": "summer_clear_console",
+  "description": "Clear the editor's Output panel. Useful before running the game to get a clean slate for error checking.",
+  "inputSchema": {
+    "$schema": "http://json-schema.org/draft-07/schema#",
+    "type": "object",
+    "properties": {}
+  }
+}

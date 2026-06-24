@@ -1,0 +1,15 @@
+{
+  "name": "summer_cloud_status",
+  "description": "Show Summer Cloud sync status.",
+  "inputSchema": {
+    "type": "object",
+    "properties": {
+      "project": {
+        "type": "string",
+        "description": "Project root path. Defaults to the current working directory."
+      }
+    },
+    "additionalProperties": false,
+    "$schema": "http://json-schema.org/draft-07/schema#"
+  }
+}

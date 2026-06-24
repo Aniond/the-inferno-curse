@@ -22,3 +22,6 @@ adjustment_enabled = true
 adjustment_brightness = 1.05
 adjustment_contrast = 1.1
 adjustment_saturation = 0.85
+
+# Base sky is set up at runtime by DayNightCycle for full control over day/night.
+# (ProceduralSkyMaterial + sun disk, horizon, zenith lerps)

@@ -1,0 +1,75 @@
+{
+	"assetId": "ee35e1d8-ea21-4d1c-91ac-55e368666a16",
+	"metadata": {
+		"downloadUrl": "https://v3b.fal.media/files/b/0a9f58bd/m0Mfn2Hqmbo9Nsn4yIkci_YvbiDsAj.png",
+		"fileName": "m0Mfn2Hqmbo9Nsn4yIkci_YvbiDsAj.png",
+		"filename": "m0Mfn2Hqmbo9Nsn4yIkci_YvbiDsAj.png",
+		"id": "ee35e1d8-ea21-4d1c-91ac-55e368666a16",
+		"metadata": {
+			"aspect_ratio": "1:1",
+			"batchCapped": false,
+			"batchSize": 1.0,
+			"clientImageModel": "fal-ai/nano-banana-2",
+			"entrypoint": "api/art/generate",
+			"falModelId": "fal-ai/nano-banana-2",
+			"falPrompt": "Create a full-screen 2D HD pixel-hybrid tactical RPG monster status sheet UI background.\n\nThe image must be a clean empty interface template, not a completed character sheet. It should be designed for a game engine to render all monster names, numbers, ability names, icons, percentages, rewards, and descriptions later.\n\nResolution: 1536x1024.\nPerspective: perfectly flat orthographic front-facing UI asset.\nStyle: dark medieval Italian manuscript, 13th-century illuminated parchment, ornate but readable, inspired by Dante-era Italy and tactical RPG menus.\nColor palette: aged parchment, dark walnut wood, muted gold filigree, ink brown, bone ivory, subtle crimson accents. No neon colors.\n\nCRITICAL RULES:\n- Do not include sample monster names.\n- Do not include sample numbers.\n- Do not include fake values like 000, ---, 10%, Lv. 1, etc.\n- Do not include ability names.\n- Do not include equipment names.\n- Do not include elemental fantasy labels like Ice, Thunder, Fire, Dark.\n- Do not include hardcoded stat names inside the art unless specifically listed below as section headers.\n- Do not include character art or monster art.\n- Do not include random letters or AI-generated gibberish.\n- Leave clean blank areas for the game engine to render all text.\n\nLayout:\nThe interface is a wide parchment ledger divided into clean framed panels.\n\nTOP ROW, about 45% height:\n1. LEFT PANEL: Monster Profile\n- Ornate rectangular portrait frame for monster sprite or monster illustration.\n- Empty parchment interior.\n- Small blank title strip beneath the portrait for monster name and family.\n- No text inside the strip except optional section header “Profile”.\n\n2. CENTER PANEL: Core Stats\n- Large clean data panel with two neat vertical columns.\n- Include faint empty value boxes or horizontal guide lines.\n- No numbers.\n- No baked stat labels except optional section header “Stats”.\n- Leave enough room for engine-rendered stats such as HP, MP, CT, STR, SPD, INT, FTH, POW, DEF, MOV, JMP, EXP.\n\n3. RIGHT PANEL: Status Resist\n- Narrow vertical panel for six status resistance rows.\n- Each row should have a small empty icon socket on the left, a short blank label space, and a small blank value space on the right.\n- No status names baked in.\n- No percentages baked in.\n- Section header may read “Resist”.\n\nBOTTOM ROW, about 55% height:\n4. LEFT LARGE PANEL: Abilities\n- Four wide ability slots in a 2x2 grid.\n- Each ability slot has a small square icon socket on the left and a large blank text area for ability name/effect.\n- No sample text.\n- Section header may read “Abilities”.\n\n5. CENTER SMALL PANEL: Traits\n- Compact vertical list area for monster traits, AI tags, weaknesses, or behavior markers.\n- 4 to 6 small rows with tiny icon sockets and blank text lanes.\n- Section header may read “Traits”.\n\n6. RIGHT PANEL: Rewards\n- Clean panel for rewards and drops.\n- Include several empty square item sockets and blank text lines.\n- Section header may read “Rewards”.\n- No coin icons with values, no sample item names, no numbers.\n\nVisual details:\n- Thin dark ink panel borders with gold corner ornaments.\n- Parchment texture should be rich but low contrast behind text areas.\n- Subtle fresco watermark in the background, very faded, not distracting.\n- Use consistent spacing and alignment.\n- Text areas must be clean and readable when dark engine text is placed on top.\n- Avoid clutter.\n- Avoid baked-in grid numbers or placeholder digits.\n- Avoid modern sci-fi UI shapes.\n- No drop shadows crossing text areas.\n- No perspective tilt.\n- No blur.\n- No screenshot framing.\n- No black background outside the UI.\n\nThe final image should look like a polished empty monster status sheet background from a high-quality 2D HD tactical RPG, ready for Godot to render monster data dynamically on top., 16-bit pixel art, SNES-era detailed sprites, rich palette",
+			"finalPrompt": "Create a full-screen 2D HD pixel-hybrid tactical RPG monster status sheet UI background.\n\nThe image must be a clean empty interface template, not a completed character sheet. It should be designed for a game engine to render all monster names, numbers, ability names, icons, percentages, rewards, and descriptions later.\n\nResolution: 1536x1024.\nPerspective: perfectly flat orthographic front-facing UI asset.\nStyle: dark medieval Italian manuscript, 13th-century illuminated parchment, ornate but readable, inspired by Dante-era Italy and tactical RPG menus.\nColor palette: aged parchment, dark walnut wood, muted gold filigree, ink brown, bone ivory, subtle crimson accents. No neon colors.\n\nCRITICAL RULES:\n- Do not include sample monster names.\n- Do not include sample numbers.\n- Do not include fake values like 000, ---, 10%, Lv. 1, etc.\n- Do not include ability names.\n- Do not include equipment names.\n- Do not include elemental fantasy labels like Ice, Thunder, Fire, Dark.\n- Do not include hardcoded stat names inside the art unless specifically listed below as section headers.\n- Do not include character art or monster art.\n- Do not include random letters or AI-generated gibberish.\n- Leave clean blank areas for the game engine to render all text.\n\nLayout:\nThe interface is a wide parchment ledger divided into clean framed panels.\n\nTOP ROW, about 45% height:\n1. LEFT PANEL: Monster Profile\n- Ornate rectangular portrait frame for monster sprite or monster illustration.\n- Empty parchment interior.\n- Small blank title strip beneath the portrait for monster name and family.\n- No text inside the strip except optional section header “Profile”.\n\n2. CENTER PANEL: Core Stats\n- Large clean data panel with two neat vertical columns.\n- Include faint empty value boxes or horizontal guide lines.\n- No numbers.\n- No baked stat labels except optional section header “Stats”.\n- Leave enough room for engine-rendered stats such as HP, MP, CT, STR, SPD, INT, FTH, POW, DEF, MOV, JMP, EXP.\n\n3. RIGHT PANEL: Status Resist\n- Narrow vertical panel for six status resistance rows.\n- Each row should have a small empty icon socket on the left, a short blank label space, and a small blank value space on the right.\n- No status names baked in.\n- No percentages baked in.\n- Section header may read “Resist”.\n\nBOTTOM ROW, about 55% height:\n4. LEFT LARGE PANEL: Abilities\n- Four wide ability slots in a 2x2 grid.\n- Each ability slot has a small square icon socket on the left and a large blank text area for ability name/effect.\n- No sample text.\n- Section header may read “Abilities”.\n\n5. CENTER SMALL PANEL: Traits\n- Compact vertical list area for monster traits, AI tags, weaknesses, or behavior markers.\n- 4 to 6 small rows with tiny icon sockets and blank text lanes.\n- Section header may read “Traits”.\n\n6. RIGHT PANEL: Rewards\n- Clean panel for rewards and drops.\n- Include several empty square item sockets and blank text lines.\n- Section header may read “Rewards”.\n- No coin icons with values, no sample item names, no numbers.\n\nVisual details:\n- Thin dark ink panel borders with gold corner ornaments.\n- Parchment texture should be rich but low contrast behind text areas.\n- Subtle fresco watermark in the background, very faded, not distracting.\n- Use consistent spacing and alignment.\n- Text areas must be clean and readable when dark engine text is placed on top.\n- Avoid clutter.\n- Avoid baked-in grid numbers or placeholder digits.\n- Avoid modern sci-fi UI shapes.\n- No drop shadows crossing text areas.\n- No perspective tilt.\n- No blur.\n- No screenshot framing.\n- No black background outside the UI.\n\nThe final image should look like a polished empty monster status sheet background from a high-quality 2D HD tactical RPG, ready for Godot to render monster data dynamically on top.",
+			"generatedAt": "2026-06-22T17:57:11.613Z",
+			"generationBatchId": "68a149f7-156d-4d13-ab70-51c8d237e9be",
+			"height": 1024.0,
+			"multiview": false,
+			"numImages": 1.0,
+			"numImagesRequested": 1.0,
+			"pose": "none",
+			"promptRefined": false,
+			"referenceCount": 0.0,
+			"runIndex": 0.0,
+			"seo": {
+				"description": "Create a full-screen 2D HD pixel-hybrid tactical RPG monster status sheet UI background. The image must be a clean empty interface template, not a completed character sheet. It should be designed for a game engine to.",
+				"keywords": [
+					"create",
+					"full",
+					"screen",
+					"pixel",
+					"hybrid",
+					"free game assets",
+					"game art",
+					"free 2d game assets",
+					"2d game art",
+					"full-screen",
+					"pixel-hybrid",
+					"tactical"
+				],
+				"openGraph": {
+					"description": "Create a full-screen 2D HD pixel-hybrid tactical RPG monster status sheet UI background. The image must be a clean empty interface template, not a completed character sheet. It should be designed for a game engine to.",
+					"title": "Create a full-screen 2D HD pixel-hybrid - Free Character Art",
+					"type": "article"
+				},
+				"title": "Create a full-screen 2D HD pixel-hybrid - Free Character Art | Summer Engine",
+				"twitter": {
+					"card": "summary_large_image",
+					"description": "Create a full-screen 2D HD pixel-hybrid tactical RPG monster status sheet UI background. The image must be a clean empty interface template, not a completed character sheet. It should be designed for a game engine to.",
+					"title": "Create a full-screen 2D HD pixel-hybrid - Free Character Art"
+				}
+			},
+			"style": "retro-16bit",
+			"surface": "studio",
+			"width": 1024.0
+		},
+		"name": "Create a full-screen 2D HD pixel-hybrid",
+		"previewUrl": "https://v3b.fal.media/files/b/0a9f58bd/m0Mfn2Hqmbo9Nsn4yIkci_YvbiDsAj.png",
+		"primary": true,
+		"thumbnailUrl": "https://v3b.fal.media/files/b/0a9f58bd/m0Mfn2Hqmbo9Nsn4yIkci_YvbiDsAj.png",
+		"title": "Create a full-screen 2D HD pixel-hybrid",
+		"type": "image",
+		"url": "https://v3b.fal.media/files/b/0a9f58bd/m0Mfn2Hqmbo9Nsn4yIkci_YvbiDsAj.png",
+		"version": "2026-06-22"
+	},
+	"name": "Create a full-screen 2D HD pixel-hybrid",
+	"paths": [
+		"res://assets/summer/ee35e1d8-ea21-4d1c-91ac-55e368666a16/2026-06-22/m0Mfn2Hqmbo9Nsn4yIkci_YvbiDsAj.png"
+	],
+	"primaryPath": "res://assets/summer/ee35e1d8-ea21-4d1c-91ac-55e368666a16/2026-06-22/m0Mfn2Hqmbo9Nsn4yIkci_YvbiDsAj.png",
+	"source": "summer-studio",
+	"version": "2026-06-22"
+}

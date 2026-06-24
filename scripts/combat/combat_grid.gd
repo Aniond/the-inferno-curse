@@ -39,7 +39,8 @@ func grid_to_world(coord: Vector2i, height_level: int = -1) -> Vector3:
 	var y = origin.y
 	if height_level >= 0:
 		y += float(height_level) * cell_width
-	return origin + Vector3(coord.x * cell_width, y, coord.y * cell_depth)
+	var half := Vector3(cell_width * 0.5, 0.0, cell_depth * 0.5)
+	return origin + Vector3(coord.x * cell_width, y, coord.y * cell_depth) + half
 
 func world_to_grid(world_position: Vector3) -> Vector2i:
 	var local = world_position - origin

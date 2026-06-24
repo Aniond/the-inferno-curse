@@ -1,0 +1,18 @@
+{
+  "name": "summer_inspect_node",
+  "description": "Get all editable properties of a node with their current values, types, and resource info.\n\nCall this before modifying a node to understand its current state. Returns every property the Godot inspector would show.\n\nExample: inspect a light to see its energy, color, shadow settings before changing them.",
+  "inputSchema": {
+    "type": "object",
+    "properties": {
+      "path": {
+        "type": "string",
+        "description": "Node path from scene tree, e.g. 'Player', 'World/Enemies/Boss', 'DirectionalLight3D'"
+      }
+    },
+    "required": [
+      "path"
+    ],
+    "additionalProperties": false,
+    "$schema": "http://json-schema.org/draft-07/schema#"
+  }
+}

@@ -1,0 +1,9 @@
+{
+  "name": "summer_open_main_scene",
+  "description": "Open the project's configured main scene from project settings.\n\nSafer than guessing scene names like main.tscn/Main.tscn.\nCall this when you get \"no scene open\".",
+  "inputSchema": {
+    "$schema": "http://json-schema.org/draft-07/schema#",
+    "type": "object",
+    "properties": {}
+  }
+}

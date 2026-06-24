@@ -1,0 +1,103 @@
+<h2>Orb Skill Tree – No Hard Cap + Duplicate Farming</h2>
+<p class="subtitle">You can place as many orbs as you want. Farming the same ability multiple times lets you stack power on it — but corruption also stacks.</p>
+
+<div class="section">
+  <div class="label">Your Rule</div>
+  <p>"No hard cap. If a player wants to farm say shadow claw. Each time its slotted it increases the damage and the corruption cost."</p>
+  <p>This turns repeated absorption into a deliberate power fantasy with a clear downside.</p>
+</div>
+
+<h3>How Duplicate Farming Works</h3>
+<div class="mockup">
+  <div class="mockup-body">
+    <strong>Example: Shadow Claw (Single Target Damage)</strong><br><br>
+    First Shadow Claw slotted in tree:<br>
+    • Damage: base 8 + STR scaling<br>
+    • Corruption contribution: +1 hidden weight<br><br>
+    Second Shadow Claw slotted (same ability type):<br>
+    • Damage now: base 8 + STR scaling + bonus from duplicate (e.g. +15-25% on the orb)<br>
+    • Corruption contribution: +1 +1 = +2 (additive on this orb type)<br><br>
+    Third Shadow Claw slotted:<br>
+    • Damage: base + even higher multiplier from the stack<br>
+    • Corruption: +3 on this line<br><br>
+    <span style="color:#ff8a7d;">The player is consciously choosing to become more powerful and more Limbo-tainted at the same time.</span>
+  </div>
+</div>
+
+<h3>Tree Integration (No Hard Cap)</h3>
+<div class="section">
+  <p>There is no limit to how many orbs you can place in the tree.</p>
+  <ul>
+    <li>You can dump 10 copies of Shadow Claw into the tree if you want.</li>
+    <li>Each duplicate increases the power of the "Shadow Claw" line.</li>
+    <li>Nodes in the tree can further amplify orbs placed in specific clusters (e.g. "Orbs in this cluster gain +10% damage per duplicate of the same type").</li>
+    <li>Corruption scales with every additional copy slotted.</li>
+  </ul>
+</div>
+
+<h3>Relation to Equip + Saint/Sinner</h3>
+<div class="section">
+  <p><strong>Slotting Both</strong></p>
+  <ul>
+    <li>An orb can still be equipped for active combat use even while multiple copies are invested in the tree.</li>
+    <li>The tree version powers up the "concept" of that ability.</li>
+  </ul>
+
+  <p><strong>Saint vs Sinner</strong></p>
+  <ul>
+    <li>Sinner path loves this — farm the same strong orb repeatedly for massive power spikes, accepting the corruption explosion.</li>
+    <li>Saint path will probably avoid heavy duplicate farming or will purify the duplicates to keep corruption low (but lose the stacking power).</li>
+    <li>Church/Guilds become even more important as "reset" or "control" tools when you go too deep on duplicates.</li>
+  </ul>
+</div>
+
+<div class="pros-cons">
+  <div class="pros">
+    <h4>Strengths</h4>
+    <ul>
+      <li>Rewards dedicated farming and grinding specific monsters.</li>
+      <li>Creates very different power curves: "I farmed 7 Shadow Claws" feels earned and dangerous.</li>
+      <li>Perfectly reinforces the hidden corruption system and the Saint/Sinner identity choice.</li>
+      <li>No artificial cap — player agency is high.</li>
+    </ul>
+  </div>
+  <div class="cons">
+    <h4>Risks / Things to watch</h4>
+    <ul>
+      <li>Could feel mandatory to farm duplicates for power.</li>
+      <li>Need good ways for Saint players to still feel strong without spamming the same orb.</li>
+      <li>Corruption scaling must stay meaningful so the downside is real.</li>
+    </ul>
+  </div>
+</div>
+
+<div class="options">
+  <div class="option" data-choice="stack-amount" onclick="toggleSelect(this)">
+    <div class="letter">A</div>
+    <div class="content">
+      <h3>Power per Duplicate</h3>
+      <p>How much should each additional copy of the same orb increase its damage? (flat %, diminishing returns, or something else?)</p>
+    </div>
+  </div>
+  <div class="option" data-choice="corruption-math" onclick="toggleSelect(this)">
+    <div class="letter">B</div>
+    <div class="content">
+      <h3>Corruption per Duplicate</h3>
+      <p>Should every duplicate add the full base_corruption, or should later copies add slightly less/more?</p>
+    </div>
+  </div>
+  <div class="option" data-choice="tree-synergy" onclick="toggleSelect(this)">
+    <div class="letter">C</div>
+    <div class="content">
+      <h3>Tree Nodes &amp; Duplicates</h3>
+      <p>Should certain tree nodes give extra bonuses specifically when you have multiples of the same orb in one cluster?</p>
+    </div>
+  </div>
+  <div class="option" data-choice="saint-control" onclick="toggleSelect(this)">
+    <div class="letter">D</div>
+    <div class="content">
+      <h3>Saint Counterplay</h3>
+      <p>How can a Saint player still get strong without duplicate farming? (unique holy orbs, better tree paths, Church upgrades, etc.)</p>
+    </div>
+  </div>
+</div>

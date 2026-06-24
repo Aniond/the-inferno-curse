@@ -1,0 +1,117 @@
+<h2>Each Skill/Orb Has Flat Sanity + Corruption Values</h2>
+<p class="subtitle">Confirmed: Every ability has two flat base values — one for player Sanity, one for world Corruption. These are properties of the skill itself.</p>
+
+<div class="section">
+  <div class="label">Your Rule</div>
+  <p>"Have sanity skill + corruption makes sense. Its a flat value of the skill."</p>
+  <p>Each orb you absorb carries its own fixed Sanity cost (player) and Corruption contribution (world). These do not start at zero — they are baked into the orb at the moment of absorption.</p>
+</div>
+
+<h3>Example Flat Values on Orbs</h3>
+<div class="mockup">
+  <div class="mockup-body" style="font-family:monospace; font-size:13px; background:#111; color:#ccc; padding:10px;">
+    Shadow Claw (Single Target Damage)<br>
+    base_damage = 8<br>
+    scaling_stat = "STR"<br>
+    base_sanity_cost = 3<br>
+    base_corruption_value = 2<br><br>
+    
+    Holy Strike (Purified version)<br>
+    base_damage = 6<br>
+    scaling_stat = "FTH"<br>
+    base_sanity_cost = 1<br>
+    base_corruption_value = 0<br><br>
+    
+    Inferno Bolt (Area Effect)<br>
+    base_damage = 12 (in 3x3)<br>
+    base_sanity_cost = 5<br>
+    base_corruption_value = 4
+  </div>
+</div>
+
+<h3>How These Values Are Used</h3>
+<div class="section">
+  <p><strong>When Equipped</strong><br>
+  The orb adds its base_sanity_cost to your current personal Sanity load.<br>
+  It also contributes its base_corruption_value to the world's current Corruption level (affects Limbo Squares density, shadow behavior, NPC tension, etc.).</p>
+
+  <p><strong>When Used in Combat</strong><br>
+  You pay the current Sanity cost of the orb (can be modified by tree nodes or duplicates).<br>
+  The orb's Corruption value is applied to the world at the moment of use (or slightly after).</p>
+
+  <p><strong>Tree Stacking (Duplicates)</strong><br>
+  When you slot multiple copies of the same orb type in the tree:<br>
+  • Damage/power increases.<br>
+  • The effective Sanity cost of that orb line increments.<br>
+  • The base_corruption_value may stay flat or get a small multiplier depending on how aggressive the node is.</p>
+
+  <p><strong>Church Purification</strong><br>
+  Creates a new holy version with:<br>
+  • Lower base_sanity_cost<br>
+  • Significantly reduced or zero base_corruption_value<br>
+  • Usually lower raw power (as previously established)</p>
+</div>
+
+<h3>Integration with Saint vs Sinner</h3>
+<div class="section">
+  <p><strong>Sinner Path</strong><br>
+  • You embrace orbs with high base_sanity_cost and high base_corruption_value.<br>
+  • Tree nodes that increase power on stacked orbs will also increase the Sanity cost further.<br>
+  • You are consciously choosing to carry more personal Sanity load and accelerate world Corruption.</p>
+
+  <p><strong>Saint Path</strong><br>
+  • You prioritize orbs with low Sanity and low Corruption (or get them purified at the Church).<br>
+  • Church reputation perks can further reduce Sanity costs on holy orbs.<br>
+  • You actively try to keep both your personal Sanity and the city's Corruption low.</p>
+</div>
+
+<div class="pros-cons">
+  <div class="pros">
+    <h4>Why flat values per skill work well</h4>
+    <ul>
+      <li>Every absorbed orb has an inherent "weight" — some souls are heavier than others.</li>
+      <li>Makes the moment of absorption meaningful ("this one will cost me Sanity and spread more Corruption").</li>
+      <li>Clear lever for Church purification (they reduce the values).</li>
+      <li>Stacking in the tree becomes a deliberate escalation of both personal and world cost.</li>
+      <li>Easy to balance per ability type (Single Target vs Area vs Buff vs Trait can have different typical ranges).</li>
+    </ul>
+  </div>
+  <div class="cons">
+    <h4>Still needs tuning</h4>
+    <ul>
+      <li>How much does a duplicate stack increase the Sanity cost? (flat +1, percentage, etc.)</li>
+      <li>Does using the orb apply its full base_corruption_value every time, or only the first time per encounter?</li>
+    </ul>
+  </div>
+</div>
+
+<div class="options">
+  <div class="option" data-choice="stack-increment" onclick="toggleSelect(this)">
+    <div class="letter">A</div>
+    <div class="content">
+      <h3>Stacking Increment</h3>
+      <p>When you slot a second copy of the same orb, should Sanity cost go up by a flat amount, a percentage, or something else?</p>
+    </div>
+  </div>
+  <div class="option" data-choice="use-vs-equip" onclick="toggleSelect(this)">
+    <div class="letter">B</div>
+    <div class="content">
+      <h3>Use vs Equip</h3>
+      <p>Should the Corruption value be applied when you equip the orb, when you use it, or both?</p>
+    </div>
+  </div>
+  <div class="option" data-choice="holy-range" onclick="toggleSelect(this)">
+    <div class="letter">C</div>
+    <div class="content">
+      <h3>Holy Version Range</h3>
+      <p>After Church purification, should the holy version always drop to 0 Corruption, or can some stay at a small positive value with other benefits?</p>
+    </div>
+  </div>
+  <div class="option" data-choice="template-fields" onclick="toggleSelect(this)">
+    <div class="letter">D</div>
+    <div class="content">
+      <h3>Template Fields</h3>
+      <p>Should the base Single Target template (and the other three types) now explicitly include base_sanity_cost and base_corruption_value as required fields?</p>
+    </div>
+  </div>
+</div>

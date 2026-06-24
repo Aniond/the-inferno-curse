@@ -1,0 +1,33 @@
+{
+  "name": "summer_connect_signal",
+  "description": "Connect a signal between two nodes. Signals are Godot's event system — they notify when something happens.\n\nCommon signals:\n- \"body_entered\" / \"body_exited\" — Area3D/Area2D detects physics bodies\n- \"pressed\" — Button clicked\n- \"timeout\" — Timer finished\n- \"area_entered\" — Area detects another area\n- \"input_event\" — CollisionObject received input\n\nThe receiver node must have a script with the specified method.",
+  "inputSchema": {
+    "type": "object",
+    "properties": {
+      "emitter": {
+        "type": "string",
+        "description": "Node that fires the signal, e.g. './Player/HitArea'"
+      },
+      "signal": {
+        "type": "string",
+        "description": "Signal name, e.g. 'body_entered'"
+      },
+      "receiver": {
+        "type": "string",
+        "description": "Node with the handler script, e.g. './Player'"
+      },
+      "method": {
+        "type": "string",
+        "description": "Method name in the receiver's script, e.g. '_on_hit_area_body_entered'"
+      }
+    },
+    "required": [
+      "emitter",
+      "signal",
+      "receiver",
+      "method"
+    ],
+    "additionalProperties": false,
+    "$schema": "http://json-schema.org/draft-07/schema#"
+  }
+}

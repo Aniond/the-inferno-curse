@@ -1,0 +1,9 @@
+{
+  "name": "summer_get_diagnostics",
+  "description": "Quick overview of all errors and warnings from both the editor console and the runtime debugger. Returns error counts and a guidance message.\n\nALWAYS call this FIRST before diving into summer_get_console or summer_get_debugger_errors. It tells you where to look.\n\nTypical workflow after making changes:\n1. summer_get_diagnostics — are there issues?\n2. If errors: summer_get_console or summer_get_debugger_errors for details\n3. Fix the issues\n4. summer_get_diagnostics again to verify",
+  "inputSchema": {
+    "$schema": "http://json-schema.org/draft-07/schema#",
+    "type": "object",
+    "properties": {}
+  }
+}

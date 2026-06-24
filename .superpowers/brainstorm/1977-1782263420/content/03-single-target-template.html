@@ -1,0 +1,124 @@
+<h2>Single Target Skills — Usable Template Design</h2>
+<p class="subtitle">Starting here as requested. Focus: Attack + Heal variants for absorption (Normal tier first)</p>
+
+<div class="section">
+  <div class="label">Design Goal</div>
+  <p>Create <strong>usable, extensible templates</strong> that monsters can offer via absorption, that plug into the current tactical combat (grid, CT action system, height, status, weather mods).</p>
+</div>
+
+<h3>Proposed Single-Target Ability Template (Data Shape)</h3>
+<div class="mockup">
+  <div class="mockup-header">AbilitySingleTarget.tres (example Resource)</div>
+  <div class="mockup-body" style="font-family: monospace; background:#111; color:#0f0; padding:12px; font-size:12px; line-height:1.4;">
+    id: "strike"<br>
+    display_name: "Strike"<br>
+    description: "A basic melee attack."<br>
+    type: "single_target"<br>
+    category: "attack"   # or "heal"<br><br>
+    # Targeting<br>
+    range: 1<br>
+    is_ranged: false<br>
+    requires_los: true<br><br>
+    # Effect<br>
+    base_damage: 8<br>
+    base_heal: 0<br>
+    power_stat: "STR"     # or INT/FTH for spells<br><br>
+    # CT / Action interaction<br>
+    ct_self_bonus: 0      # + to own current_ct (speed up turn)<br>
+    ct_target_penalty: 15 # - to target's current_ct<br>
+    action_cost: 1        # how much this action advances everyone<br><br>
+    # Status / Mods (optional)<br>
+    apply_status: ""<br>
+    status_duration: 0<br><br>
+    # Cost & Corruption<br>
+    mp_cost: 0<br>
+    corruption_per_use: 0<br><br>
+    # Theme tags for jobs<br>
+    theme_tags: ["martial"]
+  </div>
+</div>
+
+<h3>Two Core Variants</h3>
+<div class="split">
+  <div class="mockup">
+    <div class="mockup-header">Attack Variant (Normal)</div>
+    <div class="mockup-body">
+      <strong>Strike / Dagger Cut / Gnaw</strong><br>
+      - Damage based on power_stat<br>
+      - CT penalty on target (delays their turn)<br>
+      - Small chance to apply minor status<br>
+      - Low or zero MP<br>
+      - Low corruption
+    </div>
+  </div>
+  <div class="mockup">
+    <div class="mockup-header">Heal Variant (Normal)</div>
+    <div class="mockup-body">
+      <strong>Guarigione / Minor Heal / Bandage</strong><br>
+      - Positive HP on single ally (or self)<br>
+      - Can give small CT bonus to target<br>
+      - Faith or Intellect scaling<br>
+      - Low MP<br>
+      - Very low corruption (or none)
+    </div>
+  </div>
+</div>
+
+<h3>How it works in current combat flow</h3>
+<div class="section">
+  <ul>
+    <li>During ACT phase → player chooses skill instead of basic attack</li>
+    <li>Grid targeting reuses existing get_attackable_targets (single cell)</li>
+    <li>On use: resolve damage/heal + direct current_ct adjustments</li>
+    <li>Call combat_state.advance_ct( action_cost )</li>
+    <li>If status, use the existing apply_status_effect system</li>
+    <li>Weather mods already apply (damage_mult, etc.)</li>
+  </ul>
+</div>
+
+<div class="pros-cons">
+  <div class="pros">
+    <h4>Pros of starting with this template</h4>
+    <ul>
+      <li>Reuses almost all existing combat code</li>
+      <li>Easy to hook into monster normal_ability</li>
+      <li>Immediately testable in battle_test_map</li>
+      <li>Covers both "att" and "heal" in one pattern</li>
+    </ul>
+  </div>
+  <div class="cons">
+    <h4>Tradeoffs / Things to decide</h4>
+    <ul>
+      <li>Flat numbers vs formulas (power * multiplier + flat)</li>
+      <li>Should heals also cost an action / advance CT?</li>
+      <li>Corruption only on attack variants or on powerful ones?</li>
+      <li>Will these be Resources or still just strings + data dict for now?</li>
+    </ul>
+  </div>
+</div>
+
+<p style="margin-top:16px;"><strong>Next visual step:</strong> Click below or reply to choose focus.</p>
+
+<div class="options">
+  <div class="option" data-choice="examples" onclick="toggleSelect(this)">
+    <div class="letter">A</div>
+    <div class="content">
+      <h3>Give me concrete examples</h3>
+      <p>3-4 ready-to-absorb single target abilities mapped to current monsters (brigand, cultist, rat, wolf, soldier) + their exact values.</p>
+    </div>
+  </div>
+  <div class="option" data-choice="data-model" onclick="toggleSelect(this)">
+    <div class="letter">B</div>
+    <div class="content">
+      <h3>Define the full data model</h3>
+      <p>Fields, validation, how it extends to Uncommon/Rare later, integration points in player_data / combat_actor / combat_state.</p>
+    </div>
+  </div>
+  <div class="option" data-choice="ct-grid" onclick="toggleSelect(this)">
+    <div class="letter">C</div>
+    <div class="content">
+      <h3>CT + Grid + Status rules</h3>
+      <p>Exact behavior: when CT changes happen, height bonuses on single target spells, how status from single target interacts with existing _tick_actor_status_effects.</p>
+    </div>
+  </div>
+</div>

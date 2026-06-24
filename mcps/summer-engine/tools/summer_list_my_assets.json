@@ -1,0 +1,34 @@
+{
+  "name": "summer_list_my_assets",
+  "description": "List or search the signed-in user's generated and uploaded assets.\n\nUse this after generation jobs complete, when the user says \"the model I made\",\n\"my last character\", or when you need to retrieve an asset before importing it\ninto the local project.\n\nReturns exact asset IDs plus file/import URLs. Use summer_get_asset for full\nmetadata or summer_import_asset_by_id to import a specific result.",
+  "inputSchema": {
+    "type": "object",
+    "properties": {
+      "query": {
+        "type": "string",
+        "default": "",
+        "description": "Optional search term. Empty string lists recent assets."
+      },
+      "assetType": {
+        "type": "string",
+        "enum": [
+          "2d_image",
+          "animation",
+          "3d_model",
+          "audio",
+          "music",
+          "all"
+        ],
+        "default": "all",
+        "description": "Filter by asset type"
+      },
+      "limit": {
+        "type": "number",
+        "default": 10,
+        "description": "Max results (1-20)"
+      }
+    },
+    "additionalProperties": false,
+    "$schema": "http://json-schema.org/draft-07/schema#"
+  }
+}

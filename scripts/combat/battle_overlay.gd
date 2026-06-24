@@ -39,6 +39,20 @@ func _ready() -> void:
 	hide()
 
 
+func _process(_delta: float) -> void:
+	# CanvasLayer does not reliably notify its Control children on viewport
+	# resize, so the anchored _root can stay (0,0) and never lay out its
+	# children. Keep it pinned to the viewport size. Only writes on change.
+	if _root == null:
+		return
+	var vp := get_viewport()
+	if vp == null:
+		return
+	var vsize := vp.get_visible_rect().size
+	if _root.size != vsize:
+		_root.size = vsize
+
+
 func show_pre_combat(message: String) -> void:
 	show()
 	_waiting_label.text = message
@@ -133,6 +147,71 @@ func clear_target_preview() -> void:
 	_preview_body.text = ""
 
 
+func update_move_preview(data: Dictionary) -> void:
+	_preview_panel.visible = true
+	_preview_title.text = "Move Preview"
+	if not data.get("reachable", true):
+		_preview_body.text = "[color=#907060]Out of reach[/color]"
+		return
+	var lines: PackedStringArray = []
+	var move_cost := int(data.get("move_cost", 0))
+	if move_cost > 0:
+		lines.append("MOV cost: [color=#f0c060]%d[/color]" % move_cost)
+	var targets := data.get("targets", []) as Array
+	if targets.is_empty():
+		lines.append("[color=#907060]No enemies in range from here[/color]")
+	else:
+		for t in targets:
+			var name_str := str(t.get("name", "Enemy"))
+			var melee := bool(t.get("melee", false))
+			var ranged := bool(t.get("ranged", false))
+			var arc := str(t.get("arc_label", ""))
+			var range_str := ""
+			if melee:
+				range_str = "[color=#7dffb0]melee[/color]"
+				if arc != "":
+					range_str += " (%s)" % arc
+			elif ranged:
+				range_str = "[color=#8ec8ff]ranged[/color]"
+			else:
+				range_str = "[color=#ff8a7d]out of range[/color]"
+			lines.append("%s: %s" % [name_str, range_str])
+	_preview_body.text = "\n".join(lines)
+
+
+func clear_move_preview() -> void:
+	_preview_panel.visible = false
+	_preview_body.text = ""
+
+
+func update_rotate_preview(data: Dictionary) -> void:
+	_preview_panel.visible = true
+	var facing := str(data.get("facing", "south")).capitalize()
+	_preview_title.text = "Facing: %s" % facing
+	var lines: PackedStringArray = []
+	var targets := data.get("targets", []) as Array
+	if targets.is_empty():
+		lines.append("[color=#907060]No enemies visible[/color]")
+	else:
+		for t in targets:
+			var name_str := str(t.get("name", "Enemy"))
+			var arc := str(t.get("arc_label", "front"))
+			var bonus := int(t.get("arc_bonus", 0))
+			var arc_color := "#ff6b5e"
+			if bonus >= 20:
+				arc_color = "#cc88ff"
+			elif bonus >= 10:
+				arc_color = "#f0c060"
+			var bonus_str := " (+%d%% hit)" % bonus if bonus > 0 else ""
+			lines.append("%s: [color=%s]%s[/color]%s" % [name_str, arc_color, arc, bonus_str])
+	_preview_body.text = "\n".join(lines)
+
+
+func clear_rotate_preview() -> void:
+	_preview_panel.visible = false
+	_preview_body.text = ""
+
+
 func _set_phase_highlight(player_phase: int, use_ranged: bool) -> void:
 	var phases := ["MOVE", "ROTATE", "ATTACK"]
 	for index in _phase_labels.size():
@@ -155,8 +234,14 @@ func _set_phase_highlight(player_phase: int, use_ranged: bool) -> void:
 func _build_ui() -> void:
 	_root = Control.new()
 	_root.name = "Root"
-	_root.set_anchors_preset(Control.PRESET_FULL_RECT)
+	_root.anchor_right = 1.0
+	_root.anchor_bottom = 1.0
+	_root.offset_right = 0.0
+	_root.offset_bottom = 0.0
+	_root.grow_horizontal = Control.GROW_DIRECTION_BOTH
+	_root.grow_vertical = Control.GROW_DIRECTION_BOTH
 	_root.mouse_filter = Control.MOUSE_FILTER_IGNORE
+	_root.clip_contents = false
 	add_child(_root)
 
 	_waiting_label = _make_label("Click or arrow keys to move on the grid. Approach the Training Brigand to fight.", 22)
@@ -246,11 +331,11 @@ func _build_ui() -> void:
 	bottom_vbox.add_child(_action_label)
 
 	_preview_panel = _make_panel()
-	_preview_panel.set_anchors_preset(Control.PRESET_BOTTOM_RIGHT)
-	_preview_panel.offset_left = -300
-	_preview_panel.offset_top = -250
+	_preview_panel.set_anchors_preset(Control.PRESET_TOP_RIGHT)
+	_preview_panel.offset_left = -296
+	_preview_panel.offset_top = 262
 	_preview_panel.offset_right = -16
-	_preview_panel.offset_bottom = -100
+	_preview_panel.offset_bottom = 412
 	_preview_panel.visible = false
 	_root.add_child(_preview_panel)
 	var preview_vbox := _make_vbox(6)

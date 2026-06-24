@@ -1,0 +1,94 @@
+<h2>Orb Tree Rules Update: Equip Limit + Shadow/Light Merging Paths</h2>
+<p class="subtitle">You can only equip ONE instance of each unique orb, even if you have multiples stacked in the tree. Tree has branching Shadow (Sinner) and Light (Saint) paths that can merge at key nodes for hybrid options.</p>
+
+<div class="section">
+  <div class="label">Equip Limit (per your reminder)</div>
+  <p>For each unique orb (e.g. "Shadow Claw"):</p>
+  <ul>
+    <li>You can place as many copies as you want in the tree (no hard cap) to stack power and sanity cost.</li>
+    <li>You can only ever have ONE copy equipped for active use at a time.</li>
+    <li>The power from all stacked copies in the tree applies to the single equipped version.</li>
+  </ul>
+  <p>This keeps the "slot them both" idea (tree for passive growth + equip for active use) while preventing unlimited active copies of the same orb.</p>
+</div>
+
+<h3>Shadow / Light Branching Paths with Merges</h3>
+<div class="mockup">
+  <div class="mockup-body">
+    <strong>Tree Structure Concept</strong><br><br>
+    Start Node (neutral base orbs)<br>
+    ↓<br>
+    Branch A: Shadow Path (Sinner) — raw power, higher base sanity/corruption, aggressive effects<br>
+    &nbsp;&nbsp;&nbsp;&nbsp;↓<br>
+    &nbsp;&nbsp;&nbsp;&nbsp;Merge Points (hybrid nodes)<br>
+    &nbsp;&nbsp;&nbsp;&nbsp;↑<br>
+    Branch B: Light Path (Saint) — purified, lower corruption, utility/healing focus, Church synergy<br><br>
+    <strong>Merge Examples</strong><br>
+    • A Shadow Damage orb can merge with Light nodes to gain holy damage vs Limbo creatures while keeping some raw power.<br>
+    • A Light Heal orb can merge with Shadow nodes for "corrupted healing" that also damages enemies or drains sanity from foes.<br>
+    • At merge nodes you choose the blend — but high merges may have unique risks/rewards (e.g. temporary sanity spikes or world corruption surges).<br><br>
+    <span style="color:#a08060;">This replaces the strict "Dark and Light cannot coexist" with controlled, node-based merging for more build variety.</span>
+  </div>
+</div>
+
+<h3>Impact on Single Target Template</h3>
+<div class="section">
+  <p>Each Single Target orb (Damage or Heal) now has:</p>
+  <ul>
+    <li>Its flat base_sanity_cost and base_corruption_value (as previously set).</li>
+    <li>Tree stacking applies to the unique orb type regardless of path.</li>
+    <li>When equipped, only one version is active, but it benefits from all tree investments on that orb (including any merged shadow/light nodes).</li>
+    <li>Path choice happens at the tree nodes you invest in for that orb.</li>
+  </ul>
+</div>
+
+<div class="pros-cons">
+  <div class="pros">
+    <h4>Benefits</h4>
+    <ul>
+      <li>Equip limit keeps active loadout clean and meaningful (you can't spam 5 Shadow Claws at once).</li>
+      <li>Merging paths give real choice and hybrid builds without breaking the Saint/Sinner fantasy entirely.</li>
+      <li>Fits the "you can only equip one per the skill tree" while still allowing deep investment via stacking.</li>
+      <li>Merges can create interesting orbs that bridge dark/light (e.g. "Shadow Strike" that occasionally heals on crit if merged with light nodes).</li>
+      <li>Church purification can "reset" an orb to a pure Light version, clearing some shadow investments.</li>
+    </ul>
+  </div>
+  <div class="cons">
+    <h4>Tradeoffs / Things to Balance</h4>
+    <ul>
+      <li>Merges might dilute the purity of Saint vs Sinner if overused — need strong narrative or mechanical cost for deep merges.</li>
+      <li>Need to decide if merges are permanent per orb copy or can be respecced.</li>
+    </ul>
+  </div>
+</div>
+
+<div class="options">
+  <div class="option" data-choice="merge-cost" onclick="toggleSelect(this)">
+    <div class="letter">A</div>
+    <div class="content">
+      <h3>Merge Cost</h3>
+      <p>What is the price of merging shadow and light on an orb? (Extra sanity cost, temporary world corruption spike, loss of some base power, or narrative "fall from grace" flavor?)</p>
+    </div>
+  </div>
+  <div class="option" data-choice="equip-one" onclick="toggleSelect(this)">
+    <div class="letter">B</div>
+    <div class="content">
+      <h3>Equip Limit Enforcement</h3>
+      <p>Is the "only one equipped per orb type" hard (you literally can't equip a second), or soft (you can but with heavy penalties)?</p>
+    </div>
+  </div>
+  <div class="option" data-choice="tree-respec" onclick="toggleSelect(this)">
+    <div class="letter">C</div>
+    <div class="content">
+      <h3>Respec / Path Changing</h3>
+      <p>Can you move orbs between shadow/light branches later (via Church or other means), or are investments mostly permanent once merged?</p>
+    </div>
+  </div>
+  <div class="option" data-choice="single-target" onclick="toggleSelect(this)">
+    <div class="letter">D</div>
+    <div class="content">
+      <h3>Single Target Example</h3>
+      <p>Want a quick example of a Single Target orb with shadow/light merge options and how the equip limit + stacking would work on it?</p>
+    </div>
+  </div>
+</div>

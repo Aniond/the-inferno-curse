@@ -1,0 +1,99 @@
+<h2>Hidden Nodes — AI-Driven NPC Discovery</h2>
+<p class="subtitle">NPCs are AI-driven. Hidden nodes unlock naturally through rumors, overheard dialogue, and organic conversation — no quest markers or "go talk to this guy" arrows.</p>
+
+<div class="section">
+  <div class="label">How It Works</div>
+  <p><strong>World State Drives NPC Knowledge</strong><br>
+  • Each NPC has awareness based on current world corruption, recent events, and player actions.<br>
+  • As corruption rises in a district, relevant NPCs start talking about "strange creatures," closed areas, weird noises, etc.<br>
+  • Rumors can spread between NPCs over time (AI conversation simulation or proximity-based knowledge sharing).</p>
+
+  <p><strong>Player Discovery</strong><br>
+  • Player overhears NPCs talking while walking the 3D map.<br>
+  • Or player initiates conversation with an NPC who has the relevant knowledge.<br>
+  • Example (as you described):<br>
+    NPC: "Have you heard that Giardino delle Rose has been closed down due to strange creatures?"<br>
+  • Walking up and engaging the NPC (or choosing a dialogue option if one appears) unlocks the hidden node on the overview map.</p>
+
+  <p><strong>Unlock Effect</strong><br>
+  • The node appears on the city overview (connected by a road or side path).<br>
+  • Player can now enter it like any other node.<br>
+  • Inside the 3D map: free exploration, possible Limbo Squares (if corruption is high), strange creatures (potential new orbs), and story beats.</p>
+</div>
+
+<h3>Integration with Existing Systems</h3>
+<div class="section">
+  <p><strong>World Corruption</strong><br>
+  Hidden nodes and their "strange creatures" are direct results of rising world corruption. Resolving or exploring them can lower local corruption (visible on the overview and inside the node).</p>
+
+  <p><strong>Player Sanity &amp; Saint vs Sinner</strong><br>
+  • Investigating a hidden node can raise personal Sanity cost if you use corrupted orbs aggressively.<br>
+  • Saint path: Church-related rumors may guide you to "redemptive" hidden nodes with purification opportunities.<br>
+  • Sinner path: Darker rumors lead to higher-risk, higher-reward nodes.</p>
+
+  <p><strong>Ability Tree / Orbs</strong><br>
+  • Hidden nodes are excellent sources of new or rare orbs (especially from the "strange creatures").<br>
+  • Tree nodes can be unlocked or improved by discovering these areas.<br>
+  • Focus ability (from Church) helps inside the node once unlocked (reveals Limbo Squares).</p>
+
+  <p><strong>Church &amp; Guilds</strong><br>
+  • Many rumors can originate from or be influenced by Church/Guild NPCs.<br>
+  • Completing the node’s content can give reputation with the relevant faction.<br>
+  • Church may have specific hidden nodes tied to their reputation perks.</p>
+
+  <p><strong>Exploration Feel</strong><br>
+  • Feels completely natural because the AI NPCs are reacting to the actual state of the world.<br>
+  • No artificial "quest log" — you just hear something interesting and decide to check it out.<br>
+  • Multiple NPCs can spread the same rumor, so you can discover it organically in different places.</p>
+</div>
+
+<div class="pros-cons">
+  <div class="pros">
+    <h4>Why this feels natural</h4>
+    <ul>
+      <li>NPCs are AI-driven, so dialogue emerges from world state rather than rigid scripts.</li>
+      <li>Discovery feels like real rumor-spreading in a living city.</li>
+      <li>Player agency: you choose whether to follow up on what you hear.</li>
+      <li>Scales with corruption — more corruption = more rumors and more hidden nodes becoming relevant.</li>
+      <li>Fits the Limbo theme: the city is slowly falling apart and people are talking about it.</li>
+    </ul>
+  </div>
+  <div class="cons">
+    <h4>Still to decide</h4>
+    <ul>
+      <li>How "smart" does the rumor system need to be? (Simple proximity vs more complex AI knowledge graph?)</li>
+      <li>Should some hidden nodes have multiple possible triggers (different NPCs or different corruption thresholds)?</li>
+    </ul>
+  </div>
+</div>
+
+<div class="options">
+  <div class="option" data-choice="rumor-spread" onclick="toggleSelect(this)">
+    <div class="letter">A</div>
+    <div class="content">
+      <h3>Rumor Spread</h3>
+      <p>How far and how fast should rumors travel between NPCs? (Only in the same node, across connected nodes, or city-wide?)</p>
+    </div>
+  </div>
+  <div class="option" data-choice="trigger" onclick="toggleSelect(this)">
+    <div class="letter">B</div>
+    <div class="content">
+      <h3>Unlock Trigger</h3>
+      <p>Should overhearing be enough to unlock, or does the player need to actively talk to the NPC (or choose a specific dialogue line)?</p>
+    </div>
+  </div>
+  <div class="option" data-choice="multiple" onclick="toggleSelect(this)">
+    <div class="letter">C</div>
+    <div class="content">
+      <h3>Multiple Triggers</h3>
+      <p>Should most hidden nodes have several different NPC triggers (so you can discover them in different ways), or is one strong rumor per node enough?</p>
+    </div>
+  </div>
+  <div class="option" data-choice="tree" onclick="toggleSelect(this)">
+    <div class="letter">D</div>
+    <div class="content">
+      <h3>Tree Connection</h3>
+      <p>Should discovering a hidden node via NPC sometimes unlock new branches or specific nodes in the ability tree?</p>
+    </div>
+  </div>
+</div>

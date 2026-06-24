@@ -1,0 +1,39 @@
+{
+  "name": "summer_generate_3d",
+  "description": "Generate a 3D model via Summer Engine Studio.\n\nAvailable models:\n  - \"hunyuan\" (default) — Hunyuan 3D v3.1 Pro, high quality\n  - \"trellis\" — Trellis 2, fast and detailed\n  - \"meshy\" — Meshy, legacy option\n  - Any fal-ai model ID works as a passthrough\n\nAvailable kinds:\n  - \"text-to-3d\" (default) — From text description. Requires 'prompt'.\n    Internally generates a 3D-optimized reference image first, then converts to 3D.\n  - \"image-to-3d\" — From your own image. Requires 'imageUrl'.\n  - \"texture\" — Generate textures for a model. Requires 'imageUrl'.\n\nOptional rig pass (image-to-3d only):\n  Set options.rig = true to add an auto-rig pass via Meshy v6. The result\n  job (poll via summer_check_job) will include rigAssetId — the asset ID\n  of the rigged glb. Use that rigAssetId with summer_generate_motion to\n  add animation clips. Adds ~$0.30 and ~60s to the job.\n\nExample:\n  summer_generate_3d({\n    kind: \"image-to-3d\",\n    imageUrl: \"https://...\",\n    options: { rig: true }\n  })\n  // Returns jobId; poll until result includes { assetId, rigAssetId }.\n\nBy default, waits for completion (up to 5 min) and returns the result directly.\nSet wait=false to get the jobId immediately and poll manually with summer_check_job.\n\nRequires authentication: run 'npx summer-engine login' first.",
+  "inputSchema": {
+    "type": "object",
+    "properties": {
+      "prompt": {
+        "type": "string",
+        "description": "Description of the 3D model, e.g. 'a low-poly treasure chest'"
+      },
+      "kind": {
+        "type": "string",
+        "default": "text-to-3d",
+        "description": "Generation type: text-to-3d, image-to-3d, texture"
+      },
+      "model": {
+        "type": "string",
+        "default": "hunyuan",
+        "description": "Model: hunyuan (default), trellis, meshy, or any fal-ai model ID"
+      },
+      "imageUrl": {
+        "type": "string",
+        "description": "Source image URL for image-to-3d or texture"
+      },
+      "wait": {
+        "type": "boolean",
+        "default": true,
+        "description": "Wait for completion (default true, up to 5 min). Set false to get jobId immediately."
+      },
+      "options": {
+        "type": "object",
+        "additionalProperties": {},
+        "description": "Provider-specific params (target_polycount, topology, art_style, etc.)"
+      }
+    },
+    "additionalProperties": false,
+    "$schema": "http://json-schema.org/draft-07/schema#"
+  }
+}

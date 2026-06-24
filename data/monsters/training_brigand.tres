@@ -22,6 +22,7 @@ natural_power = 2
 natural_defense = 2
 abilities = Array[String](["Strike", "Guard"])
 ai_tags = Array[String](["melee", "training", "low_threat"])
+intelligence = 3
 reward_experience = 12
 reward_coin = 5
 drop_table = Array[String](["worn_dagger"])

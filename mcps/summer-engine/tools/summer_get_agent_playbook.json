@@ -1,0 +1,9 @@
+{
+  "name": "summer_get_agent_playbook",
+  "description": "AI-first operating guide for Summer Engine MCP.\n\nCall this at the start of a fresh chat before touching scenes.\nIt returns the safe workflow, anti-patterns, and recovery steps.",
+  "inputSchema": {
+    "$schema": "http://json-schema.org/draft-07/schema#",
+    "type": "object",
+    "properties": {}
+  }
+}

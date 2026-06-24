@@ -1,0 +1,30 @@
+{
+  "name": "summer_import_asset_by_id",
+  "description": "Import an exact Summer asset ID into the current project.\n\nUse this when the asset was just generated, selected from my assets, or returned\nby search. Unlike summer_import_asset, this does not search or guess: it fetches\nthe asset by ID, downloads it through Summer Engine, and runs Godot's import\npipeline. For 3D models, pass parent to instantiate it in the open scene after\nimport.",
+  "inputSchema": {
+    "type": "object",
+    "properties": {
+      "assetId": {
+        "type": "string",
+        "description": "Summer ArtAssets id"
+      },
+      "path": {
+        "type": "string",
+        "description": "Optional target res:// path. If omitted, a path is inferred from asset type and filename."
+      },
+      "parent": {
+        "type": "string",
+        "description": "Optional parent node path. For 3D models only; imports and instantiates under this node."
+      },
+      "name": {
+        "type": "string",
+        "description": "Optional scene node name when parent is provided."
+      }
+    },
+    "required": [
+      "assetId"
+    ],
+    "additionalProperties": false,
+    "$schema": "http://json-schema.org/draft-07/schema#"
+  }
+}

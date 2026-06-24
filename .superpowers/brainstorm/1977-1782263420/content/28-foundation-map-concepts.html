@@ -1,0 +1,104 @@
+<h2>Foundations Check + Map Concepts</h2>
+<p class="subtitle">Pausing on Church details for now. Confirming current foundations and starting to sketch city/world map needs.</p>
+
+<div class="section">
+  <div class="label">Current Foundations (what we have so far)</div>
+  <ul>
+    <li><strong>Absorbed Orbs</strong>: Skills/spells from monsters. Equipable. Can be placed in the ability tree (no hard cap).</li>
+    <li><strong>Ability Tree</strong>: Mild PoE-style. Place orbs in nodes. Nodes boost power of placed orbs. Duplicates of the same orb increase power but also increase Sanity cost.</li>
+    <li><strong>Sanity (Player)</strong>: Personal cost. Ramps with stacking duplicates. Affects ability use cost and personal feel.</li>
+    <li><strong>Corruption (World)</strong>: Affects Florence, NPCs, environment. Drives Limbo Squares, water color, shadows, random battles.</li>
+    <li><strong>Limbo Squares</strong>: Invisible random floor hazards. Scale with world corruption. Step on one = random teleport (often drops you into enemies). Invisible unless you have Focus ability.</li>
+    <li><strong>Saint vs Sinner</strong>: Dark and Light cannot coexist. Big character choice.</li>
+    <li><strong>Church</strong>: Purifies corrupted orbs into holy versions (lowers corruption, weakens power). Reputation via quests unlocks perks (including Focus ability at higher levels).</li>
+    <li><strong>Exploration</strong>: Free movement in Florence until engagement. Grid/tactical combat only when triggered.</li>
+    <li><strong>Single Target</strong>: Starting ability type (Damage + Heal variants) with clear template structure.</li>
+  </ul>
+</div>
+
+<h3>Map Foundation Concepts</h3>
+<div class="section">
+  <p>The maps need to support:</p>
+  <ul>
+    <li>Free exploration that feels dangerous as world corruption rises (Limbo Squares, random battles).</li>
+    <li>Clear progression of corruption effects across areas.</li>
+    <li>Church and Guild locations as meaningful hubs.</li>
+    <li>Ability tree / orb investment mattering in the world (e.g., focus for squares, holy orbs affecting corruption spread).</li>
+  </ul>
+</div>
+
+<div class="split">
+  <div class="mockup">
+    <div class="mockup-header">Florence (City Map)</div>
+    <div class="mockup-body">
+      • Multiple districts with distinct identities.<br>
+      • Corruption "heat map" overlay (visual only — not a number the player sees).<br>
+      • Limbo Squares appear more densely in high-corruption zones.<br>
+      • Church as central hub (unlocks at certain point, reputation gated perks).<br>
+      • Guild halls scattered (different reinterpretation options).<br>
+      • Safe-ish zones that slowly corrupt over time if you don't manage world corruption.
+    </div>
+  </div>
+  <div class="mockup">
+    <div class="mockup-header">Overworld / World Map</div>
+    <div class="mockup-body">
+      • Florence as main hub.<br>
+      • Connected regions (countryside, other towns, wild areas).<br>
+      • Some regions start "clean" and can become tainted if you ignore corruption.<br>
+      • Fast travel points that might get blocked or risky at high corruption.<br>
+      • Monster types tied to regions (different orbs available).<br>
+      • Story/narrative beats that spread Limbo if not addressed.
+    </div>
+  </div>
+</div>
+
+<div class="pros-cons">
+  <div class="pros">
+    <h4>Benefits of this direction</h4>
+    <ul>
+      <li>World feels alive and reactive to player choices (Saint vs Sinner has real map consequences).</li>
+      <li>Exploration stays tense even in "safe" areas once corruption spreads.</li>
+      <li>Church and Guilds become natural hubs on the map.</li>
+      <li>Limbo Squares and other hazards give exploration meaning.</li>
+    </ul>
+  </div>
+  <div class="cons">
+    <h4>Things we'll need to decide soon</h4>
+    <ul>
+      <li>How big is Florence? (one big map, multiple connected maps, or layered districts?)</li>
+      <li>Is the overworld seamless or node-based?</li>
+      <li>Do corrupted areas ever "heal" on their own if you lower world corruption?</li>
+    </ul>
+  </div>
+</div>
+
+<div class="options">
+  <div class="option" data-choice="florence-size" onclick="toggleSelect(this)">
+    <div class="letter">A</div>
+    <div class="content">
+      <h3>Florence Scale</h3>
+      <p>One large interconnected city map, multiple distinct district maps, or a hybrid?</p>
+    </div>
+  </div>
+  <div class="option" data-choice="corruption-visual" onclick="toggleSelect(this)">
+    <div class="letter">B</div>
+    <div class="content">
+      <h3>Corruption Visualization</h3>
+      <p>How do you want players to feel world corruption on the map? (color tint, particle effects, NPC changes, environmental storytelling only?)</p>
+    </div>
+  </div>
+  <div class="option" data-choice="travel" onclick="toggleSelect(this)">
+    <div class="letter">C</div>
+    <div class="content">
+      <h3>Fast Travel</h3>
+      <p>Should fast travel exist? If yes, how does corruption affect it (risky, blocked, or just more expensive)?</p>
+    </div>
+  </div>
+  <div class="option" data-choice="next-step" onclick="toggleSelect(this)">
+    <div class="letter">D</div>
+    <div class="content">
+      <h3>Next Foundation</h3>
+      <p>Want to sketch a simple Florence district layout first, or jump to how the overworld connects regions?</p>
+    </div>
+  </div>
+</div>

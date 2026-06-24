@@ -1,0 +1,28 @@
+{
+  "name": "summer_create_scene",
+  "description": "Create a new empty scene file safely.\n\nIMPORTANT:\n- This tool uses a temporary mutation strategy: it opens a template scene, removes children, saves to a new path, then restores the previous scene.\n- To prevent accidental destructive actions, you MUST explicitly set allow_temporary_scene_mutation=true.\n- If you don't want this strategy, stop and ask the user for manual scene creation in the editor.\n\nRecommended workflow:\n1) Call summer_get_project_context\n2) Call summer_open_main_scene (optional)\n3) Call summer_create_scene with a new path",
+  "inputSchema": {
+    "type": "object",
+    "properties": {
+      "path": {
+        "type": "string",
+        "description": "New scene path, e.g. 'res://scenes/empty_level.tscn'"
+      },
+      "rootName": {
+        "type": "string",
+        "default": "Main",
+        "description": "Root node name for the new scene"
+      },
+      "allow_temporary_scene_mutation": {
+        "type": "boolean",
+        "default": false,
+        "description": "Safety gate. Must be true to proceed."
+      }
+    },
+    "required": [
+      "path"
+    ],
+    "additionalProperties": false,
+    "$schema": "http://json-schema.org/draft-07/schema#"
+  }
+}

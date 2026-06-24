@@ -1,0 +1,98 @@
+<h2>Limbo Squares — Random &amp; Deceptive Teleports</h2>
+<p class="subtitle">"Just a random square. You think you're safe but it transfers you right back into the enemy."</p>
+
+<div class="section">
+  <div class="label">Confirmed Behavior</div>
+  <p>Limbo Squares do not look special. They are not glowing runes or obvious traps.</p>
+  <p>They can appear as any normal floor tile in the Florence exploration area.</p>
+  <p>Stepping on one triggers a random teleport within the local area.</p>
+  <p>The twist: the new location often looks safe at first glance… but enemies are right there (or spawn immediately on arrival).</p>
+</div>
+
+<h3>How It Plays</h3>
+<div class="mockup">
+  <div class="mockup-body">
+    <strong>Player Flow Example</strong><br><br>
+    1. You clear a small area or think you've found a safe path.<br>
+    2. You step on what looks like ordinary ground.<br>
+    3. Teleport to a new spot that appears empty and quiet.<br>
+    4. Enemies are already present or materialize instantly.<br>
+    5. You're back in combat, often in a worse position than before.<br><br>
+    
+    <strong>Corruption Scaling</strong><br>
+    • Low world corruption: Squares are uncommon. Teleports are usually short and low-risk.<br>
+    • Medium: More frequent. Good chance of landing near or directly in enemy groups.<br>
+    • High: Very common. High probability of "safe" landing turning into immediate fight.<br>
+    • Extreme: Almost every open area has risk. You can get pulled from one fight straight into another.
+  </div>
+</div>
+
+<h3>Design Notes</h3>
+<div class="section">
+  <p><strong>Purely World Corruption Driven</strong><br>
+  Density and danger scale only with the city's overall corruption level (not your personal sanity). Lowering world corruption (through Church work, Saint-path play, careful actions) makes these squares rarer and less punishing.</p>
+
+  <p><strong>Exploration Tension</strong><br>
+  During free movement in Florence, you can never fully relax once corruption spreads. "Safe" looking ground becomes a lie.</p>
+
+  <p><strong>Combat Integration</strong><br>
+  This is one of the main ways corruption forces you out of free exploration and into tactical grid combat without warning.</p>
+
+  <p><strong>Ability Tree Interaction</strong><br>
+  Strong nodes here:<br>
+  • Detect squares before stepping on them.<br>
+  • Reduce teleport distance or danger.<br>
+  • Turn the teleport into an intentional short reposition (Sinner reward).<br>
+  • Gain a temporary advantage after being teleported.<br>
+  • Temporarily suppress squares in a small area (Saint reward).</p>
+</div>
+
+<div class="pros-cons">
+  <div class="pros">
+    <h4>Why this fits the theme</h4>
+    <ul>
+      <li>Perfect Limbo feeling: false hope, sudden reversal, being dragged back into suffering.</li>
+      <li>Makes world corruption feel personal and dangerous.</li>
+      <li>Creates memorable "I thought I was safe…" moments.</li>
+      <li>Scales naturally with the corruption system.</li>
+    </ul>
+  </div>
+  <div class="cons">
+    <h4>Still to tune</h4>
+    <ul>
+      <li>How invisible the squares are (completely random vs subtle visual tells).</li>
+      <li>Whether the teleport always tries to put you near enemies or is truly random (with the risk just being statistically high).</li>
+    </ul>
+  </div>
+</div>
+
+<div class="options">
+  <div class="option" data-choice="invisibility" onclick="toggleSelect(this)">
+    <div class="letter">A</div>
+    <div class="content">
+      <h3>Invisibility Level</h3>
+      <p>Should the squares be completely invisible until stepped on (pure paranoia), or have very faint tells that become more obvious as corruption rises?</p>
+    </div>
+  </div>
+  <div class="option" data-choice="enemy-placement" onclick="toggleSelect(this)">
+    <div class="letter">B</div>
+    <div class="content">
+      <h3>Enemy on Teleport</h3>
+      <p>When it "transfers you right back into the enemy," should it always attempt to land you near existing enemies, or is it fully random (risk is just high)?</p>
+    </div>
+  </div>
+  <div class="option" data-choice="tree-reward" onclick="toggleSelect(this)">
+    <div class="letter">C</div>
+    <div class="content">
+      <h3>Tree Reward Style</h3>
+      <p>Should there be Sinner-style nodes that let you deliberately trigger squares for aggressive short teleports, or only defensive/safety nodes?</p>
+    </div>
+  </div>
+  <div class="option" data-choice="personal-cost" onclick="toggleSelect(this)">
+    <div class="letter">D</div>
+    <div class="content">
+      <h3>Personal Sanity Cost</h3>
+      <p>Should stepping on a square also cost a small amount of personal Sanity, or keep it purely a world hazard?</p>
+    </div>
+  </div>
+</div>

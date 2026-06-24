@@ -1,0 +1,101 @@
+<h2>Single Target Corruption — Additive Increment (Your Exact Example)</h2>
+<p class="subtitle">Confirmed: each ability's corruption value increases by the base cost of every newly equipped ability</p>
+
+<div class="section">
+  <div class="label">Your Rule (Additive)</div>
+  <p>Skill A starts with 1% corruption cost.<br>
+  You equip a second skill that has a 1% base cost → Skill A's corruption value increases by that 1% amount.</p>
+  <p style="margin-top:6px;">This applies symmetrically and scales with higher base costs and more abilities.</p>
+</div>
+
+<h3>Concrete Walkthrough (your example)</h3>
+<div class="mockup">
+  <div class="mockup-header">Step by step</div>
+  <div class="mockup-body">
+    <strong>Only Skill A equipped</strong><br>
+    A base=1% → effective corruption for A = <strong>1%</strong><br><br>
+    
+    <strong>Add Skill B (base=1%)</strong><br>
+    A base=1% + B's 1% = <strong>2%</strong><br>
+    B base=1% + A's 1% = <strong>2%</strong><br><br>
+    
+    <strong>Add Skill C (base=3% higher skill)</strong><br>
+    A = 1% +1% +3% = <strong>5%</strong><br>
+    B = 1% +1% +3% = <strong>5%</strong><br>
+    C = 3% +1% +1% = <strong>5%</strong>
+  </div>
+</div>
+
+<h3>Updated Usable Template Fields</h3>
+<div class="mockup">
+  <div class="mockup-header">Single Target Ability (Damage or Heal)</div>
+  <div class="mockup-body" style="font-family:monospace; font-size:12px;">
+    base_corruption = 1          # the % this ability contributes<br><br>
+    # Equip stat interaction (from choice D)<br>
+    equip_stat_mod = { "STR": 1 }   # +1 STR while equipped (example)<br><br>
+    # Other fields remain (base_damage, scaling_stat, stat_multiplier, etc.)
+  </div>
+</div>
+
+<h3>How the increment works in the template</h3>
+<div class="section">
+  <p><strong>effective_corruption = base_corruption + sum(base_corruption of all other equipped abilities)</strong></p>
+  <p>This means:</p>
+  <ul>
+    <li>More equipped abilities = every ability's value goes up</li>
+    <li>Higher base cost skills increase everyone else's corruption more</li>
+    <li>The value is stored/calculated per ability, not just a global total</li>
+    <li>Total player corruption pressure = sum of all effective_corruption</li>
+  </ul>
+</div>
+
+<div class="pros-cons">
+  <div class="pros">
+    <h4>Strengths of this additive model</h4>
+    <ul>
+      <li>Very clear and intuitive ("each new skill increases the cost of the ones you already have")</li>
+      <li>Strongly punishes loading up on many abilities</li>
+      <li>Higher skills (higher base) naturally punish the whole loadout more</li>
+      <li>Fits the "price of power" and Limbo/Florence flavor perfectly</li>
+    </ul>
+  </div>
+  <div class="cons">
+    <h4>Remaining decisions</h4>
+    <ul>
+      <li>Is the increase applied to every equipped ability (including the new one), or only to previously equipped?</li>
+      <li>Does "higher skills" also mean abilities can level up and raise their own base_corruption over time?</li>
+      <li>Is the % a direct corruption % or a multiplier on some other system?</li>
+    </ul>
+  </div>
+</div>
+
+<div class="options">
+  <div class="option" data-choice="increase-scope" onclick="toggleSelect(this)">
+    <div class="letter">A</div>
+    <div class="content">
+      <h3>Increase Scope</h3>
+      <p>Does adding a new ability increase the corruption of ALL currently equipped (including the new one), or only the previous ones?</p>
+    </div>
+  </div>
+  <div class="option" data-choice="leveling" onclick="toggleSelect(this)">
+    <div class="letter">B</div>
+    <div class="content">
+      <h3>Leveling &amp; Higher Skills</h3>
+      <p>Can individual abilities increase their base_corruption when they level (through use or duplicates)?</p>
+    </div>
+  </div>
+  <div class="option" data-choice="stat-interaction" onclick="toggleSelect(this)">
+    <div class="letter">C</div>
+    <div class="content">
+      <h3>Equip Stat Bonus Details (D)</h3>
+      <p>What exact bonuses/penalties should basic Single Target abilities give while equipped? (flat stats, % damage, CT related, etc.)</p>
+    </div>
+  </div>
+  <div class="option" data-choice="total-effects" onclick="toggleSelect(this)">
+    <div class="letter">D</div>
+    <div class="content">
+      <h3>What Total Corruption Does</h3>
+      <p>How does the player's accumulated corruption actually manifest (world effects, penalties, visual changes, purification options)?</p>
+    </div>
+  </div>
+</div>

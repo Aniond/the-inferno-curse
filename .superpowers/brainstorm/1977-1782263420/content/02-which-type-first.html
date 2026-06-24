@@ -1,0 +1,50 @@
+<h2>Which Skill Type First?</h2>
+<p class="subtitle">The Inferno Curse • Ability Absorption • Tactical Combat</p>
+
+<div class="section">
+  <p>Thanks for the go-ahead on visuals. We'll keep building mockups as needed.</p>
+</div>
+
+<div class="options" data-multiselect>
+  <div class="option" data-choice="single" onclick="toggleSelect(this)">
+    <div class="letter">1</div>
+    <div class="content">
+      <h3>Single Target (Attack / Heal)</h3>
+      <p>Direct single-cell effects. Easiest to implement first using existing attack/targeting code. Good for Normal abilities.</p>
+      <small>Focus areas: CT steal/boost, simple damage/heal, basic status</small>
+    </div>
+  </div>
+
+  <div class="option" data-choice="area" onclick="toggleSelect(this)">
+    <div class="letter">2</div>
+    <div class="content">
+      <h3>Area Effect Spells</h3>
+      <p>Shapes on the grid (cross, 3x3, line, cone). Needs new targeting logic but high tactical payoff. Strong Uncommon candidate.</p>
+      <small>Focus areas: AoE shapes, height interaction, weather dampening, multi-target CT</small>
+    </div>
+  </div>
+
+  <div class="option" data-choice="buff" onclick="toggleSelect(this)">
+    <div class="letter">3</div>
+    <div class="content">
+      <h3>Buff / Curse</h3>
+      <p>Status-like effects on CT, power, movement. Leverages existing apply_status_effect and modifiers. Fits both Normal and Uncommon.</p>
+      <small>Focus areas: Duration, stacking, CT multiplier/flat changes, corruption on use</small>
+    </div>
+  </div>
+
+  <div class="option" data-choice="trait" onclick="toggleSelect(this)">
+    <div class="letter">4</div>
+    <div class="content">
+      <h3>Traits (Passives)</h3>
+      <p>Always-on or equipped effects. Rare tier mostly. Impacts builds and class identity. Needs careful limits.</p>
+      <small>Focus areas: Passive hooks in combat formulas, equip slots, theme tags for jobs</small>
+    </div>
+  </div>
+</div>
+
+<div class="section">
+  <p class="subtitle">Click one (or more) above to flag your priority, or just reply in chat.</p>
+  <p>What part of the system do you want detailed first for the chosen type(s)?<br>
+  Examples of actual abilities • Exact data fields • Integration with CT/grid/status • Absorption chances & conditions • Corruption • UI display in parchment sheets</p>
+</div>

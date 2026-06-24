@@ -1,0 +1,9 @@
+{
+  "name": "summer_is_running",
+  "description": "Check if the game is currently running. Returns the active scene path if running.",
+  "inputSchema": {
+    "$schema": "http://json-schema.org/draft-07/schema#",
+    "type": "object",
+    "properties": {}
+  }
+}

@@ -1,0 +1,18 @@
+{
+  "name": "summer_get_script_errors",
+  "description": "Check a GDScript file for parse/compile errors without running the game.\n\nUse after writing or editing a .gd file to verify it compiles. Returns line numbers, error messages, and severity. Much faster than running the game to discover script errors.",
+  "inputSchema": {
+    "type": "object",
+    "properties": {
+      "path": {
+        "type": "string",
+        "description": "Script path, e.g. 'res://scripts/player.gd' or 'res://player_controller.gd'"
+      }
+    },
+    "required": [
+      "path"
+    ],
+    "additionalProperties": false,
+    "$schema": "http://json-schema.org/draft-07/schema#"
+  }
+}

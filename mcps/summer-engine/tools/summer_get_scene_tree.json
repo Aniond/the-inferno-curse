@@ -1,0 +1,9 @@
+{
+  "name": "summer_get_scene_tree",
+  "description": "Get the full scene tree structure of the currently open scene.\n\nUse this before structural edits (add/remove/replace).\nIf you get \"no edited scene\", call summer_open_main_scene first.",
+  "inputSchema": {
+    "$schema": "http://json-schema.org/draft-07/schema#",
+    "type": "object",
+    "properties": {}
+  }
+}

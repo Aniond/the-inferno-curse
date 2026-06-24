@@ -1,0 +1,32 @@
+{
+  "name": "summer_set_prop",
+  "description": "Set a property on a node. This is the primary way to configure nodes after adding them.\n\nVALUE FORMAT — Godot string syntax for complex types:\n- Vector3: \"Vector3(0, 10, 0)\" — position, scale, rotation_degrees\n- Vector2: \"Vector2(100, 200)\" — 2D position, size\n- Color: \"Color(1, 0.5, 0, 1)\" — RGBA, always 4 components, values 0.0-1.0\n- Transform3D: \"Transform3D(1,0,0, 0,1,0, 0,0,1, 0,5,0)\" — basis + origin\n- Resource class name: \"BoxMesh\", \"SphereMesh\", \"StandardMaterial3D\" — auto-instantiated\n- Numbers: 1.5, 42 — native JSON\n- Booleans: true, false — native JSON\n- Strings: \"hello\" — native JSON\n\nCOMMON PROPERTIES:\n- position: \"Vector3(x, y, z)\" — world position\n- rotation_degrees: \"Vector3(rx, ry, rz)\" — rotation in degrees\n- scale: \"Vector3(sx, sy, sz)\" — scale factor\n- visible: true/false — visibility\n- mesh: \"BoxMesh\", \"SphereMesh\", \"CapsuleMesh\", \"CylinderMesh\", \"PlaneMesh\"\n- shadow_enabled: true — for lights\n- light_energy: 1.5 — light intensity\n- fov: 75.0 — camera field of view",
+  "inputSchema": {
+    "type": "object",
+    "properties": {
+      "path": {
+        "type": "string",
+        "description": "Node path, e.g. './World/Player'"
+      },
+      "key": {
+        "type": "string",
+        "description": "Property name, e.g. 'position', 'mesh', 'visible'"
+      },
+      "value": {
+        "type": [
+          "string",
+          "number",
+          "boolean"
+        ],
+        "description": "Value in Godot string format for complex types, native JSON for primitives"
+      }
+    },
+    "required": [
+      "path",
+      "key",
+      "value"
+    ],
+    "additionalProperties": false,
+    "$schema": "http://json-schema.org/draft-07/schema#"
+  }
+}

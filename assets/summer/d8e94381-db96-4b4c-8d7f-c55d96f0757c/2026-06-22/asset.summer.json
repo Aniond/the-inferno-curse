@@ -1,0 +1,47 @@
+{
+	"assetId": "d8e94381-db96-4b4c-8d7f-c55d96f0757c",
+	"metadata": {
+		"downloadUrl": "https://v3b.fal.media/files/b/0a9f5dbc/SsenuRz2xEei6CYNDX4ms_m4ILxp5L.png",
+		"fileName": "SsenuRz2xEei6CYNDX4ms_m4ILxp5L.png",
+		"filename": "SsenuRz2xEei6CYNDX4ms_m4ILxp5L.png",
+		"id": "d8e94381-db96-4b4c-8d7f-c55d96f0757c",
+		"metadata": {
+			"aspect_ratio": "1:1",
+			"batchCapped": false,
+			"batchSize": 1.0,
+			"clientImageModel": "fal-ai/nano-banana-2",
+			"entrypoint": "api/art/generate",
+			"falModelId": "fal-ai/nano-banana-2",
+			"falPrompt": "Create a square 1024x1024 pixel-art fantasy RPG character sheet UI template on aged parchment, with ornate dark carved wood headers, gold filigree corners, and a medieval Italian dark fantasy style.\n\nThis is a game UI background template. Bake in only fixed interface labels. Leave every player-specific or changing value blank.\n\nAllowed baked text:\nPROFILE\nSTATS\nRESISTANCE\nABILITIES\nSKILLS\nEQUIPMENT\nTRAITS\nHP\nMP\nCT\nSTR\nSPD\nINT\nFTH\nPOW\nDEF\nMOV\nJMP\nEXP\n\nDo not add any other text. Do not add names, class names, numbers, sample values, percentages, ability names, equipment names, trait names, placeholder text, or random decorative letters.\n\nLayout:\n- Top row: three carved wooden title plaques labeled PROFILE, STATS, RESISTANCE.\n- Left PROFILE panel: ornate empty portrait frame, one blank nameplate for character name, one blank strip for class/job.\n- Center STATS panel: three empty horizontal meter frames labeled HP, MP, CT on the left. The meter frames must be empty, with no colored fill and no numbers.\n- Below the meters, include stat rows with baked stat labels and blank value boxes for STR, SPD, INT, FTH, POW, DEF, MOV, JMP, and EXP. The labels should be readable and aligned next to empty value boxes.\n- Right RESISTANCE panel: exactly six resistance rows, evenly stacked. Each row has only one small icon slot on the left and one long blank value box on the right. No shield icons, no shield column, no duplicate icon boxes. Use small symbolic icons for Physical, Poison, Bleed, Paralyze, Holy, and Corruption, but do not write those words.\n- SKILLS section: two empty rows, each with one icon slot and one blank description field.\n- EQUIPMENT section: four empty rows, each with one icon slot and one blank item field.\n- TRAITS section: four empty rows, each with one icon slot and one blank description field.\n\nStyle:\nPixel-art UI, aged parchment, dark brown carved wood plaques, thin gold trim, subtle grime and wear, ornate frame, crisp black/brown outlines, clean alignment, readable baked labels, empty spaces ready for game text overlay. No character art, no sample values, no watermark., 16-bit pixel art, SNES-era detailed sprites, rich palette",
+			"finalPrompt": "Create a square 1024x1024 pixel-art fantasy RPG character sheet UI template on aged parchment, with ornate dark carved wood headers, gold filigree corners, and a medieval Italian dark fantasy style.\n\nThis is a game UI background template. Bake in only fixed interface labels. Leave every player-specific or changing value blank.\n\nAllowed baked text:\nPROFILE\nSTATS\nRESISTANCE\nABILITIES\nSKILLS\nEQUIPMENT\nTRAITS\nHP\nMP\nCT\nSTR\nSPD\nINT\nFTH\nPOW\nDEF\nMOV\nJMP\nEXP\n\nDo not add any other text. Do not add names, class names, numbers, sample values, percentages, ability names, equipment names, trait names, placeholder text, or random decorative letters.\n\nLayout:\n- Top row: three carved wooden title plaques labeled PROFILE, STATS, RESISTANCE.\n- Left PROFILE panel: ornate empty portrait frame, one blank nameplate for character name, one blank strip for class/job.\n- Center STATS panel: three empty horizontal meter frames labeled HP, MP, CT on the left. The meter frames must be empty, with no colored fill and no numbers.\n- Below the meters, include stat rows with baked stat labels and blank value boxes for STR, SPD, INT, FTH, POW, DEF, MOV, JMP, and EXP. The labels should be readable and aligned next to empty value boxes.\n- Right RESISTANCE panel: exactly six resistance rows, evenly stacked. Each row has only one small icon slot on the left and one long blank value box on the right. No shield icons, no shield column, no duplicate icon boxes. Use small symbolic icons for Physical, Poison, Bleed, Paralyze, Holy, and Corruption, but do not write those words.\n- SKILLS section: two empty rows, each with one icon slot and one blank description field.\n- EQUIPMENT section: four empty rows, each with one icon slot and one blank item field.\n- TRAITS section: four empty rows, each with one icon slot and one blank description field.\n\nStyle:\nPixel-art UI, aged parchment, dark brown carved wood plaques, thin gold trim, subtle grime and wear, ornate frame, crisp black/brown outlines, clean alignment, readable baked labels, empty spaces ready for game text overlay. No character art, no sample values, no watermark.",
+			"generatedAt": "2026-06-22T21:30:16.956Z",
+			"generationBatchId": "678e4814-2948-44f1-a229-7494a6b82bd6",
+			"height": 1024.0,
+			"multiview": false,
+			"numImages": 1.0,
+			"numImagesRequested": 1.0,
+			"pose": "none",
+			"promptRefined": false,
+			"referenceCount": 0.0,
+			"runIndex": 0.0,
+			"style": "retro-16bit",
+			"surface": "studio",
+			"width": 1024.0
+		},
+		"name": "Create A Character Sprite",
+		"previewUrl": "https://v3b.fal.media/files/b/0a9f5dbc/SsenuRz2xEei6CYNDX4ms_m4ILxp5L.png",
+		"primary": true,
+		"thumbnailUrl": "https://v3b.fal.media/files/b/0a9f5dbc/SsenuRz2xEei6CYNDX4ms_m4ILxp5L.png",
+		"title": "Create A Character Sprite",
+		"type": "image",
+		"url": "https://v3b.fal.media/files/b/0a9f5dbc/SsenuRz2xEei6CYNDX4ms_m4ILxp5L.png",
+		"version": "2026-06-22"
+	},
+	"name": "Create A Character Sprite",
+	"paths": [
+		"res://assets/summer/d8e94381-db96-4b4c-8d7f-c55d96f0757c/2026-06-22/SsenuRz2xEei6CYNDX4ms_m4ILxp5L.png"
+	],
+	"primaryPath": "res://assets/summer/d8e94381-db96-4b4c-8d7f-c55d96f0757c/2026-06-22/SsenuRz2xEei6CYNDX4ms_m4ILxp5L.png",
+	"source": "summer-studio",
+	"version": "2026-06-22"
+}

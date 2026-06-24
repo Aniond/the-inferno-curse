@@ -1,0 +1,22 @@
+{
+  "name": "summer_select_node",
+  "description": "Select a node in the editor's scene tree and show it in the inspector panel. Useful for focusing the editor on a specific node.",
+  "inputSchema": {
+    "type": "object",
+    "properties": {
+      "nodePath": {
+        "type": "string",
+        "description": "Node path to select"
+      },
+      "scenePath": {
+        "type": "string",
+        "description": "Open this scene first, then select the node"
+      }
+    },
+    "required": [
+      "nodePath"
+    ],
+    "additionalProperties": false,
+    "$schema": "http://json-schema.org/draft-07/schema#"
+  }
+}

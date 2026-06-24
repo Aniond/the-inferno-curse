@@ -1,0 +1,103 @@
+<h2>Design Decision: One Corruption Value vs Separate Sanity + Corruption</h2>
+<p class="subtitle">The big fork you're stuck on. This affects the entire character fantasy (Saint vs Sinner), the orb tree, Church/Guild systems, and how the player feels Limbo.</p>
+
+<div class="section">
+  <div class="label">Option 1: Single "Corruption" Value</div>
+  <p>One hidden number for the player. It drives both personal effects and world effects.</p>
+  <ul>
+    <li>Stacking duplicates in the tree increases the single corruption value.</li>
+    <li>High value makes the player pay more (sanity-style cost to use orbs, personal strain).</li>
+    <li>High value also makes the world/NPCs react (water, shadows, random battles, NPC behavior).</li>
+    <li>Church purification lowers the single value (and weakens the orb).</li>
+  </ul>
+</div>
+
+<div class="pros-cons">
+  <div class="pros">
+    <h4>Pros of Single Value</h4>
+    <ul>
+      <li>Simpler to track, balance, and explain internally.</li>
+      <li>Strong unified "infection" fantasy — your soul is rotting, so the city rots too.</li>
+      <li>Every stack or action has clear dual consequences.</li>
+      <li>Easier to make the Saint/Sinner choice feel binary and high-stakes.</li>
+    </ul>
+  </div>
+  <div class="cons">
+    <h4>Cons of Single Value</h4>
+    <ul>
+      <li>Harder to create interesting mechanical separation between "how I feel" and "how Florence feels".</li>
+      <li>Player might feel punished in two ways for the same choice, with less agency.</li>
+      <li>Church purification has to fix both at once, which can feel blunt.</li>
+      <li>Less room for "player is suffering but the city is still okay" moments.</li>
+    </ul>
+  </div>
+</div>
+
+<div class="section">
+  <div class="label">Option 2: Separate Sanity (Player) + Corruption (World)</div>
+  <p>Two linked but distinct hidden values.</p>
+  <ul>
+    <li><strong>Sanity</strong> (player-based): The personal cost. Stacking duplicates primarily increases this. Affects ability use cost, personal debuffs, risk of "losing it", dialogue options, etc.</li>
+    <li><strong>Corruption</strong> (world-based): What bleeds into Florence, NPCs, environment (water color, shadows, random battles, NPC suspicion or Limbo behavior).</li>
+    <li>They can move somewhat independently. High sanity doesn't automatically max world corruption.</li>
+    <li>Church can target one or both (purify ability = big sanity drop + smaller world effect).</li>
+  </ul>
+</div>
+
+<div class="pros-cons">
+  <div class="pros">
+    <h4>Pros of Separate Values</h4>
+    <ul>
+      <li>Clear thematic split: "My soul is breaking" vs "The city is breaking because of me".</li>
+      <li>More interesting gameplay loops and tradeoffs (manage my sanity vs manage the city's corruption).</li>
+      <li>Better support for Saint vs Sinner fantasy. A Saint might sacrifice power to keep personal sanity clean even if the world is still tainted.</li>
+      <li>More levers for systems (Guilds could be better at world corruption, Church at personal sanity, or vice versa).</li>
+      <li>Stacking duplicates can feel like a deliberate "I'm willing to pay personally for power" choice.</li>
+    </ul>
+  </div>
+  <div class="cons">
+    <h4>Cons of Separate Values</h4>
+    <ul>
+      <li>More systems to track and balance (two hidden values instead of one).</li>
+      <li>Risk of the player feeling the split is arbitrary if the two values don't clearly interact.</li>
+      <li>Slightly more complex to communicate through pure environmental/player feedback (no numbers).</li>
+    </ul>
+  </div>
+</div>
+
+<h3>My Recommendation</h3>
+<div class="section">
+  <p><strong>Go with separate Sanity (player) + Corruption (world).</strong></p>
+  <p>This game is already built around a very strong "personal damnation vs city damnation" theme from Dante. A single value makes that theme feel flatter. Separate values let you do cooler things like:</p>
+  <ul>
+    <li>Player who is personally "clean" (low sanity cost) but the city is still rotting because of past choices.</li>
+    <li>Player who is personally broken (high sanity cost, aggressive orbs) but has worked with Guilds/Church to keep Florence from completely falling apart.</li>
+    <li>More meaningful Saint vs Sinner branching in the tree and in story beats.</li>
+    <li>Stacking duplicates becomes a deliberate personal sacrifice ("I'm willing to pay with my sanity for this power") rather than just "more corruption everywhere".</li>
+  </ul>
+  <p>The extra complexity is worth it because the fantasy is literally about two different things rotting at different rates.</p>
+</div>
+
+<div class="options">
+  <div class="option" data-choice="single" onclick="toggleSelect(this)">
+    <div class="letter">A</div>
+    <div class="content">
+      <h3>Single Value</h3>
+      <p>One corruption number that hits both player and world. Simpler, more unified infection fantasy.</p>
+    </div>
+  </div>
+  <div class="option" data-choice="separate" onclick="toggleSelect(this)">
+    <div class="letter">B</div>
+    <div class="content">
+      <h3>Separate Values</h3>
+      <p>Sanity (player personal cost) + Corruption (world/NPC/environment). More thematic and mechanical depth.</p>
+    </div>
+  </div>
+  <div class="option" data-choice="hybrid" onclick="toggleSelect(this)">
+    <div class="letter">C</div>
+    <div class="content">
+      <h3>Hybrid</h3>
+      <p>One main hidden value, but with separate "personal multiplier" and "world multiplier" that tree nodes and choices can affect differently.</p>
+    </div>
+  </div>
+</div>

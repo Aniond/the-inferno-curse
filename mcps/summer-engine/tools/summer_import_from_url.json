@@ -1,0 +1,22 @@
+{
+  "name": "summer_import_from_url",
+  "description": "Download a file from a URL and import it into the project. Triggers Godot's full import pipeline — generates .import files, extracts textures from .glb models, creates materials.\n\nUse this for:\n- 3D models (.glb, .gltf, .obj)\n- Textures (.png, .jpg, .webp)\n- Audio (.ogg, .wav, .mp3)\n\nThe path is auto-inferred from the URL filename if not specified. After import, the asset is immediately usable in scenes.",
+  "inputSchema": {
+    "type": "object",
+    "properties": {
+      "url": {
+        "type": "string",
+        "description": "HTTP(S) URL to download from"
+      },
+      "path": {
+        "type": "string",
+        "description": "Target path in project, e.g. 'res://assets/player.glb'. Auto-inferred from URL if omitted."
+      }
+    },
+    "required": [
+      "url"
+    ],
+    "additionalProperties": false,
+    "$schema": "http://json-schema.org/draft-07/schema#"
+  }
+}

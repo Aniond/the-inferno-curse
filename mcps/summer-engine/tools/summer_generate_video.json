@@ -1,0 +1,42 @@
+{
+  "name": "summer_generate_video",
+  "description": "Generate a video using AI models via Summer Engine Studio.\n\nKnown models (text-to-video):\n  - \"ltx\" (default) — LTX Video, fast (~$0.10)\n  - \"kling\" — Kling 2 Master, high quality (~$0.50)\n  - \"kling-turbo\" — Kling 2.5 Turbo Pro (~$0.30)\n  - \"minimax\" — MiniMax (~$0.25)\n  - \"veo3\" — Google Veo 3, premium (~$1.00)\n\nKnown models (image-to-video, when imageUrl provided):\n  - \"ltx\" (default), \"kling\", \"minimax\"\n\nIf imageUrl is provided, switches to image-to-video mode.\nPass provider-specific params in 'options' (negative_prompt, num_frames, etc.).\n\nReturns the generated video URL and asset metadata.\nRequires authentication: run 'npx summer-engine login' first.",
+  "inputSchema": {
+    "type": "object",
+    "properties": {
+      "prompt": {
+        "type": "string",
+        "description": "Description of the video content"
+      },
+      "model": {
+        "type": "string",
+        "default": "ltx",
+        "description": "Model name: ltx, kling, kling-turbo, minimax, veo3 (or any new model)"
+      },
+      "imageUrl": {
+        "type": "string",
+        "description": "Source image URL — if provided, uses image-to-video mode"
+      },
+      "duration": {
+        "type": "number",
+        "default": 5,
+        "description": "Duration in seconds (5 or 10)"
+      },
+      "aspectRatio": {
+        "type": "string",
+        "default": "16:9",
+        "description": "Aspect ratio: 16:9, 9:16, 1:1, 4:3"
+      },
+      "options": {
+        "type": "object",
+        "additionalProperties": {},
+        "description": "Provider-specific params (negative_prompt, num_frames, guidance_scale, etc.)"
+      }
+    },
+    "required": [
+      "prompt"
+    ],
+    "additionalProperties": false,
+    "$schema": "http://json-schema.org/draft-07/schema#"
+  }
+}

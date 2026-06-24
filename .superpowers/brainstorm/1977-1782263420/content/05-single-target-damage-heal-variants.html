@@ -1,0 +1,154 @@
+<h2>Single Target — Two Variants: Damage &amp; Heal</h2>
+<p class="subtitle">Equipable model with separate but parallel templates for Attack and Heal</p>
+
+<div class="section">
+  <div class="label">New Direction</div>
+  <p>You need two clear variants under the Single Target type. They share a lot of structure (because they are equipable abilities), but have important differences in effect, scaling, and feel.</p>
+</div>
+
+<div class="split">
+  <!-- DAMAGE VARIANT -->
+  <div class="mockup">
+    <div class="mockup-header" style="background:#3a2a2a;">Damage Variant (Attack)</div>
+    <div class="mockup-body" style="font-family:monospace; font-size:11px; background:#111; color:#ff8a7d; padding:8px;">
+      id = "strike"<br>
+      display_name = "Strike"<br>
+      type = "single_target"<br>
+      variant = "damage"<br><br>
+      range = 1<br>
+      is_ranged = false<br>
+      scaling_stat = "STR"<br><br>
+      base_damage = 8<br>
+      damage_type = "physical"<br><br>
+      ct_target_delay = 12<br>
+      ct_self_gain = 0<br>
+      action_cost = 1<br><br>
+      mp_cost = 0<br>
+      corruption_on_equip = 1<br>
+      corruption_on_use = 0<br><br>
+      theme_tags = ["martial"]<br>
+      rarity = "normal"
+    </div>
+  </div>
+
+  <!-- HEAL VARIANT -->
+  <div class="mockup">
+    <div class="mockup-header" style="background:#2a3a2a;">Heal Variant</div>
+    <div class="mockup-body" style="font-family:monospace; font-size:11px; background:#111; color:#8ec8ff; padding:8px;">
+      id = "guarigione"<br>
+      display_name = "Guarigione"<br>
+      type = "single_target"<br>
+      variant = "heal"<br><br>
+      range = 1<br>
+      is_ranged = false<br>
+      scaling_stat = "FTH"<br><br>
+      base_heal = 10<br>
+      heal_type = "holy"<br><br>
+      ct_target_bonus = 8   # helps ally act sooner<br>
+      ct_self_gain = 0<br>
+      action_cost = 1<br><br>
+      mp_cost = 3<br>
+      corruption_on_equip = 0<br>
+      corruption_on_use = 0<br><br>
+      theme_tags = ["sacred"]<br>
+      rarity = "normal"
+    </div>
+  </div>
+</div>
+
+<h3>Shared vs Variant-Specific Fields</h3>
+<div class="section">
+  <p><strong>Shared (same for both variants)</strong></p>
+  <ul style="font-size:13px;">
+    <li>id, display_name, description</li>
+    <li>type = "single_target"</li>
+    <li>range, is_ranged, requires_line_of_sight</li>
+    <li>action_cost, mp_cost</li>
+    <li>corruption_on_equip, corruption_on_use</li>
+    <li>theme_tags, rarity</li>
+    <li>equip logic (must be equipped to use)</li>
+  </ul>
+
+  <p><strong>Damage-specific</strong></p>
+  <ul style="font-size:13px;">
+    <li>base_damage + scaling_stat (STR/INT/etc)</li>
+    <li>damage_type</li>
+    <li>ct_target_delay (usually positive to slow enemy)</li>
+    <li>apply_status (e.g. bleed, poison)</li>
+  </ul>
+
+  <p><strong>Heal-specific</strong></p>
+  <ul style="font-size:13px;">
+    <li>base_heal + scaling_stat (FTH usually)</li>
+    <li>heal_type</li>
+    <li>ct_target_bonus (helps ally get their turn faster)</li>
+    <li>can_target_self = true</li>
+  </ul>
+</div>
+
+<div class="pros-cons">
+  <div class="pros">
+    <h4>Advantages of two explicit variants</h4>
+    <ul>
+      <li>Clean data — no "if category == attack then..." everywhere</li>
+      <li>Easy to balance separately (heals often safer, lower corruption)</li>
+      <li>Monsters can offer one or the other (brigand gives damage, cultist might give heal)</li>
+      <li>Future-proofs for area versions later</li>
+    </ul>
+  </div>
+  <div class="cons">
+    <h4>Still need to decide</h4>
+    <ul>
+      <li>Do damage and heal share the same equip slots, or are they in different pools?</li>
+      <li>Should heals ever have corruption_on_equip?</li>
+      <li>Can a single ability be both? (probably not for now)</li>
+    </ul>
+  </div>
+</div>
+
+<div class="section">
+  <p><strong>Concrete early examples (equipable, normal tier)</strong></p>
+  <div style="display:flex; gap:12px; font-size:12px;">
+    <div style="flex:1; background:#1a140f; padding:8px; border:1px solid #554433;">
+      <strong>Strike</strong> (Damage)<br>
+      Equip cost: +1 corruption<br>
+      Use: Melee damage + CT delay on target
+    </div>
+    <div style="flex:1; background:#1a140f; padding:8px; border:1px solid #554433;">
+      <strong>Guarigione</strong> (Heal)<br>
+      Equip cost: 0 corruption<br>
+      Use: Single ally heal + small CT boost
+    </div>
+  </div>
+</div>
+
+<div class="options">
+  <div class="option" data-choice="slots" onclick="toggleSelect(this)">
+    <div class="letter">A</div>
+    <div class="content">
+      <h3>Slot Rules</h3>
+      <p>Should Damage and Heal abilities share the same equip slots, or do they use separate pools (e.g. 3 Attack + 2 Support slots)?</p>
+    </div>
+  </div>
+  <div class="option" data-choice="corruption" onclick="toggleSelect(this)">
+    <div class="letter">B</div>
+    <div class="content">
+      <h3>Corruption Balance</h3>
+      <p>Should Heal variants ever carry corruption_on_equip, or should they stay "clean" while Damage variants carry the cost?</p>
+    </div>
+  </div>
+  <div class="option" data-choice="examples" onclick="toggleSelect(this)">
+    <div class="letter">C</div>
+    <div class="content">
+      <h3>More Monster Examples</h3>
+      <p>Give me 4–5 concrete Single Target abilities (mix of damage and heal) mapped to the existing monsters with full field values.</p>
+    </div>
+  </div>
+  <div class="option" data-choice="ct" onclick="toggleSelect(this)">
+    <div class="letter">D</div>
+    <div class="content">
+      <h3>CT Rules Detail</h3>
+      <p>Deep dive on how ct_target_delay (damage) vs ct_target_bonus (heal) should work with the action-based CT system and weather.</p>
+    </div>
+  </div>
+</div>

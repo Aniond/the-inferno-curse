@@ -1,0 +1,115 @@
+<h2>NPC AI &amp; Player Decisions — Natural World Consequences</h2>
+<p class="subtitle">NPCs are AI-driven and react to the living world state. Your choices (help or ignore) directly shape corruption, rumors, and events in a natural way.</p>
+
+<div class="section">
+  <div class="label">Your Rule</div>
+  <p>"NPC are going to be AI driven so I want it to feel natural"</p>
+  <p>"Based on whats going on in the game world. If the player choses not to help a someone in need. Did you hear that someone recently was murdered by the so and so, or went missing. You start to feel your decision. Negative decision feed into the corruption"</p>
+</div>
+
+<h3>How It Works</h3>
+<div class="mockup">
+  <div class="mockup-body">
+    <strong>World State Model</strong><br>
+    The game tracks a dynamic world state per district/node:<br>
+    • Current corruption level<br>
+    • Recent player actions and decisions (help/ignore counts, specific choices)<br>
+    • Events that have occurred (murders, missing people, creature sightings)<br><br>
+    
+    <strong>AI NPC Behavior</strong><br>
+    • NPCs have knowledge and dialogue generated from the current world state.<br>
+    • They "hear" and spread information naturally (proximity, time passing, events).<br>
+    • As corruption rises or negative decisions accumulate, more NPCs start talking about consequences:<br>
+      "Did you hear? Old man Rossi was found dead near the river. They say those creatures got him..."<br>
+      "I heard that girl who was asking for help the other day... she went missing. No one's seen her since."<br><br>
+    
+    <strong>Player Feels the Decision</strong><br>
+    • Negative choices directly increase world corruption in the affected area.<br>
+    • This leads to more Limbo Squares, darker water/shadows, higher random battle chance, and new or worsened hidden nodes.<br>
+    • You literally see and experience the world getting worse because of what you ignored.<br>
+    • Your personal Sanity cost can also tick up if you use corrupted orbs in a more corrupted world.
+  </div>
+</div>
+
+<h3>Integration with Existing Systems</h3>
+<div class="section">
+  <p><strong>Hidden Nodes &amp; Exploration</strong><br>
+  • Your neglect can cause or worsen hidden nodes (e.g., Giardino delle Rose becomes more overrun because you ignored the warning).<br>
+  • Rumors from NPCs are one of the main natural ways hidden nodes unlock or become relevant.<br>
+  • Exploring the consequences of your choices becomes part of the world.</p>
+
+  <p><strong>World Corruption vs Player Sanity</strong><br>
+  • Negative decisions primarily feed world corruption (the city and NPCs react).<br>
+  • You "feel" it through the environment becoming more hostile and through increased personal Sanity pressure when using abilities.<br>
+  • Positive actions (helping) can reduce world corruption and sometimes lower your Sanity cost on related orbs.</p>
+
+  <p><strong>Saint vs Sinner</strong><br>
+  • Consistent negative decisions push you toward the Sinner path and make the world darker faster.<br>
+  • Saint players who help people see slower corruption spread and more "redemptive" rumors/NPC reactions.<br>
+  • The choice feels cumulative and visible in the world, not just on a meter.</p>
+
+  <p><strong>Ability Tree &amp; Orbs</strong><br>
+  • Orbs absorbed from creatures that appeared because of your neglect may carry higher base corruption/sanity cost.<br>
+  • Tree nodes can react to decision history (e.g., Sinner nodes get stronger if you've caused neglect; Saint nodes give bonuses for helping).</p>
+
+  <p><strong>Church &amp; Guilds</strong><br>
+  • Church reputation can suffer from repeated neglect (NPCs talk about it).<br>
+  • Helping people can boost Church rep and unlock better purification options or Focus upgrades.<br>
+  • Guilds might offer more "pragmatic" (Sinner-leaning) reinterpretations after you ignore people.</p>
+
+  <p><strong>Limbo Squares</strong><br>
+  • Higher world corruption from neglect = more and more dangerous Limbo Squares (still invisible unless you have Focus).<br>
+  • Teleports can literally drop you into the consequences of your decisions.</p>
+</div>
+
+<div class="pros-cons">
+  <div class="pros">
+    <h4>Why this feels natural with AI-driven NPCs</h4>
+    <ul>
+      <li>Everything emerges from the actual state of the world + your past choices.</li>
+      <li>No artificial quest log — you hear the consequences in real conversation.</li>
+      <li>Strong emotional feedback: "I caused that to happen."</li>
+      <li>Scales with corruption: more neglect = more rumors and more visible world decay.</li>
+      <li>Reinforces the core theme that your decisions have real weight in both the player's soul and the city.</li>
+    </ul>
+  </div>
+  <div class="cons">
+    <h4>Things to balance</h4>
+    <ul>
+      <li>How direct vs subtle the link between your choice and NPC dialogue should be.</li>
+      <li>Can positive actions later meaningfully reduce the corruption from past neglect?</li>
+      <li>Make sure the system doesn't punish exploration too harshly if the player misses someone.</li>
+    </ul>
+  </div>
+</div>
+
+<div class="options">
+  <div class="option" data-choice="rumor-directness" onclick="toggleSelect(this)">
+    <div class="letter">A</div>
+    <div class="content">
+      <h3>Rumor Directness</h3>
+      <p>Should NPCs ever directly reference your involvement ("I heard someone turned that person away..."), or keep it indirect so the player has to connect the dots themselves?</p>
+    </div>
+  </div>
+  <div class="option" data-choice="redemption" onclick="toggleSelect(this)">
+    <div class="letter">B</div>
+    <div class="content">
+      <h3>Redemption Path</h3>
+      <p>Can later positive actions (helping others, purifying orbs, Church work) reduce the corruption increase from past neglect, or is the weight permanent?</p>
+    </div>
+  </div>
+  <div class="option" data-choice="tree-reaction" onclick="toggleSelect(this)">
+    <div class="letter">C</div>
+    <div class="content">
+      <h3>Tree Reaction</h3>
+      <p>Should the ability tree have nodes that react to your decision history (e.g., Sinner nodes get stronger if you've caused neglect)?</p>
+    </div>
+  </div>
+  <div class="option" data-choice="hidden-node" onclick="toggleSelect(this)">
+    <div class="letter">D</div>
+    <div class="content">
+      <h3>Hidden Node Trigger</h3>
+      <p>Should ignoring someone sometimes directly cause a new hidden node to appear or worsen (the consequence becomes explorable content you can still try to fix)?</p>
+    </div>
+  </div>
+</div>

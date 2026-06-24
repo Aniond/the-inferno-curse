@@ -57,7 +57,7 @@ func request_tactical_advice(prompt: String, callback: Callable) -> void:
 		"Authorization: Bearer %s" % _api_key,
 	])
 	var json_body := JSON.stringify(body)
-	var error := http.request(CHAT_COMPLETIONS_URL, headers, HTTPRequest.METHOD_POST, json_body)
+	var error := http.request(CHAT_COMPLETIONS_URL, headers, HTTPClient.METHOD_POST, json_body)
 	if error != OK:
 		http.queue_free()
 		callback.call_deferred({"ok": false, "error": "HTTP request failed to start: %s" % error})

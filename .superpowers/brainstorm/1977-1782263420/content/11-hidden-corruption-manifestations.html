@@ -1,0 +1,116 @@
+<h2>Single Target — Hidden Corruption &amp; World Manifestations</h2>
+<p class="subtitle">Corruption value is completely hidden. Player only experiences it through the game world changing.</p>
+
+<div class="section">
+  <div class="label">Core Rule (your clarification)</div>
+  <p>The corruption attached to each equipped ability is an <strong>internal, hidden value</strong>.</p>
+  <p>The player never sees a number, percentage, or meter.</p>
+  <p>Instead, they see the world reacting as the total hidden corruption grows with more equipped abilities and higher-power skills.</p>
+</div>
+
+<h3>Player-Facing Manifestations</h3>
+<div class="split">
+  <div class="mockup">
+    <div class="mockup-header">Water Color Change</div>
+    <div class="mockup-body">
+      • Fountains and rivers slowly darken or take on a reddish tint<br>
+      • Water may look oily or have faint floating particles<br>
+      • Drinking or interacting with water feels "off"
+    </div>
+  </div>
+  <div class="mockup">
+    <div class="mockup-header">Shadows Appear</div>
+    <div class="mockup-body">
+      • Shadows in corners or under objects lengthen unnaturally<br>
+      • Shadows sometimes move on their own or detach briefly<br>
+      • Creates a constant uneasy feeling, especially at night
+    </div>
+  </div>
+  <div class="mockup">
+    <div class="mockup-header">Random Battles</div>
+    <div class="mockup-body">
+      • Hostile encounters spawn in normally safe areas<br>
+      • Frequency and aggression increase with higher corruption<br>
+      • Can feel like the city itself is turning against the player
+    </div>
+  </div>
+</div>
+
+<h3>How it scales with abilities (additive model)</h3>
+<div class="section">
+  <p>Each ability contributes its hidden base_corruption.</p>
+  <p>As you equip more (or higher-base ones), every ability’s effective corruption increases additively.</p>
+  <p>The world manifestations intensify as the total hidden corruption rises.</p>
+  <p><strong>Example progression (hidden values):</strong></p>
+  <ul style="font-size:12px;">
+    <li>Only one low-corruption ability: Subtle water tint, occasional odd shadow</li>
+    <li>2–3 abilities: Water noticeably darker in multiple locations, shadows occasionally twitch</li>
+    <li>4+ or high-base skills: Frequent random battles in safe zones, water looks corrupted, persistent moving shadows</li>
+  </ul>
+</div>
+
+<h3>Integration with Single Target Template</h3>
+<div class="mockup">
+  <div class="mockup-header">Damage Variant Fields (hidden corruption)</div>
+  <div class="mockup-body" style="font-family:monospace; font-size:11px;">
+    base_damage = 8<br>
+    scaling_stat = "STR"<br>
+    stat_multiplier = 1.0<br><br>
+    base_corruption = 1          # hidden internal value<br>
+    # effective = base + sum(other equipped bases)  [additive]<br><br>
+    equip_stat_mod = { "STR": +1 }<br>
+    # No visible corruption field in UI — only world effects
+  </div>
+</div>
+
+<div class="pros-cons">
+  <div class="pros">
+    <h4>Why this works</h4>
+    <ul>
+      <li>Feels organic and story-driven rather than gamey</li>
+      <li>Matches the unsettling Limbo/Florence tone</li>
+      <li>Corruption has real mechanical teeth (random battles) + atmospheric weight</li>
+      <li>Gives clear feedback without breaking immersion</li>
+      <li>Purification (Church/guilds) can visibly "heal" the world</li>
+    </ul>
+  </div>
+  <div class="cons">
+    <h4>Still open</h4>
+    <ul>
+      <li>Are these effects global or do they start localized near the player?</li>
+      <li>How quickly do changes appear after equipping a new ability?</li>
+      <li>Do weather and time of day interact with or mask these manifestations?</li>
+    </ul>
+  </div>
+</div>
+
+<div class="options">
+  <div class="option" data-choice="scope" onclick="toggleSelect(this)">
+    <div class="letter">A</div>
+    <div class="content">
+      <h3>Effect Scope</h3>
+      <p>Global world changes or localized to areas the player visits / where they equipped the abilities?</p>
+    </div>
+  </div>
+  <div class="option" data-choice="speed" onclick="toggleSelect(this)">
+    <div class="letter">B</div>
+    <div class="content">
+      <h3>Manifestation Speed</h3>
+      <p>How fast do water color / shadows / random battles ramp up after you equip something new?</p>
+    </div>
+  </div>
+  <div class="option" data-choice="weather-time" onclick="toggleSelect(this)">
+    <div class="letter">C</div>
+    <div class="content">
+      <h3>Weather / Day-Night Interaction</h3>
+      <p>Should existing weather and time of day amplify, hide, or interact with corruption manifestations?</p>
+    </div>
+  </div>
+  <div class="option" data-choice="purification" onclick="toggleSelect(this)">
+    <div class="letter">D</div>
+    <div class="content">
+      <h3>Purification Feedback</h3>
+      <p>What does successful Church or guild purification look like in the world (water clears, shadows stop, random battles drop)?</p>
+    </div>
+  </div>
+</div>
