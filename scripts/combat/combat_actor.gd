@@ -19,6 +19,7 @@ var speed: int = 0
 var power: int = 0
 var defense: int = 0
 var cover_bonus: int = 0
+var defense_bonus: int = 0  # temporary bonus from status effects (Defend, Protezione, etc.)
 var current_cell: CombatCell = null
 var jump_cost_reduction: int = 0
 var jump_cost_multiplier: float = 1.0
@@ -75,7 +76,7 @@ func get_attack_power() -> int:
 	return power
 
 func get_defense_value() -> int:
-	return defense + cover_bonus
+	return defense + cover_bonus + defense_bonus
 
 func apply_damage(amount: int) -> void:
 	current_hp = max(0, current_hp - amount)
@@ -173,10 +174,26 @@ func apply_ct_modifiers(modifiers: Dictionary) -> void:
 	if modifiers.has("ct_height_delay_reduction"):
 		ct_height_delay_reduction += int(modifiers["ct_height_delay_reduction"])
 
-func apply_status_effect(effect_id: String, duration_rounds: int = 3, ct_modifiers: Dictionary = {}) -> void:
+func apply_status_effect(effect_id: String, duration_rounds: int = 3, ct_modifiers: Dictionary = {}, def_bonus: int = 0) -> void:
 	active_status_effects[effect_id] = {
 		"duration": duration_rounds,
-		"ct_modifiers": ct_modifiers.duplicate()
+		"ct_modifiers": ct_modifiers.duplicate(),
+		"def_bonus": def_bonus,
 	}
 	if ct_modifiers:
 		apply_ct_modifiers(ct_modifiers)
+	defense_bonus += def_bonus
+
+
+func tick_status_effects() -> Array:
+	var expired: Array = []
+	for effect_id in active_status_effects.keys():
+		var effect: Dictionary = active_status_effects[effect_id]
+		effect["duration"] -= 1
+		if effect["duration"] <= 0:
+			defense_bonus -= int(effect.get("def_bonus", 0))
+			defense_bonus = maxi(0, defense_bonus)
+			expired.append(effect_id)
+	for effect_id in expired:
+		active_status_effects.erase(effect_id)
+	return expired

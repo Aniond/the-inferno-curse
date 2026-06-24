@@ -7,6 +7,7 @@ enum PlayerTurnPhase {
 	INACTIVE,
 	MOVE,
 	ROTATE,
+	ACTION_MENU,
 	ATTACK,
 }
 
@@ -39,6 +40,11 @@ var _facing_indicator: MeshInstance3D = null
 var _tactical_ai_client: TacticalAiClient = null
 var _last_commanded_round: int = -1  # last round a commander issued directives
 var _use_ranged_attack: bool = false
+var _pending_skill: String = ""
+var _pending_item: String = ""
+var _pending_heal_skill: bool = false  # true when targeting phase should heal instead of damage
+
+const PLAYER_ITEMS: Array = ["Herbal Tonic", "Throwing Stone"]
 var _reachable_costs: Dictionary = {}
 var _exploration_reachable_costs: Dictionary = {}
 var _grid_cursor: MeshInstance3D = null
@@ -385,6 +391,9 @@ func _create_battle_overlay() -> void:
 	_battle_overlay = BattleOverlay.new()
 	_battle_overlay.name = "BattleOverlay"
 	add_child(_battle_overlay)
+	_battle_overlay.action_selected.connect(_on_action_selected)
+	_battle_overlay.skill_selected.connect(_on_skill_selected)
+	_battle_overlay.item_selected.connect(_on_item_selected)
 	_battle_overlay.show_pre_combat("Walk around. Approach the Training Brigand to engage (tactical grid + CT turns activate on contact).")
 
 
@@ -507,6 +516,7 @@ func _on_actor_turn_started(actor: CombatActor) -> void:
 	_battle_overlay.clear_move_preview()
 	_battle_overlay.clear_rotate_preview()
 	_battle_overlay.clear_target_preview()
+	_battle_overlay.hide_action_menu()
 	_refresh_battle_ui()
 	if actor == null:
 		return
@@ -611,6 +621,7 @@ func _resolve_enemy_turn(actor: CombatActor) -> void:
 		turn_controller.finish_act()
 		combat_state.advance_ct(1)  # end of NPC actions
 	actor.pending_directive = null
+	_tick_all_status_effects()
 	combat_state.end_actor_turn()
 	if weather_system:
 		weather_system.roll_for_weather_change()
@@ -696,7 +707,7 @@ func _player_confirm_rotate() -> void:
 	var turn_controller := combat_state.get_turn_controller()
 	if turn_controller != null:
 		turn_controller.finish_rotate()
-	_begin_player_attack_phase()
+	_begin_action_menu_phase()
 
 
 func _player_skip_rotate() -> void:
@@ -706,8 +717,179 @@ func _player_skip_rotate() -> void:
 	var turn_controller := combat_state.get_turn_controller()
 	if turn_controller != null:
 		turn_controller.skip_rotate()
-	_begin_player_attack_phase()
+	_begin_action_menu_phase()
 	combat_state.advance_ct(1)  # skip phase advances CT
+
+
+func _begin_action_menu_phase() -> void:
+	_player_phase = PlayerTurnPhase.ACTION_MENU
+	_clear_highlights()
+	_pending_skill = ""
+	_pending_item = ""
+	_pending_heal_skill = false
+	var skills: Array = []
+	if player_actor.sheet_resource != null and player_actor.sheet_resource.get("abilities") is Array:
+		for s in player_actor.sheet_resource.get("abilities"):
+			skills.append(str(s))
+	_battle_overlay.show_action_menu(skills, PLAYER_ITEMS)
+	_refresh_battle_ui()
+
+
+func _on_action_selected(action: String) -> void:
+	if not _is_player_combat_turn():
+		return
+	match action:
+		"attack":
+			_begin_player_attack_phase()
+		"defend":
+			_player_defend()
+		"wait":
+			_player_skip_attack()
+
+
+func _on_skill_selected(skill_name: String) -> void:
+	if not _is_player_combat_turn():
+		return
+	_pending_item = ""
+	match skill_name:
+		"Guts":
+			_use_skill_guts()
+		"Protezione":
+			_use_skill_protezione()
+		"Guarigione":
+			_pending_skill = skill_name
+			_pending_heal_skill = true
+			_begin_player_heal_targeting()
+		_:
+			_pending_skill = skill_name
+			_begin_player_attack_phase()
+
+
+func _on_item_selected(item_name: String) -> void:
+	if not _is_player_combat_turn():
+		return
+	_pending_item = item_name
+	_pending_skill = ""
+	match item_name:
+		"Herbal Tonic":
+			_use_herbal_tonic()
+		"Throwing Stone":
+			_use_ranged_attack = true
+			_begin_player_attack_phase()
+		_:
+			_begin_player_attack_phase()
+
+
+func _player_defend() -> void:
+	player_actor.apply_status_effect("defending", 1, {}, 4)
+	_last_action_text = "%s takes a defensive stance (+4 DEF until next turn)." % player_actor.display_name
+	print(_last_action_text)
+	combat_state.advance_ct(1)
+	var turn_controller := combat_state.get_turn_controller()
+	if turn_controller != null:
+		turn_controller.finish_act()
+	_finish_player_turn()
+
+
+func _use_skill_guts() -> void:
+	var mp_cost := 8
+	if player_actor.current_mp < mp_cost:
+		_last_action_text = "Not enough MP for Guts! (%d/%d)" % [player_actor.current_mp, mp_cost]
+		print(_last_action_text)
+		_begin_action_menu_phase()
+		return
+	player_actor.current_mp -= mp_cost
+	var max_hp := _get_actor_max_hp(player_actor)
+	var heal_amount := int(max_hp * 0.20)
+	player_actor.heal(heal_amount)
+	_last_action_text = "[Guts] %s steels their resolve, restoring %d HP! (-%d MP)" % [player_actor.display_name, heal_amount, mp_cost]
+	print(_last_action_text)
+	combat_state.advance_ct(1)
+	var turn_controller := combat_state.get_turn_controller()
+	if turn_controller != null:
+		turn_controller.finish_act()
+	_finish_player_turn()
+
+
+func _use_skill_protezione() -> void:
+	var mp_cost := 6
+	if player_actor.current_mp < mp_cost:
+		_last_action_text = "Not enough MP for Protezione! (%d/%d)" % [player_actor.current_mp, mp_cost]
+		print(_last_action_text)
+		_begin_action_menu_phase()
+		return
+	player_actor.current_mp -= mp_cost
+	player_actor.apply_status_effect("shielded", 2, {}, 5)
+	_last_action_text = "[Protezione] %s raises a ward (+5 DEF for 2 rounds). (-%d MP)" % [player_actor.display_name, mp_cost]
+	print(_last_action_text)
+	combat_state.advance_ct(1)
+	var turn_controller := combat_state.get_turn_controller()
+	if turn_controller != null:
+		turn_controller.finish_act()
+	_finish_player_turn()
+
+
+func _resolve_guarigione(target: CombatActor) -> void:
+	var mp_cost := 10
+	if player_actor.current_mp < mp_cost:
+		_last_action_text = "Not enough MP for Guarigione! (%d/%d)" % [player_actor.current_mp, mp_cost]
+		print(_last_action_text)
+		_pending_heal_skill = false
+		_pending_skill = ""
+		_begin_action_menu_phase()
+		return
+	player_actor.current_mp -= mp_cost
+	var heal_amount := 18
+	target.heal(heal_amount)
+	_last_action_text = "[Guarigione] %s heals %s for %d HP! (-%d MP)" % [player_actor.display_name, target.display_name, heal_amount, mp_cost]
+	print(_last_action_text)
+	_pending_heal_skill = false
+	_pending_skill = ""
+	combat_state.advance_ct(1)
+	var turn_controller := combat_state.get_turn_controller()
+	if turn_controller != null:
+		turn_controller.finish_act()
+	_finish_player_turn()
+
+
+func _use_herbal_tonic() -> void:
+	var heal := 12
+	var old_hp := player_actor.current_hp
+	var max_hp := _get_actor_max_hp(player_actor)
+	player_actor.current_hp = mini(max_hp, old_hp + heal)
+	var actual := player_actor.current_hp - old_hp
+	_last_action_text = "%s drinks Herbal Tonic, restoring %d HP." % [player_actor.display_name, actual]
+	print(_last_action_text)
+	combat_state.advance_ct(1)
+	var turn_controller := combat_state.get_turn_controller()
+	if turn_controller != null:
+		turn_controller.finish_act()
+	_finish_player_turn()
+
+
+func _begin_player_heal_targeting() -> void:
+	_player_phase = PlayerTurnPhase.ATTACK
+	_clear_facing_indicator()
+	# Highlight self + any actors within range 3
+	var heal_cells: Array = []
+	if player_actor.current_cell != null:
+		heal_cells.append(player_actor.current_cell)
+	for actor in combat_state.actors:
+		if actor == null or not actor.is_alive() or actor == player_actor:
+			continue
+		if actor.current_cell == null:
+			continue
+		var delta := actor.current_cell.grid_position - player_actor.get_grid_position()
+		var dist := maxi(absi(delta.x), absi(delta.y))
+		if dist <= 3:
+			heal_cells.append(actor.current_cell)
+	_attackable_targets = []
+	for cell in heal_cells:
+		var occupant: Variant = cell.get_occupant()
+		if occupant is CombatActor:
+			_attackable_targets.append(occupant)
+	_show_cell_highlights(heal_cells, Color(0.2, 0.85, 0.5, 0.5))
+	_refresh_battle_ui()
 
 
 func _begin_player_attack_phase() -> void:
@@ -728,6 +910,11 @@ func _begin_player_attack_phase() -> void:
 func _player_attack(target: CombatActor) -> void:
 	if not _attackable_targets.has(target):
 		return
+
+	if _pending_heal_skill:
+		_resolve_guarigione(target)
+		return
+
 	var is_ranged := _use_ranged_attack
 	var damage := combat_state.calculate_damage(player_actor, target, 0, is_ranged)
 	if not god_mode:
@@ -737,8 +924,14 @@ func _player_attack(target: CombatActor) -> void:
 	if is_ranged and player_actor.current_cell != null and target.current_cell != null:
 		cover_label = combat_grid.get_directional_cover_description(player_actor.current_cell, target.current_cell)
 	var attack_verb := "shoots" if is_ranged else "strikes"
+	var action_prefix := ""
+	if _pending_skill != "":
+		action_prefix = "[%s] " % _pending_skill
+	elif _pending_item == "Throwing Stone":
+		action_prefix = "[Throwing Stone] "
 	if cover_label != "" and cover_label != "No Cover":
-		_last_action_text = "%s %s %s for %d (%s, %s)!" % [
+		_last_action_text = "%s%s %s %s for %d (%s, %s)!" % [
+			action_prefix,
 			player_actor.display_name,
 			attack_verb,
 			target.display_name,
@@ -747,7 +940,8 @@ func _player_attack(target: CombatActor) -> void:
 			cover_label,
 		]
 	else:
-		_last_action_text = "%s %s %s for %d (%s)!" % [
+		_last_action_text = "%s%s %s %s for %d (%s)!" % [
+			action_prefix,
 			player_actor.display_name,
 			attack_verb,
 			target.display_name,
@@ -762,6 +956,8 @@ func _player_attack(target: CombatActor) -> void:
 		player_actor.current_ct = min(200, player_actor.current_ct + 25)
 	combat_state.advance_ct(1)  # attack used
 	_use_ranged_attack = false
+	_pending_skill = ""
+	_pending_item = ""
 	var turn_controller := combat_state.get_turn_controller()
 	if turn_controller != null:
 		turn_controller.finish_act()
@@ -783,11 +979,22 @@ func _finish_player_turn() -> void:
 	_clear_facing_indicator()
 	_battle_overlay.clear_move_preview()
 	_battle_overlay.clear_rotate_preview()
+	_battle_overlay.hide_action_menu()
 	_player_phase = PlayerTurnPhase.INACTIVE
+	_tick_all_status_effects()
 	combat_state.end_actor_turn()
 	if weather_system:
 		weather_system.roll_for_weather_change()
 	_refresh_battle_ui()
+
+
+func _tick_all_status_effects() -> void:
+	for actor in combat_state.actors:
+		if actor == null or not actor.is_alive():
+			continue
+		var expired := actor.tick_status_effects()
+		for effect_id in expired:
+			print("[Status] %s: '%s' expired." % [actor.display_name, effect_id])
 
 
 func _is_player_combat_turn() -> bool:
@@ -1383,9 +1590,16 @@ func _refresh_battle_ui() -> void:
 				hint = "[b]Move[/b] — Click a cell or use [b]arrows / WASD[/b]. Numbers show MOV cost.\nOrange tiles cost more (height). [b]Enter[/b] skips move."
 			PlayerTurnPhase.ROTATE:
 				hint = "[b]Rotate[/b] — [b]Q/E[/b] turn facing. Click or [b]Enter[/b] confirms. Yellow wedge shows facing."
+			PlayerTurnPhase.ACTION_MENU:
+				hint = "[b]Choose an action[/b] — Attack, Skill, Item, Defend, or Wait."
 			PlayerTurnPhase.ATTACK:
 				var mode := "RANGED" if _use_ranged_attack else "MELEE"
-				hint = "[b]Attack (%s)[/b] — Click an enemy. [b]R[/b] toggles ranged. Hover for flank/cover preview. [b]Enter[/b] waits." % mode
+				var action_hint := ""
+				if _pending_skill != "":
+					action_hint = "[b]%s[/b] — " % _pending_skill
+				elif _pending_item != "":
+					action_hint = "[b]%s[/b] — " % _pending_item
+				hint = "%s[b]Attack (%s)[/b] — Click an enemy. [b]R[/b] toggles ranged. Hover for flank/cover preview. [b]Enter[/b] waits." % [action_hint, mode]
 	elif _combat_active:
 		hint = "Enemy is acting..."
 	elif not _encounter_started:
@@ -1420,7 +1634,7 @@ func _player_phase_to_overlay_index() -> int:
 			return 0
 		PlayerTurnPhase.ROTATE:
 			return 1
-		PlayerTurnPhase.ATTACK:
+		PlayerTurnPhase.ACTION_MENU, PlayerTurnPhase.ATTACK:
 			return 2
 	return -1
 

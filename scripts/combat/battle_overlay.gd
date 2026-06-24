@@ -1,6 +1,10 @@
 extends CanvasLayer
 class_name BattleOverlay
 
+signal action_selected(action: String)
+signal skill_selected(skill_name: String)
+signal item_selected(item_name: String)
+
 const PANEL_BG := Color(0.08, 0.06, 0.05, 0.88)
 const PANEL_BORDER := Color(0.55, 0.42, 0.22, 1.0)
 const TEXT_MAIN := Color(0.93, 0.88, 0.78, 1.0)
@@ -9,6 +13,10 @@ const ACCENT_MOVE := Color(0.28, 0.55, 0.95, 1.0)
 const ACCENT_ROTATE := Color(0.95, 0.82, 0.2, 1.0)
 const ACCENT_ATTACK := Color(0.92, 0.28, 0.2, 1.0)
 const ACCENT_RANGED := Color(0.95, 0.55, 0.15, 1.0)
+const ACCENT_SKILL := Color(0.35, 0.75, 0.55, 1.0)
+const ACCENT_ITEM := Color(0.75, 0.55, 0.25, 1.0)
+const ACCENT_DEFEND := Color(0.4, 0.55, 0.85, 1.0)
+const ACCENT_WAIT := Color(0.5, 0.5, 0.5, 1.0)
 
 var _root: Control
 var _round_label: Label
@@ -31,6 +39,12 @@ var _preview_panel: PanelContainer
 var _preview_title: Label
 var _preview_body: RichTextLabel
 var _waiting_label: Label
+
+# Action menu
+var _action_menu_panel: PanelContainer
+var _submenu_panel: PanelContainer
+var _submenu_row: HBoxContainer
+var _active_submenu: String = ""  # "skills" | "items" | ""
 
 
 func _ready() -> void:
@@ -395,3 +409,137 @@ func _make_bar(fill_color: Color) -> ProgressBar:
 	bar.add_theme_stylebox_override("background", bg)
 	bar.add_theme_stylebox_override("fill", fill)
 	return bar
+
+
+# --- Action Menu ---
+
+func show_action_menu(skills: Array, items: Array) -> void:
+	_build_action_menu(skills, items)
+	_action_menu_panel.visible = true
+	_submenu_panel.visible = false
+	_active_submenu = ""
+
+
+func hide_action_menu() -> void:
+	if _action_menu_panel != null:
+		_action_menu_panel.visible = false
+	if _submenu_panel != null:
+		_submenu_panel.visible = false
+	_active_submenu = ""
+
+
+func _build_action_menu(skills: Array, items: Array) -> void:
+	if _action_menu_panel != null:
+		_action_menu_panel.queue_free()
+		_action_menu_panel = null
+	if _submenu_panel != null:
+		_submenu_panel.queue_free()
+		_submenu_panel = null
+
+	# Submenu panel (skills/items row) — sits just above the action menu
+	_submenu_panel = _make_panel()
+	_submenu_panel.set_anchors_preset(Control.PRESET_BOTTOM_WIDE)
+	_submenu_panel.offset_left = 16
+	_submenu_panel.offset_right = -16
+	_submenu_panel.offset_top = -290
+	_submenu_panel.offset_bottom = -216
+	_submenu_panel.visible = false
+	_root.add_child(_submenu_panel)
+	_submenu_row = HBoxContainer.new()
+	_submenu_row.add_theme_constant_override("separation", 10)
+	_submenu_panel.add_child(_submenu_row)
+
+	# Main action menu panel
+	_action_menu_panel = _make_panel()
+	_action_menu_panel.set_anchors_preset(Control.PRESET_BOTTOM_WIDE)
+	_action_menu_panel.offset_left = 16
+	_action_menu_panel.offset_right = -16
+	_action_menu_panel.offset_top = -210
+	_action_menu_panel.offset_bottom = -196
+	_root.add_child(_action_menu_panel)
+
+	var row := HBoxContainer.new()
+	row.add_theme_constant_override("separation", 10)
+	_action_menu_panel.add_child(row)
+
+	_add_action_btn(row, "Attack", ACCENT_ATTACK, func():
+		hide_action_menu()
+		action_selected.emit("attack")
+	)
+	_add_action_btn(row, "Skills", ACCENT_SKILL, func():
+		_toggle_submenu("skills", skills, ACCENT_SKILL)
+	)
+	_add_action_btn(row, "Items", ACCENT_ITEM, func():
+		_toggle_submenu("items", items, ACCENT_ITEM)
+	)
+	_add_action_btn(row, "Defend", ACCENT_DEFEND, func():
+		hide_action_menu()
+		action_selected.emit("defend")
+	)
+	_add_action_btn(row, "Wait", ACCENT_WAIT, func():
+		hide_action_menu()
+		action_selected.emit("wait")
+	)
+
+
+func _toggle_submenu(kind: String, entries: Array, accent: Color) -> void:
+	if _active_submenu == kind:
+		_submenu_panel.visible = false
+		_active_submenu = ""
+		return
+
+	_active_submenu = kind
+	for child in _submenu_row.get_children():
+		child.queue_free()
+
+	if entries.is_empty():
+		var empty_lbl := _make_label("(none)", 15)
+		empty_lbl.modulate = TEXT_MUTED
+		_submenu_row.add_child(empty_lbl)
+	else:
+		for entry in entries:
+			var entry_name := str(entry)
+			_add_action_btn(_submenu_row, entry_name, accent, func():
+				hide_action_menu()
+				if kind == "skills":
+					skill_selected.emit(entry_name)
+				else:
+					item_selected.emit(entry_name)
+			)
+
+	_submenu_panel.visible = true
+
+
+func _add_action_btn(parent: Control, label: String, accent: Color, callback: Callable) -> void:
+	var btn := Button.new()
+	btn.text = label
+	btn.custom_minimum_size = Vector2(100, 42)
+	btn.add_theme_font_size_override("font_size", 16)
+
+	var normal := StyleBoxFlat.new()
+	normal.bg_color = Color(accent.r * 0.25, accent.g * 0.25, accent.b * 0.25, 0.92)
+	normal.border_color = accent
+	normal.set_border_width_all(2)
+	normal.set_corner_radius_all(5)
+	normal.content_margin_left = 8
+	normal.content_margin_right = 8
+	normal.content_margin_top = 6
+	normal.content_margin_bottom = 6
+
+	var hover := StyleBoxFlat.new()
+	hover.bg_color = Color(accent.r * 0.45, accent.g * 0.45, accent.b * 0.45, 0.95)
+	hover.border_color = accent
+	hover.set_border_width_all(2)
+	hover.set_corner_radius_all(5)
+	hover.content_margin_left = 8
+	hover.content_margin_right = 8
+	hover.content_margin_top = 6
+	hover.content_margin_bottom = 6
+
+	btn.add_theme_stylebox_override("normal", normal)
+	btn.add_theme_stylebox_override("hover", hover)
+	btn.add_theme_stylebox_override("pressed", hover)
+	btn.add_theme_color_override("font_color", TEXT_MAIN)
+	btn.add_theme_color_override("font_hover_color", Color(1, 1, 1, 1))
+	btn.pressed.connect(callback)
+	parent.add_child(btn)
