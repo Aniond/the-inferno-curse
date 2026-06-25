@@ -1,0 +1,47 @@
+{
+	"assetId": "28050d78-2fc1-435d-868e-8aa7f216c84b",
+	"metadata": {
+		"downloadUrl": "https://v3b.fal.media/files/b/0a9fa56a/rUFR293rBah7Wl5qh40_e_blCcMp0j.png",
+		"fileName": "rUFR293rBah7Wl5qh40_e_blCcMp0j.png",
+		"filename": "rUFR293rBah7Wl5qh40_e_blCcMp0j.png",
+		"id": "28050d78-2fc1-435d-868e-8aa7f216c84b",
+		"metadata": {
+			"aspect_ratio": "1:1",
+			"batchCapped": false,
+			"batchSize": 1.0,
+			"clientImageModel": "fal-ai/nano-banana-2",
+			"entrypoint": "api/art/generate",
+			"falModelId": "fal-ai/nano-banana-2",
+			"falPrompt": "13th century Florence, Ponte Vecchio, view from riverbank. \nCovered bridge over the Arno River, small shops built along \nits sides, wooden overhangs, stone arches reflected in dark \nwater below. Dusk light, cool blue-gray shadows, warm amber \nfrom shop windows. Quiet, isolated, slightly uneasy mood. \nHand-painted illustration style, aged fresco texture, \nmuted Tuscan palette. No fantasy elements, no modern details.",
+			"finalPrompt": "13th century Florence, Ponte Vecchio, view from riverbank. \nCovered bridge over the Arno River, small shops built along \nits sides, wooden overhangs, stone arches reflected in dark \nwater below. Dusk light, cool blue-gray shadows, warm amber \nfrom shop windows. Quiet, isolated, slightly uneasy mood. \nHand-painted illustration style, aged fresco texture, \nmuted Tuscan palette. No fantasy elements, no modern details.",
+			"generatedAt": "2026-06-25T00:28:39.324Z",
+			"generationBatchId": "878a3d17-5906-4e72-b6d9-a2035d675ab7",
+			"height": 1024.0,
+			"multiview": false,
+			"numImages": 1.0,
+			"numImagesRequested": 1.0,
+			"pose": "none",
+			"promptRefined": false,
+			"referenceCount": 0.0,
+			"runIndex": 0.0,
+			"style": "none",
+			"surface": "studio",
+			"width": 1024.0
+		},
+		"name": "13th century Florence, Ponte Vecchio, view",
+		"previewUrl": "https://v3b.fal.media/files/b/0a9fa56a/rUFR293rBah7Wl5qh40_e_blCcMp0j.png",
+		"primary": true,
+		"thumbnailUrl": "https://v3b.fal.media/files/b/0a9fa56a/rUFR293rBah7Wl5qh40_e_blCcMp0j.png",
+		"title": "13th century Florence, Ponte Vecchio, view",
+		"type": "image",
+		"url": "https://v3b.fal.media/files/b/0a9fa56a/rUFR293rBah7Wl5qh40_e_blCcMp0j.png",
+		"version": "2026-06-25"
+	},
+	"name": "13th century Florence, Ponte Vecchio, view",
+	"paths": [
+		"res://assets/summer/28050d78-2fc1-435d-868e-8aa7f216c84b/2026-06-25/rUFR293rBah7Wl5qh40_e_blCcMp0j.png"
+	],
+	"primaryPath": "res://assets/summer/28050d78-2fc1-435d-868e-8aa7f216c84b/2026-06-25/rUFR293rBah7Wl5qh40_e_blCcMp0j.png",
+	"source": "summer-studio",
+	"version": "2026-06-25"
+}

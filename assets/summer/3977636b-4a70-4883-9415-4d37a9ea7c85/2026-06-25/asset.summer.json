@@ -1,0 +1,47 @@
+{
+	"assetId": "3977636b-4a70-4883-9415-4d37a9ea7c85",
+	"metadata": {
+		"downloadUrl": "https://v3b.fal.media/files/b/0a9fa547/VyeNcbuyjkBuGicuAiSoI_gWlXE5rX.png",
+		"fileName": "VyeNcbuyjkBuGicuAiSoI_gWlXE5rX.png",
+		"filename": "VyeNcbuyjkBuGicuAiSoI_gWlXE5rX.png",
+		"id": "3977636b-4a70-4883-9415-4d37a9ea7c85",
+		"metadata": {
+			"aspect_ratio": "1:1",
+			"batchCapped": false,
+			"batchSize": 1.0,
+			"clientImageModel": "fal-ai/nano-banana-2",
+			"entrypoint": "api/art/generate",
+			"falModelId": "fal-ai/nano-banana-2",
+			"falPrompt": "13th century Florence, Piazza della Signoria, street level view. \nOpen civic square, stone pavement, Palazzo della Signoria tower \nin background. Small crowds of medieval Italian citizens, guards, \nmerchants. Late afternoon light, long shadows across stone. \nTense, political atmosphere. Hand-painted illustration style, \naged fresco texture, muted Tuscan palette — burnt sienna, \nweathered stone, tarnished gold, shadow blue. Serious, solemn, \nmelancholic. No fantasy elements, no modern details.",
+			"finalPrompt": "13th century Florence, Piazza della Signoria, street level view. \nOpen civic square, stone pavement, Palazzo della Signoria tower \nin background. Small crowds of medieval Italian citizens, guards, \nmerchants. Late afternoon light, long shadows across stone. \nTense, political atmosphere. Hand-painted illustration style, \naged fresco texture, muted Tuscan palette — burnt sienna, \nweathered stone, tarnished gold, shadow blue. Serious, solemn, \nmelancholic. No fantasy elements, no modern details.",
+			"generatedAt": "2026-06-25T00:22:44.827Z",
+			"generationBatchId": "d57d307a-6488-412f-8977-93fa8a6e7c36",
+			"height": 1024.0,
+			"multiview": false,
+			"numImages": 1.0,
+			"numImagesRequested": 1.0,
+			"pose": "none",
+			"promptRefined": false,
+			"referenceCount": 0.0,
+			"runIndex": 0.0,
+			"style": "none",
+			"surface": "studio",
+			"width": 1024.0
+		},
+		"name": "13th century Florence, Piazza della Signoria,",
+		"previewUrl": "https://v3b.fal.media/files/b/0a9fa547/VyeNcbuyjkBuGicuAiSoI_gWlXE5rX.png",
+		"primary": true,
+		"thumbnailUrl": "https://v3b.fal.media/files/b/0a9fa547/VyeNcbuyjkBuGicuAiSoI_gWlXE5rX.png",
+		"title": "13th century Florence, Piazza della Signoria,",
+		"type": "image",
+		"url": "https://v3b.fal.media/files/b/0a9fa547/VyeNcbuyjkBuGicuAiSoI_gWlXE5rX.png",
+		"version": "2026-06-25"
+	},
+	"name": "13th century Florence, Piazza della Signoria,",
+	"paths": [
+		"res://assets/summer/3977636b-4a70-4883-9415-4d37a9ea7c85/2026-06-25/VyeNcbuyjkBuGicuAiSoI_gWlXE5rX.png"
+	],
+	"primaryPath": "res://assets/summer/3977636b-4a70-4883-9415-4d37a9ea7c85/2026-06-25/VyeNcbuyjkBuGicuAiSoI_gWlXE5rX.png",
+	"source": "summer-studio",
+	"version": "2026-06-25"
+}

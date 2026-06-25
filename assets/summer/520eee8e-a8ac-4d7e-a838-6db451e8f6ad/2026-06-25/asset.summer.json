@@ -1,0 +1,47 @@
+{
+	"assetId": "520eee8e-a8ac-4d7e-a838-6db451e8f6ad",
+	"metadata": {
+		"downloadUrl": "https://v3b.fal.media/files/b/0a9fa55f/KmC2eaNP6wHBkqhPlY7fv_2EjoC5Fc.png",
+		"fileName": "KmC2eaNP6wHBkqhPlY7fv_2EjoC5Fc.png",
+		"filename": "KmC2eaNP6wHBkqhPlY7fv_2EjoC5Fc.png",
+		"id": "520eee8e-a8ac-4d7e-a838-6db451e8f6ad",
+		"metadata": {
+			"aspect_ratio": "1:1",
+			"batchCapped": false,
+			"batchSize": 1.0,
+			"clientImageModel": "fal-ai/nano-banana-2",
+			"entrypoint": "api/art/generate",
+			"falModelId": "fal-ai/nano-banana-2",
+			"falPrompt": "13th century Florence, Mercato Vecchio market district, \nstreet level. Crowded narrow market stalls, merchants, \nhanging fabrics, produce, barrels. Dense medieval Italian \narchitecture pressing in on both sides. Warm afternoon light, \nbusy but slightly uneasy atmosphere. Hand-painted illustration \nstyle, aged fresco texture, muted Tuscan palette — burnt sienna, \nweathered stone, tarnished gold. No fantasy elements, \nno modern details.",
+			"finalPrompt": "13th century Florence, Mercato Vecchio market district, \nstreet level. Crowded narrow market stalls, merchants, \nhanging fabrics, produce, barrels. Dense medieval Italian \narchitecture pressing in on both sides. Warm afternoon light, \nbusy but slightly uneasy atmosphere. Hand-painted illustration \nstyle, aged fresco texture, muted Tuscan palette — burnt sienna, \nweathered stone, tarnished gold. No fantasy elements, \nno modern details.",
+			"generatedAt": "2026-06-25T00:26:49.889Z",
+			"generationBatchId": "d323c14d-27d1-45ae-945e-f7c35b557d94",
+			"height": 1024.0,
+			"multiview": false,
+			"numImages": 1.0,
+			"numImagesRequested": 1.0,
+			"pose": "none",
+			"promptRefined": false,
+			"referenceCount": 0.0,
+			"runIndex": 0.0,
+			"style": "none",
+			"surface": "studio",
+			"width": 1024.0
+		},
+		"name": "13th century Florence, Mercato Vecchio market",
+		"previewUrl": "https://v3b.fal.media/files/b/0a9fa55f/KmC2eaNP6wHBkqhPlY7fv_2EjoC5Fc.png",
+		"primary": true,
+		"thumbnailUrl": "https://v3b.fal.media/files/b/0a9fa55f/KmC2eaNP6wHBkqhPlY7fv_2EjoC5Fc.png",
+		"title": "13th century Florence, Mercato Vecchio market",
+		"type": "image",
+		"url": "https://v3b.fal.media/files/b/0a9fa55f/KmC2eaNP6wHBkqhPlY7fv_2EjoC5Fc.png",
+		"version": "2026-06-25"
+	},
+	"name": "13th century Florence, Mercato Vecchio market",
+	"paths": [
+		"res://assets/summer/520eee8e-a8ac-4d7e-a838-6db451e8f6ad/2026-06-25/KmC2eaNP6wHBkqhPlY7fv_2EjoC5Fc.png"
+	],
+	"primaryPath": "res://assets/summer/520eee8e-a8ac-4d7e-a838-6db451e8f6ad/2026-06-25/KmC2eaNP6wHBkqhPlY7fv_2EjoC5Fc.png",
+	"source": "summer-studio",
+	"version": "2026-06-25"
+}

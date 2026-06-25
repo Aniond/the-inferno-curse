@@ -100,17 +100,19 @@ func _build_ui() -> void:
 	_node_layer.mouse_filter = Control.MOUSE_FILTER_IGNORE
 	_root.add_child(_node_layer)
 
-	# Detail panel on the right
+	# Detail panel on the right — wraps its content, anchored top-right
 	_detail_panel = _make_panel()
-	_detail_panel.set_anchors_preset(Control.PRESET_RIGHT_WIDE)
+	_detail_panel.set_anchors_preset(Control.PRESET_TOP_RIGHT)
 	_detail_panel.offset_left = -310
 	_detail_panel.offset_top = 60
-	_detail_panel.offset_bottom = -60
 	_detail_panel.offset_right = -16
+	_detail_panel.offset_bottom = 60  # grows downward with content via size_flags
+	_detail_panel.size_flags_vertical = Control.SIZE_SHRINK_BEGIN
 	_root.add_child(_detail_panel)
 
 	var detail_vbox := VBoxContainer.new()
-	detail_vbox.add_theme_constant_override("separation", 12)
+	detail_vbox.add_theme_constant_override("separation", 10)
+	detail_vbox.size_flags_horizontal = Control.SIZE_EXPAND_FILL
 	_detail_panel.add_child(detail_vbox)
 
 	var city_title := Label.new()
@@ -124,7 +126,7 @@ func _build_ui() -> void:
 	detail_vbox.add_child(divider)
 
 	_detail_preview = TextureRect.new()
-	_detail_preview.custom_minimum_size = Vector2(0, 120)
+	_detail_preview.custom_minimum_size = Vector2(0, 160)
 	_detail_preview.expand_mode = TextureRect.EXPAND_FIT_WIDTH_PROPORTIONAL
 	_detail_preview.stretch_mode = TextureRect.STRETCH_KEEP_ASPECT_CENTERED
 	_detail_preview.visible = false
@@ -132,7 +134,7 @@ func _build_ui() -> void:
 
 	_detail_name = Label.new()
 	_detail_name.text = "Select a location"
-	_detail_name.add_theme_font_size_override("font_size", 18)
+	_detail_name.add_theme_font_size_override("font_size", 16)
 	_detail_name.add_theme_color_override("font_color", TEXT_MAIN)
 	_detail_name.autowrap_mode = TextServer.AUTOWRAP_WORD_SMART
 	detail_vbox.add_child(_detail_name)
@@ -148,15 +150,10 @@ func _build_ui() -> void:
 	_detail_desc.fit_content = true
 	_detail_desc.scroll_active = false
 	_detail_desc.autowrap_mode = TextServer.AUTOWRAP_WORD_SMART
-	_detail_desc.custom_minimum_size = Vector2(0, 120)
 	_detail_desc.add_theme_color_override("default_color", TEXT_MAIN)
 	_detail_desc.add_theme_font_size_override("normal_font_size", 14)
 	_detail_desc.text = "[color=#a09080]Choose a location on the map to read its description.[/color]"
 	detail_vbox.add_child(_detail_desc)
-
-	var spacer := Control.new()
-	spacer.size_flags_vertical = Control.SIZE_EXPAND_FILL
-	detail_vbox.add_child(spacer)
 
 	_travel_btn = _make_button("Travel Here", Color(0.65, 0.35, 0.12, 1.0))
 	_travel_btn.visible = false

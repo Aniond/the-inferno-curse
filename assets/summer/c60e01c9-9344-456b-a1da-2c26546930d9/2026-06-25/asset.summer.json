@@ -1,0 +1,47 @@
+{
+	"assetId": "c60e01c9-9344-456b-a1da-2c26546930d9",
+	"metadata": {
+		"downloadUrl": "https://v3b.fal.media/files/b/0a9fa558/YFfNqQ9KgQHP8L104rhcs_dUeXNNgi.png",
+		"fileName": "YFfNqQ9KgQHP8L104rhcs_dUeXNNgi.png",
+		"filename": "YFfNqQ9KgQHP8L104rhcs_dUeXNNgi.png",
+		"id": "c60e01c9-9344-456b-a1da-2c26546930d9",
+		"metadata": {
+			"aspect_ratio": "1:1",
+			"batchCapped": false,
+			"batchSize": 1.0,
+			"clientImageModel": "fal-ai/nano-banana-2",
+			"entrypoint": "api/art/generate",
+			"falModelId": "fal-ai/nano-banana-2",
+			"falPrompt": "13th century Florence, Cathedral of Santa Maria del Fiore, \nexterior facade view from street level. Gothic marble facade, \narched doorways, candles visible through open doors. \nA priest or monk figure on the steps, small scale against \nthe building. Overcast sky, cool blue-gray light, warm candlelight \nspilling from entrance. Hand-painted illustration style, aged \nfresco texture, sacred and melancholic mood. Muted Tuscan palette. \nNo fantasy elements, no modern details.",
+			"finalPrompt": "13th century Florence, Cathedral of Santa Maria del Fiore, \nexterior facade view from street level. Gothic marble facade, \narched doorways, candles visible through open doors. \nA priest or monk figure on the steps, small scale against \nthe building. Overcast sky, cool blue-gray light, warm candlelight \nspilling from entrance. Hand-painted illustration style, aged \nfresco texture, sacred and melancholic mood. Muted Tuscan palette. \nNo fantasy elements, no modern details.",
+			"generatedAt": "2026-06-25T00:25:33.422Z",
+			"generationBatchId": "8d615d1a-0342-4364-b4d5-c99f4d1a28f2",
+			"height": 1024.0,
+			"multiview": false,
+			"numImages": 1.0,
+			"numImagesRequested": 1.0,
+			"pose": "none",
+			"promptRefined": false,
+			"referenceCount": 0.0,
+			"runIndex": 0.0,
+			"style": "none",
+			"surface": "studio",
+			"width": 1024.0
+		},
+		"name": "13th century Florence, Cathedral of Santa",
+		"previewUrl": "https://v3b.fal.media/files/b/0a9fa558/YFfNqQ9KgQHP8L104rhcs_dUeXNNgi.png",
+		"primary": true,
+		"thumbnailUrl": "https://v3b.fal.media/files/b/0a9fa558/YFfNqQ9KgQHP8L104rhcs_dUeXNNgi.png",
+		"title": "13th century Florence, Cathedral of Santa",
+		"type": "image",
+		"url": "https://v3b.fal.media/files/b/0a9fa558/YFfNqQ9KgQHP8L104rhcs_dUeXNNgi.png",
+		"version": "2026-06-25"
+	},
+	"name": "13th century Florence, Cathedral of Santa",
+	"paths": [
+		"res://assets/summer/c60e01c9-9344-456b-a1da-2c26546930d9/2026-06-25/YFfNqQ9KgQHP8L104rhcs_dUeXNNgi.png"
+	],
+	"primaryPath": "res://assets/summer/c60e01c9-9344-456b-a1da-2c26546930d9/2026-06-25/YFfNqQ9KgQHP8L104rhcs_dUeXNNgi.png",
+	"source": "summer-studio",
+	"version": "2026-06-25"
+}
