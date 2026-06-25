@@ -1,6 +1,6 @@
 extends CanvasLayer
 ## MonsterSheetUI - Test monster status overlay.
-## Toggle with the "open_monster_sheet" action (M key).
+## Toggle with the "open_monster_sheet" action (N key).
 
 const BG_IMAGE := preload("res://assets/summer/426cd36b-2c1f-45fa-bde8-163fa2e6bee1/2026-06-23/Y8CAUAYVP5s73_3qixj5Y_wYMRS1pG.png")
 const FALLBACK_MONSTER: MonsterSheet = preload("res://data/monsters/training_brigand.tres")

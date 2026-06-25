@@ -1,0 +1,15 @@
+[gd_resource type="Resource" script_class="CityNodeData" format=3 uid="uid://florence_node_piazza"]
+
+[ext_resource type="Script" path="res://scripts/city/city_node_data.gd" id="1_city_node_data"]
+
+[resource]
+script = ExtResource("1_city_node_data")
+id = "piazza_della_signoria"
+display_name = "Piazza della Signoria"
+description = "The heart of Florentine civic life. Announcements, executions, and public debates all happen here. Faction tensions run highest in open daylight."
+preview_image_path = ""
+scene_path = ""
+map_position = Vector2(590, 370)
+unlocked = true
+is_secret = false
+district = "centro"

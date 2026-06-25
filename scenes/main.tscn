@@ -15,6 +15,7 @@
 [ext_resource type="PackedScene" uid="uid://du7tvmk4tm238" path="res://scenes/ui/character_sheet_ui.tscn" id="14_character_sheet_ui"]
 [ext_resource type="PackedScene" path="res://scenes/ui/monster_sheet_ui.tscn" id="15_monster_sheet_ui"]
 [ext_resource type="Script" uid="uid://v83japwmqu81" path="res://scripts/combat/battle_test_map.gd" id="16_battle_test_map"]
+[ext_resource type="Script" uid="uid://cf00lylhqjv8p" path="res://scripts/city/city_map_manager.gd" id="17_muem4"]
 [ext_resource type="Script" uid="uid://c6fjdrw7qffft" path="res://scripts/day_night_cycle.gd" id="day_night_cycle"]
 
 [sub_resource type="PlaneMesh" id="PlaneMesh_ground"]
@@ -194,3 +195,6 @@ transform = Transform3D(0.55, 0, 0, 0, 0.55, 0, 0, 0, 0.55, 6, 0.55, -8)
 [node name="CharacterSheetUI" parent="." unique_id=791393023 instance=ExtResource("14_character_sheet_ui")]
 
 [node name="MonsterSheetUI" parent="." unique_id=2083056186 instance=ExtResource("15_monster_sheet_ui")]
+
+[node name="CityMapManager" type="Node" parent="." unique_id=967255027]
+script = ExtResource("17_muem4")

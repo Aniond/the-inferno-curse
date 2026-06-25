@@ -1,0 +1,47 @@
+{
+	"assetId": "b6af84dd-0aac-4492-b1c4-4edf80a6221a",
+	"metadata": {
+		"downloadUrl": "https://v3b.fal.media/files/b/0a9fa46a/HYk6L7nUdhjbMX7f12qS4_pvawYw6I.png",
+		"fileName": "HYk6L7nUdhjbMX7f12qS4_pvawYw6I.png",
+		"filename": "HYk6L7nUdhjbMX7f12qS4_pvawYw6I.png",
+		"id": "b6af84dd-0aac-4492-b1c4-4edf80a6221a",
+		"metadata": {
+			"aspect_ratio": "1:1",
+			"batchCapped": false,
+			"batchSize": 1.0,
+			"clientImageModel": "fal-ai/nano-banana-2",
+			"entrypoint": "api/art/generate",
+			"falModelId": "fal-ai/nano-banana-2",
+			"falPrompt": "Top-down illustrated city map of 13th century Florence, Italy. \nHand-painted medieval cartographic style, aged parchment texture, \nink linework with watercolor washes. Muted Tuscan palette — \nweathered stone, burnt sienna rooftops, dusty gold, shadow blue \nwaterways. The Arno River runs through the center. \n\nKey landmarks visible and labeled with small architectural \nillustrations in period style:\n- Mercato Vecchio (market district, central)\n- Cathedral of Santa Maria del Fiore (large dome, north of center)\n- Ponte Vecchio (covered bridge crossing the Arno)\n- Piazza della Signoria (open civic square, south of cathedral)\n\nDense medieval street grid between landmarks. City walls visible \nat edges. No fantasy elements, no modern structures. Serious, \nsolemn, melancholic atmosphere. No legend, no compass rose, \nno circles, no overlaid information or icons. Pure illustrated \nmap only. Dante's Florence — beautiful, suspended, faintly decayed., epic fantasy art, magical atmosphere, rich detail, dramatic lighting",
+			"finalPrompt": "Top-down illustrated city map of 13th century Florence, Italy. \nHand-painted medieval cartographic style, aged parchment texture, \nink linework with watercolor washes. Muted Tuscan palette — \nweathered stone, burnt sienna rooftops, dusty gold, shadow blue \nwaterways. The Arno River runs through the center. \n\nKey landmarks visible and labeled with small architectural \nillustrations in period style:\n- Mercato Vecchio (market district, central)\n- Cathedral of Santa Maria del Fiore (large dome, north of center)\n- Ponte Vecchio (covered bridge crossing the Arno)\n- Piazza della Signoria (open civic square, south of cathedral)\n\nDense medieval street grid between landmarks. City walls visible \nat edges. No fantasy elements, no modern structures. Serious, \nsolemn, melancholic atmosphere. No legend, no compass rose, \nno circles, no overlaid information or icons. Pure illustrated \nmap only. Dante's Florence — beautiful, suspended, faintly decayed.",
+			"generatedAt": "2026-06-24T23:45:55.716Z",
+			"generationBatchId": "4d8a223f-0492-41a7-a190-3d5191ef2b89",
+			"height": 1024.0,
+			"multiview": false,
+			"numImages": 1.0,
+			"numImagesRequested": 1.0,
+			"pose": "none",
+			"promptRefined": false,
+			"referenceCount": 0.0,
+			"runIndex": 0.0,
+			"style": "fantasy",
+			"surface": "studio",
+			"width": 1024.0
+		},
+		"name": "Medieval Florence Map",
+		"previewUrl": "https://v3b.fal.media/files/b/0a9fa46a/HYk6L7nUdhjbMX7f12qS4_pvawYw6I.png",
+		"primary": true,
+		"thumbnailUrl": "https://v3b.fal.media/files/b/0a9fa46a/HYk6L7nUdhjbMX7f12qS4_pvawYw6I.png",
+		"title": "Medieval Florence Map",
+		"type": "image",
+		"url": "https://v3b.fal.media/files/b/0a9fa46a/HYk6L7nUdhjbMX7f12qS4_pvawYw6I.png",
+		"version": "2026-06-24"
+	},
+	"name": "Medieval Florence Map",
+	"paths": [
+		"res://assets/summer/b6af84dd-0aac-4492-b1c4-4edf80a6221a/2026-06-24/HYk6L7nUdhjbMX7f12qS4_pvawYw6I.png"
+	],
+	"primaryPath": "res://assets/summer/b6af84dd-0aac-4492-b1c4-4edf80a6221a/2026-06-24/HYk6L7nUdhjbMX7f12qS4_pvawYw6I.png",
+	"source": "summer-studio",
+	"version": "2026-06-24"
+}

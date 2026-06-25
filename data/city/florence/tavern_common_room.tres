@@ -1,0 +1,15 @@
+[gd_resource type="Resource" script_class="CityNodeData" format=3 uid="uid://florence_node_tavern"]
+
+[ext_resource type="Script" path="res://scripts/city/city_node_data.gd" id="1_city_node_data"]
+
+[resource]
+script = ExtResource("1_city_node_data")
+id = "tavern_common_room"
+display_name = "The Broken Lantern"
+description = "A tavern on the edge of the Mercato quarter. Warm wine, loose tongues, and the smell of old smoke. Rumors find their way here before anywhere else."
+preview_image_path = ""
+scene_path = "res://scenes/main.tscn"
+map_position = Vector2(480, 500)
+unlocked = true
+is_secret = false
+district = "centro"

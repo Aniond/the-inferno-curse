@@ -1,0 +1,15 @@
+[gd_resource type="Resource" script_class="CityNodeData" format=3 uid="uid://florence_node_mercato"]
+
+[ext_resource type="Script" path="res://scripts/city/city_node_data.gd" id="1_city_node_data"]
+
+[resource]
+script = ExtResource("1_city_node_data")
+id = "mercato_vecchio"
+display_name = "Mercato Vecchio"
+description = "The old market. Butchers, cloth merchants, money changers, and beggars. Everything is for sale here — including information."
+preview_image_path = ""
+scene_path = ""
+map_position = Vector2(545, 430)
+unlocked = true
+is_secret = false
+district = "centro"
