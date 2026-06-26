@@ -1,0 +1,552 @@
+[gd_scene format=3 uid="uid://mercato_vecchio"]
+
+[ext_resource type="Script" path="res://scripts/mercato_vecchio.gd" id="1_mercato_script"]
+[ext_resource type="Script" uid="uid://lcfbsowfjqce" path="res://scripts/player_3d.gd" id="2_player_script"]
+[ext_resource type="Script" uid="uid://it8rra1xygsm" path="res://scripts/camera_follow.gd" id="3_camera_script"]
+[ext_resource type="Environment" uid="uid://c4qfo6yvfhdaj" path="res://materials/tavern_environment.tres" id="4_env"]
+[ext_resource type="Script" uid="uid://c6fjdrw7qffft" path="res://scripts/day_night_cycle.gd" id="5_day_night"]
+[ext_resource type="Script" path="res://scripts/ui/sanity_shader_controller.gd" id="6_sanity_shader"]
+
+; ── Ground meshes ──────────────────────────────────────────────────────────
+
+[sub_resource type="PlaneMesh" id="PlaneMesh_plaza"]
+size = Vector2(60, 60)
+
+[sub_resource type="PlaneMesh" id="PlaneMesh_center"]
+size = Vector2(20, 20)
+
+[sub_resource type="PlaneMesh" id="PlaneMesh_river"]
+size = Vector2(62, 5)
+
+[sub_resource type="PlaneMesh" id="PlaneMesh_steps"]
+size = Vector2(6, 2)
+
+[sub_resource type="BoxShape3D" id="BoxShape3D_plaza_col"]
+size = Vector3(60, 0.2, 60)
+
+[sub_resource type="BoxShape3D" id="BoxShape3D_river_col"]
+size = Vector3(62, 0.2, 5)
+
+; ── Building shells ────────────────────────────────────────────────────────
+
+; North wall — Loggia del Mercato (wide arcade front)
+[sub_resource type="BoxMesh" id="BoxMesh_bldg_north"]
+size = Vector3(50, 10, 4)
+
+[sub_resource type="BoxShape3D" id="BoxShape3D_bldg_north"]
+size = Vector3(50, 10, 4)
+
+; West block — Dye Merchant (north half) + Herbalist (south half)
+[sub_resource type="BoxMesh" id="BoxMesh_bldg_west"]
+size = Vector3(4, 10, 40)
+
+[sub_resource type="BoxShape3D" id="BoxShape3D_bldg_west"]
+size = Vector3(4, 10, 40)
+
+; East block — Weapon Smith + residences
+[sub_resource type="BoxMesh" id="BoxMesh_bldg_east"]
+size = Vector3(4, 10, 40)
+
+[sub_resource type="BoxShape3D" id="BoxShape3D_bldg_east"]
+size = Vector3(4, 10, 40)
+
+; South quay wall (low dock edge)
+[sub_resource type="BoxMesh" id="BoxMesh_quay"]
+size = Vector3(60, 1.5, 2)
+
+[sub_resource type="BoxShape3D" id="BoxShape3D_quay"]
+size = Vector3(60, 1.5, 2)
+
+; ── Fountain ───────────────────────────────────────────────────────────────
+
+[sub_resource type="CylinderMesh" id="CylinderMesh_fountain_basin"]
+top_radius = 2.5
+bottom_radius = 2.8
+height = 0.8
+
+[sub_resource type="CylinderMesh" id="CylinderMesh_fountain_pillar"]
+top_radius = 0.3
+bottom_radius = 0.4
+height = 2.0
+
+[sub_resource type="CylinderMesh" id="CylinderMesh_fountain_top"]
+top_radius = 0.8
+bottom_radius = 0.8
+height = 0.3
+
+[sub_resource type="CylinderShape3D" id="CylinderShape3D_fountain_col"]
+radius = 2.8
+height = 1.5
+
+; ── Market stall awning placeholders (BoxMesh) ────────────────────────────
+
+[sub_resource type="BoxMesh" id="BoxMesh_stall"]
+size = Vector3(4.0, 0.2, 3.0)
+
+[sub_resource type="BoxMesh" id="BoxMesh_stall_counter"]
+size = Vector3(3.5, 0.8, 1.0)
+
+[sub_resource type="BoxShape3D" id="BoxShape3D_stall_col"]
+size = Vector3(4.0, 2.0, 3.0)
+
+; ── Exit marker arrows (thin flat boxes) ──────────────────────────────────
+
+[sub_resource type="BoxMesh" id="BoxMesh_exit_marker"]
+size = Vector3(2.0, 0.1, 2.0)
+
+; ── Pillar for Loggia arcade ───────────────────────────────────────────────
+
+[sub_resource type="CylinderMesh" id="CylinderMesh_pillar"]
+top_radius = 0.3
+bottom_radius = 0.35
+height = 5.0
+
+[sub_resource type="CylinderShape3D" id="CylinderShape3D_pillar_col"]
+radius = 0.35
+height = 5.0
+
+; ═══════════════════════════════════════════════════════════════════════════
+; SCENE TREE
+; ═══════════════════════════════════════════════════════════════════════════
+
+[node name="MercatoVecchio" type="Node3D"]
+script = ExtResource("1_mercato_script")
+
+; ── Camera & Lighting ──────────────────────────────────────────────────────
+
+[node name="Camera" type="Camera3D" parent="."]
+script = ExtResource("3_camera_script")
+target_path = NodePath("../Player")
+
+[node name="Sun" type="DirectionalLight3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 0.25881907, 0.9659258, 0, -0.9659258, 0.25881907, 0, 8, 0)
+light_color = Color(1, 0.878, 0.639, 1)
+light_energy = 0.9
+shadow_enabled = true
+
+[node name="WorldEnvironment" type="WorldEnvironment" parent="."]
+environment = ExtResource("4_env")
+
+[node name="SanityShaderController" type="Node" parent="."]
+script = ExtResource("6_sanity_shader")
+world_environment = NodePath("../WorldEnvironment")
+
+[node name="DayNightCycle" type="Node" parent="."]
+script = ExtResource("5_day_night")
+
+; ── Ambient fill lights ────────────────────────────────────────────────────
+
+[node name="AmbientFillNW" type="OmniLight3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -20, 6, -20)
+light_color = Color(0.188, 0.22, 0.271, 1)
+light_energy = 0.6
+omni_range = 30.0
+
+[node name="AmbientFillSE" type="OmniLight3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 20, 6, 20)
+light_color = Color(0.188, 0.22, 0.271, 1)
+light_energy = 0.6
+omni_range = 30.0
+
+[node name="FountainLight" type="OmniLight3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 3, 0)
+light_color = Color(0.827, 0.627, 0.243, 1)
+light_energy = 1.2
+omni_range = 18.0
+
+; ── Player ─────────────────────────────────────────────────────────────────
+
+[node name="Player" type="CharacterBody3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, 8)
+script = ExtResource("2_player_script")
+
+[node name="AnimatedSprite" type="AnimatedSprite3D" parent="Player"]
+
+[node name="Collision" type="CollisionShape3D" parent="Player"]
+
+; ── Ground ─────────────────────────────────────────────────────────────────
+
+[node name="Ground" type="StaticBody3D" parent="."]
+
+[node name="PlazaMesh" type="MeshInstance3D" parent="Ground"]
+mesh = SubResource("PlaneMesh_plaza")
+
+[node name="PlazaCollision" type="CollisionShape3D" parent="Ground"]
+shape = SubResource("BoxShape3D_plaza_col")
+
+; Center plaza — slightly lighter stone (same mesh, material slot for later)
+[node name="CenterPlaza" type="MeshInstance3D" parent="Ground"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.01, 0)
+mesh = SubResource("PlaneMesh_center")
+
+; Stone steps down to river — south center
+[node name="StepsMesh" type="MeshInstance3D" parent="Ground"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.02, 26)
+mesh = SubResource("PlaneMesh_steps")
+
+; ── River (Arno) — south edge ─────────────────────────────────────────────
+
+[node name="River" type="StaticBody3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -0.1, 30)
+
+[node name="RiverMesh" type="MeshInstance3D" parent="River"]
+mesh = SubResource("PlaneMesh_river")
+
+[node name="RiverCollision" type="CollisionShape3D" parent="River"]
+shape = SubResource("BoxShape3D_river_col")
+
+; Quay wall — dock edge lip
+[node name="QuayWall" type="StaticBody3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.5, 27.5)
+
+[node name="QuayMesh" type="MeshInstance3D" parent="QuayWall"]
+mesh = SubResource("BoxMesh_quay")
+
+[node name="QuayCollision" type="CollisionShape3D" parent="QuayWall"]
+shape = SubResource("BoxShape3D_quay")
+
+; ── Buildings ──────────────────────────────────────────────────────────────
+
+[node name="Buildings" type="Node3D" parent="."]
+
+; North — Loggia del Mercato (arcade building, wide)
+[node name="LoggiaDelMercato" type="StaticBody3D" parent="Buildings"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 5, -32)
+
+[node name="Mesh" type="MeshInstance3D" parent="Buildings/LoggiaDelMercato"]
+mesh = SubResource("BoxMesh_bldg_north")
+
+[node name="Collision" type="CollisionShape3D" parent="Buildings/LoggiaDelMercato"]
+shape = SubResource("BoxShape3D_bldg_north")
+
+; Loggia arcade pillars (6 pillars across the front face)
+[node name="LoggiaPillars" type="Node3D" parent="Buildings"]
+
+[node name="Pillar1" type="StaticBody3D" parent="Buildings/LoggiaPillars"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -20, 2.5, -28)
+
+[node name="Mesh" type="MeshInstance3D" parent="Buildings/LoggiaPillars/Pillar1"]
+mesh = SubResource("CylinderMesh_pillar")
+
+[node name="Collision" type="CollisionShape3D" parent="Buildings/LoggiaPillars/Pillar1"]
+shape = SubResource("CylinderShape3D_pillar_col")
+
+[node name="Pillar2" type="StaticBody3D" parent="Buildings/LoggiaPillars"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -12, 2.5, -28)
+
+[node name="Mesh" type="MeshInstance3D" parent="Buildings/LoggiaPillars/Pillar2"]
+mesh = SubResource("CylinderMesh_pillar")
+
+[node name="Collision" type="CollisionShape3D" parent="Buildings/LoggiaPillars/Pillar2"]
+shape = SubResource("CylinderShape3D_pillar_col")
+
+[node name="Pillar3" type="StaticBody3D" parent="Buildings/LoggiaPillars"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -4, 2.5, -28)
+
+[node name="Mesh" type="MeshInstance3D" parent="Buildings/LoggiaPillars/Pillar3"]
+mesh = SubResource("CylinderMesh_pillar")
+
+[node name="Collision" type="CollisionShape3D" parent="Buildings/LoggiaPillars/Pillar3"]
+shape = SubResource("CylinderShape3D_pillar_col")
+
+[node name="Pillar4" type="StaticBody3D" parent="Buildings/LoggiaPillars"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 4, 2.5, -28)
+
+[node name="Mesh" type="MeshInstance3D" parent="Buildings/LoggiaPillars/Pillar4"]
+mesh = SubResource("CylinderMesh_pillar")
+
+[node name="Collision" type="CollisionShape3D" parent="Buildings/LoggiaPillars/Pillar4"]
+shape = SubResource("CylinderShape3D_pillar_col")
+
+[node name="Pillar5" type="StaticBody3D" parent="Buildings/LoggiaPillars"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 12, 2.5, -28)
+
+[node name="Mesh" type="MeshInstance3D" parent="Buildings/LoggiaPillars/Pillar5"]
+mesh = SubResource("CylinderMesh_pillar")
+
+[node name="Collision" type="CollisionShape3D" parent="Buildings/LoggiaPillars/Pillar5"]
+shape = SubResource("CylinderShape3D_pillar_col")
+
+[node name="Pillar6" type="StaticBody3D" parent="Buildings/LoggiaPillars"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 20, 2.5, -28)
+
+[node name="Mesh" type="MeshInstance3D" parent="Buildings/LoggiaPillars/Pillar6"]
+mesh = SubResource("CylinderMesh_pillar")
+
+[node name="Collision" type="CollisionShape3D" parent="Buildings/LoggiaPillars/Pillar6"]
+shape = SubResource("CylinderShape3D_pillar_col")
+
+; West — Dye Merchant (north) + Herbalist (south)
+[node name="WestBlock" type="StaticBody3D" parent="Buildings"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -32, 5, -4)
+
+[node name="Mesh" type="MeshInstance3D" parent="Buildings/WestBlock"]
+mesh = SubResource("BoxMesh_bldg_west")
+
+[node name="Collision" type="CollisionShape3D" parent="Buildings/WestBlock"]
+shape = SubResource("BoxShape3D_bldg_west")
+
+; East — Weapon Smith + residences
+[node name="EastBlock" type="StaticBody3D" parent="Buildings"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 32, 5, -4)
+
+[node name="Mesh" type="MeshInstance3D" parent="Buildings/EastBlock"]
+mesh = SubResource("BoxMesh_bldg_east")
+
+[node name="Collision" type="CollisionShape3D" parent="Buildings/EastBlock"]
+shape = SubResource("BoxShape3D_bldg_east")
+
+; ── Fountain (center) ──────────────────────────────────────────────────────
+
+[node name="Fountain" type="Node3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, 0)
+
+[node name="Basin" type="StaticBody3D" parent="Fountain"]
+
+[node name="BasinMesh" type="MeshInstance3D" parent="Fountain/Basin"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.4, 0)
+mesh = SubResource("CylinderMesh_fountain_basin")
+
+[node name="BasinCollision" type="CollisionShape3D" parent="Fountain/Basin"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.4, 0)
+shape = SubResource("CylinderShape3D_fountain_col")
+
+[node name="Pillar" type="MeshInstance3D" parent="Fountain"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1.8, 0)
+mesh = SubResource("CylinderMesh_fountain_pillar")
+
+[node name="Top" type="MeshInstance3D" parent="Fountain"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 3.0, 0)
+mesh = SubResource("CylinderMesh_fountain_top")
+
+; ── Market Stalls ──────────────────────────────────────────────────────────
+; 8 stalls arranged around the fountain per reference image layout.
+; North row: 3 stalls. South row: 3 stalls. West: 1. East: 1.
+; Each stall has an awning (BoxMesh) + counter (BoxMesh) + collision.
+
+[node name="MarketStalls" type="Node3D" parent="."]
+
+; --- North row stalls (Z = -10, between fountain and Loggia) ---
+
+[node name="StallN1" type="StaticBody3D" parent="MarketStalls"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -10, 1.5, -10)
+
+[node name="Awning" type="MeshInstance3D" parent="MarketStalls/StallN1"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.5, 0)
+mesh = SubResource("BoxMesh_stall")
+
+[node name="Counter" type="MeshInstance3D" parent="MarketStalls/StallN1"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -0.5, 0.8)
+mesh = SubResource("BoxMesh_stall_counter")
+
+[node name="Collision" type="CollisionShape3D" parent="MarketStalls/StallN1"]
+shape = SubResource("BoxShape3D_stall_col")
+
+[node name="StallN2" type="StaticBody3D" parent="MarketStalls"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1.5, -12)
+
+[node name="Awning" type="MeshInstance3D" parent="MarketStalls/StallN2"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.5, 0)
+mesh = SubResource("BoxMesh_stall")
+
+[node name="Counter" type="MeshInstance3D" parent="MarketStalls/StallN2"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -0.5, 0.8)
+mesh = SubResource("BoxMesh_stall_counter")
+
+[node name="Collision" type="CollisionShape3D" parent="MarketStalls/StallN2"]
+shape = SubResource("BoxShape3D_stall_col")
+
+[node name="StallN3" type="StaticBody3D" parent="MarketStalls"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 10, 1.5, -10)
+
+[node name="Awning" type="MeshInstance3D" parent="MarketStalls/StallN3"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.5, 0)
+mesh = SubResource("BoxMesh_stall")
+
+[node name="Counter" type="MeshInstance3D" parent="MarketStalls/StallN3"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -0.5, 0.8)
+mesh = SubResource("BoxMesh_stall_counter")
+
+[node name="Collision" type="CollisionShape3D" parent="MarketStalls/StallN3"]
+shape = SubResource("BoxShape3D_stall_col")
+
+; --- South row stalls (Z = +10, between fountain and river) ---
+
+[node name="StallS1" type="StaticBody3D" parent="MarketStalls"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -10, 1.5, 10)
+
+[node name="Awning" type="MeshInstance3D" parent="MarketStalls/StallS1"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.5, 0)
+mesh = SubResource("BoxMesh_stall")
+
+[node name="Counter" type="MeshInstance3D" parent="MarketStalls/StallS1"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -0.5, -0.8)
+mesh = SubResource("BoxMesh_stall_counter")
+
+[node name="Collision" type="CollisionShape3D" parent="MarketStalls/StallS1"]
+shape = SubResource("BoxShape3D_stall_col")
+
+[node name="StallS2" type="StaticBody3D" parent="MarketStalls"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1.5, 12)
+
+[node name="Awning" type="MeshInstance3D" parent="MarketStalls/StallS2"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.5, 0)
+mesh = SubResource("BoxMesh_stall")
+
+[node name="Counter" type="MeshInstance3D" parent="MarketStalls/StallS2"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -0.5, -0.8)
+mesh = SubResource("BoxMesh_stall_counter")
+
+[node name="Collision" type="CollisionShape3D" parent="MarketStalls/StallS2"]
+shape = SubResource("BoxShape3D_stall_col")
+
+[node name="StallS3" type="StaticBody3D" parent="MarketStalls"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 10, 1.5, 10)
+
+[node name="Awning" type="MeshInstance3D" parent="MarketStalls/StallS3"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.5, 0)
+mesh = SubResource("BoxMesh_stall")
+
+[node name="Counter" type="MeshInstance3D" parent="MarketStalls/StallS3"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -0.5, -0.8)
+mesh = SubResource("BoxMesh_stall_counter")
+
+[node name="Collision" type="CollisionShape3D" parent="MarketStalls/StallS3"]
+shape = SubResource("BoxShape3D_stall_col")
+
+; --- West stall (Dye Merchant side) ---
+
+[node name="StallW1" type="StaticBody3D" parent="MarketStalls"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -18, 1.5, -4)
+
+[node name="Awning" type="MeshInstance3D" parent="MarketStalls/StallW1"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.5, 0)
+mesh = SubResource("BoxMesh_stall")
+
+[node name="Counter" type="MeshInstance3D" parent="MarketStalls/StallW1"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.8, -0.5, 0)
+mesh = SubResource("BoxMesh_stall_counter")
+
+[node name="Collision" type="CollisionShape3D" parent="MarketStalls/StallW1"]
+shape = SubResource("BoxShape3D_stall_col")
+
+; --- East stall (Weapon Smith side) ---
+
+[node name="StallE1" type="StaticBody3D" parent="MarketStalls"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 18, 1.5, -4)
+
+[node name="Awning" type="MeshInstance3D" parent="MarketStalls/StallE1"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.5, 0)
+mesh = SubResource("BoxMesh_stall")
+
+[node name="Counter" type="MeshInstance3D" parent="MarketStalls/StallE1"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.8, -0.5, 0)
+mesh = SubResource("BoxMesh_stall_counter")
+
+[node name="Collision" type="CollisionShape3D" parent="MarketStalls/StallE1"]
+shape = SubResource("BoxShape3D_stall_col")
+
+; ── NPC Positions (empty Node3D anchors — sprites slot in when ready) ──────
+
+[node name="NPCs" type="Node3D" parent="."]
+
+; ~12 NPC positions matching reference density
+[node name="NPC_Market_01" type="Node3D" parent="NPCs"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -6, 0, -6)
+
+[node name="NPC_Market_02" type="Node3D" parent="NPCs"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 4, 0, -8)
+
+[node name="NPC_Market_03" type="Node3D" parent="NPCs"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -4, 0, 2)
+
+[node name="NPC_Market_04" type="Node3D" parent="NPCs"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 8, 0, 4)
+
+[node name="NPC_Market_05" type="Node3D" parent="NPCs"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -12, 0, 6)
+
+[node name="NPC_Market_06" type="Node3D" parent="NPCs"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 2, 0, 14)
+
+[node name="NPC_Market_07" type="Node3D" parent="NPCs"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -8, 0, 16)
+
+[node name="NPC_Market_08" type="Node3D" parent="NPCs"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 14, 0, 10)
+
+[node name="NPC_DyeMerchant" type="Node3D" parent="NPCs"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -22, 0, -10)
+
+[node name="NPC_Herbalist" type="Node3D" parent="NPCs"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -22, 0, 8)
+
+[node name="NPC_WeaponSmith" type="Node3D" parent="NPCs"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 24, 0, -6)
+
+[node name="NPC_Wanderer" type="Node3D" parent="NPCs"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 6, 0, 20)
+
+; ── Exit Zones ─────────────────────────────────────────────────────────────
+; Area3D triggers for scene transitions — labeled per reference arrows.
+
+[node name="ExitZones" type="Node3D" parent="."]
+
+; North exit → Piazza della Signoria
+[node name="ExitNorth" type="Area3D" parent="ExitZones"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -18, 1, -28)
+
+[node name="Marker" type="MeshInstance3D" parent="ExitZones/ExitNorth"]
+mesh = SubResource("BoxMesh_exit_marker")
+
+[node name="Shape" type="CollisionShape3D" parent="ExitZones/ExitNorth"]
+shape = SubResource("BoxShape3D_plaza_col")
+
+; East exit → Ponte Vecchio
+[node name="ExitEast" type="Area3D" parent="ExitZones"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 28, 1, 14)
+
+[node name="Marker" type="MeshInstance3D" parent="ExitZones/ExitEast"]
+mesh = SubResource("BoxMesh_exit_marker")
+
+[node name="Shape" type="CollisionShape3D" parent="ExitZones/ExitEast"]
+shape = SubResource("BoxShape3D_plaza_col")
+
+; South exit → Arno River
+[node name="ExitSouth" type="Area3D" parent="ExitZones"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1, 30)
+
+[node name="Marker" type="MeshInstance3D" parent="ExitZones/ExitSouth"]
+mesh = SubResource("BoxMesh_exit_marker")
+
+[node name="Shape" type="CollisionShape3D" parent="ExitZones/ExitSouth"]
+shape = SubResource("BoxShape3D_plaza_col")
+
+; ── District Title Label ───────────────────────────────────────────────────
+
+[node name="DistrictUI" type="CanvasLayer" parent="."]
+layer = 5
+
+[node name="TitlePanel" type="Panel" parent="DistrictUI"]
+offset_left = 8.0
+offset_top = 8.0
+offset_right = 220.0
+offset_bottom = 52.0
+
+[node name="TitleLabel" type="Label" parent="DistrictUI/TitlePanel"]
+offset_left = 8.0
+offset_top = 4.0
+offset_right = 212.0
+offset_bottom = 28.0
+text = "Mercato Vecchio"
+theme_override_colors/font_color = Color(0.95, 0.85, 0.6, 1)
+theme_override_font_sizes/font_size = 16
+
+[node name="SubtitleLabel" type="Label" parent="DistrictUI/TitlePanel"]
+offset_left = 8.0
+offset_top = 26.0
+offset_right = 212.0
+offset_bottom = 46.0
+text = "The Old Market"
+theme_override_colors/font_color = Color(0.65, 0.57, 0.42, 1)
+theme_override_font_sizes/font_size = 11
