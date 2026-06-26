@@ -6,6 +6,12 @@
 [ext_resource type="Resource" path="res://data/skills/guts.tres" id="4_guts"]
 [ext_resource type="Resource" path="res://data/skills/protezione.tres" id="5_protezione"]
 [ext_resource type="Resource" path="res://data/skills/guarigione.tres" id="6_guarigione"]
+[ext_resource type="Resource" path="res://data/equipment/training_sword.tres" id="7_eq_training_sword"]
+[ext_resource type="Resource" path="res://data/equipment/broad_sword.tres" id="8_eq_broad_sword"]
+[ext_resource type="Resource" path="res://data/equipment/chain_mail.tres" id="9_eq_chain_mail"]
+[ext_resource type="Resource" path="res://data/equipment/leather_jerkin.tres" id="10_eq_leather_jerkin"]
+[ext_resource type="Resource" path="res://data/equipment/silver_ring.tres" id="11_eq_silver_ring"]
+[ext_resource type="Resource" path="res://data/equipment/iron_charm.tres" id="12_eq_iron_charm"]
 
 [sub_resource type="Resource" id="CoreStats_guglielmo"]
 script = ExtResource("2_core_stats")
@@ -67,3 +73,7 @@ head = "Elmetto del Cavaliere"
 body = "Cotta di Maglia"
 feet = "Calzature di Pelle"
 shield = "Scudo del Comune"
+owned_equipment = Array[Resource]([ExtResource("7_eq_training_sword"), ExtResource("8_eq_broad_sword"), ExtResource("9_eq_chain_mail"), ExtResource("10_eq_leather_jerkin"), ExtResource("11_eq_silver_ring"), ExtResource("12_eq_iron_charm")])
+equipped_weapon_id = "training_sword"
+equipped_armor_id = "chain_mail"
+equipped_trinket_id = "iron_charm"

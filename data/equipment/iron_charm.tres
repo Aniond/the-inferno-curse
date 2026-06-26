@@ -1,0 +1,12 @@
+[gd_resource type="Resource" script_class="EquipmentItem" format=3]
+
+[ext_resource type="Script" path="res://scripts/data/equipment_item.gd" id="1_equip"]
+
+[resource]
+script = ExtResource("1_equip")
+item_id = "iron_charm"
+display_name = "Talismano di Ferro"
+description = "Wards against the corrupting touch of the Soulless."
+slot = 2
+hp_bonus = 5
+pow_bonus = 1

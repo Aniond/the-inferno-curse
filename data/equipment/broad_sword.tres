@@ -1,0 +1,12 @@
+[gd_resource type="Resource" script_class="EquipmentItem" format=3]
+
+[ext_resource type="Script" path="res://scripts/data/equipment_item.gd" id="1_equip"]
+
+[resource]
+script = ExtResource("1_equip")
+item_id = "broad_sword"
+display_name = "Broad Sword"
+description = "A heavy infantry blade. Reliable, if unrefined."
+slot = 0
+weapon_power = 5
+weapon_evasion = 5

@@ -5,6 +5,8 @@ extends CanvasLayer
 ## Background: res://assets/summer/b6630f53-e376-42a0-9dea-dcdd6b8dd7ce/2026-06-22/JvLheMHJ7Vg9NahOuzTsY_dcaFSBTd.png
 
 const BG_IMAGE := preload("res://assets/summer/b6630f53-e376-42a0-9dea-dcdd6b8dd7ce/2026-06-22/JvLheMHJ7Vg9NahOuzTsY_dcaFSBTd.png")
+const EquipPopupScript := preload("res://scripts/ui/equip_popup.gd")
+const EquipmentItemScript := preload("res://scripts/data/equipment_item.gd")
 const STATUS_TYPES := ["Physical", "Poison", "Bleed", "Paralyze", "Holy", "Corruption"]
 const TEXT_Y_OFFSET := -0.004
 const STATUS_ICONS := {
@@ -30,6 +32,8 @@ var _portrait: TextureRect
 var _is_open: bool = false
 var _player_data: Node
 var _active_sheet: CharacterSheet = null  ## When set, refresh reads from this instead of PlayerData.
+var _clicks: Control     ## Transparent button overlay for editable slot rows.
+var _popup: Control   ## FFT-style picker (EquipPopup) shown over a clicked slot.
 
 
 func _ready() -> void:
@@ -70,6 +74,19 @@ func _ready() -> void:
 	_labels.mouse_filter = Control.MOUSE_FILTER_IGNORE
 	_labels.z_index = 2
 	_bg_rect.add_child(_labels)
+
+	# Clickable slot overlay (above labels). Buttons live here so the popup can fire.
+	_clicks = Control.new()
+	_clicks.name = "Clicks"
+	_clicks.set_anchors_preset(Control.PRESET_FULL_RECT)
+	_clicks.mouse_filter = Control.MOUSE_FILTER_IGNORE
+	_clicks.z_index = 3
+	_bg_rect.add_child(_clicks)
+
+	# Popup picker sits at the top of the CanvasLayer so it overlays everything.
+	_popup = EquipPopupScript.new()
+	_popup.name = "EquipPopup"
+	add_child(_popup)
 
 	_player_data = get_node_or_null("/root/PlayerData")
 	if _player_data == null:
@@ -342,6 +359,7 @@ func _create_all_labels() -> void:
 		skill_label.name = "SkillName_" + str(i)
 		skill_label.size = Vector2(_xf(0.188), _yf(0.038))
 		skill_label.add_theme_font_size_override("font_size", 13)
+		_make_slot_button("Skill", str(i), 0.066, y_row, 0.300, 0.052)
 
 	var equipment_slots := ["Weapon", "Armor", "Trinket"]
 	for i in equipment_slots.size():
@@ -352,6 +370,7 @@ func _create_all_labels() -> void:
 		equipment_label.name = "EquipmentName_" + slot_name
 		equipment_label.size = Vector2(_xf(0.196), _yf(0.038))
 		equipment_label.add_theme_font_size_override("font_size", 13)
+		_make_slot_button("Equipment", slot_name, 0.375, y_row, 0.260, 0.050)
 
 	for i in range(4):
 		var y_row := 0.696 + i * 0.067
@@ -359,6 +378,7 @@ func _create_all_labels() -> void:
 		trait_label.name = "TraitName_" + str(i)
 		trait_label.size = Vector2(_xf(0.196), _yf(0.038))
 		trait_label.add_theme_font_size_override("font_size", 13)
+		_make_slot_button("Trait", str(i), 0.692, y_row, 0.260, 0.052)
 
 
 # ----------------------------------------------------------------- refresh
@@ -498,6 +518,96 @@ func _set_portrait(path: String) -> void:
 		_portrait.texture = null
 		return
 	_portrait.texture = load(path) as Texture2D
+
+
+# ----------------------------------------------------------------- equip popup
+
+func _make_slot_button(kind: String, key: String, xf: float, yf: float, wf: float, hf: float) -> void:
+	var btn := Button.new()
+	btn.name = "%sBtn_%s" % [kind, key]
+	btn.flat = true
+	btn.modulate = Color(1, 1, 1, 0)  # invisible hit area
+	btn.position = Vector2(_xf(xf), _yf(yf))
+	btn.size = Vector2(_xf(wf), _yf(hf))
+	btn.pressed.connect(_on_slot_clicked.bind(kind, key, btn))
+	_clicks.add_child(btn)
+
+
+func _on_slot_clicked(kind: String, key: String, btn: Button) -> void:
+	# Only the per-character editable sheet supports equipping.
+	if _active_sheet == null or _popup == null:
+		return
+
+	var options: Array = []
+	var current_id := ""
+
+	match kind:
+		"Equipment":
+			current_id = _active_sheet.get_equipped_id(key)
+			for item in _active_sheet.get_equippable(key):
+				options.append({
+					"id": item.item_id,
+					"label": item.display_name,
+					"sub": _equipment_summary(item),
+				})
+		"Skill", "Trait":
+			var equipped: Array = _active_sheet.equipped_traits if kind == "Trait" else _active_sheet.equipped_skills
+			var idx := int(key)
+			current_id = equipped[idx] if idx < equipped.size() else ""
+			for sid in _owned_skill_ids():
+				options.append({"id": sid, "label": sid, "sub": ""})
+
+	# Anchor the popup just below-left of the clicked row, in viewport space.
+	var anchor := btn.get_global_rect().position + Vector2(0, btn.size.y)
+	_popup.open_at(options, current_id, anchor)
+
+	# Reconnect cleanly so only this slot receives the result.
+	if _popup.option_chosen.is_connected(_on_option_chosen):
+		_popup.option_chosen.disconnect(_on_option_chosen)
+	_popup.option_chosen.connect(_on_option_chosen.bind(kind, key), CONNECT_ONE_SHOT)
+
+
+func _on_option_chosen(chosen_id: String, kind: String, key: String) -> void:
+	if _active_sheet == null:
+		return
+	match kind:
+		"Equipment":
+			_active_sheet.equip_item(key, chosen_id)
+		"Skill":
+			_set_slot_array(_active_sheet.equipped_skills, int(key), chosen_id, CharacterSheet.MAX_SKILL_SLOTS)
+		"Trait":
+			_set_slot_array(_active_sheet.equipped_traits, int(key), chosen_id, CharacterSheet.MAX_TRAIT_SLOTS)
+	_refresh_all()
+
+
+func _set_slot_array(arr: Array, idx: int, value: String, max_slots: int) -> void:
+	# Pad to idx, then set or clear.
+	while arr.size() <= idx and arr.size() < max_slots:
+		arr.append("")
+	if idx < arr.size():
+		arr[idx] = value
+	# Drop trailing empties so the list stays tidy.
+	while arr.size() > 0 and String(arr[arr.size() - 1]).is_empty():
+		arr.remove_at(arr.size() - 1)
+
+
+func _owned_skill_ids() -> Array:
+	if _active_sheet == null:
+		return []
+	return _active_sheet.get_all_unlocked_job_skills()
+
+
+func _equipment_summary(item) -> String:
+	var parts: Array[String] = []
+	if item.weapon_power > 0: parts.append("PWR+%d" % item.weapon_power)
+	if item.pow_bonus > 0:    parts.append("POW+%d" % item.pow_bonus)
+	if item.def_bonus > 0:    parts.append("DEF+%d" % item.def_bonus)
+	if item.hp_bonus > 0:     parts.append("HP+%d" % item.hp_bonus)
+	if item.mp_bonus > 0:     parts.append("MP+%d" % item.mp_bonus)
+	if item.spd_bonus > 0:    parts.append("SPD+%d" % item.spd_bonus)
+	if item.evasion_bonus > 0 or item.weapon_evasion > 0:
+		parts.append("EV+%d%%" % (item.evasion_bonus + item.weapon_evasion))
+	return " ".join(parts)
 
 
 func _on_stats_changed() -> void:
