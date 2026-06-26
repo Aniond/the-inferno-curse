@@ -1,0 +1,12 @@
+[gd_resource type="Resource" script_class="SanityEvent" format=3 uid="uid://sanity_limbo_ritual_repeat"]
+
+[ext_resource type="Script" path="res://scripts/data/sanity_event.gd" id="1_sanity_event"]
+
+[resource]
+script = ExtResource("1_sanity_event")
+event_id = "limbo_ritual_repeat"
+circle = "limbo"
+description = "The same civic procession passes twice within minutes. No one notices."
+sanity_cost = 6
+roll_difficulty = 12
+trigger_type = "on_enter"

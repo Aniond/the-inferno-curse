@@ -1,0 +1,12 @@
+[gd_resource type="Resource" script_class="SanityEvent" format=3 uid="uid://sanity_limbo_wrong_face"]
+
+[ext_resource type="Script" path="res://scripts/data/sanity_event.gd" id="1_sanity_event"]
+
+[resource]
+script = ExtResource("1_sanity_event")
+event_id = "limbo_wrong_face"
+circle = "limbo"
+description = "An NPC's face briefly becomes someone else's — a dead relative, a stranger — then snaps back."
+sanity_cost = 9
+roll_difficulty = 14
+trigger_type = "on_interact"

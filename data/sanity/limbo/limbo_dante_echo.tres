@@ -1,0 +1,12 @@
+[gd_resource type="Resource" script_class="SanityEvent" format=3 uid="uid://sanity_limbo_dante_echo"]
+
+[ext_resource type="Script" path="res://scripts/data/sanity_event.gd" id="1_sanity_event"]
+
+[resource]
+script = ExtResource("1_sanity_event")
+event_id = "limbo_dante_echo"
+circle = "limbo"
+description = "Guglielmo hears his own name spoken in a voice that isn't there."
+sanity_cost = 8
+roll_difficulty = 13
+trigger_type = "on_story_beat"
