@@ -1,0 +1,10 @@
+[gd_resource type="StandardMaterial3D" format=3 uid="uid://cobblestone_plaza"]
+
+[resource]
+albedo_color = Color(0.32, 0.30, 0.27, 1)
+metallic = 0.0
+roughness = 0.92
+emission_enabled = true
+emission = Color(0.04, 0.04, 0.05, 1)
+emission_energy_multiplier = 0.4
+uv1_scale = Vector3(8, 8, 1)

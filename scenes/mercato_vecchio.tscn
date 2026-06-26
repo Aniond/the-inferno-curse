@@ -6,6 +6,11 @@
 [ext_resource type="Environment" uid="uid://c4qfo6yvfhdaj" path="res://materials/tavern_environment.tres" id="4_env"]
 [ext_resource type="Script" uid="uid://c6fjdrw7qffft" path="res://scripts/day_night_cycle.gd" id="5_day_night"]
 [ext_resource type="Script" path="res://scripts/ui/sanity_shader_controller.gd" id="6_sanity_shader"]
+[ext_resource type="Material" path="res://materials/cobblestone_plaza.tres" id="7_cobble_plaza"]
+[ext_resource type="Material" path="res://materials/cobblestone_center.tres" id="8_cobble_center"]
+[ext_resource type="Material" path="res://materials/arno_river.tres" id="9_arno_river"]
+[ext_resource type="Material" uid="uid://46m6jk6ase1o" path="res://materials/wall_stone.tres" id="10_wall_stone"]
+[ext_resource type="Material" path="res://materials/tuscan_sandstone.tres" id="11_sandstone"]
 
 ; ── Ground meshes ──────────────────────────────────────────────────────────
 
@@ -169,14 +174,16 @@ script = ExtResource("2_player_script")
 [node name="Ground" type="StaticBody3D" parent="."]
 
 [node name="PlazaMesh" type="MeshInstance3D" parent="Ground"]
+material_override = ExtResource("7_cobble_plaza")
 mesh = SubResource("PlaneMesh_plaza")
 
 [node name="PlazaCollision" type="CollisionShape3D" parent="Ground"]
 shape = SubResource("BoxShape3D_plaza_col")
 
-; Center plaza — slightly lighter stone (same mesh, material slot for later)
+; Center plaza — slightly lighter stone
 [node name="CenterPlaza" type="MeshInstance3D" parent="Ground"]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.01, 0)
+material_override = ExtResource("8_cobble_center")
 mesh = SubResource("PlaneMesh_center")
 
 ; Stone steps down to river — south center
@@ -190,6 +197,7 @@ mesh = SubResource("PlaneMesh_steps")
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -0.1, 30)
 
 [node name="RiverMesh" type="MeshInstance3D" parent="River"]
+material_override = ExtResource("9_arno_river")
 mesh = SubResource("PlaneMesh_river")
 
 [node name="RiverCollision" type="CollisionShape3D" parent="River"]
@@ -200,6 +208,7 @@ shape = SubResource("BoxShape3D_river_col")
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.5, 27.5)
 
 [node name="QuayMesh" type="MeshInstance3D" parent="QuayWall"]
+material_override = ExtResource("11_sandstone")
 mesh = SubResource("BoxMesh_quay")
 
 [node name="QuayCollision" type="CollisionShape3D" parent="QuayWall"]
@@ -214,6 +223,7 @@ shape = SubResource("BoxShape3D_quay")
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 5, -32)
 
 [node name="Mesh" type="MeshInstance3D" parent="Buildings/LoggiaDelMercato"]
+material_override = ExtResource("10_wall_stone")
 mesh = SubResource("BoxMesh_bldg_north")
 
 [node name="Collision" type="CollisionShape3D" parent="Buildings/LoggiaDelMercato"]
@@ -226,6 +236,7 @@ shape = SubResource("BoxShape3D_bldg_north")
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -20, 2.5, -28)
 
 [node name="Mesh" type="MeshInstance3D" parent="Buildings/LoggiaPillars/Pillar1"]
+material_override = ExtResource("11_sandstone")
 mesh = SubResource("CylinderMesh_pillar")
 
 [node name="Collision" type="CollisionShape3D" parent="Buildings/LoggiaPillars/Pillar1"]
@@ -281,6 +292,7 @@ shape = SubResource("CylinderShape3D_pillar_col")
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -32, 5, -4)
 
 [node name="Mesh" type="MeshInstance3D" parent="Buildings/WestBlock"]
+material_override = ExtResource("10_wall_stone")
 mesh = SubResource("BoxMesh_bldg_west")
 
 [node name="Collision" type="CollisionShape3D" parent="Buildings/WestBlock"]
@@ -291,6 +303,7 @@ shape = SubResource("BoxShape3D_bldg_west")
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 32, 5, -4)
 
 [node name="Mesh" type="MeshInstance3D" parent="Buildings/EastBlock"]
+material_override = ExtResource("10_wall_stone")
 mesh = SubResource("BoxMesh_bldg_east")
 
 [node name="Collision" type="CollisionShape3D" parent="Buildings/EastBlock"]
@@ -305,6 +318,7 @@ transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, 0)
 
 [node name="BasinMesh" type="MeshInstance3D" parent="Fountain/Basin"]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.4, 0)
+material_override = ExtResource("11_sandstone")
 mesh = SubResource("CylinderMesh_fountain_basin")
 
 [node name="BasinCollision" type="CollisionShape3D" parent="Fountain/Basin"]
@@ -313,10 +327,12 @@ shape = SubResource("CylinderShape3D_fountain_col")
 
 [node name="Pillar" type="MeshInstance3D" parent="Fountain"]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1.8, 0)
+material_override = ExtResource("11_sandstone")
 mesh = SubResource("CylinderMesh_fountain_pillar")
 
 [node name="Top" type="MeshInstance3D" parent="Fountain"]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 3.0, 0)
+material_override = ExtResource("11_sandstone")
 mesh = SubResource("CylinderMesh_fountain_top")
 
 ; ── Market Stalls ──────────────────────────────────────────────────────────

@@ -1,0 +1,9 @@
+[gd_resource type="StandardMaterial3D" format=3 uid="uid://tuscan_sandstone"]
+
+[resource]
+albedo_color = Color(0.62, 0.50, 0.34, 1)
+metallic = 0.0
+roughness = 0.88
+emission_enabled = true
+emission = Color(0.08, 0.06, 0.03, 1)
+emission_energy_multiplier = 0.45
