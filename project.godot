@@ -22,6 +22,7 @@ PartyManager="*res://autoload/party_manager.gd"
 EnvSecrets="*res://scripts/config/env_secrets.gd"
 ScreenshotBurst="*res://autoload/screenshot_burst.gd"
 SanityEventLibrary="*res://autoload/sanity_event_library.gd"
+SanityEventBus="*res://autoload/sanity_event_bus.gd"
 
 [display]
 
