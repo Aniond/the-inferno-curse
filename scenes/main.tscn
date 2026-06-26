@@ -21,6 +21,7 @@
 [ext_resource type="PackedScene" path="res://scenes/ui/party_select_ui.tscn" id="19_party_select_ui"]
 [ext_resource type="PackedScene" path="res://scenes/ui/character_screen.tscn" id="20_character_screen"]
 [ext_resource type="Script" uid="uid://c6fjdrw7qffft" path="res://scripts/day_night_cycle.gd" id="day_night_cycle"]
+[ext_resource type="Script" path="res://scripts/ui/sanity_shader_controller.gd" id="sanity_shader_controller"]
 
 [sub_resource type="PlaneMesh" id="PlaneMesh_ground"]
 size = Vector2(30, 30)
@@ -60,6 +61,10 @@ shadow_enabled = true
 
 [node name="WorldEnvironment" type="WorldEnvironment" parent="." unique_id=1014742819]
 environment = ExtResource("8_tavern_env")
+
+[node name="SanityShaderController" type="Node" parent="." unique_id=1111111101]
+script = ExtResource("sanity_shader_controller")
+world_environment = NodePath("../WorldEnvironment")
 
 [node name="DayNightCycle" type="Node" parent="." unique_id=1421686356]
 script = ExtResource("day_night_cycle")
