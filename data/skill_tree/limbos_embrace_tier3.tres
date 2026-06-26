@@ -1,0 +1,18 @@
+[gd_resource type="Resource" script_class="SkillTreeNode" format=3 uid="uid://stn_limbos_embrace_3"]
+
+[ext_resource type="Script" path="res://scripts/data/skill_tree_node.gd" id="1_stn"]
+
+[resource]
+script = ExtResource("1_stn")
+skill_id = "limbos_embrace"
+display_name = "Limbo's Embrace III"
+tier = 3
+gem_cost = 3
+family = "limbo"
+mp_cost_reduction = 0
+new_effect_description = "The grip tightens. Root lasts 2 turns instead of 1. Opens the path of Unnatural Step."
+new_status_applied = "rooted"
+new_status_duration = 2
+requires = Array[String]([])
+unlocks = Array[String](["unnatural_step"])
+tree_position = Vector2(200, 240)

@@ -1,0 +1,15 @@
+[gd_resource type="Resource" script_class="JobSkill" format=3 uid="uid://jsk_oven_door"]
+
+[ext_resource type="Script" path="res://scripts/data/job_skill.gd" id="1_jsk"]
+
+[resource]
+script = ExtResource("1_jsk")
+skill_id = "oven_door"
+display_name = "Oven Door"
+description = "Absorbs the first hit each combat without flinching. Built for sustained heat."
+flavor_text = "He has opened that door ten thousand times. One more won't break him."
+category = 1
+job_id = "fornaro"
+jp_cost = 80
+mp_cost = 0
+tags = Array[String](["passive", "defense", "absorb", "once_per_combat"])

@@ -1,0 +1,47 @@
+{
+	"assetId": "ec9177d0-adb0-44e2-8590-8dfbb45f5c04",
+	"metadata": {
+		"downloadUrl": "https://v3b.fal.media/files/b/0a9fc627/UtP0-k6R6gvhoE2nGKzTw_RkmjLkJO.png",
+		"fileName": "UtP0-k6R6gvhoE2nGKzTw_RkmjLkJO.png",
+		"filename": "UtP0-k6R6gvhoE2nGKzTw_RkmjLkJO.png",
+		"id": "ec9177d0-adb0-44e2-8590-8dfbb45f5c04",
+		"metadata": {
+			"aspect_ratio": "1:1",
+			"batchCapped": false,
+			"batchSize": 1.0,
+			"clientImageModel": "fal-ai/nano-banana-2",
+			"entrypoint": "api/art/generate",
+			"falModelId": "fal-ai/nano-banana-2",
+			"falPrompt": "Small decorative portrait frame for a medieval RPG character \nportrait box. Interior opening approximately 80x80 pixels. \nExterior frame ornate but restrained — aged and worn, \nnot pristine.\n\nStyle: Somewhere between a painted medallion frame and a \nworn reliquary border. Could suggest hammered metal, \ndark carved wood, or aged gilt. \n\nDetails: Subtle corner flourishes — simple knotwork or \ngeometric medieval pattern. Slight asymmetry from age and \nwear. Tarnished gold or dark bronze tone with near-black \nshadow in the recesses. A thin inner lip before the \nportrait opening.\n\nNOT: ornate fantasy filigree, glowing effects, \nmodern clean lines, heraldic symbols, crosses or \nreligious iconography baked in.\n\nColor palette: tarnished dark gold, aged bronze, \nnear-black shadow, faint warm highlight on raised edges.\nTransparent background outside the frame.\nSerious, melancholic, medieval Florentine aesthetic.\nPNG format, transparent background., 16-bit pixel art, SNES-era detailed sprites, rich palette",
+			"finalPrompt": "Small decorative portrait frame for a medieval RPG character \nportrait box. Interior opening approximately 80x80 pixels. \nExterior frame ornate but restrained — aged and worn, \nnot pristine.\n\nStyle: Somewhere between a painted medallion frame and a \nworn reliquary border. Could suggest hammered metal, \ndark carved wood, or aged gilt. \n\nDetails: Subtle corner flourishes — simple knotwork or \ngeometric medieval pattern. Slight asymmetry from age and \nwear. Tarnished gold or dark bronze tone with near-black \nshadow in the recesses. A thin inner lip before the \nportrait opening.\n\nNOT: ornate fantasy filigree, glowing effects, \nmodern clean lines, heraldic symbols, crosses or \nreligious iconography baked in.\n\nColor palette: tarnished dark gold, aged bronze, \nnear-black shadow, faint warm highlight on raised edges.\nTransparent background outside the frame.\nSerious, melancholic, medieval Florentine aesthetic.\nPNG format, transparent background.",
+			"generatedAt": "2026-06-25T23:45:26.777Z",
+			"generationBatchId": "8521edc9-e490-498b-9b23-757ea02dc566",
+			"height": 1024.0,
+			"multiview": false,
+			"numImages": 1.0,
+			"numImagesRequested": 1.0,
+			"pose": "none",
+			"promptRefined": false,
+			"referenceCount": 0.0,
+			"runIndex": 0.0,
+			"style": "retro-16bit",
+			"surface": "studio",
+			"width": 1024.0
+		},
+		"name": "Small decorative portrait frame for a",
+		"previewUrl": "https://v3b.fal.media/files/b/0a9fc627/UtP0-k6R6gvhoE2nGKzTw_RkmjLkJO.png",
+		"primary": true,
+		"thumbnailUrl": "https://v3b.fal.media/files/b/0a9fc627/UtP0-k6R6gvhoE2nGKzTw_RkmjLkJO.png",
+		"title": "Small decorative portrait frame for a",
+		"type": "image",
+		"url": "https://v3b.fal.media/files/b/0a9fc627/UtP0-k6R6gvhoE2nGKzTw_RkmjLkJO.png",
+		"version": "2026-06-25"
+	},
+	"name": "Small decorative portrait frame for a",
+	"paths": [
+		"res://assets/summer/ec9177d0-adb0-44e2-8590-8dfbb45f5c04/2026-06-25/UtP0-k6R6gvhoE2nGKzTw_RkmjLkJO.png"
+	],
+	"primaryPath": "res://assets/summer/ec9177d0-adb0-44e2-8590-8dfbb45f5c04/2026-06-25/UtP0-k6R6gvhoE2nGKzTw_RkmjLkJO.png",
+	"source": "summer-studio",
+	"version": "2026-06-25"
+}

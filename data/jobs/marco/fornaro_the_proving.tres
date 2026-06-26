@@ -1,0 +1,18 @@
+[gd_resource type="Resource" script_class="JobSkill" format=3 uid="uid://jsk_the_proving"]
+
+[ext_resource type="Script" path="res://scripts/data/job_skill.gd" id="1_jsk"]
+
+[resource]
+script = ExtResource("1_jsk")
+skill_id = "the_proving"
+display_name = "The Proving"
+description = "Reads the battlefield like rising dough. Reveals the next enemy action in the CT queue."
+flavor_text = "Everything has a tell. You just have to know what you're looking for."
+category = 0
+job_id = "fornaro"
+jp_cost = 75
+mp_cost = 4
+target = 0
+range_cells = 0
+duration_turns = 0
+tags = Array[String](["intelligence", "reveal", "ct", "utility"])

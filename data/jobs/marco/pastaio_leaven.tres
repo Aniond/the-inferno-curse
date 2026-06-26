@@ -1,0 +1,21 @@
+[gd_resource type="Resource" script_class="JobSkill" format=3 uid="uid://jsk_leaven"]
+
+[ext_resource type="Script" path="res://scripts/data/job_skill.gd" id="1_jsk"]
+
+[resource]
+script = ExtResource("1_jsk")
+skill_id = "leaven"
+display_name = "Leaven"
+description = "Applies a slow-building buff to an ally. Starts at +1 STR, doubles each turn for 3 turns as it rises."
+flavor_text = "Timing matters. Too early and it collapses. Too late and it's wasted."
+category = 0
+job_id = "pastaio"
+jp_cost = 75
+mp_cost = 5
+target = 1
+range_cells = 3
+duration_turns = 3
+stat_modifier_stat = "STR"
+stat_modifier_amount = 1
+status_applied = "leavening"
+tags = Array[String](["buff", "str", "ally", "rising", "timing"])

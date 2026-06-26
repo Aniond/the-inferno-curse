@@ -3,10 +3,14 @@ extends Node
 const ENV_FILE_NAME := ".env.local"
 
 var tactical_ai_api_key: String = ""
+var pixellab_api_key: String = ""
+var threedai_api_key: String = ""
 
 
 func _ready() -> void:
 	tactical_ai_api_key = _load_key("TACTICAL_AI_API_KEY")
+	pixellab_api_key = _load_key("PIXELLAB_API_KEY")
+	threedai_api_key = _load_key("THREEDAI_API_KEY")
 
 
 func has_tactical_ai_key() -> bool:
@@ -15,6 +19,22 @@ func has_tactical_ai_key() -> bool:
 
 func get_tactical_ai_api_key() -> String:
 	return tactical_ai_api_key
+
+
+func has_pixellab_key() -> bool:
+	return not pixellab_api_key.is_empty()
+
+
+func get_pixellab_api_key() -> String:
+	return pixellab_api_key
+
+
+func has_threedai_key() -> bool:
+	return not threedai_api_key.is_empty()
+
+
+func get_threedai_api_key() -> String:
+	return threedai_api_key
 
 
 func _load_key(key: String) -> String:

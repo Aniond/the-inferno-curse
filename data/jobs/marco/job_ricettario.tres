@@ -1,0 +1,18 @@
+[gd_resource type="Resource" script_class="JobSheet" format=3 uid="uid://job_ricettario_marco"]
+
+[ext_resource type="Script" path="res://scripts/data/job_sheet.gd" id="1_js"]
+
+[resource]
+script = ExtResource("1_js")
+job_id = "ricettario"
+display_name = "The Ricettario"
+tier = 2
+required_job_id = "pastaio"
+job_level = 0
+jp_earned = 0
+jp_spent = 0
+unlocked_skills = Array[String]([])
+level_mp_per_level = 4
+level_fth_per_level = 1
+level_pow_per_level = 1
+flavor_text = "Keeper of the Book. Knowledge-based buffs, recipe combinations, unique consumables."

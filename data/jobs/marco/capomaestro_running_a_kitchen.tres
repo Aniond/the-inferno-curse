@@ -1,0 +1,16 @@
+[gd_resource type="Resource" script_class="JobSkill" format=3 uid="uid://jsk_running_a_kitchen"]
+
+[ext_resource type="Script" path="res://scripts/data/job_skill.gd" id="1_jsk"]
+
+[resource]
+script = ExtResource("1_jsk")
+skill_id = "running_a_kitchen"
+display_name = "Running a Kitchen"
+description = "Ally abilities cost 1 less MP when Marco is active."
+flavor_text = "He has spent his life making operations run efficiently under pressure."
+category = 1
+job_id = "capomaestro"
+jp_cost = 100
+mp_cost = 0
+passive_mp_bonus = 0
+tags = Array[String](["passive", "aura", "mp_reduction", "party"])

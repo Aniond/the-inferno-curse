@@ -31,9 +31,6 @@ const CoreStatsResource := preload("res://scripts/data/core_stats.gd")
 @export var normal_ability: String = ""
 @export var uncommon_ability: String = ""
 @export var rare_ability: String = ""
-@export_range(0, 100) var normal_absorb_chance: int = 40
-@export_range(0, 100) var uncommon_absorb_chance: int = 15
-@export_range(0, 100) var rare_absorb_chance: int = 5
 @export var ability_theme_tags: Array[String] = []  # e.g. ["martial", "infernal"] for class grouping
 
 

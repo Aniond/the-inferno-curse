@@ -1,0 +1,20 @@
+[gd_resource type="Resource" script_class="JobSkill" format=3 uid="uid://jsk_flash_fire"]
+
+[ext_resource type="Script" path="res://scripts/data/job_skill.gd" id="1_jsk"]
+
+[resource]
+script = ExtResource("1_jsk")
+skill_id = "flash_fire"
+display_name = "Flash Fire"
+description = "Throws a burst of flour into flame. Short range AOE — applies Blind to targets caught in the flash."
+flavor_text = "Flour in the air. One spark. That's all it takes."
+category = 0
+job_id = "fornaro"
+jp_cost = 100
+mp_cost = 8
+target = 4
+range_cells = 2
+aoe_radius = 1
+duration_turns = 2
+status_applied = "blind"
+tags = Array[String](["fire", "aoe", "blind", "flour"])

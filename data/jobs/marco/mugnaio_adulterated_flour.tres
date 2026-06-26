@@ -1,0 +1,19 @@
+[gd_resource type="Resource" script_class="JobSkill" format=3 uid="uid://jsk_adulterated_flour"]
+
+[ext_resource type="Script" path="res://scripts/data/job_skill.gd" id="1_jsk"]
+
+[resource]
+script = ExtResource("1_jsk")
+skill_id = "adulterated_flour"
+display_name = "Adulterated Flour"
+description = "Contaminates an enemy's next consumable use — their healing or buff item has reduced effect."
+flavor_text = "Dark for a baker. But practical."
+category = 0
+job_id = "mugnaio"
+jp_cost = 100
+mp_cost = 4
+target = 1
+range_cells = 3
+duration_turns = 3
+status_applied = "item_degraded"
+tags = Array[String](["debuff", "item", "denial"])

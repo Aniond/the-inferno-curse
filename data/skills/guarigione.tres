@@ -1,0 +1,31 @@
+[gd_resource type="Resource" script_class="SkillData" format=3 uid="uid://skill_guarigione"]
+
+[ext_resource type="Script" path="res://scripts/data/skill_data.gd" id="1_skill_data"]
+
+[resource]
+script = ExtResource("1_skill_data")
+skill_id = "guarigione"
+display_name = "Guarigione"
+skill_type = 0
+tier = 0
+grimoire_source = ""
+flavor_text = "It does not cure. It mends — enough to keep moving."
+mp_cost = 10
+corruption_cost = 0.0
+casting_time = 0
+range_cells = 4
+area = 0
+target = 1
+stat_check = 0
+primary_effect_description = "Heal a single ally for 18 HP."
+duration_turns = 0
+status_applied = ""
+damage_formula = 0
+damage_value = 0.0
+healing_formula = 1
+healing_value = 18.0
+stat_modifier_stat = ""
+stat_modifier_amount = 0
+stat_modifier_duration = 0
+absorption_tier = 0
+tags = Array[String](["heal", "ally", "spell"])

@@ -1,0 +1,8 @@
+[gd_scene load_steps=2 format=3 uid="uid://vfx_claw_slash"]
+
+[ext_resource type="Script" uid="uid://bq0vwu3kfsrmu" path="res://scripts/claw_slash_effect.gd" id="1_claw_slash"]
+
+[node name="ClawSlashEffect" type="AnimatedSprite3D"]
+script = ExtResource("1_claw_slash")
+pixel_size = 0.02
+billboard = 1

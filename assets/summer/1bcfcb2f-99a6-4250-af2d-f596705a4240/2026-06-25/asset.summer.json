@@ -1,0 +1,71 @@
+{
+	"assetId": "1bcfcb2f-99a6-4250-af2d-f596705a4240",
+	"metadata": {
+		"downloadUrl": "https://res.cloudinary.com/dol86wsz1/raw/upload/v1782421372/summer_3d/3d_1782421370884.glb",
+		"fileName": "3d_1782421370884.glb",
+		"filename": "3d_1782421370884.glb",
+		"id": "1bcfcb2f-99a6-4250-af2d-f596705a4240",
+		"metadata": {
+			"cloudinaryPublicId": "summer_3d/3d_1782421370884.glb",
+			"entrypoint": "api/art/generate-3d",
+			"kind": "text-to-3d",
+			"meshyUrls": {
+				"glb": "https://v3b.fal.media/files/b/0a9fc257/o3OzTBUjt2qrnlWbYSJL8_model.glb",
+				"obj": "https://v3b.fal.media/files/b/0a9fc257/5QOAEt5J7a3i22baH62Y2_6e0597ddcf8099ca062321420d2851c6.obj"
+			},
+			"permanentUrls": {
+				"glb": "https://res.cloudinary.com/dol86wsz1/raw/upload/v1782421372/summer_3d/3d_1782421370884.glb",
+				"thumbnail": "https://res.cloudinary.com/dol86wsz1/image/upload/v1782421373/summer_3d/3d_1782421373808_thumb.png"
+			},
+			"queueJobId": "8753",
+			"queueName": "asset-generation",
+			"seo": {
+				"description": "Low poly 13th c Florentine market stall 3D model with baked textures. GLB format for Godot 4 HD-2D. Includes wood and fabric materials. Free license.",
+				"keywords": [
+					"free game assets",
+					"3d model",
+					"free 3d game assets",
+					"game development",
+					"13th",
+					"century",
+					"florentine",
+					"market",
+					"stall,",
+					"game art"
+				],
+				"openGraph": {
+					"description": "Low poly 13th c Florentine market stall 3D model with baked textures. GLB format for Godot 4 HD-2D. Includes wood and fabric materials. Free license.",
+					"title": "Medieval Florentine Stall - Free 3D Model for Games",
+					"type": "article"
+				},
+				"title": "Medieval Florentine Stall - Free 3D Model for Games | Summer Engine",
+				"twitter": {
+					"card": "summary_large_image",
+					"description": "Low poly 13th c Florentine market stall 3D model with baked textures. GLB format for Godot 4 HD-2D. Includes wood and fabric materials. Free license.",
+					"title": "Medieval Florentine Stall - Free 3D Model for Games"
+				}
+			},
+			"surface": "studio",
+			"tempUrls": {
+				"glb": "https://v3b.fal.media/files/b/0a9fc257/o3OzTBUjt2qrnlWbYSJL8_model.glb",
+				"thumbnail": "https://v3b.fal.media/files/b/0a9fc258/x6ilyNJ0KSP_upEC3NGZf_preview.png"
+			},
+			"uploadStatus": "complete"
+		},
+		"name": "Medieval Florentine Stall",
+		"previewUrl": "https://res.cloudinary.com/dol86wsz1/image/upload/v1782421373/summer_3d/3d_1782421373808_thumb.png",
+		"primary": true,
+		"thumbnailUrl": "https://res.cloudinary.com/dol86wsz1/image/upload/v1782421373/summer_3d/3d_1782421373808_thumb.png",
+		"title": "Medieval Florentine Stall",
+		"type": "3d",
+		"url": "https://res.cloudinary.com/dol86wsz1/raw/upload/v1782421372/summer_3d/3d_1782421370884.glb",
+		"version": "2026-06-25"
+	},
+	"name": "Medieval Florentine Stall",
+	"paths": [
+		"res://assets/summer/1bcfcb2f-99a6-4250-af2d-f596705a4240/2026-06-25/3d_1782421370884.glb"
+	],
+	"primaryPath": "res://assets/summer/1bcfcb2f-99a6-4250-af2d-f596705a4240/2026-06-25/3d_1782421370884.glb",
+	"source": "summer-studio",
+	"version": "2026-06-25"
+}

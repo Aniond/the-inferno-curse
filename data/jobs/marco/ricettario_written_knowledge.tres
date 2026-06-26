@@ -1,0 +1,19 @@
+[gd_resource type="Resource" script_class="JobSkill" format=3 uid="uid://jsk_written_knowledge"]
+
+[ext_resource type="Script" path="res://scripts/data/job_skill.gd" id="1_jsk"]
+
+[resource]
+script = ExtResource("1_jsk")
+skill_id = "written_knowledge"
+display_name = "Written Knowledge"
+description = "Studies an enemy for 1 turn and records their weakness. All party attacks against that enemy gain +15% damage for the encounter."
+flavor_text = "Know your ingredients."
+category = 0
+job_id = "ricettario"
+jp_cost = 120
+mp_cost = 3
+target = 1
+range_cells = 5
+duration_turns = 0
+status_applied = "weakness_recorded"
+tags = Array[String](["study", "buff", "damage_bonus", "knowledge"])

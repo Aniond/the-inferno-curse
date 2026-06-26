@@ -3,6 +3,9 @@
 [ext_resource type="Script" uid="uid://cif8cb30qlua" path="res://scripts/data/character_sheet.gd" id="1_character_sheet"]
 [ext_resource type="Script" uid="uid://unbjv8sfem0j" path="res://scripts/data/core_stats.gd" id="2_core_stats"]
 [ext_resource type="Script" uid="uid://cdruramw881al" path="res://scripts/data/stat_modifier.gd" id="3_stat_modifier"]
+[ext_resource type="Resource" path="res://data/skills/guts.tres" id="4_guts"]
+[ext_resource type="Resource" path="res://data/skills/protezione.tres" id="5_protezione"]
+[ext_resource type="Resource" path="res://data/skills/guarigione.tres" id="6_guarigione"]
 
 [sub_resource type="Resource" id="CoreStats_guglielmo"]
 script = ExtResource("2_core_stats")
@@ -58,7 +61,7 @@ max_mp = 15
 stat_modifiers = Array[Resource]([SubResource("StatModifier_squire_hp_growth"), SubResource("StatModifier_squire_mp_growth"), SubResource("StatModifier_squire_strength_growth"), SubResource("StatModifier_training_sword_power"), SubResource("StatModifier_basic_kit_defense")])
 portrait_path = "res://assets/images/priest_sprite.png"
 sprite_scene_path = "res://scenes/characters/baker_npc.tscn"
-abilities = Array[String](["Guts", "Protezione", "Guarigione"])
+abilities = Array[Resource]([ExtResource("4_guts"), ExtResource("5_protezione"), ExtResource("6_guarigione")])
 weapon = "Training Sword"
 head = "Elmetto del Cavaliere"
 body = "Cotta di Maglia"

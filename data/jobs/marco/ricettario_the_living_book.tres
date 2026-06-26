@@ -1,0 +1,15 @@
+[gd_resource type="Resource" script_class="JobSkill" format=3 uid="uid://jsk_the_living_book"]
+
+[ext_resource type="Script" path="res://scripts/data/job_skill.gd" id="1_jsk"]
+
+[resource]
+script = ExtResource("1_jsk")
+skill_id = "the_living_book"
+display_name = "The Living Book"
+description = "Each new enemy type encountered permanently adds a small bonus to party effectiveness against that type in future encounters."
+flavor_text = "He never forgets a recipe."
+category = 1
+job_id = "ricettario"
+jp_cost = 100
+mp_cost = 0
+tags = Array[String](["passive", "persistent", "knowledge", "meta"])

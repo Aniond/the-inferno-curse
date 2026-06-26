@@ -26,7 +26,68 @@ const StatModifierResource := preload("res://scripts/data/stat_modifier.gd")
 
 @export var portrait_path: String = ""
 @export var sprite_scene_path: String = ""
-@export var abilities: Array[String] = []
+@export var abilities: Array[Resource] = []
+@export var soul_gems: Array[Resource] = []
+@export var absorbed_skills: Dictionary = {}    # skill_id -> absorb count
+@export var unlocked_nodes: Dictionary = {}     # skill_id -> current tier (0=locked)
+@export var equipped_skills: Array[String] = [] # active skill slots (max 4)
+@export var equipped_traits: Array[String] = [] # passive trait slots (max 4)
+@export var job_sheets: Array[Resource] = []    # JobSheet resources for each job
+@export var active_job_id: String = ""          # currently active job
+
+const MAX_SKILL_SLOTS := 4
+const MAX_TRAIT_SLOTS := 4
+
+
+func equip_skill(skill_id: String) -> bool:
+	if equipped_skills.has(skill_id):
+		return false
+	if equipped_skills.size() >= MAX_SKILL_SLOTS:
+		return false
+	equipped_skills.append(skill_id)
+	return true
+
+
+func unequip_skill(skill_id: String) -> void:
+	equipped_skills.erase(skill_id)
+
+
+func equip_trait(skill_id: String) -> bool:
+	if equipped_traits.has(skill_id):
+		return false
+	if equipped_traits.size() >= MAX_TRAIT_SLOTS:
+		return false
+	equipped_traits.append(skill_id)
+	return true
+
+
+func unequip_trait(skill_id: String) -> void:
+	equipped_traits.erase(skill_id)
+
+
+func get_job_sheet(job_id: String) -> JobSheet:
+	for sheet in job_sheets:
+		if sheet is JobSheet and sheet.job_id == job_id:
+			return sheet
+	return null
+
+
+func get_active_job_sheet() -> JobSheet:
+	return get_job_sheet(active_job_id)
+
+
+func earn_jp(amount: int) -> void:
+	var sheet := get_active_job_sheet()
+	if sheet != null:
+		sheet.earn_jp(amount)
+
+
+func get_all_unlocked_job_skills() -> Array[String]:
+	var all: Array[String] = []
+	for sheet in job_sheets:
+		if sheet is JobSheet:
+			all.append_array(sheet.unlocked_skills)
+	return all
 
 @export var weapon: String = ""
 @export var head: String = ""

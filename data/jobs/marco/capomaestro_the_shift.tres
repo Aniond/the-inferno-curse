@@ -1,0 +1,18 @@
+[gd_resource type="Resource" script_class="JobSkill" format=3 uid="uid://jsk_the_shift"]
+
+[ext_resource type="Script" path="res://scripts/data/job_skill.gd" id="1_jsk"]
+
+[resource]
+script = ExtResource("1_jsk")
+skill_id = "the_shift"
+display_name = "The Shift"
+description = "Assigns each ally a role for 3 turns — attacker, defender, or support. Each role grants a relevant stat bonus."
+flavor_text = "Everyone has a job. Do yours."
+category = 0
+job_id = "capomaestro"
+jp_cost = 120
+mp_cost = 6
+target = 3
+duration_turns = 3
+status_applied = "shift_role"
+tags = Array[String](["buff", "aoe_ally", "role", "commander"])

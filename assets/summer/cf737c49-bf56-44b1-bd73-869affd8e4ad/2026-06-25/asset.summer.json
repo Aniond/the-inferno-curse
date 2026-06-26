@@ -1,0 +1,71 @@
+{
+	"assetId": "cf737c49-bf56-44b1-bd73-869affd8e4ad",
+	"metadata": {
+		"downloadUrl": "https://res.cloudinary.com/dol86wsz1/raw/upload/v1782421754/summer_3d/3d_1782421752550.glb",
+		"fileName": "3d_1782421752550.glb",
+		"filename": "3d_1782421752550.glb",
+		"id": "cf737c49-bf56-44b1-bd73-869affd8e4ad",
+		"metadata": {
+			"cloudinaryPublicId": "summer_3d/3d_1782421752550.glb",
+			"entrypoint": "api/art/generate-3d",
+			"kind": "text-to-3d",
+			"meshyUrls": {
+				"glb": "https://v3b.fal.media/files/b/0a9fc27e/h3lPqKXz47_cK78N2aslX_model.glb",
+				"obj": "https://v3b.fal.media/files/b/0a9fc27d/h5XhmWj9zytGLt8HIKOE3_cfa0fddc406c024f3aa3a72fd8e3d27a.obj"
+			},
+			"permanentUrls": {
+				"glb": "https://res.cloudinary.com/dol86wsz1/raw/upload/v1782421754/summer_3d/3d_1782421752550.glb",
+				"thumbnail": "https://res.cloudinary.com/dol86wsz1/image/upload/v1782421755/summer_3d/3d_1782421755501_thumb.png"
+			},
+			"queueJobId": "8759",
+			"queueName": "asset-generation",
+			"seo": {
+				"description": "Low poly 13th century Florentine fountain 3D model with baked stone textures in cool gray and moss. GLB format for game engines. Free license.",
+				"keywords": [
+					"free game assets",
+					"3d model",
+					"free 3d game assets",
+					"game development",
+					"13th",
+					"century",
+					"florentine",
+					"public",
+					"fountain,",
+					"game art"
+				],
+				"openGraph": {
+					"description": "Low poly 13th century Florentine fountain 3D model with baked stone textures in cool gray and moss. GLB format for game engines. Free license.",
+					"title": "Weathered Florentine Fountain - Free 3D Model for Games",
+					"type": "article"
+				},
+				"title": "Weathered Florentine Fountain - Free 3D Model for Games | Summer Engine",
+				"twitter": {
+					"card": "summary_large_image",
+					"description": "Low poly 13th century Florentine fountain 3D model with baked stone textures in cool gray and moss. GLB format for game engines. Free license.",
+					"title": "Weathered Florentine Fountain - Free 3D Model for Games"
+				}
+			},
+			"surface": "studio",
+			"tempUrls": {
+				"glb": "https://v3b.fal.media/files/b/0a9fc27e/h3lPqKXz47_cK78N2aslX_model.glb",
+				"thumbnail": "https://v3b.fal.media/files/b/0a9fc27e/SyiSu875gu0Vk-p1_hjqi_preview.png"
+			},
+			"uploadStatus": "complete"
+		},
+		"name": "Weathered Florentine Fountain",
+		"previewUrl": "https://res.cloudinary.com/dol86wsz1/image/upload/v1782421755/summer_3d/3d_1782421755501_thumb.png",
+		"primary": true,
+		"thumbnailUrl": "https://res.cloudinary.com/dol86wsz1/image/upload/v1782421755/summer_3d/3d_1782421755501_thumb.png",
+		"title": "Weathered Florentine Fountain",
+		"type": "3d",
+		"url": "https://res.cloudinary.com/dol86wsz1/raw/upload/v1782421754/summer_3d/3d_1782421752550.glb",
+		"version": "2026-06-25"
+	},
+	"name": "Weathered Florentine Fountain",
+	"paths": [
+		"res://assets/summer/cf737c49-bf56-44b1-bd73-869affd8e4ad/2026-06-25/3d_1782421752550.glb"
+	],
+	"primaryPath": "res://assets/summer/cf737c49-bf56-44b1-bd73-869affd8e4ad/2026-06-25/3d_1782421752550.glb",
+	"source": "summer-studio",
+	"version": "2026-06-25"
+}

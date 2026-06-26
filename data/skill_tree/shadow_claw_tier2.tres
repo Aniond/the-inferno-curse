@@ -1,0 +1,16 @@
+[gd_resource type="Resource" script_class="SkillTreeNode" format=3 uid="uid://stn_shadow_claw_2"]
+
+[ext_resource type="Script" path="res://scripts/data/skill_tree_node.gd" id="1_stn"]
+
+[resource]
+script = ExtResource("1_stn")
+skill_id = "shadow_claw"
+display_name = "Shadow Claw II"
+tier = 2
+gem_cost = 2
+family = "limbo"
+damage_multiplier_bonus = 0.2
+mp_cost_reduction = 1
+requires = Array[String]([])
+unlocks = Array[String]([])
+tree_position = Vector2(0, 120)

@@ -1,0 +1,17 @@
+[gd_resource type="Resource" script_class="JobSheet" format=3 uid="uid://job_mugnaio_marco"]
+
+[ext_resource type="Script" path="res://scripts/data/job_sheet.gd" id="1_js"]
+
+[resource]
+script = ExtResource("1_js")
+job_id = "mugnaio"
+display_name = "The Mugnaio"
+tier = 1
+required_job_id = ""
+job_level = 0
+jp_earned = 0
+jp_spent = 0
+unlocked_skills = Array[String]([])
+level_mp_per_level = 5
+level_spd_per_level = 1
+flavor_text = "The Miller. Resource denial, debuffing, attrition."

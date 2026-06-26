@@ -1,0 +1,31 @@
+[gd_resource type="Resource" script_class="SkillData" format=3 uid="uid://skill_guts"]
+
+[ext_resource type="Script" path="res://scripts/data/skill_data.gd" id="1_skill_data"]
+
+[resource]
+script = ExtResource("1_skill_data")
+skill_id = "guts"
+display_name = "Guts"
+skill_type = 1
+tier = 0
+grimoire_source = ""
+flavor_text = "Will alone is not enough. But it is a start."
+mp_cost = 8
+corruption_cost = 0.0
+casting_time = 0
+range_cells = 0
+area = 4
+target = 2
+stat_check = 0
+primary_effect_description = "Steel your resolve. Restore 20% of max HP."
+duration_turns = 0
+status_applied = ""
+damage_formula = 0
+damage_value = 0.0
+healing_formula = 2
+healing_value = 0.2
+stat_modifier_stat = ""
+stat_modifier_amount = 0
+stat_modifier_duration = 0
+absorption_tier = 0
+tags = Array[String](["self", "heal"])

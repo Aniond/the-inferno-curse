@@ -1,0 +1,31 @@
+[gd_resource type="Resource" script_class="SkillData" format=3 uid="uid://skill_protezione"]
+
+[ext_resource type="Script" path="res://scripts/data/skill_data.gd" id="1_skill_data"]
+
+[resource]
+script = ExtResource("1_skill_data")
+skill_id = "protezione"
+display_name = "Protezione"
+skill_type = 1
+tier = 0
+grimoire_source = ""
+flavor_text = "An old ward, passed down through the Siena guilds. It still holds."
+mp_cost = 6
+corruption_cost = 0.0
+casting_time = 0
+range_cells = 0
+area = 4
+target = 2
+stat_check = 0
+primary_effect_description = "Raise a ward. +5 DEF for 2 rounds."
+duration_turns = 2
+status_applied = "shielded"
+damage_formula = 0
+damage_value = 0.0
+healing_formula = 0
+healing_value = 0.0
+stat_modifier_stat = "DEF"
+stat_modifier_amount = 5
+stat_modifier_duration = 2
+absorption_tier = 0
+tags = Array[String](["self", "buff", "defense"])

@@ -1,0 +1,17 @@
+[gd_resource type="Resource" script_class="JobSkill" format=3 uid="uid://jsk_knead_and_rest"]
+
+[ext_resource type="Script" path="res://scripts/data/job_skill.gd" id="1_jsk"]
+
+[resource]
+script = ExtResource("1_jsk")
+skill_id = "knead_and_rest"
+display_name = "Knead and Rest"
+description = "Marco skips his action this turn. Next turn he acts twice."
+flavor_text = "The discipline of knowing when to wait."
+category = 0
+job_id = "pastaio"
+jp_cost = 100
+mp_cost = 0
+target = 0
+status_applied = "double_action"
+tags = Array[String](["self", "wait", "double_action", "timing"])

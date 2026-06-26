@@ -1,0 +1,15 @@
+[gd_resource type="Resource" script_class="JobSkill" format=3 uid="uid://jsk_clean_hands"]
+
+[ext_resource type="Script" path="res://scripts/data/job_skill.gd" id="1_jsk"]
+
+[resource]
+script = ExtResource("1_jsk")
+skill_id = "clean_hands"
+display_name = "Clean Hands"
+description = "Marco's presence reduces passive Corruption gain by 0.5% per battle. He doesn't fight the darkness — he just refuses to be touched by it."
+flavor_text = "He never forgets to wash his hands."
+category = 1
+job_id = "fornaio_sacro"
+jp_cost = 100
+mp_cost = 0
+tags = Array[String](["passive", "corruption", "faith", "aura", "party"])

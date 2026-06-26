@@ -1,0 +1,15 @@
+[gd_resource type="Resource" script_class="SkillTreeNode" format=3 uid="uid://stn_unnatural_step_2"]
+
+[ext_resource type="Script" path="res://scripts/data/skill_tree_node.gd" id="1_stn"]
+
+[resource]
+script = ExtResource("1_stn")
+skill_id = "unnatural_step"
+display_name = "Unnatural Step II"
+tier = 2
+gem_cost = 3
+family = "limbo"
+range_bonus = 1
+requires = Array[String](["limbos_embrace"])
+unlocks = Array[String]([])
+tree_position = Vector2(400, 120)

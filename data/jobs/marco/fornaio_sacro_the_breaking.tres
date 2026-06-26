@@ -1,0 +1,20 @@
+[gd_resource type="Resource" script_class="JobSkill" format=3 uid="uid://jsk_the_breaking"]
+
+[ext_resource type="Script" path="res://scripts/data/job_skill.gd" id="1_jsk"]
+
+[resource]
+script = ExtResource("1_jsk")
+skill_id = "the_breaking"
+display_name = "The Breaking"
+description = "A ritual sharing of bread before combat. All party members gain +2 FTH for the encounter."
+flavor_text = "Simple. Ancient. Effective."
+category = 0
+job_id = "fornaio_sacro"
+jp_cost = 120
+mp_cost = 5
+target = 3
+duration_turns = 99
+stat_modifier_stat = "FTH"
+stat_modifier_amount = 2
+status_applied = "blessed"
+tags = Array[String](["faith", "buff", "aoe_ally", "pre_combat", "fth"])

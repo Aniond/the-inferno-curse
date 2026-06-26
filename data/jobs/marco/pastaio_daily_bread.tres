@@ -1,0 +1,20 @@
+[gd_resource type="Resource" script_class="JobSkill" format=3 uid="uid://jsk_daily_bread"]
+
+[ext_resource type="Script" path="res://scripts/data/job_skill.gd" id="1_jsk"]
+
+[resource]
+script = ExtResource("1_jsk")
+skill_id = "daily_bread"
+display_name = "Daily Bread"
+description = "Distributes a small restorative to all party members. Removes one minor negative status each."
+flavor_text = "Not dramatic. Just reliable. Like bread."
+category = 0
+job_id = "pastaio"
+jp_cost = 50
+mp_cost = 7
+target = 3
+range_cells = 0
+healing_formula = 1
+healing_value = 10.0
+status_applied = "cleanse_minor"
+tags = Array[String](["heal", "aoe_ally", "cleanse", "support"])

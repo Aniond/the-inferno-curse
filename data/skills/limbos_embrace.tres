@@ -1,0 +1,32 @@
+[gd_resource type="Resource" script_class="SkillData" format=3 uid="uid://skill_limbos_embrace"]
+
+[ext_resource type="Script" path="res://scripts/data/skill_data.gd" id="1_skill_data"]
+
+[resource]
+script = ExtResource("1_skill_data")
+skill_id = "limbos_embrace"
+display_name = "Limbo's Embrace"
+skill_type = 1
+tier = 1
+grimoire_source = ""
+flavor_text = "It holds like cold stone. Like it has forgotten how to let go."
+mp_cost = 5
+corruption_cost = 0.0
+casting_time = 0
+range_cells = 1
+area = 0
+target = 0
+stat_check = 3
+primary_effect_description = "Grab and pin the target. Applies Rooted — cannot move for 1 turn, can still act."
+duration_turns = 1
+status_applied = "rooted"
+damage_formula = 0
+damage_value = 0.0
+healing_formula = 0
+healing_value = 0.0
+stat_modifier_stat = "MOV"
+stat_modifier_amount = -99
+stat_modifier_duration = 1
+absorption_tier = 1
+vfx_scene_path = "res://scenes/limbos_embrace_effect.tscn"
+tags = Array[String](["physical", "melee", "status", "root"])

@@ -1,0 +1,21 @@
+[gd_resource type="Resource" script_class="JobSkill" format=3 uid="uid://jsk_pane_benedetto"]
+
+[ext_resource type="Script" path="res://scripts/data/job_skill.gd" id="1_jsk"]
+
+[resource]
+script = ExtResource("1_jsk")
+skill_id = "pane_benedetto"
+display_name = "Pane Benedetto"
+description = "Blessed bread distributed to the party. Restores HP and reduces Corruption by 1% per member. Requires a Church visit since last use."
+flavor_text = "The blessing must be renewed. It cannot be stored."
+category = 0
+job_id = "fornaio_sacro"
+jp_cost = 150
+mp_cost = 10
+target = 3
+is_signature = true
+requires_church_visit = true
+healing_formula = 1
+healing_value = 15.0
+status_applied = "corruption_reduced"
+tags = Array[String](["signature", "faith", "heal", "aoe_ally", "corruption", "church"])

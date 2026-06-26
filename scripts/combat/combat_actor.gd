@@ -28,6 +28,7 @@ var downhill_free: bool = false
 var ct_gain_multiplier: float = 1.0
 var ct_gain_flat: int = 0
 var active_status_effects: Dictionary = {}
+var current_corruption: float = 0.0
 var ct_height_delay_reduction: int = 0  # skills can reduce height CT cost
 var intelligence: int = 5  # tactical AI sophistication (1-10), synced from sheet
 var pending_directive: AiDirective = null  # written by EnemyCommander each round

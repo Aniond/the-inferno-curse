@@ -1,0 +1,32 @@
+[gd_resource type="Resource" script_class="SkillData" format=3 uid="uid://skill_shadow_claw"]
+
+[ext_resource type="Script" path="res://scripts/data/skill_data.gd" id="1_skill_data"]
+
+[resource]
+script = ExtResource("1_skill_data")
+skill_id = "shadow_claw"
+display_name = "Shadow Claw"
+skill_type = 1
+tier = 0
+grimoire_source = ""
+flavor_text = "The fingers are wrong. Too long, too quiet."
+mp_cost = 2
+corruption_cost = 0.0
+casting_time = 0
+range_cells = 1
+area = 0
+target = 0
+stat_check = 3
+primary_effect_description = "Rake with elongated fingers. Physical melee strike."
+duration_turns = 0
+status_applied = ""
+damage_formula = 3
+damage_value = 1.0
+healing_formula = 0
+healing_value = 0.0
+stat_modifier_stat = ""
+stat_modifier_amount = 0
+stat_modifier_duration = 0
+vfx_scene_path = "res://scenes/vfx/claw_slash_effect.tscn"
+absorption_tier = 0
+tags = Array[String](["physical", "melee"])

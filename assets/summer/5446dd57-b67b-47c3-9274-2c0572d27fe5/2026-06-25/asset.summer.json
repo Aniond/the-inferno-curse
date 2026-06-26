@@ -1,0 +1,47 @@
+{
+	"assetId": "5446dd57-b67b-47c3-9274-2c0572d27fe5",
+	"metadata": {
+		"downloadUrl": "https://v3b.fal.media/files/b/0a9fc60f/UsPTPk0OW0cwr0BmWwM50_rbMUJKpP.png",
+		"fileName": "UsPTPk0OW0cwr0BmWwM50_rbMUJKpP.png",
+		"filename": "UsPTPk0OW0cwr0BmWwM50_rbMUJKpP.png",
+		"id": "5446dd57-b67b-47c3-9274-2c0572d27fe5",
+		"metadata": {
+			"aspect_ratio": "1:1",
+			"batchCapped": false,
+			"batchSize": 1.0,
+			"clientImageModel": "fal-ai/nano-banana-2",
+			"entrypoint": "api/art/generate",
+			"falModelId": "fal-ai/nano-banana-2",
+			"falPrompt": "Aged parchment background panel for a medieval RPG character \nscreen. Full panel texture, no text, no icons, no UI elements \nbaked in. \n\nLayout suggestion baked into texture only through subtle \ntonal variation:\n- Left column (~200px wide): slightly darker parchment tone, \n  suggesting a portrait and stat area\n- Right area: open, lighter parchment for content\n- Outer border: dark aged wood or leather frame, \n  slightly ornate but not decorative — functional, worn\n\nTexture details: natural parchment grain, faint foxing spots, \nsubtle ink stains at edges, slight yellowing toward center. \nFeels like a document that has been handled many times.\n\nColor palette: aged cream, warm ochre, dark brown border, \nshadow blue-gray in the darker column zone.\nNo text. No symbols. No illustrations. Pure texture panel.\nSerious, melancholic, medieval Florentine aesthetic.\nDante's Florence mood — beautiful, faded, quietly worn.\n1920x1080 resolution. PNG format.",
+			"finalPrompt": "Aged parchment background panel for a medieval RPG character \nscreen. Full panel texture, no text, no icons, no UI elements \nbaked in. \n\nLayout suggestion baked into texture only through subtle \ntonal variation:\n- Left column (~200px wide): slightly darker parchment tone, \n  suggesting a portrait and stat area\n- Right area: open, lighter parchment for content\n- Outer border: dark aged wood or leather frame, \n  slightly ornate but not decorative — functional, worn\n\nTexture details: natural parchment grain, faint foxing spots, \nsubtle ink stains at edges, slight yellowing toward center. \nFeels like a document that has been handled many times.\n\nColor palette: aged cream, warm ochre, dark brown border, \nshadow blue-gray in the darker column zone.\nNo text. No symbols. No illustrations. Pure texture panel.\nSerious, melancholic, medieval Florentine aesthetic.\nDante's Florence mood — beautiful, faded, quietly worn.\n1920x1080 resolution. PNG format.",
+			"generatedAt": "2026-06-25T23:41:24.384Z",
+			"generationBatchId": "7bc348f2-0354-488e-a821-a7a7f37a77a3",
+			"height": 1024.0,
+			"multiview": false,
+			"numImages": 1.0,
+			"numImagesRequested": 1.0,
+			"pose": "none",
+			"promptRefined": false,
+			"referenceCount": 0.0,
+			"runIndex": 0.0,
+			"style": "none",
+			"surface": "studio",
+			"width": 1024.0
+		},
+		"name": "Aged parchment background panel for a",
+		"previewUrl": "https://v3b.fal.media/files/b/0a9fc60f/UsPTPk0OW0cwr0BmWwM50_rbMUJKpP.png",
+		"primary": true,
+		"thumbnailUrl": "https://v3b.fal.media/files/b/0a9fc60f/UsPTPk0OW0cwr0BmWwM50_rbMUJKpP.png",
+		"title": "Aged parchment background panel for a",
+		"type": "image",
+		"url": "https://v3b.fal.media/files/b/0a9fc60f/UsPTPk0OW0cwr0BmWwM50_rbMUJKpP.png",
+		"version": "2026-06-25"
+	},
+	"name": "Aged parchment background panel for a",
+	"paths": [
+		"res://assets/summer/5446dd57-b67b-47c3-9274-2c0572d27fe5/2026-06-25/UsPTPk0OW0cwr0BmWwM50_rbMUJKpP.png"
+	],
+	"primaryPath": "res://assets/summer/5446dd57-b67b-47c3-9274-2c0572d27fe5/2026-06-25/UsPTPk0OW0cwr0BmWwM50_rbMUJKpP.png",
+	"source": "summer-studio",
+	"version": "2026-06-25"
+}

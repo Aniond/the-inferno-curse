@@ -1,0 +1,71 @@
+{
+	"assetId": "6088c1e6-88ef-47e5-a726-313c476897f1",
+	"metadata": {
+		"downloadUrl": "https://res.cloudinary.com/dol86wsz1/raw/upload/v1782421777/summer_3d/3d_1782421775956.glb",
+		"fileName": "3d_1782421775956.glb",
+		"filename": "3d_1782421775956.glb",
+		"id": "6088c1e6-88ef-47e5-a726-313c476897f1",
+		"metadata": {
+			"cloudinaryPublicId": "summer_3d/3d_1782421775956.glb",
+			"entrypoint": "api/art/generate-3d",
+			"kind": "text-to-3d",
+			"meshyUrls": {
+				"glb": "https://v3b.fal.media/files/b/0a9fc280/5OV7-Lg5w8MZo1pzmbkrp_model.glb",
+				"obj": "https://v3b.fal.media/files/b/0a9fc27f/LIT-WjkIdwyF6saMsPfGF_3f28a72ad83aa4b481baf9a4f5aef5da.obj"
+			},
+			"permanentUrls": {
+				"glb": "https://res.cloudinary.com/dol86wsz1/raw/upload/v1782421777/summer_3d/3d_1782421775956.glb",
+				"thumbnail": "https://res.cloudinary.com/dol86wsz1/image/upload/v1782421778/summer_3d/3d_1782421778779_thumb.png"
+			},
+			"queueJobId": "8760",
+			"queueName": "asset-generation",
+			"seo": {
+				"description": "",
+				"keywords": [
+					"free game assets",
+					"3d model",
+					"free 3d game assets",
+					"game development",
+					"mediterranean",
+					"cypress",
+					"tree,",
+					"tall",
+					"narrow",
+					"free game background"
+				],
+				"openGraph": {
+					"description": "",
+					"title": "Mediterranean Cypress Tree - Free 3D Model for Games",
+					"type": "article"
+				},
+				"title": "Mediterranean Cypress Tree - Free 3D Model for Games | Summer Engine",
+				"twitter": {
+					"card": "summary_large_image",
+					"description": "",
+					"title": "Mediterranean Cypress Tree - Free 3D Model for Games"
+				}
+			},
+			"surface": "studio",
+			"tempUrls": {
+				"glb": "https://v3b.fal.media/files/b/0a9fc280/5OV7-Lg5w8MZo1pzmbkrp_model.glb",
+				"thumbnail": "https://v3b.fal.media/files/b/0a9fc280/eDI4P4jK62z8i7fcVVhkh_preview.png"
+			},
+			"uploadStatus": "complete"
+		},
+		"name": "Mediterranean Cypress Tree",
+		"previewUrl": "https://res.cloudinary.com/dol86wsz1/image/upload/v1782421778/summer_3d/3d_1782421778779_thumb.png",
+		"primary": true,
+		"thumbnailUrl": "https://res.cloudinary.com/dol86wsz1/image/upload/v1782421778/summer_3d/3d_1782421778779_thumb.png",
+		"title": "Mediterranean Cypress Tree",
+		"type": "3d",
+		"url": "https://res.cloudinary.com/dol86wsz1/raw/upload/v1782421777/summer_3d/3d_1782421775956.glb",
+		"version": "2026-06-25"
+	},
+	"name": "Mediterranean Cypress Tree",
+	"paths": [
+		"res://assets/summer/6088c1e6-88ef-47e5-a726-313c476897f1/2026-06-25/3d_1782421775956.glb"
+	],
+	"primaryPath": "res://assets/summer/6088c1e6-88ef-47e5-a726-313c476897f1/2026-06-25/3d_1782421775956.glb",
+	"source": "summer-studio",
+	"version": "2026-06-25"
+}

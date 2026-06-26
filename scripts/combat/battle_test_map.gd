@@ -1,7 +1,7 @@
 extends Node3D
 
 const PLAYER_SHEET := preload("res://data/characters/guglielmo_da_siena.tres")
-const TEST_MONSTER_SHEET := preload("res://data/monsters/training_brigand.tres")
+const TEST_MONSTER_SHEET := preload("res://data/monsters/soulless.tres")
 
 enum PlayerTurnPhase {
 	INACTIVE,
@@ -41,12 +41,14 @@ var _tactical_ai_client: TacticalAiClient = null
 var _last_commanded_round: int = -1  # last round a commander issued directives
 var _use_ranged_attack: bool = false
 var _pending_skill: String = ""
+var _pending_skill_data: SkillData = null
 var _pending_item: String = ""
 var _pending_heal_skill: bool = false  # true when targeting phase should heal instead of damage
 
 const PLAYER_ITEMS: Array = ["Herbal Tonic", "Throwing Stone"]
 var _reachable_costs: Dictionary = {}
 var _exploration_reachable_costs: Dictionary = {}
+var _skill_tree_ui: SkillTreeUI = null
 var _grid_cursor: MeshInstance3D = null
 var _hovered_cell: CombatCell = null
 
@@ -71,6 +73,13 @@ func _ready() -> void:
 	if _player_node != null:
 		_player_node.grid_movement_only = false
 
+	# Wire party select → formatted character sheet
+	var party_select := get_node_or_null("/root/World/PartySelectUI")
+	var char_sheet := get_node_or_null("/root/World/CharacterSheetUI")
+	if party_select != null and char_sheet != null:
+		party_select.character_selected.connect(_on_party_character_selected.bind(party_select, char_sheet))
+
+
 	combat_state.actor_turn_started.connect(_on_actor_turn_started)
 	combat_state.ct_updated.connect(_refresh_battle_ui)
 	combat_state.encounter_ended.connect(_on_encounter_ended)
@@ -81,6 +90,13 @@ func _ready() -> void:
 		_start_test_combat()
 	else:
 		_refresh_battle_ui()
+
+
+func _on_party_character_selected(sheet: CharacterSheet, party_select: Node, char_sheet: Node) -> void:
+	if char_sheet != null and char_sheet.has_method("show_sheet_for"):
+		char_sheet.show_sheet_for(sheet)
+	if party_select != null and party_select.has_method("close"):
+		party_select.close()
 
 
 func _process(_delta: float) -> void:
@@ -101,6 +117,12 @@ func _physics_process(_delta: float) -> void:
 func _unhandled_input(event: InputEvent) -> void:
 	# Only consume grid/tactical inputs after the grid has been engaged (enemy combat started).
 	# Before engagement the player walks around normally with free movement.
+	if event is InputEventKey and (event as InputEventKey).pressed:
+		if (event as InputEventKey).keycode == KEY_P:
+			_debug_award_marco_jp(500)
+			get_viewport().set_input_as_handled()
+			return
+
 	if combat_grid == null or not _encounter_started:
 		return
 
@@ -115,6 +137,12 @@ func _unhandled_input(event: InputEvent) -> void:
 		if _handle_grid_direction_move():
 			get_viewport().set_input_as_handled()
 		return
+
+	if event is InputEventKey and (event as InputEventKey).pressed:
+		if (event as InputEventKey).keycode == KEY_K:
+			_toggle_skill_tree()
+			get_viewport().set_input_as_handled()
+			return
 
 	if not _is_player_combat_turn():
 		return
@@ -310,16 +338,18 @@ func _create_player_actor() -> void:
 
 func _create_test_monster_actor() -> void:
 	monster_actor = CombatActor.new()
-	monster_actor.name = "TrainingBrigandCombatActor"
-	monster_actor.actor_id = "training_brigand_01"
-	monster_actor.display_name = "Training Brigand"
+	monster_actor.name = "SoullessCombatActor"
+	monster_actor.actor_id = "soulless_01"
+	monster_actor.display_name = "Soulless"
 	monster_actor.faction = "enemy"
 	monster_actor.sheet_resource = TEST_MONSTER_SHEET
 	monster_actor.starting_grid_position = Vector2i(7, 11)
 	monster_actor.visual_facing = "north"
 	add_child(monster_actor)
 	monster_actor.global_position = _grid_to_world(monster_actor.starting_grid_position)
-	monster_actor.add_child(_make_actor_marker(Color(0.75, 0.12, 0.08, 1.0), "Training Brigand"))
+	monster_actor.add_child(_make_actor_marker(Color(0.45, 0.55, 0.75, 1.0), "Soulless"))
+	# Override HP to 1 after _ready() fires (deferred so _sync_stats doesn't overwrite it)
+	monster_actor.set_deferred("current_hp", 1)
 
 
 ## Debug (spawn_test_squad): a Brigand Captain (commander, INT 8) plus two
@@ -725,12 +755,16 @@ func _begin_action_menu_phase() -> void:
 	_player_phase = PlayerTurnPhase.ACTION_MENU
 	_clear_highlights()
 	_pending_skill = ""
+	_pending_skill_data = null
 	_pending_item = ""
 	_pending_heal_skill = false
 	var skills: Array = []
 	if player_actor.sheet_resource != null and player_actor.sheet_resource.get("abilities") is Array:
 		for s in player_actor.sheet_resource.get("abilities"):
-			skills.append(str(s))
+			if s is SkillData:
+				skills.append(s.display_name)
+			else:
+				skills.append(str(s))
 	_battle_overlay.show_action_menu(skills, PLAYER_ITEMS)
 	_refresh_battle_ui()
 
@@ -751,18 +785,35 @@ func _on_skill_selected(skill_name: String) -> void:
 	if not _is_player_combat_turn():
 		return
 	_pending_item = ""
-	match skill_name:
-		"Guts":
-			_use_skill_guts()
-		"Protezione":
-			_use_skill_protezione()
-		"Guarigione":
-			_pending_skill = skill_name
+	var skill: SkillData = _find_skill_by_name(skill_name)
+	if skill == null:
+		_pending_skill = skill_name
+		_begin_player_attack_phase()
+		return
+	_pending_skill = skill.display_name
+	_pending_skill_data = skill
+	match skill.target:
+		SkillData.TargetType.SELF:
+			_execute_skill(skill, player_actor, player_actor)
+		SkillData.TargetType.SINGLE_ALLY:
 			_pending_heal_skill = true
 			_begin_player_heal_targeting()
-		_:
-			_pending_skill = skill_name
+		SkillData.TargetType.SINGLE_ENEMY:
 			_begin_player_attack_phase()
+		_:
+			_begin_player_attack_phase()
+
+
+func _find_skill_by_name(skill_name: String) -> SkillData:
+	if player_actor.sheet_resource == null:
+		return null
+	var abilities = player_actor.sheet_resource.get("abilities")
+	if not abilities is Array:
+		return null
+	for s in abilities:
+		if s is SkillData and s.display_name == skill_name:
+			return s
+	return null
 
 
 func _on_item_selected(item_name: String) -> void:
@@ -791,60 +842,80 @@ func _player_defend() -> void:
 	_finish_player_turn()
 
 
-func _use_skill_guts() -> void:
-	var mp_cost := 8
-	if player_actor.current_mp < mp_cost:
-		_last_action_text = "Not enough MP for Guts! (%d/%d)" % [player_actor.current_mp, mp_cost]
-		print(_last_action_text)
-		_begin_action_menu_phase()
-		return
-	player_actor.current_mp -= mp_cost
-	var max_hp := _get_actor_max_hp(player_actor)
-	var heal_amount := int(max_hp * 0.20)
-	player_actor.heal(heal_amount)
-	_last_action_text = "[Guts] %s steels their resolve, restoring %d HP! (-%d MP)" % [player_actor.display_name, heal_amount, mp_cost]
-	print(_last_action_text)
-	combat_state.advance_ct(1)
-	var turn_controller := combat_state.get_turn_controller()
-	if turn_controller != null:
-		turn_controller.finish_act()
-	_finish_player_turn()
-
-
-func _use_skill_protezione() -> void:
-	var mp_cost := 6
-	if player_actor.current_mp < mp_cost:
-		_last_action_text = "Not enough MP for Protezione! (%d/%d)" % [player_actor.current_mp, mp_cost]
-		print(_last_action_text)
-		_begin_action_menu_phase()
-		return
-	player_actor.current_mp -= mp_cost
-	player_actor.apply_status_effect("shielded", 2, {}, 5)
-	_last_action_text = "[Protezione] %s raises a ward (+5 DEF for 2 rounds). (-%d MP)" % [player_actor.display_name, mp_cost]
-	print(_last_action_text)
-	combat_state.advance_ct(1)
-	var turn_controller := combat_state.get_turn_controller()
-	if turn_controller != null:
-		turn_controller.finish_act()
-	_finish_player_turn()
-
-
-func _resolve_guarigione(target: CombatActor) -> void:
-	var mp_cost := 10
-	if player_actor.current_mp < mp_cost:
-		_last_action_text = "Not enough MP for Guarigione! (%d/%d)" % [player_actor.current_mp, mp_cost]
+func _execute_skill(skill: SkillData, caster: CombatActor, target: CombatActor) -> void:
+	if caster.current_mp < skill.mp_cost:
+		_last_action_text = "Not enough MP for %s! (%d/%d)" % [skill.display_name, caster.current_mp, skill.mp_cost]
 		print(_last_action_text)
 		_pending_heal_skill = false
 		_pending_skill = ""
+		_pending_skill_data = null
 		_begin_action_menu_phase()
 		return
-	player_actor.current_mp -= mp_cost
-	var heal_amount := 18
-	target.heal(heal_amount)
-	_last_action_text = "[Guarigione] %s heals %s for %d HP! (-%d MP)" % [player_actor.display_name, target.display_name, heal_amount, mp_cost]
+
+	caster.current_mp -= skill.mp_cost
+	caster.current_corruption += skill.corruption_cost
+
+	var damage_dealt := 0
+	var healing_done := 0
+
+	match skill.damage_formula:
+		SkillData.FormulaType.FLAT:
+			damage_dealt = int(skill.damage_value)
+		SkillData.FormulaType.PERCENT_MAX_HP:
+			damage_dealt = int(_get_actor_max_hp(target) * skill.damage_value)
+		SkillData.FormulaType.CASTER_POW:
+			damage_dealt = int(caster.power * skill.damage_value)
+
+	if damage_dealt > 0:
+		target.apply_damage(damage_dealt)
+
+	if skill.vfx_scene_path != "":
+		var vfx_scene := load(skill.vfx_scene_path) as PackedScene
+		if vfx_scene != null:
+			var vfx := vfx_scene.instantiate()
+			get_tree().current_scene.add_child(vfx)
+			vfx.global_position = caster.get_world_position() + Vector3(0, 1.0, 0)
+			if vfx.has_method("play_slash"):
+				vfx.play_slash()
+
+	match skill.healing_formula:
+		SkillData.FormulaType.FLAT:
+			healing_done = int(skill.healing_value)
+		SkillData.FormulaType.PERCENT_MAX_HP:
+			healing_done = int(_get_actor_max_hp(caster) * skill.healing_value)
+		SkillData.FormulaType.CASTER_POW:
+			healing_done = int(caster.power * skill.healing_value)
+
+	if healing_done > 0:
+		target.heal(healing_done)
+
+	if skill.status_applied != "":
+		var def_bonus := 0
+		if skill.stat_modifier_stat == "DEF":
+			def_bonus = skill.stat_modifier_amount
+		target.apply_status_effect(skill.status_applied, skill.duration_turns, {}, def_bonus)
+
+	var effect_parts: Array = []
+	if damage_dealt > 0:
+		effect_parts.append("%d dmg" % damage_dealt)
+	if healing_done > 0:
+		effect_parts.append("+%d HP" % healing_done)
+	if skill.status_applied != "":
+		effect_parts.append(skill.status_applied)
+	var effect_str := ", ".join(effect_parts) if effect_parts.size() > 0 else "no effect"
+
+	_last_action_text = "[%s] %s → %s: %s (-%d MP)" % [
+		skill.display_name,
+		caster.display_name,
+		target.display_name,
+		effect_str,
+		skill.mp_cost,
+	]
 	print(_last_action_text)
+
 	_pending_heal_skill = false
 	_pending_skill = ""
+	_pending_skill_data = null
 	combat_state.advance_ct(1)
 	var turn_controller := combat_state.get_turn_controller()
 	if turn_controller != null:
@@ -912,7 +983,10 @@ func _player_attack(target: CombatActor) -> void:
 		return
 
 	if _pending_heal_skill:
-		_resolve_guarigione(target)
+		if _pending_skill_data != null:
+			_execute_skill(_pending_skill_data, player_actor, target)
+		else:
+			_pending_heal_skill = false
 		return
 
 	var is_ranged := _use_ranged_attack
@@ -957,6 +1031,7 @@ func _player_attack(target: CombatActor) -> void:
 	combat_state.advance_ct(1)  # attack used
 	_use_ranged_attack = false
 	_pending_skill = ""
+	_pending_skill_data = null
 	_pending_item = ""
 	var turn_controller := combat_state.get_turn_controller()
 	if turn_controller != null:
@@ -983,9 +1058,50 @@ func _finish_player_turn() -> void:
 	_player_phase = PlayerTurnPhase.INACTIVE
 	_tick_all_status_effects()
 	combat_state.end_actor_turn()
+	_check_absorption()
 	if weather_system:
 		weather_system.roll_for_weather_change()
 	_refresh_battle_ui()
+
+
+func _check_absorption() -> void:
+	var all_enemies_dead := true
+	for actor in combat_state.actors:
+		if actor == null or actor == player_actor:
+			continue
+		if actor.faction == "enemy" and actor.is_alive():
+			all_enemies_dead = false
+			break
+	if not all_enemies_dead:
+		return
+
+	var player_sheet := player_actor.sheet_resource
+	if player_sheet == null:
+		return
+
+	for actor in combat_state.actors:
+		if actor == null or actor == player_actor or actor.faction != "enemy":
+			continue
+		var monster_sheet := actor.sheet_resource
+		if monster_sheet == null or not monster_sheet is MonsterSheet:
+			continue
+		var result := AbsorptionResolver.resolve(monster_sheet, player_sheet)
+		if result.skill_id == "":
+			continue
+		if result.succeeded:
+			print("[Absorption] %s absorbed from %s! (rolled %.0f%% vs %.0f%% chance) Soul gem added." % [
+				result.skill_id,
+				monster_sheet.display_name,
+				result.roll * 100.0,
+				result.chance * 100.0,
+			])
+		else:
+			print("[Absorption] %s resisted from %s. (rolled %.0f%% vs %.0f%% chance)" % [
+				result.skill_id,
+				monster_sheet.display_name,
+				result.roll * 100.0,
+				result.chance * 100.0,
+			])
 
 
 func _tick_all_status_effects() -> void:
@@ -1544,6 +1660,35 @@ func _on_encounter_ended(result_phase: int) -> void:
 			"last_action": result_text,
 		})
 	print(result_text)
+
+
+func _toggle_skill_tree() -> void:
+	if _skill_tree_ui != null:
+		_skill_tree_ui.queue_free()
+		_skill_tree_ui = null
+		return
+	if player_actor == null or player_actor.sheet_resource == null:
+		return
+	var scene := load("res://scenes/ui/skill_tree_ui.tscn") as PackedScene
+	if scene == null:
+		return
+	_skill_tree_ui = scene.instantiate() as SkillTreeUI
+	add_child(_skill_tree_ui)
+	_skill_tree_ui.setup(player_actor.sheet_resource)
+	_skill_tree_ui.skill_unlocked.connect(func(_id, _tier): _refresh_battle_ui())
+
+
+func _debug_award_marco_jp(amount: int) -> void:
+	var marco = load("res://data/characters/marco_il_fornaio.tres") as CharacterSheet
+	if marco == null:
+		print("[Debug] Marco sheet not found")
+		return
+	var sheet := marco.get_active_job_sheet()
+	if sheet == null:
+		print("[Debug] Marco has no active job sheet")
+		return
+	sheet.earn_jp(amount)
+	print("[Debug] Awarded %d JP to Marco (%s) — total: %d, level: %d" % [amount, sheet.job_id, sheet.jp_earned, sheet.job_level])
 
 
 func _refresh_battle_ui() -> void:

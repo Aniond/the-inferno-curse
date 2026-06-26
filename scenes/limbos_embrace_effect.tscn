@@ -1,0 +1,8 @@
+[gd_scene load_steps=2 format=3]
+
+[ext_resource type="Script" path="res://scripts/limbos_embrace_effect.gd" id="1_script"]
+
+[node name="LimboEmbraceGrab" type="AnimatedSprite3D"]
+pixel_size = 0.012
+billboard = 1
+script = ExtResource("1_script")

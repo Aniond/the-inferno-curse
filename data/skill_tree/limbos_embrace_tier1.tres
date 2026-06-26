@@ -1,0 +1,15 @@
+[gd_resource type="Resource" script_class="SkillTreeNode" format=3 uid="uid://stn_limbos_embrace_1"]
+
+[ext_resource type="Script" path="res://scripts/data/skill_tree_node.gd" id="1_stn"]
+
+[resource]
+script = ExtResource("1_stn")
+skill_id = "limbos_embrace"
+display_name = "Limbo's Embrace I"
+tier = 1
+gem_cost = 1
+family = "limbo"
+mp_cost_reduction = 1
+requires = Array[String]([])
+unlocks = Array[String]([])
+tree_position = Vector2(200, 0)

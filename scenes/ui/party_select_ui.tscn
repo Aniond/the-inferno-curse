@@ -1,0 +1,7 @@
+[gd_scene format=3 uid="uid://party_select_ui"]
+
+[ext_resource type="Script" path="res://scripts/ui/party_select_ui.gd" id="1_party_select"]
+
+[node name="PartySelectUI" type="CanvasLayer"]
+layer = 99
+script = ExtResource("1_party_select")

@@ -1,0 +1,16 @@
+[gd_resource type="Resource" script_class="SkillTreeNode" format=3 uid="uid://stn_unnatural_step_3"]
+
+[ext_resource type="Script" path="res://scripts/data/skill_tree_node.gd" id="1_stn"]
+
+[resource]
+script = ExtResource("1_stn")
+skill_id = "unnatural_step"
+display_name = "Unnatural Step III"
+tier = 3
+gem_cost = 4
+family = "limbo"
+range_bonus = 1
+new_effect_description = "Something in the way it moves. Total +4 MOV. Grants an additional free reposition once per combat."
+requires = Array[String](["limbos_embrace"])
+unlocks = Array[String]([])
+tree_position = Vector2(400, 240)

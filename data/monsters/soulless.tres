@@ -1,0 +1,34 @@
+[gd_resource type="Resource" script_class="MonsterSheet" format=3 uid="uid://dgo4hj0m1plp6"]
+
+[ext_resource type="Script" uid="uid://cfug6jap4u1ja" path="res://scripts/data/monster_sheet.gd" id="1_monster_sheet"]
+[ext_resource type="Script" uid="uid://unbjv8sfem0j" path="res://scripts/data/core_stats.gd" id="2_core_stats"]
+
+[sub_resource type="Resource" id="CoreStats_soulless"]
+script = ExtResource("2_core_stats")
+strength = 6
+intellect = 1
+faith = 1
+creativity = 2
+presence = 1
+
+[resource]
+script = ExtResource("1_monster_sheet")
+monster_id = "soulless"
+display_name = "Soulless"
+family = "Limbo"
+core_stats = SubResource("CoreStats_soulless")
+max_hp = 28
+max_mp = 10
+starting_ct = 10
+movement = 6
+natural_power = 2
+natural_defense = 1
+abilities = Array[String](["Shadow Claw", "Limbo's Embrace", "Unnatural Step"])
+ai_tags = Array[String](["undead", "melee", "flanker", "limbo"])
+intelligence = 4
+reward_experience = 12
+drop_table = Array[String](["ashen_cloth"])
+normal_ability = "shadow_claw"
+uncommon_ability = "limbos_embrace"
+rare_ability = "unnatural_step"
+ability_theme_tags = Array[String](["limbo", "infernal", "martial"])

@@ -1,0 +1,127 @@
+[gd_resource type="Resource" script_class="CharacterSheet" format=3 uid="uid://marco_il_fornaio"]
+
+[ext_resource type="Script" uid="uid://cif8cb30qlua" path="res://scripts/data/character_sheet.gd" id="1_character_sheet"]
+[ext_resource type="Script" uid="uid://unbjv8sfem0j" path="res://scripts/data/core_stats.gd" id="2_core_stats"]
+[ext_resource type="Script" path="res://scripts/data/job_sheet.gd" id="3_job_sheet"]
+
+[sub_resource type="Resource" id="CoreStats_marco"]
+script = ExtResource("2_core_stats")
+strength = 6
+speed = 5
+intellect = 5
+faith = 6
+creativity = 7
+presence = 5
+
+[sub_resource type="Resource" id="JobSheet_fornaro"]
+script = ExtResource("3_job_sheet")
+job_id = "fornaro"
+display_name = "The Fornaro"
+tier = 1
+required_job_id = ""
+job_level = 0
+jp_earned = 0
+jp_spent = 0
+unlocked_skills = Array[String]([])
+level_hp_per_level = 5
+level_def_per_level = 1
+level_str_per_level = 1
+flavor_text = "Master of the stone oven. Heat control, delayed damage, terrain pressure."
+
+[sub_resource type="Resource" id="JobSheet_mugnaio"]
+script = ExtResource("3_job_sheet")
+job_id = "mugnaio"
+display_name = "The Mugnaio"
+tier = 1
+required_job_id = ""
+job_level = 0
+jp_earned = 0
+jp_spent = 0
+unlocked_skills = Array[String]([])
+level_mp_per_level = 5
+level_spd_per_level = 1
+flavor_text = "The Miller. Resource denial, debuffing, attrition."
+
+[sub_resource type="Resource" id="JobSheet_pastaio"]
+script = ExtResource("3_job_sheet")
+job_id = "pastaio"
+display_name = "The Pastaio"
+tier = 1
+required_job_id = ""
+job_level = 0
+jp_earned = 0
+jp_spent = 0
+unlocked_skills = Array[String]([])
+level_hp_per_level = 3
+level_mp_per_level = 3
+level_fth_per_level = 1
+flavor_text = "The Dough Master. Party buffs, status transformation, sustain."
+
+[sub_resource type="Resource" id="JobSheet_capomaestro"]
+script = ExtResource("3_job_sheet")
+job_id = "capomaestro"
+display_name = "The Capomaestro"
+tier = 2
+required_job_id = "fornaro"
+job_level = 0
+jp_earned = 0
+jp_spent = 0
+unlocked_skills = Array[String]([])
+level_hp_per_level = 6
+level_str_per_level = 1
+level_def_per_level = 1
+level_pow_per_level = 1
+flavor_text = "Master of the Guild. Party commander, force multiplier, battlefield coordinator."
+
+[sub_resource type="Resource" id="JobSheet_ricettario"]
+script = ExtResource("3_job_sheet")
+job_id = "ricettario"
+display_name = "The Ricettario"
+tier = 2
+required_job_id = "pastaio"
+job_level = 0
+jp_earned = 0
+jp_spent = 0
+unlocked_skills = Array[String]([])
+level_mp_per_level = 4
+level_fth_per_level = 1
+level_pow_per_level = 1
+flavor_text = "Keeper of the Book. Knowledge-based buffs, recipe combinations, unique consumables."
+
+[sub_resource type="Resource" id="JobSheet_fornaio_sacro"]
+script = ExtResource("3_job_sheet")
+job_id = "fornaio_sacro"
+display_name = "The Fornaio Sacro"
+tier = 2
+required_job_id = "mugnaio"
+job_level = 0
+jp_earned = 0
+jp_spent = 0
+unlocked_skills = Array[String]([])
+level_hp_per_level = 4
+level_mp_per_level = 4
+level_fth_per_level = 2
+flavor_text = "The Sacred Baker. FTH-based support, corruption cleansing, sacred buffs."
+
+[resource]
+script = ExtResource("1_character_sheet")
+character_id = "marco_il_fornaio"
+display_name = "Marco il Fornaio"
+job_title = "Baker"
+core_stats = SubResource("CoreStats_marco")
+max_hp = 42
+max_mp = 18
+movement = 4
+jump = 2
+evasion_rate = 8
+critical_rate = 3
+power_stat = "STR"
+portrait_path = ""
+sprite_scene_path = "res://scenes/characters/baker_npc.tscn"
+abilities = Array[Resource]([])
+job_sheets = Array[Resource]([SubResource("JobSheet_fornaro"), SubResource("JobSheet_mugnaio"), SubResource("JobSheet_pastaio"), SubResource("JobSheet_capomaestro"), SubResource("JobSheet_ricettario"), SubResource("JobSheet_fornaio_sacro")])
+active_job_id = "fornaro"
+equipped_skills = Array[String]([])
+equipped_traits = Array[String]([])
+weapon = "Baker's Peel"
+body = "Grembiule del Fornaio"

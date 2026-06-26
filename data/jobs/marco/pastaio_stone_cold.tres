@@ -1,0 +1,15 @@
+[gd_resource type="Resource" script_class="JobSkill" format=3 uid="uid://jsk_stone_cold"]
+
+[ext_resource type="Script" path="res://scripts/data/job_skill.gd" id="1_jsk"]
+
+[resource]
+script = ExtResource("1_jsk")
+skill_id = "stone_cold"
+display_name = "Stone Cold"
+description = "Marco is immune to Fear and Confusion status effects."
+flavor_text = "He has deadlines. Fear is a luxury."
+category = 1
+job_id = "pastaio"
+jp_cost = 80
+mp_cost = 0
+tags = Array[String](["passive", "immunity", "fear", "confusion"])

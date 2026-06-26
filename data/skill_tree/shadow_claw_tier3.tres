@@ -1,0 +1,19 @@
+[gd_resource type="Resource" script_class="SkillTreeNode" format=3 uid="uid://stn_shadow_claw_3"]
+
+[ext_resource type="Script" path="res://scripts/data/skill_tree_node.gd" id="1_stn"]
+
+[resource]
+script = ExtResource("1_stn")
+skill_id = "shadow_claw"
+display_name = "Shadow Claw III"
+tier = 3
+gem_cost = 3
+family = "limbo"
+damage_multiplier_bonus = 0.2
+mp_cost_reduction = 0
+new_effect_description = "The wound lingers. Applies Bleed — target loses 2 HP at the start of each of their turns for 3 turns."
+new_status_applied = "bleed"
+new_status_duration = 3
+requires = Array[String]([])
+unlocks = Array[String](["limbos_embrace"])
+tree_position = Vector2(0, 240)

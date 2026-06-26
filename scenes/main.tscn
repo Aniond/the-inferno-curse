@@ -5,6 +5,7 @@
 [ext_resource type="Material" path="res://materials/ground_wood.tres" id="3_ground_mat"]
 [ext_resource type="Material" uid="uid://46m6jk6ase1o" path="res://materials/wall_stone.tres" id="4_wall_mat"]
 [ext_resource type="Material" path="res://materials/pillar_stone.tres" id="5_pillar_mat"]
+[ext_resource type="Script" uid="uid://bq0vwu3kfsrmu" path="res://scripts/claw_slash_effect.gd" id="7_dp3eg"]
 [ext_resource type="Script" uid="uid://bfpkultvl68tn" path="res://scripts/torch_light.gd" id="7_torch_script"]
 [ext_resource type="Environment" uid="uid://c4qfo6yvfhdaj" path="res://materials/tavern_environment.tres" id="8_tavern_env"]
 [ext_resource type="Script" uid="uid://dtys6d543urix" path="res://scripts/environment/procedural_tavern_floor.gd" id="9_floor_script"]
@@ -16,6 +17,9 @@
 [ext_resource type="PackedScene" path="res://scenes/ui/monster_sheet_ui.tscn" id="15_monster_sheet_ui"]
 [ext_resource type="Script" uid="uid://v83japwmqu81" path="res://scripts/combat/battle_test_map.gd" id="16_battle_test_map"]
 [ext_resource type="Script" uid="uid://cf00lylhqjv8p" path="res://scripts/city/city_map_manager.gd" id="17_muem4"]
+[ext_resource type="PackedScene" path="res://scenes/ui/job_skill_ui.tscn" id="18_job_skill_ui"]
+[ext_resource type="PackedScene" path="res://scenes/ui/party_select_ui.tscn" id="19_party_select_ui"]
+[ext_resource type="PackedScene" path="res://scenes/ui/character_screen.tscn" id="20_character_screen"]
 [ext_resource type="Script" uid="uid://c6fjdrw7qffft" path="res://scripts/day_night_cycle.gd" id="day_night_cycle"]
 
 [sub_resource type="PlaneMesh" id="PlaneMesh_ground"]
@@ -36,15 +40,14 @@ size = Vector3(0.5, 8, 30)
 [sub_resource type="BoxShape3D" id="BoxShape3D_wall_ew"]
 size = Vector3(0.5, 8, 30)
 
-[sub_resource type="BoxMesh" id="BoxMesh_pillar"]
+[sub_resource type="BoxShape3D" id="BoxShape3D_pillar"]
 size = Vector3(0.8, 6, 0.8)
 
-[sub_resource type="BoxShape3D" id="BoxShape3D_pillar"]
+[sub_resource type="BoxMesh" id="BoxMesh_pillar"]
 size = Vector3(0.8, 6, 0.8)
 
 [node name="World" type="Node3D" unique_id=1662994112]
 script = ExtResource("16_battle_test_map")
-spawn_test_squad = true
 
 [node name="Camera" type="Camera3D" parent="." unique_id=1134048631]
 script = ExtResource("2_camera_script")
@@ -76,6 +79,12 @@ script = ExtResource("1_player_script")
 [node name="AnimatedSprite" type="AnimatedSprite3D" parent="Player" unique_id=1826517043]
 
 [node name="Collision" type="CollisionShape3D" parent="Player" unique_id=328605020]
+
+[node name="ClawSlash" type="AnimatedSprite3D" parent="Player" unique_id=355662004]
+transform = Transform3D(0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0)
+pixel_size = 0.012
+billboard = 1
+script = ExtResource("7_dp3eg")
 
 [node name="Walls" type="Node3D" parent="." unique_id=22144205]
 
@@ -122,11 +131,8 @@ shape = SubResource("BoxShape3D_wall_ew")
 [node name="Pillar1" type="StaticBody3D" parent="Walls" unique_id=1482932451]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -5, 3, -8)
 
-[node name="Mesh" type="MeshInstance3D" parent="Walls/Pillar1" unique_id=1367350466]
-material_override = ExtResource("5_pillar_mat")
-mesh = SubResource("BoxMesh_pillar")
-
 [node name="Collision" type="CollisionShape3D" parent="Walls/Pillar1" unique_id=455733810]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.07201576, -0.07172489, 0.0077848434)
 shape = SubResource("BoxShape3D_pillar")
 
 [node name="Pillar2" type="StaticBody3D" parent="Walls" unique_id=1682498127]
@@ -195,6 +201,12 @@ transform = Transform3D(0.55, 0, 0, 0, 0.55, 0, 0, 0, 0.55, 6, 0.55, -8)
 [node name="CharacterSheetUI" parent="." unique_id=791393023 instance=ExtResource("14_character_sheet_ui")]
 
 [node name="MonsterSheetUI" parent="." unique_id=2083056186 instance=ExtResource("15_monster_sheet_ui")]
+
+[node name="JobSkillUI" parent="." unique_id=1487771345 instance=ExtResource("18_job_skill_ui")]
+
+[node name="PartySelectUI" parent="." unique_id=1991983367 instance=ExtResource("19_party_select_ui")]
+
+[node name="CharacterScreen" parent="." unique_id=332462342 instance=ExtResource("20_character_screen")]
 
 [node name="CityMapManager" type="Node" parent="." unique_id=967255027]
 script = ExtResource("17_muem4")

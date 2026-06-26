@@ -1,0 +1,20 @@
+[gd_resource type="Resource" script_class="JobSkill" format=3 uid="uid://jsk_stone_ground"]
+
+[ext_resource type="Script" path="res://scripts/data/job_skill.gd" id="1_jsk"]
+
+[resource]
+script = ExtResource("1_jsk")
+skill_id = "stone_ground"
+display_name = "Stone Ground"
+description = "Slows a target significantly — CT gain reduced by 30% for 2 turns."
+flavor_text = "Everything takes longer when you do it right."
+category = 0
+job_id = "mugnaio"
+jp_cost = 75
+mp_cost = 6
+target = 1
+range_cells = 3
+duration_turns = 2
+ct_modifier = -0.3
+status_applied = "slowed"
+tags = Array[String](["debuff", "ct", "slow"])

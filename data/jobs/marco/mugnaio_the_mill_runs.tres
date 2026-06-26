@@ -1,0 +1,16 @@
+[gd_resource type="Resource" script_class="JobSkill" format=3 uid="uid://jsk_the_mill_runs"]
+
+[ext_resource type="Script" path="res://scripts/data/job_skill.gd" id="1_jsk"]
+
+[resource]
+script = ExtResource("1_jsk")
+skill_id = "the_mill_runs"
+display_name = "The Mill Runs"
+description = "Marco generates 1 bonus MP per turn from pure efficiency."
+flavor_text = "Steady, reliable, never stops."
+category = 1
+job_id = "mugnaio"
+jp_cost = 80
+mp_cost = 0
+passive_mp_regen = 1
+tags = Array[String](["passive", "mp", "regen"])

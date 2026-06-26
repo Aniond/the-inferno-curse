@@ -1,0 +1,18 @@
+[gd_resource type="Resource" script_class="JobSheet" format=3 uid="uid://job_fornaro_marco"]
+
+[ext_resource type="Script" path="res://scripts/data/job_sheet.gd" id="1_js"]
+
+[resource]
+script = ExtResource("1_js")
+job_id = "fornaro"
+display_name = "The Fornaro"
+tier = 1
+required_job_id = ""
+job_level = 0
+jp_earned = 0
+jp_spent = 0
+unlocked_skills = Array[String]([])
+level_hp_per_level = 5
+level_def_per_level = 1
+level_str_per_level = 1
+flavor_text = "Master of the stone oven. Heat control, delayed damage, terrain pressure."

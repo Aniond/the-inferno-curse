@@ -1,0 +1,20 @@
+[gd_resource type="Resource" script_class="JobSkill" format=3 uid="uid://jsk_chaff_and_grain"]
+
+[ext_resource type="Script" path="res://scripts/data/job_skill.gd" id="1_jsk"]
+
+[resource]
+script = ExtResource("1_jsk")
+skill_id = "chaff_and_grain"
+display_name = "Chaff and Grain"
+description = "Throws a cloud of grain dust. Reduces accuracy and applies Choke — each turn in the cloud costs 1 extra MP to cast abilities."
+flavor_text = "Breathe it in. Now try to think straight."
+category = 0
+job_id = "mugnaio"
+jp_cost = 50
+mp_cost = 5
+target = 4
+range_cells = 3
+aoe_radius = 1
+duration_turns = 2
+status_applied = "choke"
+tags = Array[String](["debuff", "accuracy", "mp_drain", "cloud"])

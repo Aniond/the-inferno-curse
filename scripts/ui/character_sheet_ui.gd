@@ -1,6 +1,6 @@
 extends CanvasLayer
 ## CharacterSheetUI - Full-screen character status overlay.
-## Toggle with the "open_character_sheet" action (C key).
+## Toggle with the "open_character_sheet" action (Ctrl+C).
 ## Reads all data from PlayerData autoload.
 ## Background: res://assets/summer/b6630f53-e376-42a0-9dea-dcdd6b8dd7ce/2026-06-22/JvLheMHJ7Vg9NahOuzTsY_dcaFSBTd.png
 
@@ -25,9 +25,11 @@ var _hp_fill: ColorRect
 var _mp_fill: ColorRect
 var _ct_fill: ColorRect
 var _exp_fill: ColorRect
+var _portrait: TextureRect
 
 var _is_open: bool = false
 var _player_data: Node
+var _active_sheet: CharacterSheet = null  ## When set, refresh reads from this instead of PlayerData.
 
 
 func _ready() -> void:
@@ -86,11 +88,6 @@ func _ready() -> void:
 
 
 func _input(event: InputEvent) -> void:
-	if event.is_action_pressed("ui_cancel") and _is_open:
-		hide_sheet()
-		get_viewport().set_input_as_handled()
-		return
-
 	if event.is_action_pressed("open_character_sheet"):
 		if _is_open:
 			hide_sheet()
@@ -100,12 +97,22 @@ func _input(event: InputEvent) -> void:
 
 
 func show_sheet() -> void:
+	_active_sheet = null
+	_is_open = true
+	visible = true
+	_refresh_all()
+
+
+## Open the formatted sheet populated from an arbitrary CharacterSheet resource.
+func show_sheet_for(sheet: CharacterSheet) -> void:
+	_active_sheet = sheet
 	_is_open = true
 	visible = true
 	_refresh_all()
 
 
 func hide_sheet() -> void:
+	_active_sheet = null
 	_is_open = false
 	visible = false
 
@@ -266,6 +273,17 @@ func _create_gauge_fills() -> void:
 	_ct_fill = _make_fill(Color(0.55, 0.55, 0.62, 0.70), 0.440, 0.239, 0.176, 0.017)
 	_exp_fill = _make_fill(Color(0.76, 0.58, 0.20, 0.55), 0.531, 0.626, 0.041, 0.023)
 
+	# Portrait inside the PROFILE frame. Clipped to its box so it never overflows.
+	_portrait = TextureRect.new()
+	_portrait.name = "Portrait"
+	_portrait.expand_mode = TextureRect.EXPAND_IGNORE_SIZE
+	_portrait.stretch_mode = TextureRect.STRETCH_KEEP_ASPECT_CENTERED
+	_portrait.clip_contents = true
+	_portrait.mouse_filter = Control.MOUSE_FILTER_IGNORE
+	_portrait.position = Vector2(_xf(0.092), _yf(0.150))
+	_portrait.size = Vector2(_xf(0.180), _yf(0.230))
+	_bars.add_child(_portrait)
+
 
 # ----------------------------------------------------------------- label creation
 
@@ -346,6 +364,10 @@ func _create_all_labels() -> void:
 # ----------------------------------------------------------------- refresh
 
 func _refresh_all() -> void:
+	if _active_sheet != null:
+		_refresh_from_sheet(_active_sheet)
+		return
+
 	var pd := _player_data
 	if pd == null:
 		return
@@ -365,6 +387,7 @@ func _refresh_all() -> void:
 	# Info panel
 	_set_label("CharName", pd.character_name)
 	_set_label("CharTitle", pd.character_title)
+	_set_portrait(pd.portrait_path)
 
 	for i in range(4):
 		var skill_text := ""
@@ -385,6 +408,70 @@ func _refresh_all() -> void:
 		_set_label("ResistValue_" + elem, "%d%%" % pd.get_resistance(elem))
 
 
+func _refresh_from_sheet(s: CharacterSheet) -> void:
+	var max_hp := s.get_max_hp()
+	var max_mp := s.get_max_mp()
+	var max_ct := 100
+	# A resource sheet has no live HP/MP/CT — show full bars at max.
+	_set_gauge(_hp_fill, 1.0, 0.176)
+	_set_gauge(_mp_fill, 1.0, 0.176)
+	_set_gauge(_ct_fill, float(s.get_starting_ct()) / float(maxi(max_ct, 1)), 0.176)
+	_set_gauge(_exp_fill, float(s.experience) / float(maxi(_exp_to_next(s.level), 1)), 0.041)
+
+	_set_label("HPValue", "%d / %d" % [max_hp, max_hp])
+	_set_label("MPValue", "%d / %d" % [max_mp, max_mp])
+	_set_label("CTValue", "%d / %d" % [s.get_starting_ct(), max_ct])
+
+	_set_label("StatValue_STR", str(s.get_core_stat("STR")))
+	_set_label("StatValue_SPD", str(s.get_core_stat("SPD")))
+	_set_label("StatValue_INT", str(s.get_core_stat("INT")))
+	_set_label("StatValue_FTH", str(s.get_core_stat("FTH")))
+	_set_label("StatValue_POW", str(s.get_power()))
+	_set_label("StatValue_DEF", str(s.get_defense()))
+	_set_label("StatValue_MOV", str(s.get_movement()))
+	_set_label("StatValue_JMP", str(s.get_jump()))
+	_set_label("StatValue_EXP", str(s.experience))
+
+	_set_label("CharName", s.display_name)
+	_set_label("CharTitle", s.job_title)
+	_set_portrait(s.portrait_path)
+
+	for i in range(4):
+		var skill_text := ""
+		if i < s.equipped_skills.size():
+			skill_text = s.equipped_skills[i]
+		_set_label("SkillName_" + str(i), skill_text)
+
+	for i in range(4):
+		var trait_text := ""
+		if i < s.equipped_traits.size():
+			trait_text = s.equipped_traits[i]
+		_set_label("TraitName_" + str(i), trait_text)
+
+	var armor := s.body
+	if armor.strip_edges().is_empty():
+		armor = _first_non_empty([s.shield, s.head, s.feet])
+	_set_label("EquipmentName_Weapon", _format_equipment_label("Weapon", s.weapon))
+	_set_label("EquipmentName_Armor", _format_equipment_label("Armor", armor))
+	_set_label("EquipmentName_Trinket", _format_equipment_label("Trinket", s.accessory))
+
+	for elem_variant in STATUS_TYPES:
+		var elem: String = elem_variant
+		_set_label("ResistValue_" + elem, "0%")
+
+
+func _exp_to_next(level: int) -> int:
+	return maxi(100, level * 100)
+
+
+func _first_non_empty(values: Array) -> String:
+	for v in values:
+		var sv := String(v).strip_edges()
+		if not sv.is_empty():
+			return sv
+	return ""
+
+
 func _format_equipment_label(slot_name: String, item_name: String) -> String:
 	var trimmed := item_name.strip_edges()
 	if trimmed.is_empty():
@@ -402,6 +489,15 @@ func _set_label(node_name: String, text: String) -> void:
 	var node := _labels.get_node_or_null(node_name)
 	if node is Label:
 		node.text = text
+
+
+func _set_portrait(path: String) -> void:
+	if _portrait == null:
+		return
+	if path.strip_edges().is_empty():
+		_portrait.texture = null
+		return
+	_portrait.texture = load(path) as Texture2D
 
 
 func _on_stats_changed() -> void:

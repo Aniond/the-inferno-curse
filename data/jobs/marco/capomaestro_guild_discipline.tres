@@ -1,0 +1,19 @@
+[gd_resource type="Resource" script_class="JobSkill" format=3 uid="uid://jsk_guild_discipline"]
+
+[ext_resource type="Script" path="res://scripts/data/job_skill.gd" id="1_jsk"]
+
+[resource]
+script = ExtResource("1_jsk")
+skill_id = "guild_discipline"
+display_name = "Guild Discipline"
+description = "Coordinated order to all party members — everyone acts +5 CT faster this round. Once per combat."
+flavor_text = "In the guild, you move when the master says move."
+category = 0
+job_id = "capomaestro"
+jp_cost = 150
+mp_cost = 8
+target = 3
+is_signature = true
+ct_modifier = 5.0
+status_applied = "guild_haste"
+tags = Array[String](["signature", "ct", "aoe_ally", "commander", "once_per_combat"])

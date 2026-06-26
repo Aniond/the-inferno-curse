@@ -1,6 +1,6 @@
 extends CharacterBody3D
 
-@export var pixel_size: float = 0.012
+@export var pixel_size: float = 0.0061
 @export var sprite_height_scale: float = 1.74
 @export_enum("south", "east", "north", "west") var starting_direction: String = "south"
 @export var play_walk_on_ready: bool = false

@@ -1,0 +1,31 @@
+[gd_resource type="Resource" script_class="SkillData" format=3 uid="uid://skill_unnatural_step"]
+
+[ext_resource type="Script" path="res://scripts/data/skill_data.gd" id="1_skill_data"]
+
+[resource]
+script = ExtResource("1_skill_data")
+skill_id = "unnatural_step"
+display_name = "Unnatural Step"
+skill_type = 2
+tier = 0
+grimoire_source = ""
+flavor_text = "It does not walk. It arrives."
+mp_cost = 0
+corruption_cost = 0.0
+casting_time = 0
+range_cells = 0
+area = 4
+target = 2
+stat_check = 0
+primary_effect_description = "Passive: permanently adds +2 movement to this unit."
+duration_turns = 0
+status_applied = ""
+damage_formula = 0
+damage_value = 0.0
+healing_formula = 0
+healing_value = 0.0
+stat_modifier_stat = "MOV"
+stat_modifier_amount = 2
+stat_modifier_duration = 0
+absorption_tier = 0
+tags = Array[String](["movement", "passive"])

@@ -1,0 +1,7 @@
+[gd_scene format=3 uid="uid://character_screen"]
+
+[ext_resource type="Script" path="res://scripts/ui/character_screen.gd" id="1_character_screen"]
+
+[node name="CharacterScreen" type="CanvasLayer"]
+layer = 101
+script = ExtResource("1_character_screen")

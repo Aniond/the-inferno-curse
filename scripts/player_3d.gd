@@ -198,3 +198,26 @@ func _on_grid_move_complete(final_dir_key: String) -> void:
 	if final_dir_key != "" and final_dir_key in ["south", "east", "north", "west"]:
 		_last_direction = final_dir_key
 	_play_idle_anim()
+
+
+func _unhandled_input(event: InputEvent) -> void:
+	if event.is_action_pressed("attack") and movement_enabled:
+		_do_attack()
+	if event.is_action_pressed("grab_effect") and movement_enabled:
+		_do_void_grab()
+
+
+func _do_attack() -> void:
+	if has_node("ClawSlash"):
+		$ClawSlash.play_slash()
+
+func _do_void_grab() -> void:
+	var effect_scene := load("res://scenes/limbos_embrace_effect.tscn") as PackedScene
+	if not effect_scene:
+		push_error("Failed to load limbos_embrace_effect.tscn")
+		return
+	var effect := effect_scene.instantiate() as AnimatedSprite3D
+	effect.global_position = global_position
+	get_parent().add_child(effect)
+	if effect.has_method("play_grab"):
+		effect.play_grab()
