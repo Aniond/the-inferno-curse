@@ -22,6 +22,7 @@
 [ext_resource type="PackedScene" path="res://scenes/ui/character_screen.tscn" id="20_character_screen"]
 [ext_resource type="Script" uid="uid://c6fjdrw7qffft" path="res://scripts/day_night_cycle.gd" id="day_night_cycle"]
 [ext_resource type="Script" path="res://scripts/ui/sanity_shader_controller.gd" id="sanity_shader_controller"]
+[ext_resource type="Script" path="res://scripts/sanity_triggers.gd" id="sanity_triggers"]
 
 [sub_resource type="PlaneMesh" id="PlaneMesh_ground"]
 size = Vector2(30, 30)
@@ -43,6 +44,9 @@ size = Vector3(0.5, 8, 30)
 
 [sub_resource type="BoxShape3D" id="BoxShape3D_pillar"]
 size = Vector3(0.8, 6, 0.8)
+
+[sub_resource type="BoxShape3D" id="BoxShape3D_sanity_zone"]
+size = Vector3(6.0, 4.0, 6.0)
 
 [sub_resource type="BoxMesh" id="BoxMesh_pillar"]
 size = Vector3(0.8, 6, 0.8)
@@ -215,3 +219,29 @@ transform = Transform3D(0.55, 0, 0, 0, 0.55, 0, 0, 0, 0.55, 6, 0.55, -8)
 
 [node name="CityMapManager" type="Node" parent="." unique_id=967255027]
 script = ExtResource("17_muem4")
+
+[node name="SanityTriggers" type="Node" parent="." unique_id=1111111102]
+script = ExtResource("sanity_triggers")
+
+[node name="AmbientTimer" type="Timer" parent="SanityTriggers" unique_id=1111111103]
+wait_time = 240.0
+autostart = true
+
+[node name="LimboZone" type="Area3D" parent="SanityTriggers" unique_id=1111111104]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 2, -12)
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="SanityTriggers/LimboZone" unique_id=1111111105]
+shape = SubResource("BoxShape3D_sanity_zone")
+
+[node name="SanityDebugUI" type="CanvasLayer" parent="SanityTriggers" unique_id=1111111106]
+layer = 20
+
+[node name="Label" type="Label" parent="SanityTriggers/SanityDebugUI" unique_id=1111111107]
+offset_left = 8.0
+offset_top = 8.0
+offset_right = 300.0
+offset_bottom = 60.0
+text = "Sanity: 100  [Stable]"
+
+[connection signal="timeout" from="SanityTriggers/AmbientTimer" to="SanityTriggers" method="_on_ambient_timer_timeout"]
+[connection signal="body_entered" from="SanityTriggers/LimboZone" to="SanityTriggers" method="_on_zone_body_entered"]
