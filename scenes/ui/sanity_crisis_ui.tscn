@@ -1,0 +1,116 @@
+[gd_scene format=3 uid="uid://sanity_crisis_ui"]
+
+[ext_resource type="Script" path="res://scripts/ui/sanity_crisis_ui.gd" id="1_crisis_script"]
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_panel"]
+bg_color = Color(0.1, 0.08, 0.06, 0.94)
+border_width_left = 2
+border_width_top = 2
+border_width_right = 2
+border_width_bottom = 2
+border_color = Color(0.61, 0.47, 0.26, 1)
+corner_radius_top_left = 4
+corner_radius_top_right = 4
+corner_radius_bottom_right = 4
+corner_radius_bottom_left = 4
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_btn_asylum"]
+bg_color = Color(0.45, 0.2, 0.1, 1)
+border_width_left = 1
+border_width_top = 1
+border_width_right = 1
+border_width_bottom = 1
+border_color = Color(0.77, 0.38, 0.18, 1)
+corner_radius_top_left = 3
+corner_radius_top_right = 3
+corner_radius_bottom_right = 3
+corner_radius_bottom_left = 3
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_btn_press_on"]
+bg_color = Color(0.18, 0.14, 0.1, 1)
+border_width_left = 1
+border_width_top = 1
+border_width_right = 1
+border_width_bottom = 1
+border_color = Color(0.61, 0.47, 0.26, 1)
+corner_radius_top_left = 3
+corner_radius_top_right = 3
+corner_radius_bottom_right = 3
+corner_radius_bottom_left = 3
+
+[node name="SanityCrisisUI" type="CanvasLayer"]
+layer = 100
+script = ExtResource("1_crisis_script")
+process_mode = 3
+
+[node name="Backdrop" type="ColorRect" parent="."]
+color = Color(0, 0, 0, 0.6)
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+mouse_filter = 2
+
+[node name="Panel" type="Panel" parent="."]
+custom_minimum_size = Vector2(480, 280)
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -240.0
+offset_top = -140.0
+offset_right = 240.0
+offset_bottom = 140.0
+theme_override_styles/panel = SubResource("StyleBoxFlat_panel")
+
+[node name="VBox" type="VBoxContainer" parent="Panel"]
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_left = 24.0
+offset_top = 24.0
+offset_right = -24.0
+offset_bottom = -24.0
+theme_override_constants/separation = 16
+
+[node name="Title" type="Label" parent="Panel/VBox"]
+text = "The Mind Breaks"
+theme_override_colors/font_color = Color(0.95, 0.85, 0.6, 1)
+theme_override_font_sizes/font_size = 22
+horizontal_alignment = 1
+
+[node name="Separator" type="HSeparator" parent="Panel/VBox"]
+
+[node name="Body" type="Label" parent="Panel/VBox"]
+text = "Guglielmo can no longer trust what he sees. The shadows move with purpose. The faces are wrong. Something watches from the spaces between moments.
+
+Seek refuge and let the clergy tend to his mind — or press on into the dark."
+theme_override_colors/font_color = Color(0.88, 0.78, 0.6, 1)
+theme_override_font_sizes/font_size = 13
+autowrap_mode = 3
+custom_minimum_size = Vector2(0, 80)
+
+[node name="Buttons" type="HBoxContainer" parent="Panel/VBox"]
+alignment = 1
+theme_override_constants/separation = 16
+
+[node name="AsylumButton" type="Button" parent="Panel/VBox/Buttons"]
+custom_minimum_size = Vector2(180, 40)
+text = "Seek Asylum"
+theme_override_colors/font_color = Color(0.95, 0.78, 0.55, 1)
+theme_override_font_sizes/font_size = 14
+theme_override_styles/normal = SubResource("StyleBoxFlat_btn_asylum")
+
+[node name="PressOnButton" type="Button" parent="Panel/VBox/Buttons"]
+custom_minimum_size = Vector2(180, 40)
+text = "Press On"
+theme_override_colors/font_color = Color(0.78, 0.7, 0.58, 1)
+theme_override_font_sizes/font_size = 14
+theme_override_styles/normal = SubResource("StyleBoxFlat_btn_press_on")
+
+[node name="Consequence" type="Label" parent="Panel/VBox"]
+text = "Asylum: sanity restored, but the mind is diminished.       Press On: keep your power. Keep your madness."
+theme_override_colors/font_color = Color(0.55, 0.48, 0.38, 1)
+theme_override_font_sizes/font_size = 11
+autowrap_mode = 3
+horizontal_alignment = 1

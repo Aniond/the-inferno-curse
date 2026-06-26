@@ -9,6 +9,7 @@ extends Node
 
 
 func _ready() -> void:
+	process_mode = Node.PROCESS_MODE_ALWAYS
 	SanityEventBus.sanity_changed.connect(_on_sanity_changed)
 	SanityEventBus.band_changed.connect(_on_band_changed)
 	_refresh_debug()

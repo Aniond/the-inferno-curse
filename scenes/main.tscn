@@ -23,6 +23,7 @@
 [ext_resource type="Script" uid="uid://c6fjdrw7qffft" path="res://scripts/day_night_cycle.gd" id="day_night_cycle"]
 [ext_resource type="Script" path="res://scripts/ui/sanity_shader_controller.gd" id="sanity_shader_controller"]
 [ext_resource type="Script" path="res://scripts/sanity_triggers.gd" id="sanity_triggers"]
+[ext_resource type="PackedScene" path="res://scenes/ui/sanity_crisis_ui.tscn" id="sanity_crisis_ui"]
 
 [sub_resource type="PlaneMesh" id="PlaneMesh_ground"]
 size = Vector2(30, 30)
@@ -242,6 +243,8 @@ offset_top = 8.0
 offset_right = 300.0
 offset_bottom = 60.0
 text = "Sanity: 100  [Stable]"
+
+[node name="SanityCrisisUI" parent="." instance=ExtResource("sanity_crisis_ui")]
 
 [connection signal="timeout" from="SanityTriggers/AmbientTimer" to="SanityTriggers" method="_on_ambient_timer_timeout"]
 [connection signal="body_entered" from="SanityTriggers/LimboZone" to="SanityTriggers" method="_on_zone_body_entered"]
