@@ -21,9 +21,9 @@
 [ext_resource type="PackedScene" path="res://scenes/ui/party_select_ui.tscn" id="19_party_select_ui"]
 [ext_resource type="PackedScene" path="res://scenes/ui/character_screen.tscn" id="20_character_screen"]
 [ext_resource type="Script" uid="uid://c6fjdrw7qffft" path="res://scripts/day_night_cycle.gd" id="day_night_cycle"]
-[ext_resource type="Script" path="res://scripts/ui/sanity_shader_controller.gd" id="sanity_shader_controller"]
-[ext_resource type="Script" path="res://scripts/sanity_triggers.gd" id="sanity_triggers"]
 [ext_resource type="PackedScene" path="res://scenes/ui/sanity_crisis_ui.tscn" id="sanity_crisis_ui"]
+[ext_resource type="Script" uid="uid://c0ykmrxainom6" path="res://scripts/ui/sanity_shader_controller.gd" id="sanity_shader_controller"]
+[ext_resource type="Script" uid="uid://cc25vem0jlxq" path="res://scripts/sanity_triggers.gd" id="sanity_triggers"]
 
 [sub_resource type="PlaneMesh" id="PlaneMesh_ground"]
 size = Vector2(30, 30)
@@ -46,11 +46,11 @@ size = Vector3(0.5, 8, 30)
 [sub_resource type="BoxShape3D" id="BoxShape3D_pillar"]
 size = Vector3(0.8, 6, 0.8)
 
-[sub_resource type="BoxShape3D" id="BoxShape3D_sanity_zone"]
-size = Vector3(6.0, 4.0, 6.0)
-
 [sub_resource type="BoxMesh" id="BoxMesh_pillar"]
 size = Vector3(0.8, 6, 0.8)
+
+[sub_resource type="BoxShape3D" id="BoxShape3D_sanity_zone"]
+size = Vector3(6, 4, 6)
 
 [node name="World" type="Node3D" unique_id=1662994112]
 script = ExtResource("16_battle_test_map")
@@ -244,7 +244,7 @@ offset_right = 300.0
 offset_bottom = 60.0
 text = "Sanity: 100  [Stable]"
 
-[node name="SanityCrisisUI" parent="." instance=ExtResource("sanity_crisis_ui")]
+[node name="SanityCrisisUI" parent="." unique_id=2098417299 instance=ExtResource("sanity_crisis_ui")]
 
 [connection signal="timeout" from="SanityTriggers/AmbientTimer" to="SanityTriggers" method="_on_ambient_timer_timeout"]
 [connection signal="body_entered" from="SanityTriggers/LimboZone" to="SanityTriggers" method="_on_zone_body_entered"]

@@ -8,7 +8,6 @@ signal crisis_resolved
 const ASYLUM_RESTORE := 50
 const ASYLUM_MAX_PENALTY := 20
 
-@onready var _panel: Panel = $Panel
 @onready var _asylum_btn: Button = $Panel/VBox/Buttons/AsylumButton
 @onready var _press_on_btn: Button = $Panel/VBox/Buttons/PressOnButton
 

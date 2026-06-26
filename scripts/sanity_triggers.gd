@@ -4,7 +4,6 @@ extends Node
 ## Press Y to fire limbo_dante_echo (story beat test).
 ## Press U to recover via inn rest.
 
-@onready var _ambient_timer: Timer = $AmbientTimer
 @onready var _debug_label: Label = $SanityDebugUI/Label
 
 
@@ -28,11 +27,11 @@ func _on_ambient_timer_timeout() -> void:
 	SanityEventBus.trigger("limbo_ambient_fade")
 
 
-func _on_sanity_changed(new_value: int, _delta: int) -> void:
+func _on_sanity_changed(_new_value: int, _delta: int) -> void:
 	_refresh_debug()
 
 
-func _on_band_changed(new_band: int) -> void:
+func _on_band_changed(_new_band: int) -> void:
 	_refresh_debug()
 
 

@@ -34,7 +34,7 @@ func trigger(event_id: String) -> void:
 		return
 
 	var perception := _get_perception()
-	var modifier := (perception - 10) / 2
+	var modifier := int((perception - 10) / 2.0)
 	var repeat_penalty := -2 if sheet.has_witnessed(event_id) else 0
 
 	var raw_roll := randi_range(1, 20)
@@ -64,8 +64,8 @@ func recover(source: String) -> void:
 			_apply_sanity_delta(INN_RESTORE, sheet)
 		"clergy":
 			var perception := _get_perception()
-			var modifier := (perception - 10) / 2
-			var roll := randi_range(1, 20) + modifier
+			var clergy_modifier := int((perception - 10) / 2.0)
+			var roll := randi_range(1, 20) + clergy_modifier
 			var amount := CLERGY_RESTORE_SUCCESS if roll >= CLERGY_DC else CLERGY_RESTORE_FAIL
 			_apply_sanity_delta(amount, sheet)
 		"guild":
