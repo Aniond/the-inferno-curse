@@ -1,6 +1,7 @@
 [gd_resource type="Resource" script_class="CharacterSheet" format=3 uid="uid://do7ft3l8ekc7q"]
 
 [ext_resource type="Script" uid="uid://cif8cb30qlua" path="res://scripts/data/character_sheet.gd" id="1_character_sheet"]
+[ext_resource type="Script" path="res://scripts/data/sanity_sheet.gd" id="13_sanity_sheet"]
 [ext_resource type="Script" uid="uid://unbjv8sfem0j" path="res://scripts/data/core_stats.gd" id="2_core_stats"]
 [ext_resource type="Script" uid="uid://cdruramw881al" path="res://scripts/data/stat_modifier.gd" id="3_stat_modifier"]
 [ext_resource type="Resource" path="res://data/skills/guts.tres" id="4_guts"]
@@ -56,6 +57,12 @@ source_name = "Basic Squire Kit"
 target_stat = "DEF"
 flat_bonus = 5
 
+[sub_resource type="Resource" id="SanitySheet_guglielmo"]
+script = ExtResource("13_sanity_sheet")
+sanity_current = 100
+sanity_max = 100
+witnessed_events = Array[String]([])
+
 [resource]
 script = ExtResource("1_character_sheet")
 character_id = "guglielmo_da_siena"
@@ -77,3 +84,4 @@ owned_equipment = Array[Resource]([ExtResource("7_eq_training_sword"), ExtResour
 equipped_weapon_id = "training_sword"
 equipped_armor_id = "chain_mail"
 equipped_trinket_id = "iron_charm"
+sanity = SubResource("SanitySheet_guglielmo")

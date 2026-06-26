@@ -35,6 +35,8 @@ const StatModifierResource := preload("res://scripts/data/stat_modifier.gd")
 @export var job_sheets: Array[Resource] = []    # JobSheet resources for each job
 @export var active_job_id: String = ""          # currently active job
 
+@export var sanity: Resource = null             # SanitySheet — Guglielmo only
+
 const MAX_SKILL_SLOTS := 4
 const MAX_TRAIT_SLOTS := 4
 
