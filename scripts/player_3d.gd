@@ -13,6 +13,26 @@ var grid_movement_only: bool = false
 var _last_direction: String = "south"
 var _move_tween: Tween = null
 
+# 4-directional priority tracking: stores the order keys were pressed
+# so the most recently pressed key wins when two are held simultaneously.
+var _pressed_dirs: Array[String] = []
+
+# World-space vectors for each logical direction at 45° camera yaw.
+# Forward (move_up) = NW in world = screen up-right
+# Back (move_down)  = SE in world = screen down-left
+# Left              = SW in world = screen down-left... no:
+# At yaw 45°: camera looks along (-1,0,-1) normalized.
+# Right of camera = (1,0,-1) normalized = East+North in world.
+# Mapping: up=north(-Z), down=south(+Z), left=west(-X), right=east(+X)
+# Rotated 45°: north=(-0.707,0,-0.707), south=(0.707,0,0.707),
+#              east=(0.707,0,-0.707),   west=(-0.707,0,0.707)
+const DIR_VECTORS: Dictionary = {
+	"north": Vector3(-0.7071, 0.0, -0.7071),
+	"south": Vector3(0.7071, 0.0, 0.7071),
+	"east":  Vector3(0.7071, 0.0, -0.7071),
+	"west":  Vector3(-0.7071, 0.0, 0.7071),
+}
+
 
 func _ready() -> void:
 	# Collision capsule
@@ -30,7 +50,8 @@ func _ready() -> void:
 	$AnimatedSprite.sprite_frames = frames
 	$AnimatedSprite.billboard = 1  # BILLBOARD_ENABLED
 	$AnimatedSprite.centered = true
-	$AnimatedSprite.pixel_size = 0.012
+	$AnimatedSprite.pixel_size = 0.035
+	$AnimatedSprite.texture_filter = CanvasItem.TEXTURE_FILTER_NEAREST
 	# Y-scale compensation: undo vertical squash from camera pitch
 	# Y-Scale = 1 / cos(pitch). Camera pitch is 55 deg -> 1/cos(55) = 1.74
 	$AnimatedSprite.scale = Vector3(1.0, 1.74, 1.0)
@@ -93,48 +114,31 @@ func _process(_delta: float) -> void:
 
 
 func _physics_process(delta: float) -> void:
-	# Lock all rotation; sprite billboards face camera, body never tilts.
 	self.rotation = Vector3.ZERO
 
 	if not movement_enabled or grid_movement_only:
 		velocity = velocity.move_toward(Vector3.ZERO, friction * delta)
-		# Do not force _play_idle_anim() here — when in grid mode, animation state
-		# (walk vs idle) is driven by explicit calls from the grid controller (battle map)
-		# so the player uses the move (walk) animation during grid steps.
 		move_and_slide()
 		return
 
-	var input_dir := Input.get_vector("move_left", "move_right", "move_up", "move_down")
-	var move_dir := Vector3(input_dir.x, 0.0, input_dir.y)
+	# Pick the most recently pressed direction still held, no diagonals.
+	var active_dir: String = ""
+	for dir in _pressed_dirs:
+		var action: String = _dir_to_action(dir)
+		if Input.is_action_pressed(action):
+			active_dir = dir
 
-	if move_dir != Vector3.ZERO:
+	if active_dir != "":
+		var move_dir: Vector3 = DIR_VECTORS[active_dir]
 		velocity = velocity.move_toward(move_dir * speed, acceleration * delta)
-		_play_walk_anim(move_dir)
+		_last_direction = active_dir
+		_play_walk_anim_dir(active_dir)
 	else:
 		velocity = velocity.move_toward(Vector3.ZERO, friction * delta)
 		_play_idle_anim()
 
 	move_and_slide()
 
-
-func _get_direction_key(move_dir: Vector3) -> String:
-	if abs(move_dir.x) >= abs(move_dir.z):
-		if move_dir.x > 0:
-			return "east"
-		return "west"
-	else:
-		if move_dir.z > 0:
-			return "south"
-		return "north"
-
-
-func _play_walk_anim(move_dir: Vector3) -> void:
-	var dir_key: String = _get_direction_key(move_dir)
-	var anim_name: String = "walk_" + dir_key
-
-	if $AnimatedSprite.sprite_frames.has_animation(anim_name):
-		$AnimatedSprite.play(anim_name)
-	_last_direction = dir_key
 
 
 func _play_idle_anim() -> void:
@@ -205,6 +209,35 @@ func _unhandled_input(event: InputEvent) -> void:
 		_do_attack()
 	if event.is_action_pressed("grab_effect") and movement_enabled:
 		_do_void_grab()
+
+	# Track press order for 4-dir priority (most recently pressed wins).
+	for dir in ["north", "south", "east", "west"]:
+		var action: String = _dir_to_action(dir)
+		if event.is_action_pressed(action):
+			_pressed_dirs.erase(dir)
+			_pressed_dirs.append(dir)
+		elif event.is_action_released(action):
+			_pressed_dirs.erase(dir)
+
+
+func _dir_to_action(dir: String) -> String:
+	match dir:
+		"north": return "move_up"
+		"south": return "move_down"
+		"east":  return "move_right"
+		"west":  return "move_left"
+	return ""
+
+
+func _play_walk_anim_dir(dir: String) -> void:
+	var anim_name: String = "walk_" + dir
+	if $AnimatedSprite.sprite_frames.has_animation(anim_name):
+		if $AnimatedSprite.animation != anim_name:
+			$AnimatedSprite.play(anim_name)
+	else:
+		var fallback: String = "walk_south"
+		if $AnimatedSprite.animation != fallback:
+			$AnimatedSprite.play(fallback)
 
 
 func _do_attack() -> void:

@@ -76,6 +76,9 @@ func _unhandled_input(event: InputEvent) -> void:
 func _process(delta: float) -> void:
 	projection = Camera3D.PROJECTION_ORTHOGONAL
 	current = true
+	pitch_deg = clampf(pitch_deg, 30.0, 60.0)
+	_yaw_deg = clampf(_yaw_deg, 0.0, 90.0)
+	ortho_size = clampf(ortho_size, zoom_min, zoom_max)
 	size = lerpf(size, ortho_size, minf(follow_speed * delta, 1.0))
 	if not _target:
 		return

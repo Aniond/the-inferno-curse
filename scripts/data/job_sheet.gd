@@ -51,4 +51,4 @@ func earn_jp(amount: int) -> void:
 
 func _recalculate_job_level() -> void:
 	# Every 100 JP earned raises job level, cap at 10
-	job_level = mini(jp_earned / 100, 10)
+	job_level = mini(jp_earned / 100.0, 10)

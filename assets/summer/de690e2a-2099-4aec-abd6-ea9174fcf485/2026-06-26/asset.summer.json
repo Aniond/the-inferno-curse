@@ -1,0 +1,71 @@
+{
+	"assetId": "de690e2a-2099-4aec-abd6-ea9174fcf485",
+	"metadata": {
+		"downloadUrl": "https://res.cloudinary.com/dol86wsz1/raw/upload/v1782507290/summer_3d/3d_1782507288837.glb",
+		"fileName": "3d_1782507288837.glb",
+		"filename": "3d_1782507288837.glb",
+		"id": "de690e2a-2099-4aec-abd6-ea9174fcf485",
+		"metadata": {
+			"cloudinaryPublicId": "summer_3d/3d_1782507288837.glb",
+			"entrypoint": "api/art/generate-3d",
+			"kind": "text-to-3d",
+			"meshyUrls": {
+				"glb": "https://v3b.fal.media/files/b/0a9fe3e7/xhtz6VsofayOuMLu3cErP_model.glb",
+				"obj": "https://v3b.fal.media/files/b/0a9fe3e7/Ia8ly2os64Fo5huNfR64I_4b1b3ebf383315257fbf46fab8a376e5.obj"
+			},
+			"permanentUrls": {
+				"glb": "https://res.cloudinary.com/dol86wsz1/raw/upload/v1782507290/summer_3d/3d_1782507288837.glb",
+				"thumbnail": "https://res.cloudinary.com/dol86wsz1/image/upload/v1782507292/summer_3d/3d_1782507292455_thumb.png"
+			},
+			"queueJobId": "9419",
+			"queueName": "asset-generation",
+			"seo": {
+				"description": "Low detail 3D model of a small 13th century Florentine church facade. Exterior only with flat back. GLB format with basic textures. Works in major game engines. Free license.",
+				"keywords": [
+					"free game assets",
+					"3d model",
+					"free 3d game assets",
+					"game development",
+					"13th",
+					"century",
+					"florentine",
+					"parish",
+					"church,",
+					"free game background"
+				],
+				"openGraph": {
+					"description": "Low detail 3D model of a small 13th century Florentine church facade. Exterior only with flat back. GLB format with basic textures. Works in major game engines. Free license.",
+					"title": "Medieval Florentine Church - Free 3D Model for Games",
+					"type": "article"
+				},
+				"title": "Medieval Florentine Church - Free 3D Model for Games | Summer Engine",
+				"twitter": {
+					"card": "summary_large_image",
+					"description": "Low detail 3D model of a small 13th century Florentine church facade. Exterior only with flat back. GLB format with basic textures. Works in major game engines. Free license.",
+					"title": "Medieval Florentine Church - Free 3D Model for Games"
+				}
+			},
+			"surface": "studio",
+			"tempUrls": {
+				"glb": "https://v3b.fal.media/files/b/0a9fe3e7/xhtz6VsofayOuMLu3cErP_model.glb",
+				"thumbnail": "https://v3b.fal.media/files/b/0a9fe3e7/93kOesklUiPUhE3WnO_zS_preview.png"
+			},
+			"uploadStatus": "complete"
+		},
+		"name": "Medieval Florentine Church",
+		"previewUrl": "https://res.cloudinary.com/dol86wsz1/image/upload/v1782507292/summer_3d/3d_1782507292455_thumb.png",
+		"primary": true,
+		"thumbnailUrl": "https://res.cloudinary.com/dol86wsz1/image/upload/v1782507292/summer_3d/3d_1782507292455_thumb.png",
+		"title": "Medieval Florentine Church",
+		"type": "3d",
+		"url": "https://res.cloudinary.com/dol86wsz1/raw/upload/v1782507290/summer_3d/3d_1782507288837.glb",
+		"version": "2026-06-26"
+	},
+	"name": "Medieval Florentine Church",
+	"paths": [
+		"res://assets/summer/de690e2a-2099-4aec-abd6-ea9174fcf485/2026-06-26/3d_1782507288837.glb"
+	],
+	"primaryPath": "res://assets/summer/de690e2a-2099-4aec-abd6-ea9174fcf485/2026-06-26/3d_1782507288837.glb",
+	"source": "summer-studio",
+	"version": "2026-06-26"
+}

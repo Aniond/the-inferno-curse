@@ -1,568 +1,583 @@
-[gd_scene format=3 uid="uid://mercato_vecchio"]
+[gd_scene format=3 uid="uid://47xgn11ukxdb"]
 
-[ext_resource type="Script" path="res://scripts/mercato_vecchio.gd" id="1_mercato_script"]
+[ext_resource type="Script" uid="uid://cg00ya1nu4387" path="res://scripts/mercato_vecchio.gd" id="1_mercato_script"]
 [ext_resource type="Script" uid="uid://lcfbsowfjqce" path="res://scripts/player_3d.gd" id="2_player_script"]
 [ext_resource type="Script" uid="uid://it8rra1xygsm" path="res://scripts/camera_follow.gd" id="3_camera_script"]
-[ext_resource type="Environment" uid="uid://c4qfo6yvfhdaj" path="res://materials/tavern_environment.tres" id="4_env"]
+[ext_resource type="Environment" uid="uid://s56mkgpb1y1i" path="res://materials/mercato_environment.tres" id="4_env"]
 [ext_resource type="Script" uid="uid://c6fjdrw7qffft" path="res://scripts/day_night_cycle.gd" id="5_day_night"]
-[ext_resource type="Script" path="res://scripts/ui/sanity_shader_controller.gd" id="6_sanity_shader"]
-[ext_resource type="Material" path="res://materials/cobblestone_plaza.tres" id="7_cobble_plaza"]
+[ext_resource type="Script" uid="uid://c0ykmrxainom6" path="res://scripts/ui/sanity_shader_controller.gd" id="6_sanity_shader"]
 [ext_resource type="Material" path="res://materials/cobblestone_center.tres" id="8_cobble_center"]
 [ext_resource type="Material" path="res://materials/arno_river.tres" id="9_arno_river"]
-[ext_resource type="Material" uid="uid://46m6jk6ase1o" path="res://materials/wall_stone.tres" id="10_wall_stone"]
 [ext_resource type="Material" path="res://materials/tuscan_sandstone.tres" id="11_sandstone"]
+[ext_resource type="Material" uid="uid://b5sd0tjfiti6k" path="res://materials/cobblestone_road.tres" id="12_cobble_road"]
+[ext_resource type="PackedScene" uid="uid://f83d6jxahacn" path="res://assets/summer/1bcfcb2f-99a6-4250-af2d-f596705a4240/2026-06-25/3d_1782421370884.glb" id="20_stall"]
+[ext_resource type="PackedScene" uid="uid://t21scg4kv34t" path="res://assets/summer/cf737c49-bf56-44b1-bd73-869affd8e4ad/2026-06-25/3d_1782421752550.glb" id="21_fountain"]
+[ext_resource type="PackedScene" uid="uid://cth2bkoo31qtx" path="res://assets/summer/f69c3803-e559-4343-82ed-208567a70a5c/2026-06-25/3d_1782421736650.glb" id="22_building_north"]
+[ext_resource type="PackedScene" uid="uid://on3tdkjpv7dq" path="res://assets/summer/2e610c4f-1708-4ae1-a5ca-730dec0a45b5/2026-06-25/3d_1782421666896.glb" id="23_townhouse_a"]
+[ext_resource type="PackedScene" uid="uid://cw5uvnpneo07p" path="res://assets/summer/726c7746-b76d-403b-85c3-21a374a44f7a/2026-06-26/3d_1782507309021.glb" id="24_townhouse_b"]
+[ext_resource type="PackedScene" uid="uid://ccpy2guh7rra4" path="res://assets/summer/ec3df1f5-60f9-41a6-98b8-27d168bfc720/2026-06-26/3d_1782507293304.glb" id="25_townhouse_c"]
+[ext_resource type="PackedScene" uid="uid://siah6bgc23bx" path="res://assets/summer/6088c1e6-88ef-47e5-a726-313c476897f1/2026-06-25/3d_1782421775956.glb" id="26_cypress"]
+[ext_resource type="PackedScene" uid="uid://1m7s5lqn886a" path="res://assets/summer/429389f0-9e2a-46ef-a37a-bdf937ea0097/2026-06-25/3d_1782421504983.glb" id="27_barrel"]
+[ext_resource type="Shader" uid="uid://b5j1puxxgc2p1" path="res://materials/vignette.gdshader" id="30_vignette_shader"]
 
-; ── Ground meshes ──────────────────────────────────────────────────────────
+[sub_resource type="CameraAttributesPractical" id="CameraAttributesPractical_hd2d"]
+dof_blur_far_enabled = true
+dof_blur_far_distance = 12.0
+dof_blur_far_transition = 4.0
+dof_blur_amount = 0.15
 
 [sub_resource type="PlaneMesh" id="PlaneMesh_plaza"]
-size = Vector2(60, 60)
-
-[sub_resource type="PlaneMesh" id="PlaneMesh_center"]
-size = Vector2(20, 20)
-
-[sub_resource type="PlaneMesh" id="PlaneMesh_river"]
-size = Vector2(62, 5)
-
-[sub_resource type="PlaneMesh" id="PlaneMesh_steps"]
-size = Vector2(6, 2)
+size = Vector2(90, 90)
 
 [sub_resource type="BoxShape3D" id="BoxShape3D_plaza_col"]
-size = Vector3(60, 0.2, 60)
+size = Vector3(90, 0.2, 90)
+
+[sub_resource type="PlaneMesh" id="PlaneMesh_center"]
+size = Vector2(5, 5)
+
+[sub_resource type="PlaneMesh" id="PlaneMesh_steps"]
+size = Vector2(3, 1.5)
+
+[sub_resource type="PlaneMesh" id="PlaneMesh_road_north"]
+size = Vector2(5, 8)
+
+[sub_resource type="PlaneMesh" id="PlaneMesh_road_east"]
+size = Vector2(8, 5)
+
+[sub_resource type="PlaneMesh" id="PlaneMesh_road_south"]
+size = Vector2(5, 6)
+
+[sub_resource type="PlaneMesh" id="PlaneMesh_river"]
+size = Vector2(20, 5)
 
 [sub_resource type="BoxShape3D" id="BoxShape3D_river_col"]
-size = Vector3(62, 0.2, 5)
+size = Vector3(20, 0.2, 5)
 
-; ── Building shells ────────────────────────────────────────────────────────
-
-; North wall — Loggia del Mercato (wide arcade front)
-[sub_resource type="BoxMesh" id="BoxMesh_bldg_north"]
-size = Vector3(50, 10, 4)
-
-[sub_resource type="BoxShape3D" id="BoxShape3D_bldg_north"]
-size = Vector3(50, 10, 4)
-
-; West block — Dye Merchant (north half) + Herbalist (south half)
-[sub_resource type="BoxMesh" id="BoxMesh_bldg_west"]
-size = Vector3(4, 10, 40)
-
-[sub_resource type="BoxShape3D" id="BoxShape3D_bldg_west"]
-size = Vector3(4, 10, 40)
-
-; East block — Weapon Smith + residences
-[sub_resource type="BoxMesh" id="BoxMesh_bldg_east"]
-size = Vector3(4, 10, 40)
-
-[sub_resource type="BoxShape3D" id="BoxShape3D_bldg_east"]
-size = Vector3(4, 10, 40)
-
-; South quay wall (low dock edge)
 [sub_resource type="BoxMesh" id="BoxMesh_quay"]
-size = Vector3(60, 1.5, 2)
+size = Vector3(16, 1.5, 1.5)
 
 [sub_resource type="BoxShape3D" id="BoxShape3D_quay"]
-size = Vector3(60, 1.5, 2)
+size = Vector3(16, 1.5, 1.5)
 
-; ── Fountain ───────────────────────────────────────────────────────────────
+[sub_resource type="BoxShape3D" id="BoxShape3D_north_col"]
+size = Vector3(16, 8, 4)
 
-[sub_resource type="CylinderMesh" id="CylinderMesh_fountain_basin"]
-top_radius = 2.5
-bottom_radius = 2.8
-height = 0.8
+[sub_resource type="BoxShape3D" id="BoxShape3D_west_col"]
+size = Vector3(4, 8, 16)
 
-[sub_resource type="CylinderMesh" id="CylinderMesh_fountain_pillar"]
-top_radius = 0.3
-bottom_radius = 0.4
-height = 2.0
+[sub_resource type="BoxShape3D" id="BoxShape3D_east_col"]
+size = Vector3(4, 8, 16)
 
-[sub_resource type="CylinderMesh" id="CylinderMesh_fountain_top"]
-top_radius = 0.8
-bottom_radius = 0.8
-height = 0.3
+[sub_resource type="BoxShape3D" id="BoxShape3D_south_col"]
+size = Vector3(5, 8, 4)
 
 [sub_resource type="CylinderShape3D" id="CylinderShape3D_fountain_col"]
-radius = 2.8
 height = 1.5
-
-; ── Market stall awning placeholders (BoxMesh) ────────────────────────────
-
-[sub_resource type="BoxMesh" id="BoxMesh_stall"]
-size = Vector3(4.0, 0.2, 3.0)
-
-[sub_resource type="BoxMesh" id="BoxMesh_stall_counter"]
-size = Vector3(3.5, 0.8, 1.0)
+radius = 1.5
 
 [sub_resource type="BoxShape3D" id="BoxShape3D_stall_col"]
-size = Vector3(4.0, 2.0, 3.0)
-
-; ── Exit marker arrows (thin flat boxes) ──────────────────────────────────
+size = Vector3(1, 2, 0.8)
 
 [sub_resource type="BoxMesh" id="BoxMesh_exit_marker"]
-size = Vector3(2.0, 0.1, 2.0)
+size = Vector3(1.5, 0.1, 1.5)
 
-; ── Pillar for Loggia arcade ───────────────────────────────────────────────
+[sub_resource type="BoxShape3D" id="BoxShape3D_exit"]
+size = Vector3(2, 2, 2)
 
-[sub_resource type="CylinderMesh" id="CylinderMesh_pillar"]
-top_radius = 0.3
-bottom_radius = 0.35
-height = 5.0
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_vignette"]
+shader = ExtResource("30_vignette_shader")
+shader_parameter/strength = 0.35
+shader_parameter/radius = 0.75
 
-[sub_resource type="CylinderShape3D" id="CylinderShape3D_pillar_col"]
-radius = 0.35
-height = 5.0
-
-; ═══════════════════════════════════════════════════════════════════════════
-; SCENE TREE
-; ═══════════════════════════════════════════════════════════════════════════
-
-[node name="MercatoVecchio" type="Node3D"]
+[node name="MercatoVecchio" type="Node3D" unique_id=661859103]
 script = ExtResource("1_mercato_script")
 
-; ── Camera & Lighting ──────────────────────────────────────────────────────
-
-[node name="Camera" type="Camera3D" parent="."]
+[node name="Camera" type="Camera3D" parent="." unique_id=795010401]
+attributes = SubResource("CameraAttributesPractical_hd2d")
+fov = 55.0
 script = ExtResource("3_camera_script")
 target_path = NodePath("../Player")
+ortho_size = 18.0
+dead_zone_radius = 0.0
+orbit_distance = 9.0
+pitch_deg = 42.0
+zoom_min = 12.0
+pan_limit = 15.0
 
-[node name="Sun" type="DirectionalLight3D" parent="."]
-transform = Transform3D(1, 0, 0, 0, 0.25881907, 0.9659258, 0, -0.9659258, 0.25881907, 0, 8, 0)
-light_color = Color(1, 0.878, 0.639, 1)
-light_energy = 0.9
+[node name="Sun" type="DirectionalLight3D" parent="." unique_id=2064682248]
+transform = Transform3D(0.766, 0, -0.643, 0.371, 0.819, 0.442, 0.527, -0.574, 0.628, 0, 8, 0)
+light_color = Color(1, 0.85, 0.65, 1)
+light_energy = 1.2
 shadow_enabled = true
+shadow_bias = 0.05
 
-[node name="WorldEnvironment" type="WorldEnvironment" parent="."]
+[node name="WorldEnvironment" type="WorldEnvironment" parent="." unique_id=861813352]
 environment = ExtResource("4_env")
 
-[node name="SanityShaderController" type="Node" parent="."]
+[node name="SanityShaderController" type="Node" parent="." unique_id=426205350]
 script = ExtResource("6_sanity_shader")
 world_environment = NodePath("../WorldEnvironment")
 
-[node name="DayNightCycle" type="Node" parent="."]
+[node name="DayNightCycle" type="Node" parent="." unique_id=1155191615]
 script = ExtResource("5_day_night")
 
-; ── Ambient fill lights ────────────────────────────────────────────────────
-
-[node name="AmbientFillNW" type="OmniLight3D" parent="."]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -20, 6, -20)
+[node name="AmbientFillNW" type="OmniLight3D" parent="." unique_id=213937780]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -5, 5, -5)
 light_color = Color(0.188, 0.22, 0.271, 1)
-light_energy = 0.6
-omni_range = 30.0
+light_energy = 0.7
+omni_range = 16.0
 
-[node name="AmbientFillSE" type="OmniLight3D" parent="."]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 20, 6, 20)
+[node name="AmbientFillSE" type="OmniLight3D" parent="." unique_id=1677254575]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 5, 5, 5)
 light_color = Color(0.188, 0.22, 0.271, 1)
-light_energy = 0.6
-omni_range = 30.0
+light_energy = 0.7
+omni_range = 16.0
 
-[node name="FountainLight" type="OmniLight3D" parent="."]
+[node name="FountainLight" type="OmniLight3D" parent="." unique_id=40503358]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 3, 0)
-light_color = Color(0.827, 0.627, 0.243, 1)
-light_energy = 1.2
-omni_range = 18.0
+light_color = Color(1, 0.75, 0.45, 1)
+light_energy = 0.8
+shadow_enabled = true
+omni_range = 7.0
 
-; ── Player ─────────────────────────────────────────────────────────────────
+[node name="RiverLight" type="OmniLight3D" parent="." unique_id=1706825558]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 3, 12)
+light_color = Color(0.15, 0.22, 0.35, 1)
+light_energy = 0.5
+omni_range = 8.0
 
-[node name="Player" type="CharacterBody3D" parent="."]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, 8)
+[node name="Player" type="CharacterBody3D" parent="." unique_id=295642438]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -3, 0, 2)
 script = ExtResource("2_player_script")
 
-[node name="AnimatedSprite" type="AnimatedSprite3D" parent="Player"]
+[node name="AnimatedSprite" type="AnimatedSprite3D" parent="Player" unique_id=1586162602]
 
-[node name="Collision" type="CollisionShape3D" parent="Player"]
+[node name="Collision" type="CollisionShape3D" parent="Player" unique_id=620881924]
 
-; ── Ground ─────────────────────────────────────────────────────────────────
+[node name="Ground" type="StaticBody3D" parent="." unique_id=2101594529]
 
-[node name="Ground" type="StaticBody3D" parent="."]
-
-[node name="PlazaMesh" type="MeshInstance3D" parent="Ground"]
-material_override = ExtResource("7_cobble_plaza")
+[node name="PlazaMesh" type="MeshInstance3D" parent="Ground" unique_id=1798331000]
+material_override = ExtResource("12_cobble_road")
 mesh = SubResource("PlaneMesh_plaza")
 
-[node name="PlazaCollision" type="CollisionShape3D" parent="Ground"]
+[node name="PlazaCollision" type="CollisionShape3D" parent="Ground" unique_id=1012475058]
 shape = SubResource("BoxShape3D_plaza_col")
 
-; Center plaza — slightly lighter stone
-[node name="CenterPlaza" type="MeshInstance3D" parent="Ground"]
+[node name="CenterPlaza" type="MeshInstance3D" parent="Ground" unique_id=1203319842]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.01, 0)
+visible = false
 material_override = ExtResource("8_cobble_center")
 mesh = SubResource("PlaneMesh_center")
 
-; Stone steps down to river — south center
-[node name="StepsMesh" type="MeshInstance3D" parent="Ground"]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.02, 26)
+[node name="StepsMesh" type="MeshInstance3D" parent="Ground" unique_id=1387717594]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.02, 8)
+visible = false
+material_override = ExtResource("11_sandstone")
 mesh = SubResource("PlaneMesh_steps")
 
-; ── River (Arno) — south edge ─────────────────────────────────────────────
+[node name="RoadNorth" type="MeshInstance3D" parent="Ground" unique_id=990000001]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -6, 0.015, -12)
+visible = false
+material_override = ExtResource("8_cobble_center")
+mesh = SubResource("PlaneMesh_road_north")
 
-[node name="River" type="StaticBody3D" parent="."]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -0.1, 30)
+[node name="RoadEast" type="MeshInstance3D" parent="Ground" unique_id=990000002]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 12, 0.015, 2)
+visible = false
+material_override = ExtResource("8_cobble_center")
+mesh = SubResource("PlaneMesh_road_east")
 
-[node name="RiverMesh" type="MeshInstance3D" parent="River"]
+[node name="RoadSouth" type="MeshInstance3D" parent="Ground" unique_id=990000003]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.015, 11)
+visible = false
+material_override = ExtResource("8_cobble_center")
+mesh = SubResource("PlaneMesh_road_south")
+
+[node name="River" type="StaticBody3D" parent="." unique_id=28052292]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -0.1, 11)
+
+[node name="RiverMesh" type="MeshInstance3D" parent="River" unique_id=1341626147]
 material_override = ExtResource("9_arno_river")
 mesh = SubResource("PlaneMesh_river")
 
-[node name="RiverCollision" type="CollisionShape3D" parent="River"]
+[node name="RiverCollision" type="CollisionShape3D" parent="River" unique_id=598124606]
 shape = SubResource("BoxShape3D_river_col")
 
-; Quay wall — dock edge lip
-[node name="QuayWall" type="StaticBody3D" parent="."]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.5, 27.5)
+[node name="QuayWall" type="StaticBody3D" parent="." unique_id=1596262359]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.5, 9)
+visible = false
 
-[node name="QuayMesh" type="MeshInstance3D" parent="QuayWall"]
+[node name="QuayMesh" type="MeshInstance3D" parent="QuayWall" unique_id=722162484]
 material_override = ExtResource("11_sandstone")
 mesh = SubResource("BoxMesh_quay")
 
-[node name="QuayCollision" type="CollisionShape3D" parent="QuayWall"]
+[node name="QuayCollision" type="CollisionShape3D" parent="QuayWall" unique_id=314134774]
 shape = SubResource("BoxShape3D_quay")
 
-; ── Buildings ──────────────────────────────────────────────────────────────
+[node name="Buildings" type="Node3D" parent="." unique_id=1176954374]
+transform = Transform3D(4, 0, 0, 0, 4, 0, 0, 0, 4, 0, -3, 0)
 
-[node name="Buildings" type="Node3D" parent="."]
+[node name="LoggiaDelMercato" type="Node3D" parent="Buildings" unique_id=240185057]
 
-; North — Loggia del Mercato (arcade building, wide)
-[node name="LoggiaDelMercato" type="StaticBody3D" parent="Buildings"]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 5, -32)
+[node name="LoggiaNW" parent="Buildings/LoggiaDelMercato" unique_id=1361742254 instance=ExtResource("23_townhouse_a")]
+transform = Transform3D(9, 0, 0, 0, 9, 0, 0, 0, 9, -7, 0, -8)
 
-[node name="Mesh" type="MeshInstance3D" parent="Buildings/LoggiaDelMercato"]
-material_override = ExtResource("10_wall_stone")
-mesh = SubResource("BoxMesh_bldg_north")
+[node name="LoggiaN1" parent="Buildings/LoggiaDelMercato" unique_id=136352332 instance=ExtResource("22_building_north")]
+transform = Transform3D(6.75, 0, 0, 0, 6.75, 0, 0, 0, 6.75, -2, 0, -8)
 
-[node name="Collision" type="CollisionShape3D" parent="Buildings/LoggiaDelMercato"]
-shape = SubResource("BoxShape3D_bldg_north")
+[node name="LoggiaN2" parent="Buildings/LoggiaDelMercato" unique_id=1696474577 instance=ExtResource("22_building_north")]
+transform = Transform3D(6.75, 0, 0, 0, 6.75, 0, 0, 0, 6.75, 3, 0, -8)
 
-; Loggia arcade pillars (6 pillars across the front face)
-[node name="LoggiaPillars" type="Node3D" parent="Buildings"]
+[node name="LoggiaNE" parent="Buildings/LoggiaDelMercato" unique_id=1630498435 instance=ExtResource("24_townhouse_b")]
+transform = Transform3D(6.75, 0, 0, 0, 6.75, 0, 0, 0, 6.75, 7, 0, -8)
 
-[node name="Pillar1" type="StaticBody3D" parent="Buildings/LoggiaPillars"]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -20, 2.5, -28)
+[node name="NorthCollision" type="StaticBody3D" parent="Buildings/LoggiaDelMercato" unique_id=1268557159]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 4, -8)
 
-[node name="Mesh" type="MeshInstance3D" parent="Buildings/LoggiaPillars/Pillar1"]
-material_override = ExtResource("11_sandstone")
-mesh = SubResource("CylinderMesh_pillar")
+[node name="Shape" type="CollisionShape3D" parent="Buildings/LoggiaDelMercato/NorthCollision" unique_id=1348312983]
+shape = SubResource("BoxShape3D_north_col")
 
-[node name="Collision" type="CollisionShape3D" parent="Buildings/LoggiaPillars/Pillar1"]
-shape = SubResource("CylinderShape3D_pillar_col")
+[node name="WestBlock" type="Node3D" parent="Buildings" unique_id=996052106]
 
-[node name="Pillar2" type="StaticBody3D" parent="Buildings/LoggiaPillars"]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -12, 2.5, -28)
+[node name="WestHouse1" parent="Buildings/WestBlock" unique_id=532753614 instance=ExtResource("23_townhouse_a")]
+transform = Transform3D(0, 0, 6.75, 0, 6.75, 0, -6.75, 0, 0, -8, 0, -6)
 
-[node name="Mesh" type="MeshInstance3D" parent="Buildings/LoggiaPillars/Pillar2"]
-mesh = SubResource("CylinderMesh_pillar")
+[node name="WestHouse2" parent="Buildings/WestBlock" unique_id=1757390446 instance=ExtResource("24_townhouse_b")]
+transform = Transform3D(0, 0, 6.75, 0, 6.75, 0, -6.75, 0, 0, -8, 0, -1)
 
-[node name="Collision" type="CollisionShape3D" parent="Buildings/LoggiaPillars/Pillar2"]
-shape = SubResource("CylinderShape3D_pillar_col")
+[node name="WestHouse3" parent="Buildings/WestBlock" unique_id=625030376 instance=ExtResource("25_townhouse_c")]
+transform = Transform3D(0, 0, 6.75, 0, 6.75, 0, -6.75, 0, 0, -8, 0, 4)
 
-[node name="Pillar3" type="StaticBody3D" parent="Buildings/LoggiaPillars"]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -4, 2.5, -28)
+[node name="WestHouse4" parent="Buildings/WestBlock" unique_id=255890219 instance=ExtResource("23_townhouse_a")]
+transform = Transform3D(0, 0, 6.75, 0, 6.75, 0, -6.75, 0, 0, -8, 0, 7)
 
-[node name="Mesh" type="MeshInstance3D" parent="Buildings/LoggiaPillars/Pillar3"]
-mesh = SubResource("CylinderMesh_pillar")
+[node name="WestCollision" type="StaticBody3D" parent="Buildings/WestBlock" unique_id=1721283678]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -8, 4, 0)
 
-[node name="Collision" type="CollisionShape3D" parent="Buildings/LoggiaPillars/Pillar3"]
-shape = SubResource("CylinderShape3D_pillar_col")
+[node name="Shape" type="CollisionShape3D" parent="Buildings/WestBlock/WestCollision" unique_id=996052107]
+shape = SubResource("BoxShape3D_west_col")
 
-[node name="Pillar4" type="StaticBody3D" parent="Buildings/LoggiaPillars"]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 4, 2.5, -28)
+[node name="EastBlock" type="Node3D" parent="Buildings" unique_id=1244355770]
 
-[node name="Mesh" type="MeshInstance3D" parent="Buildings/LoggiaPillars/Pillar4"]
-mesh = SubResource("CylinderMesh_pillar")
+[node name="EastHouse1" parent="Buildings/EastBlock" unique_id=1075384466 instance=ExtResource("25_townhouse_c")]
+transform = Transform3D(0, 0, -6.75, 0, 6.75, 0, 6.75, 0, 0, 8, 0, -6)
 
-[node name="Collision" type="CollisionShape3D" parent="Buildings/LoggiaPillars/Pillar4"]
-shape = SubResource("CylinderShape3D_pillar_col")
+[node name="EastHouse2" parent="Buildings/EastBlock" unique_id=1427767734 instance=ExtResource("23_townhouse_a")]
+transform = Transform3D(0, 0, -6.75, 0, 6.75, 0, 6.75, 0, 0, 8, 0, -1)
 
-[node name="Pillar5" type="StaticBody3D" parent="Buildings/LoggiaPillars"]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 12, 2.5, -28)
+[node name="EastHouse3" parent="Buildings/EastBlock" unique_id=409685011 instance=ExtResource("24_townhouse_b")]
+transform = Transform3D(0, 0, -6.75, 0, 6.75, 0, 6.75, 0, 0, 8, 0, 4)
 
-[node name="Mesh" type="MeshInstance3D" parent="Buildings/LoggiaPillars/Pillar5"]
-mesh = SubResource("CylinderMesh_pillar")
+[node name="EastHouse4" parent="Buildings/EastBlock" unique_id=429833682 instance=ExtResource("25_townhouse_c")]
+transform = Transform3D(0, 0, -6.75, 0, 6.75, 0, 6.75, 0, 0, 8, 0, 7)
 
-[node name="Collision" type="CollisionShape3D" parent="Buildings/LoggiaPillars/Pillar5"]
-shape = SubResource("CylinderShape3D_pillar_col")
+[node name="EastCollision" type="StaticBody3D" parent="Buildings/EastBlock" unique_id=1618890990]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 8, 4, 0)
 
-[node name="Pillar6" type="StaticBody3D" parent="Buildings/LoggiaPillars"]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 20, 2.5, -28)
+[node name="Shape" type="CollisionShape3D" parent="Buildings/EastBlock/EastCollision" unique_id=1244355771]
+shape = SubResource("BoxShape3D_east_col")
 
-[node name="Mesh" type="MeshInstance3D" parent="Buildings/LoggiaPillars/Pillar6"]
-mesh = SubResource("CylinderMesh_pillar")
+[node name="SouthBlock" type="Node3D" parent="Buildings" unique_id=740100136]
 
-[node name="Collision" type="CollisionShape3D" parent="Buildings/LoggiaPillars/Pillar6"]
-shape = SubResource("CylinderShape3D_pillar_col")
+[node name="SouthHouseW" parent="Buildings/SouthBlock" unique_id=1473472215 instance=ExtResource("24_townhouse_b")]
+transform = Transform3D(6.75, 0, 0, 0, 6.75, 0, 0, 0, 6.75, -5, 0, 8)
 
-; West — Dye Merchant (north) + Herbalist (south)
-[node name="WestBlock" type="StaticBody3D" parent="Buildings"]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -32, 5, -4)
+[node name="SouthHouseE" parent="Buildings/SouthBlock" unique_id=2053226694 instance=ExtResource("25_townhouse_c")]
+transform = Transform3D(6.75, 0, 0, 0, 6.75, 0, 0, 0, 6.75, 5, 0, 8)
 
-[node name="Mesh" type="MeshInstance3D" parent="Buildings/WestBlock"]
-material_override = ExtResource("10_wall_stone")
-mesh = SubResource("BoxMesh_bldg_west")
+[node name="SouthCollisionW" type="StaticBody3D" parent="Buildings/SouthBlock" unique_id=157705616]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -5, 4, 8)
 
-[node name="Collision" type="CollisionShape3D" parent="Buildings/WestBlock"]
-shape = SubResource("BoxShape3D_bldg_west")
+[node name="Shape" type="CollisionShape3D" parent="Buildings/SouthBlock/SouthCollisionW" unique_id=740100137]
+shape = SubResource("BoxShape3D_south_col")
 
-; East — Weapon Smith + residences
-[node name="EastBlock" type="StaticBody3D" parent="Buildings"]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 32, 5, -4)
+[node name="SouthCollisionE" type="StaticBody3D" parent="Buildings/SouthBlock" unique_id=157705617]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 5, 4, 8)
 
-[node name="Mesh" type="MeshInstance3D" parent="Buildings/EastBlock"]
-material_override = ExtResource("10_wall_stone")
-mesh = SubResource("BoxMesh_bldg_east")
+[node name="Shape" type="CollisionShape3D" parent="Buildings/SouthBlock/SouthCollisionE" unique_id=740100138]
+shape = SubResource("BoxShape3D_south_col")
 
-[node name="Collision" type="CollisionShape3D" parent="Buildings/EastBlock"]
-shape = SubResource("BoxShape3D_bldg_east")
+[node name="Fountain" type="Node3D" parent="." unique_id=2004597802]
 
-; ── Fountain (center) ──────────────────────────────────────────────────────
+[node name="FountainModel" parent="Fountain" unique_id=1390774354 instance=ExtResource("21_fountain")]
+transform = Transform3D(4.5, 0, 0, 0, 4.5, 0, 0, 0, 4.5, 0, 0, 0)
 
-[node name="Fountain" type="Node3D" parent="."]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, 0)
+[node name="FountainCollision" type="StaticBody3D" parent="Fountain" unique_id=5916562]
 
-[node name="Basin" type="StaticBody3D" parent="Fountain"]
-
-[node name="BasinMesh" type="MeshInstance3D" parent="Fountain/Basin"]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.4, 0)
-material_override = ExtResource("11_sandstone")
-mesh = SubResource("CylinderMesh_fountain_basin")
-
-[node name="BasinCollision" type="CollisionShape3D" parent="Fountain/Basin"]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.4, 0)
+[node name="Shape" type="CollisionShape3D" parent="Fountain/FountainCollision" unique_id=1345419137]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.5, 0)
 shape = SubResource("CylinderShape3D_fountain_col")
 
-[node name="Pillar" type="MeshInstance3D" parent="Fountain"]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1.8, 0)
-material_override = ExtResource("11_sandstone")
-mesh = SubResource("CylinderMesh_fountain_pillar")
+[node name="MarketStalls" type="Node3D" parent="." unique_id=1864202977]
 
-[node name="Top" type="MeshInstance3D" parent="Fountain"]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 3.0, 0)
-material_override = ExtResource("11_sandstone")
-mesh = SubResource("CylinderMesh_fountain_top")
+[node name="StallN1" type="Node3D" parent="MarketStalls" unique_id=1703616352]
+transform = Transform3D(5.04, 0, 0, 0, 5.04, 0, 0, 0, 5.04, -6, 0, -7)
 
-; ── Market Stalls ──────────────────────────────────────────────────────────
-; 8 stalls arranged around the fountain per reference image layout.
-; North row: 3 stalls. South row: 3 stalls. West: 1. East: 1.
-; Each stall has an awning (BoxMesh) + counter (BoxMesh) + collision.
+[node name="Model" parent="MarketStalls/StallN1" unique_id=285125161 instance=ExtResource("20_stall")]
 
-[node name="MarketStalls" type="Node3D" parent="."]
+[node name="Collision" type="StaticBody3D" parent="MarketStalls/StallN1" unique_id=1515177657]
 
-; --- North row stalls (Z = -10, between fountain and Loggia) ---
-
-[node name="StallN1" type="StaticBody3D" parent="MarketStalls"]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -10, 1.5, -10)
-
-[node name="Awning" type="MeshInstance3D" parent="MarketStalls/StallN1"]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.5, 0)
-mesh = SubResource("BoxMesh_stall")
-
-[node name="Counter" type="MeshInstance3D" parent="MarketStalls/StallN1"]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -0.5, 0.8)
-mesh = SubResource("BoxMesh_stall_counter")
-
-[node name="Collision" type="CollisionShape3D" parent="MarketStalls/StallN1"]
+[node name="Shape" type="CollisionShape3D" parent="MarketStalls/StallN1/Collision" unique_id=960226643]
 shape = SubResource("BoxShape3D_stall_col")
 
-[node name="StallN2" type="StaticBody3D" parent="MarketStalls"]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1.5, -12)
+[node name="StallN2" type="Node3D" parent="MarketStalls" unique_id=562169983]
+transform = Transform3D(5.04, 0, 0, 0, 5.04, 0, 0, 0, 5.04, 6, 0, -7)
 
-[node name="Awning" type="MeshInstance3D" parent="MarketStalls/StallN2"]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.5, 0)
-mesh = SubResource("BoxMesh_stall")
+[node name="Model" parent="MarketStalls/StallN2" unique_id=748890608 instance=ExtResource("20_stall")]
 
-[node name="Counter" type="MeshInstance3D" parent="MarketStalls/StallN2"]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -0.5, 0.8)
-mesh = SubResource("BoxMesh_stall_counter")
+[node name="Collision" type="StaticBody3D" parent="MarketStalls/StallN2" unique_id=94547785]
 
-[node name="Collision" type="CollisionShape3D" parent="MarketStalls/StallN2"]
+[node name="Shape" type="CollisionShape3D" parent="MarketStalls/StallN2/Collision" unique_id=2092570180]
 shape = SubResource("BoxShape3D_stall_col")
 
-[node name="StallN3" type="StaticBody3D" parent="MarketStalls"]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 10, 1.5, -10)
+[node name="StallN3" type="Node3D" parent="MarketStalls" unique_id=1232140653]
+transform = Transform3D(5.04, 0, 0, 0, 5.04, 0, 0, 0, 5.04, 0, 0, -9)
 
-[node name="Awning" type="MeshInstance3D" parent="MarketStalls/StallN3"]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.5, 0)
-mesh = SubResource("BoxMesh_stall")
+[node name="Model" parent="MarketStalls/StallN3" unique_id=138208387 instance=ExtResource("20_stall")]
 
-[node name="Counter" type="MeshInstance3D" parent="MarketStalls/StallN3"]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -0.5, 0.8)
-mesh = SubResource("BoxMesh_stall_counter")
+[node name="Collision" type="StaticBody3D" parent="MarketStalls/StallN3" unique_id=800248621]
 
-[node name="Collision" type="CollisionShape3D" parent="MarketStalls/StallN3"]
+[node name="Shape" type="CollisionShape3D" parent="MarketStalls/StallN3/Collision" unique_id=954500654]
 shape = SubResource("BoxShape3D_stall_col")
 
-; --- South row stalls (Z = +10, between fountain and river) ---
+[node name="StallS1" type="Node3D" parent="MarketStalls" unique_id=857287906]
+transform = Transform3D(-5.04, 0, 0, 0, 5.04, 0, 0, 0, -5.04, -6, 0, 7)
 
-[node name="StallS1" type="StaticBody3D" parent="MarketStalls"]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -10, 1.5, 10)
+[node name="Model" parent="MarketStalls/StallS1" unique_id=1658010364 instance=ExtResource("20_stall")]
 
-[node name="Awning" type="MeshInstance3D" parent="MarketStalls/StallS1"]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.5, 0)
-mesh = SubResource("BoxMesh_stall")
+[node name="Collision" type="StaticBody3D" parent="MarketStalls/StallS1" unique_id=1348713598]
 
-[node name="Counter" type="MeshInstance3D" parent="MarketStalls/StallS1"]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -0.5, -0.8)
-mesh = SubResource("BoxMesh_stall_counter")
-
-[node name="Collision" type="CollisionShape3D" parent="MarketStalls/StallS1"]
+[node name="Shape" type="CollisionShape3D" parent="MarketStalls/StallS1/Collision" unique_id=1626782179]
 shape = SubResource("BoxShape3D_stall_col")
 
-[node name="StallS2" type="StaticBody3D" parent="MarketStalls"]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1.5, 12)
+[node name="StallS2" type="Node3D" parent="MarketStalls" unique_id=436937596]
+transform = Transform3D(-5.04, 0, 0, 0, 5.04, 0, 0, 0, -5.04, 6, 0, 7)
 
-[node name="Awning" type="MeshInstance3D" parent="MarketStalls/StallS2"]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.5, 0)
-mesh = SubResource("BoxMesh_stall")
+[node name="Model" parent="MarketStalls/StallS2" unique_id=1510287934 instance=ExtResource("20_stall")]
 
-[node name="Counter" type="MeshInstance3D" parent="MarketStalls/StallS2"]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -0.5, -0.8)
-mesh = SubResource("BoxMesh_stall_counter")
+[node name="Collision" type="StaticBody3D" parent="MarketStalls/StallS2" unique_id=1898483494]
 
-[node name="Collision" type="CollisionShape3D" parent="MarketStalls/StallS2"]
+[node name="Shape" type="CollisionShape3D" parent="MarketStalls/StallS2/Collision" unique_id=1688632648]
 shape = SubResource("BoxShape3D_stall_col")
 
-[node name="StallS3" type="StaticBody3D" parent="MarketStalls"]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 10, 1.5, 10)
+[node name="StallS3" type="Node3D" parent="MarketStalls" unique_id=1325577089]
+transform = Transform3D(-5.04, 0, 0, 0, 5.04, 0, 0, 0, -5.04, 0, 0, 9)
 
-[node name="Awning" type="MeshInstance3D" parent="MarketStalls/StallS3"]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.5, 0)
-mesh = SubResource("BoxMesh_stall")
+[node name="Model" parent="MarketStalls/StallS3" unique_id=52333797 instance=ExtResource("20_stall")]
 
-[node name="Counter" type="MeshInstance3D" parent="MarketStalls/StallS3"]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -0.5, -0.8)
-mesh = SubResource("BoxMesh_stall_counter")
+[node name="Collision" type="StaticBody3D" parent="MarketStalls/StallS3" unique_id=1375322796]
 
-[node name="Collision" type="CollisionShape3D" parent="MarketStalls/StallS3"]
+[node name="Shape" type="CollisionShape3D" parent="MarketStalls/StallS3/Collision" unique_id=595124960]
 shape = SubResource("BoxShape3D_stall_col")
 
-; --- West stall (Dye Merchant side) ---
+[node name="StallW1" type="Node3D" parent="MarketStalls" unique_id=1438624891]
+transform = Transform3D(5.04, 0, 0, 0, 5.04, 0, 0, 0, 5.04, -9, 0, 0)
 
-[node name="StallW1" type="StaticBody3D" parent="MarketStalls"]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -18, 1.5, -4)
+[node name="Model" parent="MarketStalls/StallW1" unique_id=164534756 instance=ExtResource("20_stall")]
 
-[node name="Awning" type="MeshInstance3D" parent="MarketStalls/StallW1"]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.5, 0)
-mesh = SubResource("BoxMesh_stall")
+[node name="Collision" type="StaticBody3D" parent="MarketStalls/StallW1" unique_id=1895297203]
 
-[node name="Counter" type="MeshInstance3D" parent="MarketStalls/StallW1"]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.8, -0.5, 0)
-mesh = SubResource("BoxMesh_stall_counter")
-
-[node name="Collision" type="CollisionShape3D" parent="MarketStalls/StallW1"]
+[node name="Shape" type="CollisionShape3D" parent="MarketStalls/StallW1/Collision" unique_id=1703616353]
 shape = SubResource("BoxShape3D_stall_col")
 
-; --- East stall (Weapon Smith side) ---
+[node name="StallE1" type="Node3D" parent="MarketStalls" unique_id=1518140108]
+transform = Transform3D(5.04, 0, 0, 0, 5.04, 0, 0, 0, 5.04, 9, 0, 0)
 
-[node name="StallE1" type="StaticBody3D" parent="MarketStalls"]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 18, 1.5, -4)
+[node name="Model" parent="MarketStalls/StallE1" unique_id=1390774355 instance=ExtResource("20_stall")]
 
-[node name="Awning" type="MeshInstance3D" parent="MarketStalls/StallE1"]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.5, 0)
-mesh = SubResource("BoxMesh_stall")
+[node name="Collision" type="StaticBody3D" parent="MarketStalls/StallE1" unique_id=1515177658]
 
-[node name="Counter" type="MeshInstance3D" parent="MarketStalls/StallE1"]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.8, -0.5, 0)
-mesh = SubResource("BoxMesh_stall_counter")
-
-[node name="Collision" type="CollisionShape3D" parent="MarketStalls/StallE1"]
+[node name="Shape" type="CollisionShape3D" parent="MarketStalls/StallE1/Collision" unique_id=960226644]
 shape = SubResource("BoxShape3D_stall_col")
 
-; ── NPC Positions (empty Node3D anchors — sprites slot in when ready) ──────
+[node name="Props" type="Node3D" parent="." unique_id=1324385131]
 
-[node name="NPCs" type="Node3D" parent="."]
+[node name="CypressNW" parent="Props" unique_id=2119128300 instance=ExtResource("26_cypress")]
+transform = Transform3D(6.75, 0, 0, 0, 6.75, 0, 0, 0, 6.75, -13, 0, -13)
 
-; ~12 NPC positions matching reference density
-[node name="NPC_Market_01" type="Node3D" parent="NPCs"]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -6, 0, -6)
+[node name="CypressNE" parent="Props" unique_id=529108280 instance=ExtResource("26_cypress")]
+transform = Transform3D(6.75, 0, 0, 0, 6.75, 0, 0, 0, 6.75, 13, 0, -13)
 
-[node name="NPC_Market_02" type="Node3D" parent="NPCs"]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 4, 0, -8)
+[node name="CypressSW" parent="Props" unique_id=529108281 instance=ExtResource("26_cypress")]
+transform = Transform3D(6.75, 0, 0, 0, 6.75, 0, 0, 0, 6.75, -13, 0, 13)
 
-[node name="NPC_Market_03" type="Node3D" parent="NPCs"]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -4, 0, 2)
+[node name="CypressSE" parent="Props" unique_id=529108282 instance=ExtResource("26_cypress")]
+transform = Transform3D(6.75, 0, 0, 0, 6.75, 0, 0, 0, 6.75, 13, 0, 13)
 
-[node name="NPC_Market_04" type="Node3D" parent="NPCs"]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 8, 0, 4)
+[node name="BarrelsNW" parent="Props" unique_id=180341151 instance=ExtResource("27_barrel")]
+transform = Transform3D(2.37, 0, 0, 0, 2.37, 0, 0, 0, 2.37, -6, 0, -2)
 
-[node name="NPC_Market_05" type="Node3D" parent="NPCs"]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -12, 0, 6)
+[node name="BarrelsNE" parent="Props" unique_id=1634992929 instance=ExtResource("27_barrel")]
+transform = Transform3D(2.37, 0, 0, 0, 2.37, 0, 0, 0, 2.37, 6, 0, -2)
 
-[node name="NPC_Market_06" type="Node3D" parent="NPCs"]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 2, 0, 14)
+[node name="BarrelsS" parent="Props" unique_id=1816767977 instance=ExtResource("27_barrel")]
+transform = Transform3D(2.37, 0, 0, 0, 2.37, 0, 0, 0, 2.37, -2, 0, 6)
 
-[node name="NPC_Market_07" type="Node3D" parent="NPCs"]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -8, 0, 16)
+[node name="BarrelsQuay" parent="Props" unique_id=171323587 instance=ExtResource("27_barrel")]
+transform = Transform3D(2.37, 0, 0, 0, 2.37, 0, 0, 0, 2.37, 5, 0, 6)
 
-[node name="NPC_Market_08" type="Node3D" parent="NPCs"]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 14, 0, 10)
+[node name="NPCs" type="Node3D" parent="." unique_id=2061776362]
 
-[node name="NPC_DyeMerchant" type="Node3D" parent="NPCs"]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -22, 0, -10)
+[node name="NPC_Market_01" type="Node3D" parent="NPCs" unique_id=1914228407]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -2, 0, -2)
 
-[node name="NPC_Herbalist" type="Node3D" parent="NPCs"]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -22, 0, 8)
+[node name="NPC_Market_02" type="Node3D" parent="NPCs" unique_id=982728730]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 2, 0, -3)
 
-[node name="NPC_WeaponSmith" type="Node3D" parent="NPCs"]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 24, 0, -6)
+[node name="NPC_Market_03" type="Node3D" parent="NPCs" unique_id=1405146694]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -1, 0, 2)
 
-[node name="NPC_Wanderer" type="Node3D" parent="NPCs"]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 6, 0, 20)
+[node name="NPC_Market_04" type="Node3D" parent="NPCs" unique_id=1659782911]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 3, 0, 1)
 
-; ── Exit Zones ─────────────────────────────────────────────────────────────
-; Area3D triggers for scene transitions — labeled per reference arrows.
+[node name="NPC_Market_05" type="Node3D" parent="NPCs" unique_id=917878848]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -4, 0, 1)
 
-[node name="ExitZones" type="Node3D" parent="."]
+[node name="NPC_Market_06" type="Node3D" parent="NPCs" unique_id=448099523]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 1, 0, 3)
 
-; North exit → Piazza della Signoria
-[node name="ExitNorth" type="Area3D" parent="ExitZones"]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -18, 1, -28)
+[node name="NPC_Market_07" type="Node3D" parent="NPCs" unique_id=480578068]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -3, 0, 4)
 
-[node name="Marker" type="MeshInstance3D" parent="ExitZones/ExitNorth"]
+[node name="NPC_Market_08" type="Node3D" parent="NPCs" unique_id=2082152232]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 4, 0, 2)
+
+[node name="NPC_DyeMerchant" type="Node3D" parent="NPCs" unique_id=206750934]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -6, 0, -1)
+
+[node name="NPC_Herbalist" type="Node3D" parent="NPCs" unique_id=1700622858]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -6, 0, 3)
+
+[node name="NPC_WeaponSmith" type="Node3D" parent="NPCs" unique_id=291242073]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 6, 0, -1)
+
+[node name="NPC_Wanderer" type="Node3D" parent="NPCs" unique_id=1657614905]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 1, 0, 6)
+
+[node name="ExitZones" type="Node3D" parent="." unique_id=1933435373]
+
+[node name="ExitNorth" type="Area3D" parent="ExitZones" unique_id=1941829983]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -6, 1, -8)
+
+[node name="Marker" type="MeshInstance3D" parent="ExitZones/ExitNorth" unique_id=1712378989]
+visible = false
 mesh = SubResource("BoxMesh_exit_marker")
 
-[node name="Shape" type="CollisionShape3D" parent="ExitZones/ExitNorth"]
-shape = SubResource("BoxShape3D_plaza_col")
+[node name="Shape" type="CollisionShape3D" parent="ExitZones/ExitNorth" unique_id=756726105]
+shape = SubResource("BoxShape3D_exit")
 
-; East exit → Ponte Vecchio
-[node name="ExitEast" type="Area3D" parent="ExitZones"]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 28, 1, 14)
+[node name="ExitEast" type="Area3D" parent="ExitZones" unique_id=522495209]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 8, 1, 2)
 
-[node name="Marker" type="MeshInstance3D" parent="ExitZones/ExitEast"]
+[node name="Marker" type="MeshInstance3D" parent="ExitZones/ExitEast" unique_id=473204391]
+visible = false
 mesh = SubResource("BoxMesh_exit_marker")
 
-[node name="Shape" type="CollisionShape3D" parent="ExitZones/ExitEast"]
-shape = SubResource("BoxShape3D_plaza_col")
+[node name="Shape" type="CollisionShape3D" parent="ExitZones/ExitEast" unique_id=1305288810]
+shape = SubResource("BoxShape3D_exit")
 
-; South exit → Arno River
-[node name="ExitSouth" type="Area3D" parent="ExitZones"]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1, 30)
+[node name="ExitSouth" type="Area3D" parent="ExitZones" unique_id=201128579]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1, 8)
 
-[node name="Marker" type="MeshInstance3D" parent="ExitZones/ExitSouth"]
+[node name="Marker" type="MeshInstance3D" parent="ExitZones/ExitSouth" unique_id=545860818]
+visible = false
 mesh = SubResource("BoxMesh_exit_marker")
 
-[node name="Shape" type="CollisionShape3D" parent="ExitZones/ExitSouth"]
-shape = SubResource("BoxShape3D_plaza_col")
+[node name="Shape" type="CollisionShape3D" parent="ExitZones/ExitSouth" unique_id=1783503163]
+shape = SubResource("BoxShape3D_exit")
 
-; ── District Title Label ───────────────────────────────────────────────────
-
-[node name="DistrictUI" type="CanvasLayer" parent="."]
+[node name="DistrictUI" type="CanvasLayer" parent="." unique_id=328745134]
 layer = 5
 
-[node name="TitlePanel" type="Panel" parent="DistrictUI"]
+[node name="TitlePanel" type="Panel" parent="DistrictUI" unique_id=154773928]
 offset_left = 8.0
 offset_top = 8.0
 offset_right = 220.0
 offset_bottom = 52.0
 
-[node name="TitleLabel" type="Label" parent="DistrictUI/TitlePanel"]
+[node name="TitleLabel" type="Label" parent="DistrictUI/TitlePanel" unique_id=1283895321]
+layout_mode = 0
 offset_left = 8.0
 offset_top = 4.0
 offset_right = 212.0
 offset_bottom = 28.0
-text = "Mercato Vecchio"
 theme_override_colors/font_color = Color(0.95, 0.85, 0.6, 1)
 theme_override_font_sizes/font_size = 16
+text = "Mercato Vecchio"
 
-[node name="SubtitleLabel" type="Label" parent="DistrictUI/TitlePanel"]
+[node name="SubtitleLabel" type="Label" parent="DistrictUI/TitlePanel" unique_id=1346502984]
+layout_mode = 0
 offset_left = 8.0
 offset_top = 26.0
 offset_right = 212.0
 offset_bottom = 46.0
-text = "The Old Market"
 theme_override_colors/font_color = Color(0.65, 0.57, 0.42, 1)
 theme_override_font_sizes/font_size = 11
+text = "The Old Market"
+
+[node name="CanvasModulate" type="CanvasModulate" parent="DistrictUI" unique_id=303000001]
+color = Color(0.95, 0.9, 0.8, 1)
+
+[node name="Vignette" type="ColorRect" parent="DistrictUI" unique_id=304000001]
+z_index = 10
+material = SubResource("ShaderMaterial_vignette")
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+mouse_filter = 2
+color = Color(0, 0, 0, 0)
+
+[node name="SkyFill" type="DirectionalLight3D" parent="." unique_id=301000001]
+transform = Transform3D(-0.766, 0, 0.643, -0.371, 0.819, -0.442, -0.527, -0.574, -0.628, 0, 8, 0)
+light_color = Color(0.55, 0.62, 0.75, 1)
+light_energy = 0.4
+
+[node name="TorchLight_01" type="OmniLight3D" parent="." unique_id=302000001]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -14, 2, -14)
+light_color = Color(1, 0.65, 0.35, 1)
+light_energy = 0.5
+omni_range = 3.0
+
+[node name="TorchLight_02" type="OmniLight3D" parent="." unique_id=302000002]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -4, 2, -14)
+light_color = Color(1, 0.65, 0.35, 1)
+light_energy = 0.5
+omni_range = 3.0
+
+[node name="TorchLight_03" type="OmniLight3D" parent="." unique_id=302000003]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 6, 2, -14)
+light_color = Color(1, 0.65, 0.35, 1)
+light_energy = 0.5
+omni_range = 3.0
+
+[node name="TorchLight_04" type="OmniLight3D" parent="." unique_id=302000004]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 14, 2, -14)
+light_color = Color(1, 0.65, 0.35, 1)
+light_energy = 0.5
+omni_range = 3.0
+
+[node name="TorchLight_05" type="OmniLight3D" parent="." unique_id=302000005]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -14, 2, -2)
+light_color = Color(1, 0.65, 0.35, 1)
+light_energy = 0.5
+omni_range = 3.0
+
+[node name="TorchLight_06" type="OmniLight3D" parent="." unique_id=302000006]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 14, 2, -2)
+light_color = Color(1, 0.65, 0.35, 1)
+light_energy = 0.5
+omni_range = 3.0
+
+[node name="TorchLight_07" type="OmniLight3D" parent="." unique_id=302000007]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -10, 2, 14)
+light_color = Color(1, 0.65, 0.35, 1)
+light_energy = 0.5
+omni_range = 3.0
+
+[node name="TorchLight_08" type="OmniLight3D" parent="." unique_id=302000008]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 10, 2, 14)
+light_color = Color(1, 0.65, 0.35, 1)
+light_energy = 0.5
+omni_range = 3.0
